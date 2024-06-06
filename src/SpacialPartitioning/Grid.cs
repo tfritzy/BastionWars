@@ -4,7 +4,7 @@ namespace SpacialPartitioning;
 
 public class Grid
 {
-    public const int PartitionSize = 10;
+    public const int PartitionSize = 5;
 
     readonly Partition[,] partitions;
 

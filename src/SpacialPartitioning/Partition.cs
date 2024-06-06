@@ -4,7 +4,7 @@ namespace SpacialPartitioning;
 
 public class Partition
 {
-    List<Entity> entities;
+    readonly List<Entity> entities;
 
     public Partition()
     {
