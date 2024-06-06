@@ -1,10 +1,12 @@
-namespace BastionWars;
+using System.Numerics;
+
+namespace SpacialPartitioning;
 
 public class Grid
 {
     public const int PartitionSize = 10;
 
-    Partition[,] partitions;
+    readonly Partition[,] partitions;
 
     public Grid(int sizeX, int sizeY)
     {
@@ -25,8 +27,27 @@ public class Grid
 
     public void AddEntity(Entity entity)
     {
-        int x = (int)(entity.x / PartitionSize);
-        int y = (int)(entity.y / PartitionSize);
+        int x = (int)(entity.Position.X / PartitionSize);
+        int y = (int)(entity.Position.Y / PartitionSize);
         partitions[x, y].AddEntity(entity);
+    }
+
+    public List<ulong> GetCollisions(Vector2 point, float radius)
+    {
+        int xPartMin = Math.Max((int)((point.X - radius) / PartitionSize), 0);
+        int xPartMax = Math.Min((int)((point.X + radius) / PartitionSize), partitions.GetLength(0) - 1);
+        int yPartMin = Math.Max((int)((point.Y - radius) / PartitionSize), 0);
+        int yPartMax = Math.Min((int)((point.Y + radius) / PartitionSize), partitions.GetLength(1) - 1);
+
+        List<ulong> collisions = new();
+        for (int x = xPartMin; x <= xPartMax; x++)
+        {
+            for (int y = yPartMin; y <= yPartMax; y++)
+            {
+                collisions.AddRange(partitions[x, y].GetCollisions(point, radius));
+            }
+        }
+
+        return collisions;
     }
 }

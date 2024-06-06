@@ -1,2 +1,2 @@
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using BastionWars;
+global using SpacialPartitioning;
