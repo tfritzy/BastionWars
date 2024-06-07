@@ -7,6 +7,7 @@ public class Grid
     public const int PartitionSize = 5;
 
     readonly Partition[,] partitions;
+    readonly Dictionary<ulong, (int x, int y)> entityPartitionLookup;
 
     public Grid(int sizeX, int sizeY)
     {
@@ -16,11 +17,12 @@ public class Grid
         }
 
         partitions = new Partition[sizeX / PartitionSize, sizeY / PartitionSize];
+        entityPartitionLookup = new();
         for (int x = 0; x < partitions.GetLength(0); x++)
         {
             for (int y = 0; y < partitions.GetLength(1); y++)
             {
-                partitions[x, y] = new Partition();
+                partitions[x, y] = new Partition(new Vector2(x * PartitionSize, y * PartitionSize));
             }
         }
     }
@@ -30,14 +32,21 @@ public class Grid
         int x = (int)(entity.Position.X / PartitionSize);
         int y = (int)(entity.Position.Y / PartitionSize);
         partitions[x, y].AddEntity(entity);
+
+        entityPartitionLookup.Add(entity.Id, (x, y));
+    }
+
+    public void UpdateEntityPosition(ulong id, Vector2 newPosition)
+    {
+        (int x, int y) = entityPartitionLookup[id];
     }
 
     public List<ulong> GetCollisions(Vector2 point, float radius)
     {
-        int xPartMin = Math.Max((int)((point.X - radius) / PartitionSize), 0);
-        int xPartMax = Math.Min((int)((point.X + radius) / PartitionSize), partitions.GetLength(0) - 1);
-        int yPartMin = Math.Max((int)((point.Y - radius) / PartitionSize), 0);
-        int yPartMax = Math.Min((int)((point.Y + radius) / PartitionSize), partitions.GetLength(1) - 1);
+        int xPartMin = Math.Max((int)((point.X - radius) / PartitionSize - 1), 0);
+        int xPartMax = Math.Min((int)((point.X + radius) / PartitionSize) + 1, partitions.GetLength(0) - 1);
+        int yPartMin = Math.Max((int)((point.Y - radius) / PartitionSize) - 1, 0);
+        int yPartMax = Math.Min((int)((point.Y + radius) / PartitionSize) + 1, partitions.GetLength(1) - 1);
 
         List<ulong> collisions = new();
         for (int x = xPartMin; x <= xPartMax; x++)

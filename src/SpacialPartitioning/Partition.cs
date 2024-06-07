@@ -4,22 +4,24 @@ namespace SpacialPartitioning;
 
 public class Partition
 {
-    readonly List<Entity> entities;
+    readonly Dictionary<ulong, Entity> entities;
+    readonly Vector2 bottomLeft;
 
-    public Partition()
+    public Partition(Vector2 bottomLeft)
     {
+        this.bottomLeft = bottomLeft;
         entities = new();
     }
 
     public void AddEntity(Entity entity)
     {
-        entities.Add(entity);
+        entities.Add(entity.Id, entity);
     }
 
-    public List<ulong> GetCollisions(Vector2 point, float radius)
+    public HashSet<ulong> GetCollisions(Vector2 point, float radius)
     {
-        List<ulong> collisions = new();
-        foreach (Entity entity in entities)
+        HashSet<ulong> collisions = new();
+        foreach (Entity entity in entities.Values)
         {
             if (Vector2.DistanceSquared(point, entity.Position) <= Math.Pow(entity.Radius + radius, 2))
             {
