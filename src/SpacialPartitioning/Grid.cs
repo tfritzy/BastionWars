@@ -87,4 +87,28 @@ public class Grid
 
         return collisions;
     }
+
+    public Vector2 GetEntityPosition(ulong id)
+    {
+        if (!entityPartitionLookup.ContainsKey(id))
+        {
+            throw new ArgumentException("Entity not found");
+        }
+
+        return GetPartition(id).GetEntity(id).Position;
+
+    }
+
+    private Partition GetPartition(ulong id)
+    {
+        if (!entityPartitionLookup.ContainsKey(id))
+        {
+            throw new ArgumentException("Entity not found");
+        }
+
+        return partitions[
+            entityPartitionLookup[id].X,
+            entityPartitionLookup[id].Y];
+    }
+
 }

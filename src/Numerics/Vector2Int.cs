@@ -1,3 +1,5 @@
+namespace System.Numerics;
+
 public struct Vector2Int
 {
     public int X;
