@@ -1,4 +1,6 @@
 using System.Numerics;
+using AStar;
+using AStar.Options;
 using SpacialPartitioning;
 
 namespace BastionWars;
@@ -6,19 +8,27 @@ namespace BastionWars;
 public class Map
 {
     public TileType[,] Tiles { get; private set; }
-    public bool[,] Travelable { get; private set; }
+    public short[,] Travelable { get; private set; }
     public Grid Grid { get; private set; }
     public List<Bastion> Bastions { get; private set; }
+    public PathFinder PathFinder { get; private set; }
 
     public Map(int width, int height)
     {
         Bastions = new();
         Grid = new Grid(width, height);
         Tiles = new TileType[width, height];
-        Travelable = new bool[width, height];
-
+        Travelable = new short[width, height];
         GenerateTerrain();
         PlaceBastions();
+
+        var pathfinderOptions = new PathFinderOptions
+        {
+            PunishChangeDirection = true,
+            UseDiagonals = true,
+        };
+        var worldGrid = new WorldGrid(Travelable);
+        PathFinder = new PathFinder(worldGrid, pathfinderOptions);
     }
 
     private void GenerateTerrain()
@@ -28,7 +38,7 @@ public class Map
             for (int y = 0; y < Tiles.GetLength(1); y++)
             {
                 Tiles[x, y] = TileType.Land;
-                Travelable[x, y] = true;
+                Travelable[x, y] = 1;
             }
         }
     }
@@ -49,7 +59,7 @@ public class Map
                 bastion.Id,
                 Bastion.Radius
             ));
-            Travelable[pos.X, pos.Y] = false;
+            Travelable[pos.X, pos.Y] = 0;
         }
     }
 
@@ -61,8 +71,18 @@ public class Map
         {
             x = random.Next(Tiles.GetLength(0));
             y = random.Next(Tiles.GetLength(1));
-        } while (Travelable[x, y] == false);
+        } while (Travelable[x, y] == 0);
 
         return new Vector2Int(x, y);
+    }
+
+    public Vector2Int[] FindPathBetweenBastions(Vector2Int start, Vector2Int end)
+    {
+        Travelable[start.X, start.Y] = 1;
+        Travelable[end.X, end.Y] = 1;
+        var path = PathFinder.FindPath(start, end);
+        Travelable[start.X, start.Y] = 0;
+        Travelable[end.X, end.Y] = 0;
+        return path;
     }
 }
