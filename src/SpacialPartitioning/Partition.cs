@@ -13,9 +13,19 @@ public class Partition
         entities = new();
     }
 
+    public Entity GetEntity(ulong id)
+    {
+        return entities[id];
+    }
+
     public void AddEntity(Entity entity)
     {
         entities.Add(entity.Id, entity);
+    }
+
+    public void RemoveEntity(ulong id)
+    {
+        entities.Remove(id);
     }
 
     public HashSet<ulong> GetCollisions(Vector2 point, float radius)
@@ -30,5 +40,10 @@ public class Partition
         }
 
         return collisions;
+    }
+
+    public void UpdateEntityPosition(ulong id, Vector2 newPosition)
+    {
+        entities[id].Position = newPosition;
     }
 }

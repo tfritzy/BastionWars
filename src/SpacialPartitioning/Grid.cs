@@ -4,10 +4,11 @@ namespace SpacialPartitioning;
 
 public class Grid
 {
+    public int EntityCount => entityPartitionLookup.Count;
     public const int PartitionSize = 5;
 
     readonly Partition[,] partitions;
-    readonly Dictionary<ulong, (int x, int y)> entityPartitionLookup;
+    readonly Dictionary<ulong, Vector2Int> entityPartitionLookup;
 
     public Grid(int sizeX, int sizeY)
     {
@@ -33,12 +34,39 @@ public class Grid
         int y = (int)(entity.Position.Y / PartitionSize);
         partitions[x, y].AddEntity(entity);
 
-        entityPartitionLookup.Add(entity.Id, (x, y));
+        entityPartitionLookup.Add(entity.Id, new Vector2Int(x, y));
     }
 
     public void UpdateEntityPosition(ulong id, Vector2 newPosition)
     {
-        (int x, int y) = entityPartitionLookup[id];
+        Vector2Int newPartition = new(
+            (int)(newPosition.X / PartitionSize),
+            (int)(newPosition.Y / PartitionSize));
+
+        if (!entityPartitionLookup.ContainsKey(id))
+        {
+            throw new ArgumentException("Entity not found");
+        }
+
+        if (newPartition.X < 0 || newPartition.X >= partitions.GetLength(0) ||
+            newPartition.Y < 0 || newPartition.Y >= partitions.GetLength(1))
+        {
+            throw new ArgumentException("Entity out of bounds");
+        }
+
+        if (entityPartitionLookup[id] == newPartition)
+        {
+            partitions[newPartition.X, newPartition.Y].UpdateEntityPosition(id, newPosition);
+        }
+        else
+        {
+            Partition partition = partitions[entityPartitionLookup[id].X, entityPartitionLookup[id].Y];
+            Entity entity = partition.GetEntity(id);
+            partitions[entityPartitionLookup[id].X, entityPartitionLookup[id].Y].RemoveEntity(id);
+            entity.Position = newPosition;
+            partitions[newPartition.X, newPartition.Y].AddEntity(entity);
+            entityPartitionLookup[id] = newPartition;
+        }
     }
 
     public List<ulong> GetCollisions(Vector2 point, float radius)
