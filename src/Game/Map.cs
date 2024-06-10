@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Text;
+using Navigation;
 using SpacialPartitioning;
 
 namespace BastionWars;
@@ -10,6 +11,7 @@ public class Map
     public short[,] Travelable { get; private set; }
     public Grid Grid { get; private set; }
     public List<Bastion> Bastions { get; private set; }
+    private Dictionary<ulong, ushort[,]> bastionPaths = new();
 
     public Map(int width, int height)
     {
@@ -19,6 +21,7 @@ public class Map
         Travelable = new short[width, height];
         GenerateTerrain();
         PlaceBastions();
+        CalculateBastionMaps();
     }
 
     private void GenerateTerrain()
@@ -35,7 +38,7 @@ public class Map
 
     private void PlaceBastions()
     {
-        int bastionCount = 8;
+        int bastionCount = 4;
         Bastions = new List<Bastion>(bastionCount);
 
         for (int i = 0; i < bastionCount; i++)
@@ -50,6 +53,34 @@ public class Map
                 Bastion.Radius
             ));
             Travelable[pos.X, pos.Y] = 0;
+        }
+    }
+
+    public List<Vector2Int> GetPathBetweenBastions(ulong startId, ulong endId)
+    {
+        if (bastionPaths.TryGetValue(startId, out ushort[,]? pathMap))
+        {
+            if (pathMap == null)
+            {
+                return new();
+            }
+
+            return NavGrid.ReconstructPath(
+                Vector2Int.From(Grid.GetEntityPosition(startId)),
+                Vector2Int.From(Grid.GetEntityPosition(endId)),
+                pathMap
+            );
+        }
+
+        return new();
+    }
+
+    private void CalculateBastionMaps()
+    {
+        foreach (Bastion bastion in Bastions)
+        {
+            ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(bastion.Id)), Travelable);
+            bastionPaths.Add(bastion.Id, pathMap);
         }
     }
 
