@@ -23,7 +23,6 @@ public class MapTests
     public void Map_AllBastionsCanBeNavigatedBetween()
     {
         Map map = new(5, 5);
-        int unreachable = 0;
         foreach (var bastion in map.Bastions)
         {
             foreach (var other in map.Bastions)
@@ -34,18 +33,10 @@ public class MapTests
                 }
 
                 List<Vector2Int> path = map.GetPathBetweenBastions(bastion.Id, other.Id);
-                if (path.Count == 0)
-                {
-                    unreachable++;
-                    Console.WriteLine($"No path between {bastion.Id} and {other.Id}");
-                }
-                else
-                {
-                    Console.WriteLine($"Path between {bastion.Id} and {other.Id}: {string.Join(" -> ", path)}");
-                }
+                Assert.IsTrue(path.Count > 0);
+                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(bastion.Id)), path[0]);
+                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(other.Id)), path[^1]);
             }
         }
-
-        Assert.AreEqual(0, unreachable);
     }
 }
