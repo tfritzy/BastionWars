@@ -59,7 +59,32 @@ public struct Vector2Int
     public static Vector2Int Zero => new(0, 0);
     public static Vector2Int One => new(1, 1);
     public static Vector2Int Up => new(0, 1);
+    public static Vector2Int TopRight => new(1, 1);
     public static Vector2Int Down => new(0, -1);
+    public static Vector2Int TopLeft => new(-1, 1);
     public static Vector2Int Left => new(-1, 0);
+    public static Vector2Int BottomRight => new(1, -1);
     public static Vector2Int Right => new(1, 0);
+    public static Vector2Int BottomLeft => new(-1, -1);
+
+    public static Vector2Int GetDirection(int i)
+    {
+        return i switch
+        {
+            0 => Up,
+            1 => TopRight,
+            2 => Right,
+            3 => BottomRight,
+            4 => Down,
+            5 => BottomLeft,
+            6 => Left,
+            7 => TopLeft,
+            _ => throw new ArgumentException("Invalid direction")
+        };
+    }
+
+    public override string ToString()
+    {
+        return $"<{X}, {Y}>";
+    }
 }

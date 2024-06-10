@@ -1,6 +1,5 @@
 using System.Numerics;
-using AStar;
-using AStar.Options;
+using System.Text;
 using SpacialPartitioning;
 
 namespace BastionWars;
@@ -11,7 +10,6 @@ public class Map
     public short[,] Travelable { get; private set; }
     public Grid Grid { get; private set; }
     public List<Bastion> Bastions { get; private set; }
-    public PathFinder PathFinder { get; private set; }
 
     public Map(int width, int height)
     {
@@ -21,14 +19,6 @@ public class Map
         Travelable = new short[width, height];
         GenerateTerrain();
         PlaceBastions();
-
-        var pathfinderOptions = new PathFinderOptions
-        {
-            PunishChangeDirection = true,
-            UseDiagonals = true,
-        };
-        var worldGrid = new WorldGrid(Travelable);
-        PathFinder = new PathFinder(worldGrid, pathfinderOptions);
     }
 
     private void GenerateTerrain()
@@ -76,13 +66,46 @@ public class Map
         return new Vector2Int(x, y);
     }
 
-    public Vector2Int[] FindPathBetweenBastions(Vector2Int start, Vector2Int end)
+    public override string ToString()
     {
-        Travelable[start.X, start.Y] = 1;
-        Travelable[end.X, end.Y] = 1;
-        var path = PathFinder.FindPath(start, end);
-        Travelable[start.X, start.Y] = 0;
-        Travelable[end.X, end.Y] = 0;
-        return path;
+        StringBuilder sb = new();
+        for (int x = 0; x < Tiles.GetLength(0) + 2; x++)
+        {
+            sb.Append('-');
+        }
+        sb.AppendLine();
+
+        for (int y = 0; y < Tiles.GetLength(1); y++)
+        {
+            sb.Append('|');
+            for (int x = 0; x < Tiles.GetLength(0); x++)
+            {
+                if (Bastions.Any(b => Grid.GetEntityPosition(b.Id) == new Vector2(x, y)))
+                {
+                    sb.Append('B');
+                    continue;
+                }
+                else if (Travelable[x, y] == 1)
+                {
+                    sb.Append(' ');
+                    continue;
+                }
+                else
+                {
+                    sb.Append(Travelable[x, y] == 1 ? ' ' : 'X');
+                }
+            }
+
+            sb.Append("|");
+            sb.AppendLine();
+        }
+
+        for (int x = 0; x < Tiles.GetLength(0) + 2; x++)
+        {
+            sb.Append('-');
+        }
+
+
+        return sb.ToString();
     }
 }
