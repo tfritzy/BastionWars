@@ -1,4 +1,4 @@
-namespace BastionWars;
+namespace KeepLordWarriors;
 
 public static class IdGenerator
 {

@@ -3,7 +3,7 @@ using System.Text;
 using Navigation;
 using SpacialPartitioning;
 
-namespace BastionWars;
+namespace KeepLordWarriors;
 
 public class Map
 {
@@ -22,6 +22,14 @@ public class Map
         GenerateTerrain();
         PlaceBastions();
         CalculateBastionMaps();
+    }
+
+    public void Update(float deltaTime)
+    {
+        foreach (Bastion bastion in Bastions)
+        {
+            bastion.Update(deltaTime);
+        }
     }
 
     private void GenerateTerrain()
@@ -43,7 +51,7 @@ public class Map
 
         for (int i = 0; i < bastionCount; i++)
         {
-            BastionType type = (BastionType)(i % 3);
+            SoldierType type = (SoldierType)(i % 3);
             Bastion bastion = new(type);
             Bastions.Add(bastion);
             Vector2Int pos = GetBuildableTile();
@@ -138,5 +146,11 @@ public class Map
 
 
         return sb.ToString();
+    }
+
+    public void AttackBastion(ulong sourceId, ulong targetId, SoldierType? type = null, float percent = 1f)
+    {
+        Bastion source = Bastions.First(b => b.Id == sourceId);
+        Bastion target = Bastions.First(b => b.Id == targetId);
     }
 }

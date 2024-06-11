@@ -1,4 +1,4 @@
-namespace BastionWars;
+namespace KeepLordWarriors;
 
 public abstract class Entity
 {

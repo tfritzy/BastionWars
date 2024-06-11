@@ -6,7 +6,7 @@ public static class TH
 {
     public static Entity BuildEntity(float x, float y, float radius = .2f)
     {
-        return new Entity(new Vector2(x, y), BastionWars.IdGenerator.NextId(), radius);
+        return new Entity(new Vector2(x, y), KeepLordWarriors.IdGenerator.NextId(), radius);
     }
 
     public static Entity AddNewEntity(Grid grid, float x, float y, float radius = .2f)
