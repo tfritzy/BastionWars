@@ -1,9 +1,8 @@
 namespace KeepLordWarriors;
 
-public struct DeploymentOrder
+public class DeploymentOrder
 {
     public ulong TargetId;
-    public int MageCount;
     public int WarriorCount;
     public int ArcherCount;
 }

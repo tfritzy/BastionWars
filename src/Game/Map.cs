@@ -151,6 +151,12 @@ public class Map
     public void AttackBastion(ulong sourceId, ulong targetId, SoldierType? type = null, float percent = 1f)
     {
         Bastion source = Bastions.First(b => b.Id == sourceId);
-        Bastion target = Bastions.First(b => b.Id == targetId);
+
+        if (source == null || !Bastions.Any(b => b.Id == targetId))
+        {
+            return;
+        }
+
+        source.SetDeploymentOrder(targetId, type, percent);
     }
 }

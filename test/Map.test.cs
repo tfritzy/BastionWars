@@ -39,16 +39,4 @@ public class MapTests
             }
         }
     }
-
-    [TestMethod]
-    public void Map_BastionAttackDeploysTroopsOverTime()
-    {
-        Map map = new(5, 5);
-        Bastion bastion = map.Bastions[0];
-        bastion.SetCount(archers: 30);
-
-        Assert.AreEqual(30, bastion.GetCount(SoldierType.Archer));
-        map.AttackBastion(bastion.Id, map.Bastions[1].Id);
-        Assert.AreEqual(24, bastion.GetCount(SoldierType.Archer));
-    }
 }

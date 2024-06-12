@@ -2,16 +2,16 @@ namespace KeepLordWarriors;
 
 public class Bastion : Entity
 {
-    public int MageCount { get; private set; }
     public int ArcherCount { get; private set; }
     public int WarriorCount { get; private set; }
     public SoldierType SoldierType { get; }
 
-    public DeploymentOrder DeploymentOrder { get; private set; }
+    public DeploymentOrder? DeploymentOrder { get; private set; }
     private float deploymentCooldown = 0f;
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .75f;
+    public const int MaxTroopsPerWave = 6;
 
     public Bastion(SoldierType soldierType, int alliance = 0) : base(alliance)
     {
@@ -22,16 +22,14 @@ public class Bastion : Entity
     {
         return type switch
         {
-            SoldierType.Mage => MageCount,
             SoldierType.Archer => ArcherCount,
             SoldierType.Warrior => WarriorCount,
             _ => 0
         };
     }
 
-    public void SetCount(int? mages = null, int? archers = null, int? warriors = null)
+    public void SetCount(int? archers = null, int? warriors = null)
     {
-        MageCount = mages ?? MageCount;
         ArcherCount = archers ?? ArcherCount;
         WarriorCount = warriors ?? WarriorCount;
     }
@@ -40,9 +38,6 @@ public class Bastion : Entity
     {
         switch (SoldierType)
         {
-            case SoldierType.Mage:
-                MageCount++;
-                break;
             case SoldierType.Archer:
                 ArcherCount++;
                 break;
@@ -64,14 +59,46 @@ public class Bastion : Entity
 
     private void DeployTroops()
     {
+        if (DeploymentOrder == null)
+        {
+            return;
+        }
+
         if (deploymentCooldown <= 0)
         {
             deploymentCooldown = DeploymentRefractoryPeriod;
+            int waveCap = MaxTroopsPerWave;
+
+            int toDeploy = Min(WarriorCount, waveCap, DeploymentOrder.WarriorCount);
+            WarriorCount -= toDeploy;
+            DeploymentOrder.WarriorCount -= toDeploy;
+            waveCap -= toDeploy;
+
+            toDeploy = Min(ArcherCount, waveCap, DeploymentOrder.ArcherCount);
+            ArcherCount -= toDeploy;
+            DeploymentOrder.ArcherCount -= toDeploy;
+
+            if (DeploymentOrder.ArcherCount == 0 && DeploymentOrder.WarriorCount == 0)
+            {
+                DeploymentOrder = null;
+            }
         }
     }
 
-    public void SetDeploymentOrder(DeploymentOrder order)
+    public void SetDeploymentOrder(ulong target, SoldierType? type = null, float percent = 1f)
     {
-        DeploymentOrder = order;
+        DeploymentOrder = new DeploymentOrder
+        {
+            TargetId = target,
+            ArcherCount = type == SoldierType.Archer || type == null ? (int)(ArcherCount * percent) : 0,
+            WarriorCount = type == SoldierType.Warrior || type == null ? (int)(WarriorCount * percent) : 0,
+        };
+
+        DeployTroops();
+    }
+
+    private static int Min(params int[] values)
+    {
+        return values.Min();
     }
 }
