@@ -47,7 +47,6 @@ public class BastionTests
 
         bastion.SetCount(warriors: 30);
         bastion.SetDeploymentOrder(2u, type: SoldierType.Warrior);
-        bastion.Update(Bastion.DeploymentRefractoryPeriod);
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
 
         bastion.SetCount(warriors: 30, archers: 30);
@@ -89,11 +88,22 @@ public class BastionTests
     {
         Bastion bastion = new(SoldierType.Warrior);
         bastion.SetCount(warriors: 15, archers: 30);
-        bastion.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
+
+        bastion.SetDeploymentOrder(0, SoldierType.Warrior, 1f);
         Assert.AreEqual(9, bastion.GetCount(SoldierType.Warrior));
-        bastion.SetDeploymentOrder(0, SoldierType.Archer, .5f);
-        bastion.Update(Bastion.DeploymentRefractoryPeriod);
+
+        bastion.Update(Bastion.DeploymentRefractoryPeriod / 2);
+
+        bastion.SetDeploymentOrder(1, SoldierType.Archer, 1f);
         Assert.AreEqual(9, bastion.GetCount(SoldierType.Warrior));
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Archer));
+
+        bastion.Update(Bastion.DeploymentRefractoryPeriod / 2 + .1f);
+        Assert.AreEqual(3, bastion.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(24, bastion.GetCount(SoldierType.Archer));
+
+        bastion.Update(Bastion.DeploymentRefractoryPeriod / 2 + .1f);
+        Assert.AreEqual(3, bastion.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(18, bastion.GetCount(SoldierType.Archer));
     }
 }

@@ -6,8 +6,7 @@ public class Bastion : Entity
     public int WarriorCount { get; private set; }
     public SoldierType SoldierType { get; }
 
-    public DeploymentOrder? DeploymentOrder { get; private set; }
-    private float deploymentCooldown = 0f;
+    public List<DeploymentOrder> DeploymentOrders { get; } = new();
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .75f;
@@ -49,9 +48,12 @@ public class Bastion : Entity
 
     public void Update(float deltaTime)
     {
-        if (deploymentCooldown > 0)
+        foreach (var order in DeploymentOrders)
         {
-            deploymentCooldown -= deltaTime;
+            if (order.WaveCooldown > 0)
+            {
+                order.WaveCooldown -= deltaTime;
+            }
         }
 
         DeployTroops();
@@ -59,40 +61,56 @@ public class Bastion : Entity
 
     private void DeployTroops()
     {
-        if (DeploymentOrder == null)
+        if (DeploymentOrders.Count == 0)
         {
             return;
         }
 
-        if (deploymentCooldown <= 0)
+        for (int i = 0; i < DeploymentOrders.Count; i++)
         {
-            deploymentCooldown = DeploymentRefractoryPeriod;
-            int waveCap = MaxTroopsPerWave;
-
-            int toDeploy = Min(WarriorCount, waveCap, DeploymentOrder.WarriorCount);
-            WarriorCount -= toDeploy;
-            DeploymentOrder.WarriorCount -= toDeploy;
-            waveCap -= toDeploy;
-
-            toDeploy = Min(ArcherCount, waveCap, DeploymentOrder.ArcherCount);
-            ArcherCount -= toDeploy;
-            DeploymentOrder.ArcherCount -= toDeploy;
-
-            if (DeploymentOrder.ArcherCount == 0 && DeploymentOrder.WarriorCount == 0)
+            var order = DeploymentOrders[i];
+            if (order.WaveCooldown <= 0)
             {
-                DeploymentOrder = null;
+                order.WaveCooldown = DeploymentRefractoryPeriod;
+                int waveCap = MaxTroopsPerWave;
+
+                int toDeploy = Min(WarriorCount, waveCap, order.WarriorCount);
+                WarriorCount -= toDeploy;
+                order.WarriorCount -= toDeploy;
+                waveCap -= toDeploy;
+
+                toDeploy = Min(ArcherCount, waveCap, order.ArcherCount);
+                ArcherCount -= toDeploy;
+                order.ArcherCount -= toDeploy;
+
+                if (order.ArcherCount == 0 && order.WarriorCount == 0)
+                {
+                    DeploymentOrders.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }
 
     public void SetDeploymentOrder(ulong target, SoldierType? type = null, float percent = 1f)
     {
-        DeploymentOrder = new DeploymentOrder
+        var deploymentOrder = new DeploymentOrder
         {
             TargetId = target,
             ArcherCount = type == SoldierType.Archer || type == null ? (int)(ArcherCount * percent) : 0,
             WarriorCount = type == SoldierType.Warrior || type == null ? (int)(WarriorCount * percent) : 0,
         };
+
+        int existingIndex = DeploymentOrders.FindIndex(o => o.TargetId == target);
+        if (existingIndex >= 0)
+        {
+            deploymentOrder.WaveCooldown = DeploymentOrders[existingIndex].WaveCooldown;
+            DeploymentOrders[existingIndex] = deploymentOrder;
+        }
+        else
+        {
+            DeploymentOrders.Add(deploymentOrder);
+        }
 
         DeployTroops();
     }
