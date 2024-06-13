@@ -8,22 +8,24 @@ public class BastionTests
     [TestMethod]
     public void Bastion_BasicStuff()
     {
-        Bastion bastion = new(SoldierType.Warrior);
+        Map map = new(10, 10);
+        Bastion bastion = new(map, SoldierType.Warrior);
         Assert.AreEqual(0, bastion.ArcherCount);
         Assert.AreEqual(0, bastion.WarriorCount);
         Assert.AreEqual(SoldierType.Warrior, bastion.SoldierType);
-        Assert.AreEqual(1u, bastion.Id);
-        Bastion bastion2 = new(SoldierType.Archer, 3);
-        Assert.AreEqual(2u, bastion2.Id);
+        Assert.AreNotEqual(0u, bastion.Id);
+        Bastion bastion2 = new(map, SoldierType.Archer, 3);
+        Assert.AreEqual(bastion.Id + 1, bastion2.Id);
         Assert.AreEqual(3, bastion2.Alliance);
     }
 
     [TestMethod]
     public void Bastion_IncreasesPopulationAppropriately()
     {
+        Map map = new(10, 10);
         foreach (var type in Enum.GetValues<SoldierType>())
         {
-            Bastion bastion = new(type);
+            Bastion bastion = new(map, type);
             Assert.AreEqual(0, bastion.GetCount(type));
             bastion.Produce();
             Assert.AreEqual(1, bastion.GetCount(type));
@@ -34,7 +36,8 @@ public class BastionTests
     [TestMethod]
     public void Map_BastionAttackDeploysCorrectTroops()
     {
-        Bastion bastion = new(SoldierType.Warrior);
+        Map map = new(10, 10);
+        Bastion bastion = new(map, SoldierType.Warrior);
 
         bastion.SetCount(archers: 30);
         bastion.SetDeploymentOrder(2u);
@@ -71,7 +74,8 @@ public class BastionTests
     [TestMethod]
     public void Bastion_DeploysTroopsOverTime()
     {
-        Bastion bastion = new(SoldierType.Warrior);
+        Map map = new(10, 10);
+        Bastion bastion = new(map, SoldierType.Warrior);
         bastion.SetCount(warriors: 30);
         bastion.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
@@ -86,7 +90,8 @@ public class BastionTests
     [TestMethod]
     public void Bastion_MultipleOrders()
     {
-        Bastion bastion = new(SoldierType.Warrior);
+        Map map = new(10, 10);
+        Bastion bastion = new(map, SoldierType.Warrior);
         bastion.SetCount(warriors: 15, archers: 30);
 
         bastion.SetDeploymentOrder(0, SoldierType.Warrior, 1f);

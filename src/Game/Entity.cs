@@ -1,3 +1,5 @@
+using SpacialPartitioning;
+
 namespace KeepLordWarriors;
 
 public abstract class Entity
@@ -9,9 +11,12 @@ public abstract class Entity
     /// </summary>
     public int Alliance;
 
-    public Entity(int alliance = 0)
+    protected Map map;
+
+    public Entity(Map map, int alliance = 0)
     {
         Id = IdGenerator.NextId();
         Alliance = alliance;
+        this.map = map;
     }
 }

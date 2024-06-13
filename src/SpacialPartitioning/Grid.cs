@@ -37,7 +37,7 @@ public class Grid
         entityPartitionLookup.Add(entity.Id, new Vector2Int(x, y));
     }
 
-    public void UpdateEntityPosition(ulong id, Vector2 newPosition)
+    public void MoveEntity(ulong id, Vector2 newPosition)
     {
         Vector2Int newPartition = new(
             (int)(newPosition.X / PartitionSize),
@@ -96,7 +96,16 @@ public class Grid
         }
 
         return GetPartition(id).GetEntity(id).Position;
+    }
 
+    public Vector2Int GetEntityGridPos(ulong id)
+    {
+        if (!entityPartitionLookup.ContainsKey(id))
+        {
+            throw new ArgumentException("Entity not found");
+        }
+
+        return Vector2Int.From(GetPartition(id).GetEntity(id).Position);
     }
 
     private Partition GetPartition(ulong id)

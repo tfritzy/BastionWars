@@ -62,12 +62,12 @@ public class GridTest
         Assert.AreEqual(1, collisions.Count);
         Assert.AreEqual(e1.Id, collisions[0]);
 
-        grid.UpdateEntityPosition(e1.Id, new Vector2(0f, 25f));
+        grid.MoveEntity(e1.Id, new Vector2(0f, 25f));
         collisions = grid.GetCollisions(new Vector2(0f, 19f), 4f);
         Assert.AreEqual(1, collisions.Count);
         Assert.AreEqual(e2.Id, collisions[0]);
 
-        grid.UpdateEntityPosition(e1.Id, new Vector2(0f, 29.9f));
+        grid.MoveEntity(e1.Id, new Vector2(0f, 29.9f));
         collisions = grid.GetCollisions(new Vector2(0f, 33f), 4f);
         Assert.AreEqual(1, collisions.Count);
         Assert.AreEqual(e1.Id, collisions[0]);
@@ -81,10 +81,10 @@ public class GridTest
         Grid grid = new(30, 30);
         var e1 = TH.AddNewEntity(grid, 0f, 20f, 1f);
 
-        Assert.ThrowsException<ArgumentException>(() => grid.UpdateEntityPosition(e1.Id, new Vector2(0f, 31f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.UpdateEntityPosition(e1.Id, new Vector2(31f, 0f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.UpdateEntityPosition(e1.Id, new Vector2(-5f, 0f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.UpdateEntityPosition(e1.Id, new Vector2(0f, -5f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.UpdateEntityPosition(e1.Id + 1, new Vector2(3, 3)));
+        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(0f, 31f)));
+        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(31f, 0f)));
+        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(-5f, 0f)));
+        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(0f, -5f)));
+        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id + 1, new Vector2(3, 3)));
     }
 }

@@ -11,7 +11,8 @@ public class Map
     public short[,] Travelable { get; private set; }
     public Grid Grid { get; private set; }
     public List<Bastion> Bastions { get; private set; }
-    private Dictionary<ulong, ushort[,]> bastionPaths = new();
+    public List<Soldier> Soldiers { get; private set; } = new();
+    private Dictionary<ulong, Dictionary<ulong, List<Vector2Int>>> bastionPaths = new();
 
     public Map(int width, int height)
     {
@@ -29,6 +30,11 @@ public class Map
         foreach (Bastion bastion in Bastions)
         {
             bastion.Update(deltaTime);
+        }
+
+        foreach (Soldier soldier in Soldiers)
+        {
+            soldier.Update(deltaTime);
         }
     }
 
@@ -52,7 +58,7 @@ public class Map
         for (int i = 0; i < bastionCount; i++)
         {
             SoldierType type = (SoldierType)(i % 3);
-            Bastion bastion = new(type);
+            Bastion bastion = new(this, type);
             Bastions.Add(bastion);
             Vector2Int pos = GetBuildableTile();
             Grid.AddEntity(new SpacialPartitioning.Entity(
@@ -64,23 +70,25 @@ public class Map
         }
     }
 
-    public List<Vector2Int> GetPathBetweenBastions(ulong startId, ulong endId)
+    public List<Vector2Int>? GetPathBetweenBastions(ulong startId, ulong endId)
     {
-        if (bastionPaths.TryGetValue(startId, out ushort[,]? pathMap))
+        if (!bastionPaths.ContainsKey(startId) || !bastionPaths[startId].ContainsKey(endId))
         {
-            if (pathMap == null)
-            {
-                return new();
-            }
-
-            return NavGrid.ReconstructPath(
-                Vector2Int.From(Grid.GetEntityPosition(startId)),
-                Vector2Int.From(Grid.GetEntityPosition(endId)),
-                pathMap
-            );
+            return null;
         }
 
-        return new();
+        return bastionPaths[startId][endId];
+    }
+
+    public Vector2? GetNextPathPoint(ulong originId, ulong targetId, int progress)
+    {
+        List<Vector2Int>? path = GetPathBetweenBastions(originId, targetId);
+        if (path == null || progress + 1 >= path.Count)
+        {
+            return null;
+        }
+
+        return new Vector2(path[progress + 1].X + .5f, path[progress + 1].Y + .5f);
     }
 
     private void CalculateBastionMaps()
@@ -88,7 +96,29 @@ public class Map
         foreach (Bastion bastion in Bastions)
         {
             ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(bastion.Id)), Travelable);
-            bastionPaths.Add(bastion.Id, pathMap);
+            Vector2Int sourcePos = Vector2Int.From(Grid.GetEntityPosition(bastion.Id));
+
+            foreach (Bastion other in Bastions)
+            {
+                if (bastion.Id == other.Id)
+                {
+                    continue;
+                }
+
+                Vector2Int targetPos = Vector2Int.From(Grid.GetEntityPosition(other.Id));
+                List<Vector2Int> path = NavGrid.ReconstructPath(sourcePos, targetPos, pathMap);
+                if (path == null)
+                {
+                    continue;
+                }
+
+                if (!bastionPaths.ContainsKey(bastion.Id))
+                {
+                    bastionPaths.Add(bastion.Id, new());
+                }
+
+                bastionPaths[bastion.Id].Add(other.Id, path);
+            }
         }
     }
 
@@ -158,5 +188,15 @@ public class Map
         }
 
         source.SetDeploymentOrder(targetId, type, percent);
+    }
+
+    public void AddSoldier(Soldier soldier, Vector2 pos)
+    {
+        Soldiers.Add(soldier);
+        Grid.AddEntity(new SpacialPartitioning.Entity(
+            pos,
+            soldier.Id,
+            Soldier.Radius
+        ));
     }
 }

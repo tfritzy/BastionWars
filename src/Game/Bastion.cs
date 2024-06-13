@@ -1,3 +1,5 @@
+using SpacialPartitioning;
+
 namespace KeepLordWarriors;
 
 public class Bastion : Entity
@@ -12,7 +14,7 @@ public class Bastion : Entity
     public const float DeploymentRefractoryPeriod = .75f;
     public const int MaxTroopsPerWave = 6;
 
-    public Bastion(SoldierType soldierType, int alliance = 0) : base(alliance)
+    public Bastion(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
     {
         SoldierType = soldierType;
     }
