@@ -9,7 +9,7 @@ public abstract class Entity
     /// <summary>
     /// 0 = Neutral, 1+ = Alliance
     /// </summary>
-    public int Alliance;
+    public int Alliance { get; protected set; }
 
     protected Map map;
 

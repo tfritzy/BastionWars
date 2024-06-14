@@ -199,4 +199,15 @@ public class Map
             Soldier.Radius
         ));
     }
+
+    public float MeleePowerOf(Soldier soldier) => MeleePowerOf(soldier.Type, soldier.Alliance);
+    public float MeleePowerOf(SoldierType soldierType, int alliance)
+    {
+        return soldierType switch
+        {
+            SoldierType.Archer => 1,
+            SoldierType.Warrior => 4,
+            _ => 0
+        };
+    }
 }

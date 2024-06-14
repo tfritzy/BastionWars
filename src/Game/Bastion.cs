@@ -14,6 +14,9 @@ public class Bastion : Entity
     public const float DeploymentRefractoryPeriod = .75f;
     public const int MaxTroopsPerWave = 6;
 
+    /// Overkill damage during a breach is stored here and applied to the next wave
+    private float powerOverflow;
+
     public Bastion(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
     {
         SoldierType = soldierType;
@@ -120,5 +123,72 @@ public class Bastion : Entity
     private static int Min(params int[] values)
     {
         return values.Min();
+    }
+
+    public void Breach(Soldier soldier)
+    {
+        if (soldier.Alliance == Alliance)
+        {
+            IncrementSoldierCount(soldier.Type);
+        }
+        else
+        {
+            float attackerPower = map.MeleePowerOf(soldier);
+            while (attackerPower > 0)
+            {
+                if (WarriorCount > 0)
+                {
+                    attackerPower = DoBattle(attackerPower, SoldierType.Warrior);
+                }
+                else if (ArcherCount > 0)
+                {
+                    attackerPower = DoBattle(attackerPower, SoldierType.Archer);
+                }
+                else
+                {
+                    Capture(soldier.Alliance);
+                    IncrementSoldierCount(soldier.Type);
+                    powerOverflow = attackerPower - map.MeleePowerOf(soldier);
+                    break;
+                }
+            }
+        }
+    }
+
+    private float DoBattle(float attackerPower, SoldierType defenderType)
+    {
+        float defenderPower = map.MeleePowerOf(defenderType, Alliance);
+        if (attackerPower >= defenderPower + powerOverflow)
+        {
+            // attacker wins
+            float remainingPower = attackerPower - defenderPower - powerOverflow;
+            IncrementSoldierCount(defenderType, -1);
+            powerOverflow = 0;
+            return remainingPower;
+        }
+        else
+        {
+            // defender wins
+            powerOverflow -= attackerPower;
+            return 0;
+        }
+    }
+
+    private void IncrementSoldierCount(SoldierType type, int amount = 1)
+    {
+        switch (type)
+        {
+            case SoldierType.Archer:
+                ArcherCount += amount;
+                break;
+            case SoldierType.Warrior:
+                WarriorCount += amount;
+                break;
+        }
+    }
+
+    private void Capture(int alliance)
+    {
+        Alliance = alliance;
     }
 }
