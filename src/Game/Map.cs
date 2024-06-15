@@ -32,9 +32,9 @@ public class Map
             bastion.Update(deltaTime);
         }
 
-        foreach (Soldier soldier in Soldiers)
+        for (int i = 0; i < Soldiers.Count; i++)
         {
-            soldier.Update(deltaTime);
+            Soldiers[i].Update(deltaTime);
         }
     }
 
@@ -198,6 +198,13 @@ public class Map
             soldier.Id,
             Soldier.Radius
         ));
+    }
+
+    public void RemoveSoldier(ulong id)
+    {
+        var removed = Soldiers.RemoveAll((s) => s.Id == id);
+        Console.WriteLine("Soldiers removed: " + removed);
+        Grid.RemoveEntity(id);
     }
 
     public float MeleePowerOf(Soldier soldier) => MeleePowerOf(soldier.Type, soldier.Alliance);

@@ -23,8 +23,12 @@ public class Soldier : Entity
     public void Update(float deltaTime)
     {
         Vector2? target = map.GetNextPathPoint(sourceBastionId, targetBastionId, pathProgress);
-        if (target == null)
+        if (target == null) {
+            Bastion bastion = map.Bastions.Find((b) => b.Id == targetBastionId);
+            bastion.Breach(this);
+            map.RemoveSoldier(Id);
             return;
+        }
         Vector2 currentPos = map.Grid.GetEntityPosition(Id);
         Vector2 delta = target.Value - currentPos;
         Vector2 moveDelta = Vector2.Normalize(delta) * BaseMovementSpeed * deltaTime;

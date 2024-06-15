@@ -187,7 +187,7 @@ public class Bastion : Entity
         }
     }
 
-    private void Capture(int alliance)
+    public void Capture(int alliance)
     {
         Alliance = alliance;
     }
