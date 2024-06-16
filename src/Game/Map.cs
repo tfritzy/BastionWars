@@ -13,13 +13,16 @@ public class Map
     public Grid Grid { get; private set; } = new Grid(0, 0);
     public List<Bastion> Bastions { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
-    private readonly Dictionary<ulong, Dictionary<ulong, List<Vector2Int>>> bastionPaths = new();
-    private Dictionary<Vector2, ulong> bastionLands = new();
+    public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
+    private Dictionary<ulong, Dictionary<ulong, List<V2Int>>> bastionPaths = new();
+    public int Width => Tiles.GetLength(0);
+    public int Height => Tiles.GetLength(1);
 
     public Map(string rawMap)
     {
         ParseMap(rawMap);
         CalculateBastionPathing();
+        CalculateBastionOwnership();
     }
 
     public void Update(float deltaTime)
@@ -69,7 +72,7 @@ public class Map
         }
     }
 
-    public List<Vector2Int>? GetPathBetweenBastions(ulong startId, ulong endId)
+    public List<V2Int>? GetPathBetweenBastions(ulong startId, ulong endId)
     {
         if (!bastionPaths.ContainsKey(startId) || !bastionPaths[startId].ContainsKey(endId))
         {
@@ -81,7 +84,7 @@ public class Map
 
     public Vector2? GetNextPathPoint(ulong originId, ulong targetId, int progress)
     {
-        List<Vector2Int>? path = GetPathBetweenBastions(originId, targetId);
+        List<V2Int>? path = GetPathBetweenBastions(originId, targetId);
         if (path == null || progress + 1 >= path.Count)
         {
             return null;
@@ -94,8 +97,8 @@ public class Map
     {
         foreach (Bastion bastion in Bastions)
         {
-            ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(bastion.Id)), Traversable);
-            Vector2Int sourcePos = Vector2Int.From(Grid.GetEntityPosition(bastion.Id));
+            ushort[,] pathMap = NavGrid.GetPathMap(V2Int.From(Grid.GetEntityPosition(bastion.Id)), Traversable);
+            V2Int sourcePos = V2Int.From(Grid.GetEntityPosition(bastion.Id));
 
             foreach (Bastion other in Bastions)
             {
@@ -104,8 +107,8 @@ public class Map
                     continue;
                 }
 
-                Vector2Int targetPos = Vector2Int.From(Grid.GetEntityPosition(other.Id));
-                List<Vector2Int> path = NavGrid.ReconstructPath(sourcePos, targetPos, pathMap);
+                V2Int targetPos = V2Int.From(Grid.GetEntityPosition(other.Id));
+                List<V2Int> path = NavGrid.ReconstructPath(sourcePos, targetPos, pathMap);
                 if (path == null)
                 {
                     continue;
@@ -123,10 +126,20 @@ public class Map
 
     private void CalculateBastionOwnership()
     {
+        Dictionary<ulong, V2Int> locations = new();
+        foreach (Bastion bastion in Bastions)
+        {
+            V2Int? location = Grid.GetEntityGridPos(bastion.Id);
+            if (location != null)
+            {
+                locations.Add(bastion.Id, location.Value);
+            }
+        }
 
+        BastionLands = Ownership.Calculate(Width, Height, locations);
     }
 
-    private Vector2Int GetBuildableTile()
+    private V2Int GetBuildableTile()
     {
         Random random = new();
         int x, y;
@@ -136,7 +149,7 @@ public class Map
             y = random.Next(Tiles.GetLength(1));
         } while (Traversable[x, y] == 0);
 
-        return new Vector2Int(x, y);
+        return new V2Int(x, y);
     }
 
     public override string ToString()

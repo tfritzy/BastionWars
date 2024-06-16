@@ -23,9 +23,10 @@ public class Soldier : Entity
     public void Update(float deltaTime)
     {
         Vector2? target = map.GetNextPathPoint(sourceBastionId, targetBastionId, pathProgress);
-        if (target == null) {
-            Bastion bastion = map.Bastions.Find((b) => b.Id == targetBastionId);
-            bastion.Breach(this);
+        if (target == null)
+        {
+            Bastion? bastion = map.Bastions.Find((b) => b.Id == targetBastionId);
+            bastion?.Breach(this);
             map.RemoveSoldier(Id);
             return;
         }
