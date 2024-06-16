@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Numerics;
 using System.Text;
 using Navigation;
@@ -7,22 +8,18 @@ namespace KeepLordWarriors;
 
 public class Map
 {
-    public TileType[,] Tiles { get; private set; }
-    public short[,] Travelable { get; private set; }
-    public Grid Grid { get; private set; }
-    public List<Bastion> Bastions { get; private set; }
+    public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
+    public short[,] Traversable { get; private set; } = new short[0, 0];
+    public Grid Grid { get; private set; } = new Grid(0, 0);
+    public List<Bastion> Bastions { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
-    private Dictionary<ulong, Dictionary<ulong, List<Vector2Int>>> bastionPaths = new();
+    private readonly Dictionary<ulong, Dictionary<ulong, List<Vector2Int>>> bastionPaths = new();
+    private Dictionary<Vector2, ulong> bastionLands = new();
 
-    public Map(int width, int height)
+    public Map(string rawMap)
     {
-        Bastions = new();
-        Grid = new Grid(width, height);
-        Tiles = new TileType[width, height];
-        Travelable = new short[width, height];
-        GenerateTerrain();
-        PlaceBastions();
-        CalculateBastionMaps();
+        ParseMap(rawMap);
+        CalculateBastionPathing();
     }
 
     public void Update(float deltaTime)
@@ -38,35 +35,37 @@ public class Map
         }
     }
 
-    private void GenerateTerrain()
+    private void ParseTerrain(char[,] map)
     {
-        for (int x = 0; x < Tiles.GetLength(0); x++)
+        for (int x = 0; x < map.GetLength(0); x++)
         {
-            for (int y = 0; y < Tiles.GetLength(1); y++)
+            for (int y = 0; y < map.GetLength(1); y++)
             {
-                Tiles[x, y] = TileType.Land;
-                Travelable[x, y] = 1;
+                Tiles[x, y] = map[x, y] == 'X' ? TileType.Water : TileType.Land;
+                Traversable[x, y] = map[x, y] == 'X' ? (short)0 : (short)1;
             }
         }
     }
 
-    private void PlaceBastions()
+    private void ParseBastions(char[,] map)
     {
-        int bastionCount = 4;
-        Bastions = new List<Bastion>(bastionCount);
-
-        for (int i = 0; i < bastionCount; i++)
+        for (int x = 0; x < map.GetLength(0); x++)
         {
-            SoldierType type = (SoldierType)(i % 3);
-            Bastion bastion = new(this, type);
-            Bastions.Add(bastion);
-            Vector2Int pos = GetBuildableTile();
-            Grid.AddEntity(new SpacialPartitioning.Entity(
-                new Vector2(pos.X, pos.Y),
-                bastion.Id,
-                Bastion.Radius
-            ));
-            Travelable[pos.X, pos.Y] = 0;
+            for (int y = 0; y < map.GetLength(1); y++)
+            {
+                if (char.IsDigit(map[x, y]))
+                {
+                    int alliance = int.Parse(map[x, y].ToString());
+                    Bastion bastion = new(this, SoldierType.Warrior, alliance: alliance);
+                    Bastions.Add(bastion);
+                    Grid.AddEntity(new SpacialPartitioning.Entity(
+                        new Vector2(x, y),
+                        bastion.Id,
+                        Bastion.Radius
+                    ));
+                    Traversable[x, y] = 0;
+                }
+            }
         }
     }
 
@@ -91,11 +90,11 @@ public class Map
         return new Vector2(path[progress + 1].X + .5f, path[progress + 1].Y + .5f);
     }
 
-    private void CalculateBastionMaps()
+    private void CalculateBastionPathing()
     {
         foreach (Bastion bastion in Bastions)
         {
-            ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(bastion.Id)), Travelable);
+            ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(bastion.Id)), Traversable);
             Vector2Int sourcePos = Vector2Int.From(Grid.GetEntityPosition(bastion.Id));
 
             foreach (Bastion other in Bastions)
@@ -122,6 +121,11 @@ public class Map
         }
     }
 
+    private void CalculateBastionOwnership()
+    {
+
+    }
+
     private Vector2Int GetBuildableTile()
     {
         Random random = new();
@@ -130,7 +134,7 @@ public class Map
         {
             x = random.Next(Tiles.GetLength(0));
             y = random.Next(Tiles.GetLength(1));
-        } while (Travelable[x, y] == 0);
+        } while (Traversable[x, y] == 0);
 
         return new Vector2Int(x, y);
     }
@@ -154,14 +158,14 @@ public class Map
                     sb.Append('B');
                     continue;
                 }
-                else if (Travelable[x, y] == 1)
+                else if (Traversable[x, y] == 1)
                 {
                     sb.Append(' ');
                     continue;
                 }
                 else
                 {
-                    sb.Append(Travelable[x, y] == 1 ? ' ' : 'X');
+                    sb.Append(Traversable[x, y] == 1 ? ' ' : 'X');
                 }
             }
 
@@ -216,5 +220,60 @@ public class Map
             SoldierType.Warrior => 4,
             _ => 0
         };
+    }
+
+    private void ParseMap(string rawMap)
+    {
+        rawMap = rawMap.Replace("\r", "");
+        rawMap = rawMap.Replace(" ", "");
+        string[] pieces = rawMap.Split("</>");
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            pieces[i] = pieces[i].Trim();
+        }
+        string[] terrain = pieces[0].Split("\n");
+        string[] ownership = pieces[1].Split("\n");
+        string[] elevation = pieces[2].Split("\n");
+
+        Tiles = new TileType[terrain[0].Length, terrain.Length];
+        Traversable = new short[terrain[0].Length, terrain.Length];
+        Grid = new Grid(terrain[0].Length, terrain.Length);
+        for (int y = 0; y < terrain.Length; y++)
+        {
+            for (int x = 0; x < terrain[0].Length; x++)
+            {
+                switch (terrain[y][x])
+                {
+                    case 'A':
+                        Tiles[x, y] = TileType.Land;
+                        Traversable[x, y] = 0;
+                        Bastions.Add(new(this, SoldierType.Archer, alliance: ownership[y][x] - '0'));
+                        Grid.AddEntity(new SpacialPartitioning.Entity(
+                            new Vector2(x, y),
+                            Bastions[^1].Id,
+                            Bastion.Radius
+                        ));
+                        break;
+                    case 'W':
+                        Tiles[x, y] = TileType.Land;
+                        Traversable[x, y] = 0;
+                        Bastions.Add(new(this, SoldierType.Warrior, alliance: ownership[y][x] - '0'));
+                        Grid.AddEntity(new SpacialPartitioning.Entity(
+                            new Vector2(x, y),
+                            Bastions[^1].Id,
+                            Bastion.Radius
+                        ));
+                        break;
+                    case 'X':
+                        Tiles[x, y] = TileType.Water;
+                        Traversable[x, y] = 0;
+                        break;
+                    default:
+                        Tiles[x, y] = TileType.Land;
+                        Traversable[x, y] = 1;
+                        break;
+                }
+            }
+        }
     }
 }

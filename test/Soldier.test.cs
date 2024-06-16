@@ -9,7 +9,7 @@ public class SoldierTests
     [TestMethod]
     public void Soldier_WalksTowardsTarget()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         var soldier = new Soldier(map, 0, SoldierType.Warrior, map.Bastions[0].Id, map.Bastions[1].Id);
         var path = map.GetPathBetweenBastions(map.Bastions[0].Id, map.Bastions[1].Id)!;
         map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
@@ -29,7 +29,7 @@ public class SoldierTests
     [TestMethod]
     public void Soldier_BreachesTarget()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         map.Bastions[0].Capture(1);
         map.Bastions[1].Capture(2);
         map.Bastions[1].SetCount(archers: 2);

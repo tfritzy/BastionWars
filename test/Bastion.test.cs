@@ -8,7 +8,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_BasicStuff()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
         Assert.AreEqual(0, bastion.ArcherCount);
         Assert.AreEqual(0, bastion.WarriorCount);
@@ -22,7 +22,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_IncreasesPopulationAppropriately()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         foreach (var type in Enum.GetValues<SoldierType>())
         {
             Bastion bastion = new(map, type);
@@ -36,7 +36,7 @@ public class BastionTests
     [TestMethod]
     public void Map_BastionAttackDeploysCorrectTroops()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
 
         bastion.SetCount(archers: 30);
@@ -74,7 +74,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_DeploysTroopsOverTime()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
         bastion.SetCount(warriors: 30);
         bastion.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
@@ -90,7 +90,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_MultipleOrders()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
         bastion.SetCount(warriors: 15, archers: 30);
 
@@ -115,7 +115,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_Breach_GetsCaptured()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
 
         bastion.SetCount(warriors: 30);
@@ -132,7 +132,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_Breach_FightsSoldiersFirst()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
 
         bastion.SetCount(warriors: 10, archers: 30);
@@ -155,7 +155,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_Breach_SoldiersWreckArchers()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
 
         bastion.SetCount(archers: 30);
@@ -171,7 +171,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_Breach_ArchersNotVeryGoodAtIt()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
 
         bastion.SetCount(warriors: 30);
@@ -187,7 +187,7 @@ public class BastionTests
     [TestMethod]
     public void Bastion_Breach_PowerOverflowOnCapture()
     {
-        Map map = new(10, 10);
+        Map map = new(Maps.TenByFive);
         Bastion bastion = new(map, SoldierType.Warrior);
         int originalAlliance = bastion.Alliance;
 
