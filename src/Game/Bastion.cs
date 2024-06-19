@@ -38,7 +38,7 @@ public class Bastion : Entity
         WarriorCount = warriors ?? WarriorCount;
     }
 
-    public void Produce()
+    public void Accrue()
     {
         switch (SoldierType)
         {

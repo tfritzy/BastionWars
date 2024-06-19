@@ -105,23 +105,24 @@ public class MapTests
 
         for (int y = 0; y < map.Height; y++)
         {
-            actualOwnership.Append($"\n");
             for (int x = 0; x < map.Width; x++)
             {
                 actualOwnership.Append($"{lookup[map.BastionLands[new V2Int(x, y)]]}");
                 if (x != map.Width - 1)
                     actualOwnership.Append(" ");
             }
+            if (y != map.Height - 1)
+                actualOwnership.Append($"\n");
         }
 
         Console.WriteLine(actualOwnership);
 
-        string expectedOwnership = @"
-0 0 0 0 0 1 1 2 2 2
-0 0 0 0 1 1 2 2 2 2
-0 0 0 1 1 2 2 2 2 2
-1 1 1 1 2 2 2 2 2 2
-1 1 1 1 2 2 2 2 2 2";
+        string expectedOwnership =
+            "0 0 0 0 0 1 1 2 2 2\n" +
+            "0 0 0 0 1 1 2 2 2 2\n" +
+            "0 0 0 1 1 2 2 2 2 2\n" +
+            "1 1 1 1 2 2 2 2 2 2\n" +
+            "1 1 1 1 2 2 2 2 2 2";
         Assert.AreEqual(expectedOwnership, actualOwnership.ToString());
     }
 }

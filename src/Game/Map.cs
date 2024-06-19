@@ -38,18 +38,6 @@ public class Map
         }
     }
 
-    private void ParseTerrain(char[,] map)
-    {
-        for (int x = 0; x < map.GetLength(0); x++)
-        {
-            for (int y = 0; y < map.GetLength(1); y++)
-            {
-                Tiles[x, y] = map[x, y] == 'X' ? TileType.Water : TileType.Land;
-                Traversable[x, y] = map[x, y] == 'X' ? (short)0 : (short)1;
-            }
-        }
-    }
-
     private void ParseBastions(char[,] map)
     {
         for (int x = 0; x < map.GetLength(0); x++)

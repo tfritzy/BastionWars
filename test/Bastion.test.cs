@@ -27,7 +27,7 @@ public class BastionTests
         {
             Bastion bastion = new(map, type);
             Assert.AreEqual(0, bastion.GetCount(type));
-            bastion.Produce();
+            bastion.Accrue();
             Assert.AreEqual(1, bastion.GetCount(type));
         }
     }
