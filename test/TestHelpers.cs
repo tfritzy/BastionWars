@@ -26,4 +26,9 @@ public static class TH
     {
         return new Soldier(map, ofAlliance, type, map.Bastions[0].Id, map.Bastions[1].Id);
     }
+
+    public static void ClearOutbox(Game game)
+    {
+        game.outbox.Clear();
+    }
 }
