@@ -77,7 +77,7 @@ public static class NavGrid
 
     private static bool IsTraversable(V2Int pos, short[,] traversable)
     {
-        return traversable[pos.X, pos.Y] == 1;
+        return traversable[pos.X, pos.Y] == Constants.TRAVERSABLE;
     }
 
     public static List<V2Int> ReconstructPath(V2Int start, V2Int end, ushort[,] prevMap)

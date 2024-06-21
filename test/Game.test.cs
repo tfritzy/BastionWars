@@ -38,4 +38,10 @@ public class GameTests
             Assert.AreEqual(0, bastion.GetCount(bastion.SoldierType));
         }
     }
+
+    [TestMethod]
+    public void Game_PlacesWords()
+    {
+        Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+    }
 }

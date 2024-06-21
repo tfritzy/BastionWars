@@ -1,6 +1,7 @@
 using System.Numerics;
 using System.Text;
 using KeepLordWarriors;
+using Navigation;
 
 namespace Tests;
 
@@ -124,5 +125,29 @@ public class MapTests
             "1 1 1 1 2 2 2 2 2 2\n" +
             "1 1 1 1 2 2 2 2 2 2";
         Assert.AreEqual(expectedOwnership, actualOwnership.ToString());
+    }
+
+    [TestMethod]
+    public void Map_PlacesWords()
+    {
+        Map map = new(TestMaps.TenByFive);
+        int numAvailableSpots = 0;
+        for (int x = 0; x < map.Width; x++)
+            for (int y = 0; y < map.Height; y++)
+                numAvailableSpots += map.Traversable[x, y] == Constants.TRAVERSABLE ? 1 : 0;
+
+        Assert.AreEqual(numAvailableSpots, map.Words.Keys.Count);
+        Assert.AreEqual(0, map.Words.Values.Count(w => w != null));
+        map.PlaceWord();
+        Assert.AreEqual(1, map.Words.Values.Count(w => w != null));
+        map.PlaceWord();
+        Assert.AreEqual(2, map.Words.Values.Count(w => w != null));
+
+        for (int i = 0; i < 100; i++)
+        {
+            map.PlaceWord();
+        }
+
+        Assert.AreEqual(numAvailableSpots, map.Words.Values.Count(w => w != null));
     }
 }

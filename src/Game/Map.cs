@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Numerics;
-using System.Text;
 using Navigation;
 using SpacialPartitioning;
 
@@ -14,6 +12,7 @@ public class Map
     public List<Bastion> Bastions { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
     public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
+    public Dictionary<V2Int, string?> Words { get; private set; } = new();
     private Dictionary<ulong, Dictionary<ulong, List<V2Int>>> bastionPaths = new();
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
@@ -23,6 +22,7 @@ public class Map
         ParseMap(rawMap);
         CalculateBastionPathing();
         CalculateBastionOwnership();
+        CalculateValidWordPositions();
     }
 
     public void Update(float deltaTime)
@@ -35,28 +35,6 @@ public class Map
         for (int i = 0; i < Soldiers.Count; i++)
         {
             Soldiers[i].Update(deltaTime);
-        }
-    }
-
-    private void ParseBastions(char[,] map)
-    {
-        for (int x = 0; x < map.GetLength(0); x++)
-        {
-            for (int y = 0; y < map.GetLength(1); y++)
-            {
-                if (char.IsDigit(map[x, y]))
-                {
-                    int alliance = int.Parse(map[x, y].ToString());
-                    Bastion bastion = new(this, SoldierType.Warrior, alliance: alliance);
-                    Bastions.Add(bastion);
-                    Grid.AddEntity(new SpacialPartitioning.Entity(
-                        new Vector2(x, y),
-                        bastion.Id,
-                        Bastion.Radius
-                    ));
-                    Traversable[x, y] = 0;
-                }
-            }
         }
     }
 
@@ -127,60 +105,39 @@ public class Map
         BastionLands = Ownership.Calculate(Width, Height, locations);
     }
 
-    private V2Int GetBuildableTile()
+    private void CalculateValidWordPositions()
     {
-        Random random = new();
-        int x, y;
-        do
+        for (int x = 0; x < Width; x++)
         {
-            x = random.Next(Tiles.GetLength(0));
-            y = random.Next(Tiles.GetLength(1));
-        } while (Traversable[x, y] == 0);
-
-        return new V2Int(x, y);
-    }
-
-    public override string ToString()
-    {
-        StringBuilder sb = new();
-        for (int x = 0; x < Tiles.GetLength(0) + 2; x++)
-        {
-            sb.Append('-');
-        }
-        sb.AppendLine();
-
-        for (int y = 0; y < Tiles.GetLength(1); y++)
-        {
-            sb.Append('|');
-            for (int x = 0; x < Tiles.GetLength(0); x++)
+            for (int y = 0; y < Height; y++)
             {
-                if (Bastions.Any(b => Grid.GetEntityPosition(b.Id) == new Vector2(x, y)))
+                if (Traversable[x, y] == Constants.TRAVERSABLE)
                 {
-                    sb.Append('B');
-                    continue;
-                }
-                else if (Traversable[x, y] == 1)
-                {
-                    sb.Append(' ');
-                    continue;
-                }
-                else
-                {
-                    sb.Append(Traversable[x, y] == 1 ? ' ' : 'X');
+                    Words[new V2Int(x, y)] = null;
                 }
             }
-
-            sb.Append("|");
-            sb.AppendLine();
         }
+    }
 
-        for (int x = 0; x < Tiles.GetLength(0) + 2; x++)
+    public void PlaceWord()
+    {
+        int numOpenSpots = Words.Values.Count(w => w == null);
+        if (numOpenSpots == 0)
+            return;
+
+        int placement = new Random().Next(0, numOpenSpots);
+        foreach (V2Int pos in Words.Keys)
         {
-            sb.Append('-');
+            if (Words[pos] == null)
+            {
+                placement -= 1;
+                if (placement < 0)
+                {
+                    Words[pos] = "Hello";
+                    return;
+                }
+            }
         }
-
-
-        return sb.ToString();
     }
 
     public void AttackBastion(ulong sourceId, ulong targetId, SoldierType? type = null, float percent = 1f)
@@ -208,7 +165,6 @@ public class Map
     public void RemoveSoldier(ulong id)
     {
         var removed = Soldiers.RemoveAll((s) => s.Id == id);
-        Console.WriteLine("Soldiers removed: " + removed);
         Grid.RemoveEntity(id);
     }
 
@@ -247,7 +203,7 @@ public class Map
                 {
                     case 'A':
                         Tiles[x, y] = TileType.Land;
-                        Traversable[x, y] = 0;
+                        Traversable[x, y] = Constants.BLOCKED;
                         Bastions.Add(new(this, SoldierType.Archer, alliance: ownership[y][x] - '0'));
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
@@ -257,7 +213,7 @@ public class Map
                         break;
                     case 'W':
                         Tiles[x, y] = TileType.Land;
-                        Traversable[x, y] = 0;
+                        Traversable[x, y] = Constants.BLOCKED;
                         Bastions.Add(new(this, SoldierType.Warrior, alliance: ownership[y][x] - '0'));
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
@@ -267,11 +223,11 @@ public class Map
                         break;
                     case 'X':
                         Tiles[x, y] = TileType.Water;
-                        Traversable[x, y] = 0;
+                        Traversable[x, y] = Constants.BLOCKED;
                         break;
                     default:
                         Tiles[x, y] = TileType.Land;
-                        Traversable[x, y] = 1;
+                        Traversable[x, y] = Constants.TRAVERSABLE;
                         break;
                 }
             }
