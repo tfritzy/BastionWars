@@ -105,6 +105,22 @@ public class Grid
         return GetPartition(id).GetEntity(id).Position;
     }
 
+    public Schema.Vector2 GetEntitySchemaPosition(ulong id)
+    {
+        if (!entityPartitionLookup.ContainsKey(id))
+        {
+            throw new ArgumentException("Entity not found");
+        }
+
+        var pos = GetPartition(id).GetEntity(id).Position;
+
+        return new Schema.Vector2
+        {
+            X = pos.X,
+            Y = pos.Y
+        };
+    }
+
     public V2Int? GetEntityGridPos(ulong id)
     {
         if (!entityPartitionLookup.ContainsKey(id))

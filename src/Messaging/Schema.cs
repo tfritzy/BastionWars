@@ -28,18 +28,21 @@ namespace Schema
     {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxzY2hlbWEucHJvdG8SBlNjaGVtYSJrCgtPbmVvZlVwZGF0ZRIUCgxyZWNp",
-            "cGllbnRfaWQYASABKAkSDwoHZ2FtZV9pZBgCIAEoCRIrCgxlbnRpdHlfbW92",
-            "ZWQYAyABKAsyEy5TY2hlbWEuRW50aXR5TW92ZWRIAEIICgZ1cGRhdGUiHwoH",
-            "VmVjdG9yMhIJCgF4GAEgASgCEgkKAXkYAiABKAIiWgoLRW50aXR5TW92ZWQS",
-            "CgoCaWQYASABKAQSHAoDcG9zGAIgASgLMg8uU2NoZW1hLlZlY3RvcjISIQoI",
-            "dmVsb2NpdHkYAyABKAsyDy5TY2hlbWEuVmVjdG9yMmIGcHJvdG8z"));
+            "CgxzY2hlbWEucHJvdG8SBlNjaGVtYSJ8CgtPbmVvZlVwZGF0ZRIUCgxyZWNp",
+            "cGllbnRfaWQYASABKAkSDwoHZ2FtZV9pZBgCIAEoCRI8ChVhbGxfc29sZGll",
+            "cl9wb3NpdGlvbnMYAyABKAsyGy5TY2hlbWEuQWxsU29sZGllclBvc2l0aW9u",
+            "c0gAQggKBnVwZGF0ZSIfCgdWZWN0b3IyEgkKAXgYASABKAISCQoBeRgCIAEo",
+            "AiJJChNBbGxTb2xkaWVyUG9zaXRpb25zEjIKEXNvbGRpZXJfcG9zaXRpb25z",
+            "GAEgAygLMhcuU2NoZW1hLlNvbGRpZXJQb3NpdGlvbiJeCg9Tb2xkaWVyUG9z",
+            "aXRpb24SCgoCaWQYASABKAQSHAoDcG9zGAIgASgLMg8uU2NoZW1hLlZlY3Rv",
+            "cjISIQoIdmVsb2NpdHkYAyABKAsyDy5TY2hlbWEuVmVjdG9yMmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofUpdate), global::Schema.OneofUpdate.Parser, new[]{ "RecipientId", "GameId", "EntityMoved" }, new[]{ "Update" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofUpdate), global::Schema.OneofUpdate.Parser, new[]{ "RecipientId", "GameId", "AllSoldierPositions" }, new[]{ "Update" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Vector2), global::Schema.Vector2.Parser, new[]{ "X", "Y" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.EntityMoved), global::Schema.EntityMoved.Parser, new[]{ "Id", "Pos", "Velocity" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllSoldierPositions), global::Schema.AllSoldierPositions.Parser, new[]{ "SoldierPositions" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SoldierPosition), global::Schema.SoldierPosition.Parser, new[]{ "Id", "Pos", "Velocity" }, null, null, null, null)
           }));
     }
     #endregion
@@ -88,8 +91,8 @@ namespace Schema
       gameId_ = other.gameId_;
       switch (other.UpdateCase)
       {
-        case UpdateOneofCase.EntityMoved:
-          EntityMoved = other.EntityMoved.Clone();
+        case UpdateOneofCase.AllSoldierPositions:
+          AllSoldierPositions = other.AllSoldierPositions.Clone();
           break;
       }
 
@@ -131,17 +134,17 @@ namespace Schema
       }
     }
 
-    /// <summary>Field number for the "entity_moved" field.</summary>
-    public const int EntityMovedFieldNumber = 3;
+    /// <summary>Field number for the "all_soldier_positions" field.</summary>
+    public const int AllSoldierPositionsFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.EntityMoved EntityMoved
+    public global::Schema.AllSoldierPositions AllSoldierPositions
     {
-      get { return updateCase_ == UpdateOneofCase.EntityMoved ? (global::Schema.EntityMoved)update_ : null; }
+      get { return updateCase_ == UpdateOneofCase.AllSoldierPositions ? (global::Schema.AllSoldierPositions)update_ : null; }
       set
       {
         update_ = value;
-        updateCase_ = value == null ? UpdateOneofCase.None : UpdateOneofCase.EntityMoved;
+        updateCase_ = value == null ? UpdateOneofCase.None : UpdateOneofCase.AllSoldierPositions;
       }
     }
 
@@ -150,7 +153,7 @@ namespace Schema
     public enum UpdateOneofCase
     {
       None = 0,
-      EntityMoved = 3,
+      AllSoldierPositions = 3,
     }
     private UpdateOneofCase updateCase_ = UpdateOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -189,7 +192,7 @@ namespace Schema
       }
       if (RecipientId != other.RecipientId) return false;
       if (GameId != other.GameId) return false;
-      if (!object.Equals(EntityMoved, other.EntityMoved)) return false;
+      if (!object.Equals(AllSoldierPositions, other.AllSoldierPositions)) return false;
       if (UpdateCase != other.UpdateCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -201,7 +204,7 @@ namespace Schema
       int hash = 1;
       if (RecipientId.Length != 0) hash ^= RecipientId.GetHashCode();
       if (GameId.Length != 0) hash ^= GameId.GetHashCode();
-      if (updateCase_ == UpdateOneofCase.EntityMoved) hash ^= EntityMoved.GetHashCode();
+      if (updateCase_ == UpdateOneofCase.AllSoldierPositions) hash ^= AllSoldierPositions.GetHashCode();
       hash ^= (int)updateCase_;
       if (_unknownFields != null)
       {
@@ -232,9 +235,9 @@ namespace Schema
         output.WriteRawTag(18);
         output.WriteString(GameId);
       }
-      if (updateCase_ == UpdateOneofCase.EntityMoved) {
+      if (updateCase_ == UpdateOneofCase.AllSoldierPositions) {
         output.WriteRawTag(26);
-        output.WriteMessage(EntityMoved);
+        output.WriteMessage(AllSoldierPositions);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -257,10 +260,10 @@ namespace Schema
         output.WriteRawTag(18);
         output.WriteString(GameId);
       }
-      if (updateCase_ == UpdateOneofCase.EntityMoved)
+      if (updateCase_ == UpdateOneofCase.AllSoldierPositions)
       {
         output.WriteRawTag(26);
-        output.WriteMessage(EntityMoved);
+        output.WriteMessage(AllSoldierPositions);
       }
       if (_unknownFields != null)
       {
@@ -282,9 +285,9 @@ namespace Schema
       {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(GameId);
       }
-      if (updateCase_ == UpdateOneofCase.EntityMoved)
+      if (updateCase_ == UpdateOneofCase.AllSoldierPositions)
       {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(EntityMoved);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(AllSoldierPositions);
       }
       if (_unknownFields != null)
       {
@@ -311,12 +314,12 @@ namespace Schema
       }
       switch (other.UpdateCase)
       {
-        case UpdateOneofCase.EntityMoved:
-          if (EntityMoved == null)
+        case UpdateOneofCase.AllSoldierPositions:
+          if (AllSoldierPositions == null)
           {
-            EntityMoved = new global::Schema.EntityMoved();
+            AllSoldierPositions = new global::Schema.AllSoldierPositions();
           }
-          EntityMoved.MergeFrom(other.EntityMoved);
+          AllSoldierPositions.MergeFrom(other.AllSoldierPositions);
           break;
       }
 
@@ -345,12 +348,12 @@ namespace Schema
             break;
           }
           case 26: {
-            global::Schema.EntityMoved subBuilder = new global::Schema.EntityMoved();
-            if (updateCase_ == UpdateOneofCase.EntityMoved) {
-              subBuilder.MergeFrom(EntityMoved);
+            global::Schema.AllSoldierPositions subBuilder = new global::Schema.AllSoldierPositions();
+            if (updateCase_ == UpdateOneofCase.AllSoldierPositions) {
+              subBuilder.MergeFrom(AllSoldierPositions);
             }
             input.ReadMessage(subBuilder);
-            EntityMoved = subBuilder;
+            AllSoldierPositions = subBuilder;
             break;
           }
         }
@@ -383,13 +386,13 @@ namespace Schema
             }
           case 26:
             {
-              global::Schema.EntityMoved subBuilder = new global::Schema.EntityMoved();
-              if (updateCase_ == UpdateOneofCase.EntityMoved)
+              global::Schema.AllSoldierPositions subBuilder = new global::Schema.AllSoldierPositions();
+              if (updateCase_ == UpdateOneofCase.AllSoldierPositions)
               {
-                subBuilder.MergeFrom(EntityMoved);
+                subBuilder.MergeFrom(AllSoldierPositions);
               }
               input.ReadMessage(subBuilder);
-              EntityMoved = subBuilder;
+              AllSoldierPositions = subBuilder;
               break;
             }
         }
@@ -660,16 +663,16 @@ namespace Schema
 
   }
 
-  public sealed partial class EntityMoved : pb::IMessage<EntityMoved>
+  public sealed partial class AllSoldierPositions : pb::IMessage<AllSoldierPositions>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
 #endif
   {
-    private static readonly pb::MessageParser<EntityMoved> _parser = new pb::MessageParser<EntityMoved>(() => new EntityMoved());
+    private static readonly pb::MessageParser<AllSoldierPositions> _parser = new pb::MessageParser<AllSoldierPositions>(() => new AllSoldierPositions());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<EntityMoved> Parser { get { return _parser; } }
+    public static pb::MessageParser<AllSoldierPositions> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -687,7 +690,7 @@ namespace Schema
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public EntityMoved()
+    public AllSoldierPositions()
     {
       OnConstruction();
     }
@@ -696,7 +699,210 @@ namespace Schema
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public EntityMoved(EntityMoved other) : this()
+    public AllSoldierPositions(AllSoldierPositions other) : this()
+    {
+      soldierPositions_ = other.soldierPositions_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AllSoldierPositions Clone()
+    {
+      return new AllSoldierPositions(this);
+    }
+
+    /// <summary>Field number for the "soldier_positions" field.</summary>
+    public const int SoldierPositionsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Schema.SoldierPosition> _repeated_soldierPositions_codec
+        = pb::FieldCodec.ForMessage(10, global::Schema.SoldierPosition.Parser);
+    private readonly pbc::RepeatedField<global::Schema.SoldierPosition> soldierPositions_ = new pbc::RepeatedField<global::Schema.SoldierPosition>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Schema.SoldierPosition> SoldierPositions
+    {
+      get { return soldierPositions_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other)
+    {
+      return Equals(other as AllSoldierPositions);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(AllSoldierPositions other)
+    {
+      if (ReferenceEquals(other, null))
+      {
+        return false;
+      }
+      if (ReferenceEquals(other, this))
+      {
+        return true;
+      }
+      if (!soldierPositions_.Equals(other.soldierPositions_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode()
+    {
+      int hash = 1;
+      hash ^= soldierPositions_.GetHashCode();
+      if (_unknownFields != null)
+      {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString()
+    {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+#else
+      soldierPositions_.WriteTo(output, _repeated_soldierPositions_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+#endif
+    }
+
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output)
+    {
+      soldierPositions_.WriteTo(ref output, _repeated_soldierPositions_codec);
+      if (_unknownFields != null)
+      {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+#endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize()
+    {
+      int size = 0;
+      size += soldierPositions_.CalculateSize(_repeated_soldierPositions_codec);
+      if (_unknownFields != null)
+      {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(AllSoldierPositions other)
+    {
+      if (other == null)
+      {
+        return;
+      }
+      soldierPositions_.Add(other.soldierPositions_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+#else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            soldierPositions_.AddEntriesFrom(input, _repeated_soldierPositions_codec);
+            break;
+          }
+        }
+      }
+#endif
+    }
+
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input)
+    {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0)
+      {
+        switch (tag)
+        {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10:
+            {
+              soldierPositions_.AddEntriesFrom(ref input, _repeated_soldierPositions_codec);
+              break;
+            }
+        }
+      }
+    }
+#endif
+
+  }
+
+  public sealed partial class SoldierPosition : pb::IMessage<SoldierPosition>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+#endif
+  {
+    private static readonly pb::MessageParser<SoldierPosition> _parser = new pb::MessageParser<SoldierPosition>(() => new SoldierPosition());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SoldierPosition> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor
+    {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SoldierPosition()
+    {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SoldierPosition(SoldierPosition other) : this()
     {
       id_ = other.id_;
       pos_ = other.pos_ != null ? other.pos_.Clone() : null;
@@ -706,9 +912,9 @@ namespace Schema
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public EntityMoved Clone()
+    public SoldierPosition Clone()
     {
-      return new EntityMoved(this);
+      return new SoldierPosition(this);
     }
 
     /// <summary>Field number for the "id" field.</summary>
@@ -757,12 +963,12 @@ namespace Schema
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other)
     {
-      return Equals(other as EntityMoved);
+      return Equals(other as SoldierPosition);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(EntityMoved other)
+    public bool Equals(SoldierPosition other)
     {
       if (ReferenceEquals(other, null))
       {
@@ -878,7 +1084,7 @@ namespace Schema
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(EntityMoved other)
+    public void MergeFrom(SoldierPosition other)
     {
       if (other == null)
       {

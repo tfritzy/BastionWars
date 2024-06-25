@@ -6,7 +6,7 @@ message OneofUpdate {
     string recipient_id = 1;
     string game_id = 2;
     oneof update {
-        EntityMoved entity_moved = 3;
+        AllSoldierPositions all_soldier_positions = 3;
     }
 }
 
@@ -15,7 +15,11 @@ message Vector2 {
     float y = 2;
 }
 
-message EntityMoved {
+message AllSoldierPositions {
+    repeated SoldierPosition soldier_positions = 1;
+}
+
+message SoldierPosition {
     uint64 id = 1;
     Vector2 pos = 2;
     Vector2 velocity = 3;
