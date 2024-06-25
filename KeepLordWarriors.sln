@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepLordWarriors", "src\Kee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepLordWarriorsTests", "test\KeepLordWarriorsTests.csproj", "{0AA6AA86-83F1-43B0-8DC5-2A8A1B204FE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godot", "godot\Godot.csproj", "{D93A9705-D4A4-4962-9E8D-B5DAFEF56E7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{0AA6AA86-83F1-43B0-8DC5-2A8A1B204FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AA6AA86-83F1-43B0-8DC5-2A8A1B204FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AA6AA86-83F1-43B0-8DC5-2A8A1B204FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D93A9705-D4A4-4962-9E8D-B5DAFEF56E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D93A9705-D4A4-4962-9E8D-B5DAFEF56E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D93A9705-D4A4-4962-9E8D-B5DAFEF56E7E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D93A9705-D4A4-4962-9E8D-B5DAFEF56E7E}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

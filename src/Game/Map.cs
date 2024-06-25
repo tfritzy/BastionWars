@@ -25,7 +25,7 @@ public class Map
         CalculateValidWordPositions();
     }
 
-    public void Update(float deltaTime)
+    public void Update(double deltaTime)
     {
         foreach (Bastion bastion in Bastions)
         {

@@ -20,7 +20,7 @@ public class Soldier : Entity
         targetBastionId = target;
     }
 
-    public void Update(float deltaTime)
+    public void Update(double deltaTime)
     {
         Vector2? target = map.GetNextPathPoint(sourceBastionId, targetBastionId, pathProgress);
         if (target == null)
@@ -32,7 +32,7 @@ public class Soldier : Entity
         }
         Vector2 currentPos = map.Grid.GetEntityPosition(Id);
         Vector2 delta = target.Value - currentPos;
-        Vector2 moveDelta = Vector2.Normalize(delta) * BaseMovementSpeed * deltaTime;
+        Vector2 moveDelta = Vector2.Normalize(delta) * BaseMovementSpeed * (float)deltaTime;
         map.Grid.MoveEntity(Id, currentPos + moveDelta);
 
         if (Vector2.DistanceSquared(map.Grid.GetEntityPosition(Id), target.Value) < 0.05f)

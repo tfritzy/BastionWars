@@ -7,6 +7,7 @@ public class Bastion : Entity
     public int ArcherCount { get; private set; }
     public int WarriorCount { get; private set; }
     public SoldierType SoldierType { get; }
+    public Map Map { get; private set; }
 
     public List<DeploymentOrder> DeploymentOrders { get; } = new();
 
@@ -20,6 +21,7 @@ public class Bastion : Entity
     public Bastion(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
     {
         SoldierType = soldierType;
+        Map = map;
     }
 
     public int GetCount(SoldierType type)
@@ -51,7 +53,7 @@ public class Bastion : Entity
         }
     }
 
-    public void Update(float deltaTime)
+    public void Update(double deltaTime)
     {
         foreach (var order in DeploymentOrders)
         {

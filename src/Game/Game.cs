@@ -13,14 +13,14 @@ public class Game
         GenerationMode = settings.GenerationMode;
     }
 
-    public void Update(float deltaTime)
+    public void Update(double deltaTime)
     {
         BastionAutoAccrue(deltaTime);
         Map.Update(deltaTime);
     }
 
-    private Dictionary<ulong, float> bastionProduceCooldowns = new();
-    private void BastionAutoAccrue(float deltaTime)
+    private Dictionary<ulong, double> bastionProduceCooldowns = new();
+    private void BastionAutoAccrue(double deltaTime)
     {
         if (GenerationMode != GenerationMode.AutoAccrue)
         {
