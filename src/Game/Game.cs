@@ -8,8 +8,8 @@ public class Game
     public GenerationMode GenerationMode { get; private set; }
     public Queue<Schema.OneofUpdate> outbox { get; private set; } = new();
 
-    private float lastNetworkTick = 0f;
-    private float lastWordPlacement = 0f;
+    private double lastNetworkTick = 0f;
+    private double lastWordPlacement = 0f;
 
     public const float AutoAccrualTime = 1f;
     public const float NetworkTickTime = 1f / 20f;
@@ -96,7 +96,7 @@ public class Game
         }
     }
 
-    private void PlaceWord(float deltaTime)
+    private void PlaceWord(double deltaTime)
     {
         if (GenerationMode != GenerationMode.Word)
         {
