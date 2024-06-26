@@ -6,9 +6,9 @@ namespace KeepLordWarriors;
 public class Soldier : Entity
 {
     public SoldierType Type { get; private set; }
-    private readonly ulong targetBastionId;
-    private readonly ulong sourceBastionId;
-    private int pathProgress;
+    public readonly ulong TargetBastionId;
+    public readonly ulong SourceBastionId;
+    public int PathProgress { get; private set; }
 
     public const float Radius = 0.5f;
     public const float BaseMovementSpeed = 1.0f;
@@ -16,16 +16,16 @@ public class Soldier : Entity
     public Soldier(Map map, int alliance, SoldierType type, ulong source, ulong target) : base(map, alliance)
     {
         Type = type;
-        sourceBastionId = source;
-        targetBastionId = target;
+        SourceBastionId = source;
+        TargetBastionId = target;
     }
 
     public void Update(double deltaTime)
     {
-        Vector2? target = map.GetNextPathPoint(sourceBastionId, targetBastionId, pathProgress);
+        Vector2? target = map.GetNextPathPoint(SourceBastionId, TargetBastionId, PathProgress);
         if (target == null)
         {
-            Bastion? bastion = map.Bastions.Find((b) => b.Id == targetBastionId);
+            Bastion? bastion = map.Bastions.Find((b) => b.Id == TargetBastionId);
             bastion?.Breach(this);
             map.RemoveSoldier(Id);
             return;
@@ -37,7 +37,7 @@ public class Soldier : Entity
 
         if (Vector2.DistanceSquared(map.Grid.GetEntityPosition(Id), target.Value) < 0.05f)
         {
-            pathProgress++;
+            PathProgress++;
         }
     }
 }

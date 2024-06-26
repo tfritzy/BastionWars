@@ -86,9 +86,23 @@ public class Bastion : Entity
                 order.WarriorCount -= toDeploy;
                 waveCap -= toDeploy;
 
+                for (int j = 0; j < toDeploy; j++)
+                {
+                    Map.AddSoldier(
+                        new Soldier(Map, Alliance, SoldierType.Warrior, Id, order.TargetId),
+                        Map.Grid.GetEntityPosition(Id));
+                }
+
                 toDeploy = Min(ArcherCount, waveCap, order.ArcherCount);
                 ArcherCount -= toDeploy;
                 order.ArcherCount -= toDeploy;
+
+                for (int j = 0; j < toDeploy; j++)
+                {
+                    Map.AddSoldier(
+                        new Soldier(Map, Alliance, SoldierType.Archer, Id, order.TargetId),
+                        Map.Grid.GetEntityPosition(Id));
+                }
 
                 if (order.ArcherCount == 0 && order.WarriorCount == 0)
                 {

@@ -140,14 +140,16 @@ public class Map
         }
     }
 
-    public void AttackBastion(ulong sourceId, ulong targetId, SoldierType? type = null, float percent = 1f)
+    public void AttackBastion(int sourceIndex, int targetIndex, SoldierType? type = null, float percent = 1f)
     {
-        Bastion source = Bastions.First(b => b.Id == sourceId);
-
-        if (source == null || !Bastions.Any(b => b.Id == targetId))
+        if (sourceIndex < 0 || sourceIndex >= Bastions.Count
+            || targetIndex < 0 || targetIndex >= Bastions.Count)
         {
             return;
         }
+
+        Bastion source = Bastions[sourceIndex];
+        ulong targetId = Bastions[targetIndex].Id;
 
         source.SetDeploymentOrder(targetId, type, percent);
     }

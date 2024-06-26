@@ -65,6 +65,7 @@ public class MapTests
             SoldierType.Archer,
             SoldierType.Warrior
         };
+
         for (int i = 0; i < map.Bastions.Count; i++)
         {
             Assert.AreEqual(expectedAlliances[i], map.Bastions[i].Alliance);
@@ -149,5 +150,29 @@ public class MapTests
         }
 
         Assert.AreEqual(numAvailableSpots, map.Words.Values.Count(w => w != null));
+    }
+
+    [TestMethod]
+    public void Map_AttackingDeploysSoldiers()
+    {
+        Map map = new(TestMaps.TenByFive);
+        map.Bastions[0].Capture(1);
+        map.Bastions[1].Capture(2);
+        map.Bastions[0].SetCount(archers: 2);
+        map.AttackBastion(0, 1);
+
+        Assert.AreEqual(0, map.Bastions[0].ArcherCount);
+        Assert.AreEqual(2, map.Soldiers.Count);
+
+        foreach (var soldier in map.Soldiers)
+        {
+            Assert.AreEqual(map.Bastions[0].Id, soldier.SourceBastionId);
+            Assert.AreEqual(map.Bastions[1].Id, soldier.TargetBastionId);
+            Assert.AreEqual(SoldierType.Archer, soldier.Type);
+            Assert.AreEqual(1, soldier.Alliance);
+            Assert.AreEqual(0, soldier.PathProgress);
+            V2Int? gridPos = map.Grid.GetEntityGridPos(map.Bastions[0].Id);
+            Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
+        }
     }
 }
