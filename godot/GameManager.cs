@@ -2,6 +2,7 @@ using Godot;
 using KeepLordWarriors;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class GameManager : Node
 {
@@ -23,6 +24,9 @@ public partial class GameManager : Node
 		}
 
 		AddChild(new Terminal(Game));
+
+		ConfigureScene();
+		// SpawnTiles();
 	}
 
 	void BuildBastion(Bastion bastion)
@@ -48,5 +52,25 @@ public partial class GameManager : Node
 	{
 		Game.Update(delta);
 		SyncSoldiers();
+	}
+
+	void ConfigureScene()
+	{
+		RenderingServer.SetDefaultClearColor(new Color(1, 1, 1, 1));
+	}
+
+	void SpawnTiles()
+	{
+		var texture = (Texture2D)GD.Load<Texture>("res://Sprites/tile.png");
+		for (int x = 0; x < Game.Map.Width; x++)
+		{
+			for (int y = 0; y < Game.Map.Height; y++)
+			{
+				Sprite2D tileSprite = new();
+				tileSprite.Texture = texture;
+				tileSprite.Position = new Vector2(x, y) * Constants.WorldSpaceToScreenSpace;
+				AddChild(tileSprite);
+			}
+		}
 	}
 }

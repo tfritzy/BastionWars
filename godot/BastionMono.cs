@@ -13,8 +13,8 @@ public partial class BastionMono : Node
         Texture2D texture = (Texture2D)GD.Load("res://Sprites/keep.png");
         spriteNode.Texture = texture;
         var pos = bastion.Map.Grid.GetEntityPosition(bastion.Id);
-        spriteNode.Position = new Vector2(pos.X, pos.Y) * 20;
-        spriteNode.Scale = new Vector2(.3f, .3f);
+        spriteNode.Position = new Vector2(pos.X, pos.Y) * Constants.WorldSpaceToScreenSpace;
+        spriteNode.Scale = new Vector2(.6f, .6f);
         AddChild(spriteNode);
 
         label = new()
