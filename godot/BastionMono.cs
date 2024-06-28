@@ -10,7 +10,7 @@ public partial class BastionMono : Node
     {
         this.bastion = bastion;
         Sprite2D spriteNode = new();
-        Texture2D texture = (Texture2D)GD.Load("res://icon.svg"); // Replace with the path to your texture
+        Texture2D texture = (Texture2D)GD.Load("res://Sprites/keep.png");
         spriteNode.Texture = texture;
         var pos = bastion.Map.Grid.GetEntityPosition(bastion.Id);
         spriteNode.Position = new Vector2(pos.X, pos.Y) * 20;

@@ -49,7 +49,7 @@ public class MapTests
         List<int> expectedAlliances = new() { 1, 0, 0, 0, 0, 2 };
         List<V2Int> expectedPositions = new()
         {
-            new V2Int(0, 0),
+            new V2Int(1, 0),
             new V2Int(3, 0),
             new V2Int(2, 2),
             new V2Int(0, 3),

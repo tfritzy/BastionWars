@@ -26,9 +26,8 @@ public partial class Terminal : LineEdit
 
     private void TextSubmit(string text)
     {
-        GD.Print("Attack! " + text);
-
-        game.Map.AttackBastion(2, 4);
+        Commands.HandleCommand(game, text);
+        Text = "";
     }
 
     public override void _Ready()

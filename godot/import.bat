@@ -1,0 +1,1 @@
+Godot_v4.2.2-stable_mono_win64_console.exe --headless -e --quit-after 2

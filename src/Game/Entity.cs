@@ -4,7 +4,7 @@ namespace KeepLordWarriors;
 
 public abstract class Entity
 {
-    public ulong Id;
+    public ulong Id { get; private set; }
 
     /// <summary>
     /// 0 = Neutral, 1+ = Alliance

@@ -37,7 +37,7 @@ public class BastionTests
     public void Map_BastionAttackDeploysCorrectTroops()
     {
         Map map = new(TestMaps.TenByFive);
-        Bastion bastion = new(map, SoldierType.Warrior);
+        Bastion bastion = map.Bastions[0];
 
         bastion.SetCount(archers: 30);
         bastion.SetDeploymentOrder(2u);
@@ -75,7 +75,7 @@ public class BastionTests
     public void Bastion_DeploysTroopsOverTime()
     {
         Map map = new(TestMaps.TenByFive);
-        Bastion bastion = new(map, SoldierType.Warrior);
+        Bastion bastion = map.Bastions[1];
         bastion.SetCount(warriors: 30);
         bastion.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
@@ -91,15 +91,15 @@ public class BastionTests
     public void Bastion_MultipleOrders()
     {
         Map map = new(TestMaps.TenByFive);
-        Bastion bastion = new(map, SoldierType.Warrior);
+        Bastion bastion = map.Bastions[2];
         bastion.SetCount(warriors: 15, archers: 30);
 
-        bastion.SetDeploymentOrder(0, SoldierType.Warrior, 1f);
+        bastion.SetDeploymentOrder(map.Bastions[0].Id, SoldierType.Warrior, 1f);
         Assert.AreEqual(9, bastion.GetCount(SoldierType.Warrior));
 
         bastion.Update(Bastion.DeploymentRefractoryPeriod / 2);
 
-        bastion.SetDeploymentOrder(1, SoldierType.Archer, 1f);
+        bastion.SetDeploymentOrder(map.Bastions[1].Id, SoldierType.Archer, 1f);
         Assert.AreEqual(9, bastion.GetCount(SoldierType.Warrior));
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Archer));
 

@@ -95,6 +95,11 @@ public class Grid
         return collisions;
     }
 
+    public bool ContainsEntity(ulong id)
+    {
+        return entityPartitionLookup.ContainsKey(id);
+    }
+
     public Vector2 GetEntityPosition(ulong id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
