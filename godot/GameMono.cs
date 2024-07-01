@@ -8,6 +8,7 @@ public partial class GameMono : Node
 {
 	public Game Game;
 	private Dictionary<ulong, SoldierMono> soldiers = new();
+	private MapMono mapMono;
 
 	public override void _Ready()
 	{
@@ -19,11 +20,11 @@ public partial class GameMono : Node
 			map: map
 		));
 
+		mapMono = new MapMono(Game.Map);
+		AddChild(mapMono);
+		AddChild(new InteractiveCamera(mapMono.Center));
 		AddChild(new Terminal(Game));
-		AddChild(new InteractiveCamera());
-
 		ConfigureScene();
-		SpawnTiles();
 	}
 
 	void SyncSoldiers()
@@ -48,11 +49,5 @@ public partial class GameMono : Node
 	void ConfigureScene()
 	{
 		RenderingServer.SetDefaultClearColor(new Color(1, 1, 1, 1));
-	}
-
-	void SpawnTiles()
-	{
-		MapMono gridMono = new(Game.Map);
-		AddChild(gridMono);
 	}
 }

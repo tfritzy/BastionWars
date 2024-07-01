@@ -8,6 +8,7 @@ public partial class MapMono : TileMap
 {
     private Map Map;
     public string TileSetPath = "res://Configs/tile_set.tres";
+    public Godot.Vector2 Center => CalculateCenter();
 
     public MapMono(Map map)
     {
@@ -35,7 +36,8 @@ public partial class MapMono : TileMap
         {
             for (int y = 0; y < Map.Height; y++)
             {
-                SetCell(0, new Vector2I(x, y), 1, new Vector2I(0, 0));
+                TileType type = Map.Tiles[x, y];
+                SetCell(0, new Vector2I(x, y), (int)type, new Vector2I(0, 0));
             }
         }
     }
@@ -50,5 +52,15 @@ public partial class MapMono : TileMap
                 ToGlobal(MapToLocal(new Vector2I(bastionPos.X, bastionPos.Y)));
             AddChild(bastionMono);
         }
+    }
+
+    private Godot.Vector2 CalculateCenter()
+    {
+        var rect = GetUsedRect();
+
+        var center_x = Position.X + (rect.Size.X / 2)
+        var center_y = Position.Y + (rect.Size.Y / 2)
+
+        return new Godot.Vector2(center_x, center_y);
     }
 }

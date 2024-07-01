@@ -223,6 +223,10 @@ public class Map
                             Bastion.Radius
                         ));
                         break;
+                    case 'T':
+                        Tiles[x, y] = TileType.Tree;
+                        Traversable[x, y] = Constants.BLOCKED;
+                        break;
                     case 'X':
                         Tiles[x, y] = TileType.Water;
                         Traversable[x, y] = Constants.BLOCKED;

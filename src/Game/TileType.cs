@@ -2,7 +2,8 @@ namespace KeepLordWarriors;
 
 public enum TileType
 {
-    Water,
+    Invalid,
     Land,
+    Water,
     Tree
 }
