@@ -24,6 +24,6 @@ public partial class SoldierMono : Sprite2D
         }
 
         var pos = game.Map.Grid.GetEntityPosition(id);
-        Position = new Vector2(pos.X, pos.Y) * Constants.WorldSpaceToScreenSpace;
+        Position = new Vector2(pos.X, pos.Y);
     }
 }

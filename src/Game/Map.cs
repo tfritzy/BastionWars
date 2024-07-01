@@ -8,7 +8,7 @@ public class Map
 {
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
-    public Grid Grid { get; private set; } = new Grid(0, 0);
+    public SpacialPartitioning.Grid Grid { get; private set; } = new SpacialPartitioning.Grid(0, 0);
     public List<Bastion> Bastions { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
     public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
@@ -196,7 +196,7 @@ public class Map
 
         Tiles = new TileType[terrain[0].Length, terrain.Length];
         Traversable = new short[terrain[0].Length, terrain.Length];
-        Grid = new Grid(terrain[0].Length, terrain.Length);
+        Grid = new SpacialPartitioning.Grid(terrain[0].Length, terrain.Length);
         for (int y = 0; y < terrain.Length; y++)
         {
             for (int x = 0; x < terrain[0].Length; x++)

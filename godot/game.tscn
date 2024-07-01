@@ -1,9 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0srxy5w2ngpg"]
+[gd_scene load_steps=3 format=3 uid="uid://b0srxy5w2ngpg"]
 
-[ext_resource type="Script" path="res://GameManager.cs" id="1_0ktn8"]
+[ext_resource type="Script" path="res://GameMono.cs" id="1_0ktn8"]
+[ext_resource type="TileSet" uid="uid://dldt4cgkrm03q" path="res://Configs/tile_set.tres" id="2_u3v02"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_0ktn8")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0

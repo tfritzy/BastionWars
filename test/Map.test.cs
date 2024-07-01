@@ -11,7 +11,7 @@ public class MapTests
     [TestMethod]
     public void Map_PlacesBastions()
     {
-        Map map = new(TestMaps.ThirtyByTwenty);
+        KeepLordWarriors.Map map = new(TestMaps.ThirtyByTwenty);
         Assert.IsTrue(map.Bastions.Count > 0);
 
         foreach (var bastion in map.Bastions)
@@ -24,7 +24,7 @@ public class MapTests
     [TestMethod]
     public void Map_AllBastionsCanBeNavigatedBetween()
     {
-        Map map = new(TestMaps.TenByFive);
+        KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         foreach (var bastion in map.Bastions)
         {
             foreach (var other in map.Bastions)
@@ -45,7 +45,7 @@ public class MapTests
     [TestMethod]
     public void Map_ReadsBastionsCorrectly()
     {
-        Map map = new(TestMaps.TenByFive);
+        KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         List<int> expectedAlliances = new() { 1, 0, 0, 0, 0, 2 };
         List<V2Int> expectedPositions = new()
         {
@@ -95,7 +95,7 @@ public class MapTests
             0 0 0 0 0 0 0 0 0 0 
             0 0 0 0 0 0 0 0 0 0 
             0 0 0 0 0 0 0 0 0 0";
-        Map map = new(rawMap);
+        KeepLordWarriors.Map map = new(rawMap);
         ulong b0 = map.Bastions[0].Id;
         ulong b1 = map.Bastions[1].Id;
         ulong b2 = map.Bastions[2].Id;
@@ -131,7 +131,7 @@ public class MapTests
     [TestMethod]
     public void Map_PlacesWords()
     {
-        Map map = new(TestMaps.TenByFive);
+        KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         int numAvailableSpots = 0;
         for (int x = 0; x < map.Width; x++)
             for (int y = 0; y < map.Height; y++)
@@ -155,7 +155,7 @@ public class MapTests
     [TestMethod]
     public void Map_AttackingDeploysSoldiers()
     {
-        Map map = new(TestMaps.TenByFive);
+        KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         map.Bastions[0].Capture(1);
         map.Bastions[1].Capture(2);
         map.Bastions[0].SetCount(archers: 2);
