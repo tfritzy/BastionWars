@@ -12,7 +12,7 @@ public partial class GameMono : Node
 
 	public override void _Ready()
 	{
-		using var file = FileAccess.Open("res://map.txt", FileAccess.ModeFlags.Read);
+		using var file = FileAccess.Open("res://Maps/map.txt", FileAccess.ModeFlags.Read);
 		string map = file.GetAsText();
 
 		Game = new Game(new GameSettings(
@@ -23,7 +23,6 @@ public partial class GameMono : Node
 		mapMono = new MapMono(Game.Map);
 		AddChild(mapMono);
 		AddChild(new InteractiveCamera(mapMono.Center));
-		AddChild(new Terminal(Game));
 		ConfigureScene();
 	}
 

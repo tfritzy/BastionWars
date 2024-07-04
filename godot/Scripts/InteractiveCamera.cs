@@ -17,8 +17,10 @@ public partial class InteractiveCamera : Camera2D
     public override void _Ready()
     {
         AnchorMode = Camera2D.AnchorModeEnum.FixedTopLeft;
-        Zoom = new Vector2(.35f, .35f);
-        Position += new Vector2(-700, -200);
+        Zoom = new Vector2(.22f, .22f);
+        Position += new Vector2(-700, -400);
+        var viewport = GetTree().Root;
+        viewport.Scaling3DMode = Viewport.Scaling3DModeEnum.Fsr2;
     }
 
     public override void _Input(InputEvent @event)
