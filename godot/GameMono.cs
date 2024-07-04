@@ -16,7 +16,7 @@ public partial class GameMono : Node
 		string map = file.GetAsText();
 
 		Game = new Game(new GameSettings(
-			mode: GenerationMode.AutoAccrue,
+			mode: GenerationMode.Word,
 			map: map
 		));
 

@@ -12,7 +12,7 @@ public partial class BastionMono : Sprite2D
         Texture2D texture = (Texture2D)GD.Load("res://Sprites/keep.png");
         Texture = texture;
 
-        label = new()
+        label = new Label()
         {
             Position = new Vector2(0, -150),
             Scale = new Vector2(3, 3),

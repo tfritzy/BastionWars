@@ -9,15 +9,16 @@ public partial class InteractiveCamera : Camera2D
     [Export]
     public float PanSpeed = 10.0f; // Speed of panning
 
+
     public InteractiveCamera(Vector2 startPos)
     {
-        Position = startPos;
     }
 
     public override void _Ready()
     {
         AnchorMode = Camera2D.AnchorModeEnum.FixedTopLeft;
-        Zoom = new Vector2(4, 4);
+        Zoom = new Vector2(.35f, .35f);
+        Position += new Vector2(-700, -200);
     }
 
     public override void _Input(InputEvent @event)

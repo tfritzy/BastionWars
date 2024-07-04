@@ -2,6 +2,7 @@ using Godot;
 using KeepLordWarriors;
 using SpacialPartitioning;
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 public partial class MapMono : TileMap
@@ -10,9 +11,12 @@ public partial class MapMono : TileMap
     public string TileSetPath = "res://Configs/tile_set.tres";
     public Godot.Vector2 Center => CalculateCenter();
 
+    private Dictionary<V2Int, Typeable> words = new();
+
     public MapMono(Map map)
     {
         Map = map;
+        words = new();
     }
 
     public override void _Ready()
@@ -28,6 +32,11 @@ public partial class MapMono : TileMap
 
         GenerateGrid();
         SpawnBastions();
+    }
+
+    public override void _Process(double delta)
+    {
+        SyncWods();
     }
 
     private void GenerateGrid()
@@ -54,12 +63,30 @@ public partial class MapMono : TileMap
         }
     }
 
+    private void SyncWods()
+    {
+        foreach (var pos in Map.Words.Keys)
+        {
+            var word = Map.Words[pos];
+            if (word != null && !words.ContainsKey(pos))
+            {
+                words[pos] = new(word);
+                words[pos].Position = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)));
+                AddChild(words[pos]);
+            }
+        }
+    }
+
     private Godot.Vector2 CalculateCenter()
     {
         var rect = GetUsedRect();
 
-        var center_x = Position.X + (rect.Size.X / 2)
-        var center_y = Position.Y + (rect.Size.Y / 2)
+        GD.Print("Rect: " + rect);
+
+        var center_x = Position.X + (rect.Size.X / 2);
+        var center_y = Position.Y + (rect.Size.Y / 2);
+
+        GD.Print("Center: " + center_x + ", " + center_y);
 
         return new Godot.Vector2(center_x, center_y);
     }
