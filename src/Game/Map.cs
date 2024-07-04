@@ -8,11 +8,11 @@ public class Map
 {
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
-    public SpacialPartitioning.Grid Grid { get; private set; } = new SpacialPartitioning.Grid(0, 0);
+    public Grid Grid { get; private set; } = new(0, 0);
     public List<Bastion> Bastions { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
     public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
-    public Dictionary<V2Int, string?> Words { get; private set; } = new();
+    public Dictionary<V2Int, Word?> Words { get; private set; } = new();
     private Dictionary<ulong, Dictionary<ulong, List<V2Int>>> bastionPaths = new();
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
@@ -133,7 +133,7 @@ public class Map
                 placement -= 1;
                 if (placement < 0)
                 {
-                    Words[pos] = "Hello";
+                    Words[pos] = new Word("Hello", pos);
                     return;
                 }
             }

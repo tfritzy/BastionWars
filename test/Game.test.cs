@@ -80,4 +80,23 @@ public class GameTests
         Assert.AreEqual(newPos.X, positionUpdate.AllSoldierPositions.SoldierPositions[0].Pos.X);
         Assert.AreEqual(newPos.Y, positionUpdate.AllSoldierPositions.SoldierPositions[0].Pos.Y);
     }
+
+    [TestMethod]
+    public void Game_IncrementsWordProgress()
+    {
+        Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        Word firstWord = game.Map.Words.Values.First(w => w != null)!;
+        ulong ownerId = game.Map.BastionLands[firstWord.Position];
+        Bastion bastion = game.Map.Bastions.First(b => b.Id == ownerId);
+
+        for (int i = 0; i < firstWord.Text.Length - 1; i++)
+        {
+            game.HandleKeystroke(firstWord.Text[i]);
+        }
+
+        Assert.AreEqual(0, bastion.GetCount(bastion.SoldierType));
+        game.HandleKeystroke(firstWord.Text[^1]);
+        // Multiple words could have been completed.
+        Assert.IsTrue(bastion.GetCount(bastion.SoldierType) > 0);
+    }
 }

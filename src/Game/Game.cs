@@ -110,4 +110,32 @@ public class Game
             lastWordPlacement = 0f;
         }
     }
+
+    public void HandleKeystroke(char key)
+    {
+        if (GenerationMode != GenerationMode.Word)
+        {
+            return;
+        }
+
+        foreach (Word? word in Map.Words.Values)
+        {
+            if (word == null)
+            {
+                continue;
+            }
+
+            word.HandleKeystroke(key);
+
+            if (word.TypedIndex == word.Text.Length)
+            {
+                Map.Words[word.Position] = null;
+                if (Map.BastionLands.TryGetValue(word.Position, out ulong ownerId))
+                {
+                    Bastion? bastion = Map.Bastions.FirstOrDefault(b => b.Id == ownerId);
+                    bastion?.SetCount(warriors: bastion.GetCount(SoldierType.Warrior) + 1);
+                }
+            }
+        }
+    }
 }
