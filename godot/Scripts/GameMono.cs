@@ -1,8 +1,6 @@
 using Godot;
 using KeepLordWarriors;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class GameMono : Node
 {
@@ -48,5 +46,61 @@ public partial class GameMono : Node
 	void ConfigureScene()
 	{
 		RenderingServer.SetDefaultClearColor(new Color(1, 1, 1, 1));
+	}
+
+	private Dictionary<Key, char> keys = new() {
+		{ Key.A, 'a'},
+		{ Key.B, 'b'},
+		{ Key.C, 'c'},
+		{ Key.D, 'd'},
+		{ Key.E, 'e'},
+		{ Key.F, 'f'},
+		{ Key.G, 'g'},
+		{ Key.H, 'h'},
+		{ Key.I, 'i'},
+		{ Key.J, 'j'},
+		{ Key.K, 'k'},
+		{ Key.L, 'l'},
+		{ Key.M, 'm'},
+		{ Key.N, 'n'},
+		{ Key.O, 'o'},
+		{ Key.P, 'p'},
+		{ Key.Q, 'q'},
+		{ Key.R, 'r'},
+		{ Key.S, 's'},
+		{ Key.T, 't'},
+		{ Key.U, 'u'},
+		{ Key.V, 'v'},
+		{ Key.W, 'w'},
+		{ Key.X, 'x'},
+		{ Key.Y, 'y'},
+		{ Key.Z, 'z'},
+	};
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey eventKey)
+		{
+			if (eventKey.Pressed && keys.TryGetValue(eventKey.Keycode, out char key))
+			{
+				Game.HandleKeystroke(key);
+				UpdateWords();
+			}
+		}
+	}
+
+	private void UpdateWords()
+	{
+		foreach (var word in Game.Map.Words)
+		{
+			if (word.Value == null)
+			{
+				continue;
+			}
+
+			if (mapMono.Words.TryGetValue(word.Key, out Typeable value))
+			{
+				value.UpdateProgress(word.Value.TypedIndex);
+			}
+		}
 	}
 }

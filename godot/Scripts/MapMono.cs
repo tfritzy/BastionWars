@@ -10,13 +10,12 @@ public partial class MapMono : TileMap
     private Map Map;
     public string TileSetPath = "res://Configs/tile_set.tres";
     public Godot.Vector2 Center => CalculateCenter();
-
-    private Dictionary<V2Int, Typeable> words = new();
+    public Dictionary<V2Int, Typeable> Words = new();
 
     public MapMono(Map map)
     {
         Map = map;
-        words = new();
+        Words = new();
     }
 
     public override void _Ready()
@@ -36,7 +35,7 @@ public partial class MapMono : TileMap
 
     public override void _Process(double delta)
     {
-        SyncWods();
+        SyncWords();
     }
 
     private void GenerateGrid()
@@ -63,16 +62,28 @@ public partial class MapMono : TileMap
         }
     }
 
-    private void SyncWods()
+    private void SyncWords()
     {
         foreach (var pos in Map.Words.Keys)
         {
             var word = Map.Words[pos];
-            if (word != null && !words.ContainsKey(pos))
+            if (word != null && !Words.ContainsKey(pos))
             {
-                words[pos] = new(word);
-                words[pos].Position = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)));
-                AddChild(words[pos]);
+                Words[pos] = new Typeable(word.Text)
+                {
+                    Position = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)))
+                };
+                AddChild(Words[pos]);
+            }
+        }
+
+        foreach (var pos in Words.Keys)
+        {
+            var word = Map.Words[pos];
+            if (word == null)
+            {
+                RemoveChild(Words[pos]);
+                Words.Remove(pos);
             }
         }
     }

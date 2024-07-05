@@ -133,7 +133,8 @@ public class Map
                 placement -= 1;
                 if (placement < 0)
                 {
-                    Words[pos] = new Word("Hello", pos);
+                    string letter = "abcdefghijklmnopqrstuvwxyz".Substring(new Random().Next(0, 26), 1);
+                    Words[pos] = new Word(letter, pos);
                     return;
                 }
             }

@@ -10,7 +10,7 @@ public class Word
 
     public Word(string text, V2Int position)
     {
-        Text = text;
+        Text = text.ToLower();
         TypedIndex = 0;
         Position = position;
     }
