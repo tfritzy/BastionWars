@@ -19,12 +19,12 @@ public static class TH
 
     public static Soldier BuildEnemySoldier(SoldierType type, int ofAlliance, KeepLordWarriors.Map map)
     {
-        return new Soldier(map, ofAlliance + 1, type, map.Keeps[0].Id, map.Keeps[1].Id);
+        return new Soldier(map, ofAlliance + 1, type, map.KeepAt(0).Id, map.KeepAt(1).Id);
     }
 
     public static Soldier BuildAllySoldier(SoldierType type, int ofAlliance, KeepLordWarriors.Map map)
     {
-        return new Soldier(map, ofAlliance, type, map.Keeps[0].Id, map.Keeps[1].Id);
+        return new Soldier(map, ofAlliance, type, map.KeepAt(0).Id, map.KeepAt(1).Id);
     }
 
     public static void ClearOutbox(Game game)

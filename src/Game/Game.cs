@@ -65,7 +65,7 @@ public class Game
             return;
         }
 
-        foreach (Keep bastion in Map.Keeps)
+        foreach (Keep bastion in Map.Keeps.Values)
         {
             if (!bastionProduceCooldowns.ContainsKey(bastion.Id))
             {
@@ -132,7 +132,7 @@ public class Game
                 Map.Words[word.Position] = null;
                 if (Map.BastionLands.TryGetValue(word.Position, out ulong ownerId))
                 {
-                    Keep? bastion = Map.Keeps.FirstOrDefault(b => b.Id == ownerId);
+                    Keep? bastion = Map.Keeps[ownerId];
                     bastion?.SetCount(warriors: bastion.GetCount(SoldierType.Warrior) + 1);
                 }
             }

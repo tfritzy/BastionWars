@@ -9,7 +9,7 @@ public class Map
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
-    public List<Keep> Keeps { get; private set; } = new();
+    public Dictionary<ulong, Keep> Keeps { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
     public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
     public Dictionary<V2Int, Word?> Words { get; private set; } = new();
@@ -27,7 +27,7 @@ public class Map
 
     public void Update(double deltaTime)
     {
-        foreach (Keep bastion in Keeps)
+        foreach (Keep bastion in Keeps.Values)
         {
             bastion.Update(deltaTime);
         }
@@ -61,12 +61,12 @@ public class Map
 
     private void CalculateBastionPathing()
     {
-        foreach (Keep bastion in Keeps)
+        foreach (Keep bastion in Keeps.Values)
         {
             ushort[,] pathMap = NavGrid.GetPathMap(V2Int.From(Grid.GetEntityPosition(bastion.Id)), Traversable);
             V2Int sourcePos = V2Int.From(Grid.GetEntityPosition(bastion.Id));
 
-            foreach (Keep other in Keeps)
+            foreach (Keep other in Keeps.Values)
             {
                 if (bastion.Id == other.Id)
                 {
@@ -93,7 +93,7 @@ public class Map
     private void CalculateBastionOwnership()
     {
         Dictionary<ulong, V2Int> locations = new();
-        foreach (Keep bastion in Keeps)
+        foreach (Keep bastion in Keeps.Values)
         {
             V2Int? location = Grid.GetEntityGridPos(bastion.Id);
             if (location != null)
@@ -141,18 +141,15 @@ public class Map
         }
     }
 
-    public void AttackBastion(int sourceIndex, int targetIndex, SoldierType? type = null, float percent = 1f)
+    public void AttackBastion(ulong source, ulong target, SoldierType? type = null, float percent = 1f)
     {
-        if (sourceIndex < 0 || sourceIndex >= Keeps.Count
-            || targetIndex < 0 || targetIndex >= Keeps.Count)
+        if (!Keeps.ContainsKey(source) || !Keeps.ContainsKey(target))
         {
             return;
         }
 
-        Keep source = Keeps[sourceIndex];
-        ulong targetId = Keeps[targetIndex].Id;
-
-        source.SetDeploymentOrder(targetId, type, percent);
+        Keep sourceKeep = Keeps[source];
+        sourceKeep.SetDeploymentOrder(target, type, percent);
     }
 
     public void AddSoldier(Soldier soldier, Vector2 pos)
@@ -182,6 +179,11 @@ public class Map
         };
     }
 
+    public Keep KeepAt(int index)
+    {
+        return Keeps.Values.ElementAt(index);
+    }
+
     private void ParseMap(string rawMap)
     {
         rawMap = rawMap.Replace("\r", "");
@@ -197,7 +199,7 @@ public class Map
 
         Tiles = new TileType[terrain[0].Length, terrain.Length];
         Traversable = new short[terrain[0].Length, terrain.Length];
-        Grid = new SpacialPartitioning.Grid(terrain[0].Length, terrain.Length);
+        Grid = new Grid(terrain[0].Length, terrain.Length);
         for (int y = 0; y < terrain.Length; y++)
         {
             for (int x = 0; x < terrain[0].Length; x++)
@@ -207,20 +209,22 @@ public class Map
                     case 'A':
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Constants.BLOCKED;
-                        Keeps.Add(new(this, SoldierType.Archer, alliance: ownership[y][x] - '0'));
+                        var archerKeep = new Keep(this, SoldierType.Archer, alliance: ownership[y][x] - '0');
+                        Keeps.Add(archerKeep.Id, archerKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
-                            Keeps[^1].Id,
+                            archerKeep.Id,
                             Keep.Radius
                         ));
                         break;
                     case 'W':
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Constants.BLOCKED;
-                        Keeps.Add(new(this, SoldierType.Warrior, alliance: ownership[y][x] - '0'));
+                        var warriorKeep = new Keep(this, SoldierType.Warrior, alliance: ownership[y][x] - '0');
+                        Keeps.Add(warriorKeep.Id, warriorKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
-                            Keeps[^1].Id,
+                            warriorKeep.Id,
                             Keep.Radius
                         ));
                         break;

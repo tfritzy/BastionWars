@@ -53,9 +53,9 @@ public partial class MapMono : TileMap
 
     private void SpawnBastions()
     {
-        foreach (var bastion in Map.Keeps)
+        foreach (var bastion in Map.Keeps.Values)
         {
-            BastionMono bastionMono = new(bastion);
+            var bastionMono = new BastionMono(bastion);
             V2Int bastionPos = this.Map.Grid.GetEntityGridPos(bastion.Id).Value;
             bastionMono.Position =
                 ToGlobal(MapToLocal(new Vector2I(bastionPos.X, bastionPos.Y)));
@@ -92,7 +92,7 @@ public partial class MapMono : TileMap
     private void ColorLands()
     {
         Dictionary<ulong, Keep> keeps = new();
-        foreach (Keep keep in Map.Keeps)
+        foreach (Keep keep in Map.Keeps.Values)
         {
             keeps.Add(keep.Id, keep);
         }
