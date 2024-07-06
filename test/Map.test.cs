@@ -12,9 +12,9 @@ public class MapTests
     public void Map_PlacesBastions()
     {
         KeepLordWarriors.Map map = new(TestMaps.ThirtyByTwenty);
-        Assert.IsTrue(map.Bastions.Count > 0);
+        Assert.IsTrue(map.Keeps.Count > 0);
 
-        foreach (var bastion in map.Bastions)
+        foreach (var bastion in map.Keeps)
         {
             Vector2 pos = map.Grid.GetEntityPosition(bastion.Id);
             Assert.IsTrue(map.Traversable[(int)pos.X, (int)pos.Y] == 0);
@@ -25,9 +25,9 @@ public class MapTests
     public void Map_AllBastionsCanBeNavigatedBetween()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        foreach (var bastion in map.Bastions)
+        foreach (var bastion in map.Keeps)
         {
-            foreach (var other in map.Bastions)
+            foreach (var other in map.Keeps)
             {
                 if (bastion == other)
                 {
@@ -66,11 +66,11 @@ public class MapTests
             SoldierType.Warrior
         };
 
-        for (int i = 0; i < map.Bastions.Count; i++)
+        for (int i = 0; i < map.Keeps.Count; i++)
         {
-            Assert.AreEqual(expectedAlliances[i], map.Bastions[i].Alliance);
-            Assert.AreEqual(expectedTypes[i], map.Bastions[i].SoldierType);
-            Assert.AreEqual(expectedPositions[i], map.Grid.GetEntityGridPos(map.Bastions[i].Id));
+            Assert.AreEqual(expectedAlliances[i], map.Keeps[i].Alliance);
+            Assert.AreEqual(expectedTypes[i], map.Keeps[i].SoldierType);
+            Assert.AreEqual(expectedPositions[i], map.Grid.GetEntityGridPos(map.Keeps[i].Id));
         }
     }
 
@@ -96,9 +96,9 @@ public class MapTests
             0 0 0 0 0 0 0 0 0 0 
             0 0 0 0 0 0 0 0 0 0";
         KeepLordWarriors.Map map = new(rawMap);
-        ulong b0 = map.Bastions[0].Id;
-        ulong b1 = map.Bastions[1].Id;
-        ulong b2 = map.Bastions[2].Id;
+        ulong b0 = map.Keeps[0].Id;
+        ulong b1 = map.Keeps[1].Id;
+        ulong b2 = map.Keeps[2].Id;
 
         StringBuilder actualOwnership = new();
         Dictionary<ulong, string> lookup = new() {
@@ -156,22 +156,22 @@ public class MapTests
     public void Map_AttackingDeploysSoldiers()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        map.Bastions[0].Capture(1);
-        map.Bastions[1].Capture(2);
-        map.Bastions[0].SetCount(archers: 2);
+        map.Keeps[0].Capture(1);
+        map.Keeps[1].Capture(2);
+        map.Keeps[0].SetCount(archers: 2);
         map.AttackBastion(0, 1);
 
-        Assert.AreEqual(0, map.Bastions[0].ArcherCount);
+        Assert.AreEqual(0, map.Keeps[0].ArcherCount);
         Assert.AreEqual(2, map.Soldiers.Count);
 
         foreach (var soldier in map.Soldiers)
         {
-            Assert.AreEqual(map.Bastions[0].Id, soldier.SourceBastionId);
-            Assert.AreEqual(map.Bastions[1].Id, soldier.TargetBastionId);
+            Assert.AreEqual(map.Keeps[0].Id, soldier.SourceBastionId);
+            Assert.AreEqual(map.Keeps[1].Id, soldier.TargetBastionId);
             Assert.AreEqual(SoldierType.Archer, soldier.Type);
             Assert.AreEqual(1, soldier.Alliance);
             Assert.AreEqual(0, soldier.PathProgress);
-            V2Int? gridPos = map.Grid.GetEntityGridPos(map.Bastions[0].Id);
+            V2Int? gridPos = map.Grid.GetEntityGridPos(map.Keeps[0].Id);
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }
     }

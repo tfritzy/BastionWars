@@ -3,9 +3,9 @@ using KeepLordWarriors;
 
 public partial class BastionMono : Sprite2D
 {
-    public Bastion Bastion;
+    public Keep Bastion;
 
-    public BastionMono(Bastion bastion)
+    public BastionMono(Keep bastion)
     {
         this.Bastion = bastion;
         Texture2D texture = (Texture2D)GD.Load("res://Sprites/keep.png");

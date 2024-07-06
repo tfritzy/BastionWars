@@ -16,11 +16,6 @@ public partial class Typeable : RichTextLabel
         UpdateProgress(0);
     }
 
-    public override void _Ready()
-    {
-        // Text = $"[color=red]Fuck[/color]";
-    }
-
     public void UpdateProgress(int progress)
     {
         Text = $"[color=#222222]{word[..progress]}[/color][color=#555555]{word[progress..]}[/color]";

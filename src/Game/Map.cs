@@ -9,7 +9,7 @@ public class Map
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
-    public List<Bastion> Bastions { get; private set; } = new();
+    public List<Keep> Keeps { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
     public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
     public Dictionary<V2Int, Word?> Words { get; private set; } = new();
@@ -27,7 +27,7 @@ public class Map
 
     public void Update(double deltaTime)
     {
-        foreach (Bastion bastion in Bastions)
+        foreach (Keep bastion in Keeps)
         {
             bastion.Update(deltaTime);
         }
@@ -61,12 +61,12 @@ public class Map
 
     private void CalculateBastionPathing()
     {
-        foreach (Bastion bastion in Bastions)
+        foreach (Keep bastion in Keeps)
         {
             ushort[,] pathMap = NavGrid.GetPathMap(V2Int.From(Grid.GetEntityPosition(bastion.Id)), Traversable);
             V2Int sourcePos = V2Int.From(Grid.GetEntityPosition(bastion.Id));
 
-            foreach (Bastion other in Bastions)
+            foreach (Keep other in Keeps)
             {
                 if (bastion.Id == other.Id)
                 {
@@ -93,7 +93,7 @@ public class Map
     private void CalculateBastionOwnership()
     {
         Dictionary<ulong, V2Int> locations = new();
-        foreach (Bastion bastion in Bastions)
+        foreach (Keep bastion in Keeps)
         {
             V2Int? location = Grid.GetEntityGridPos(bastion.Id);
             if (location != null)
@@ -143,14 +143,14 @@ public class Map
 
     public void AttackBastion(int sourceIndex, int targetIndex, SoldierType? type = null, float percent = 1f)
     {
-        if (sourceIndex < 0 || sourceIndex >= Bastions.Count
-            || targetIndex < 0 || targetIndex >= Bastions.Count)
+        if (sourceIndex < 0 || sourceIndex >= Keeps.Count
+            || targetIndex < 0 || targetIndex >= Keeps.Count)
         {
             return;
         }
 
-        Bastion source = Bastions[sourceIndex];
-        ulong targetId = Bastions[targetIndex].Id;
+        Keep source = Keeps[sourceIndex];
+        ulong targetId = Keeps[targetIndex].Id;
 
         source.SetDeploymentOrder(targetId, type, percent);
     }
@@ -207,21 +207,21 @@ public class Map
                     case 'A':
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Constants.BLOCKED;
-                        Bastions.Add(new(this, SoldierType.Archer, alliance: ownership[y][x] - '0'));
+                        Keeps.Add(new(this, SoldierType.Archer, alliance: ownership[y][x] - '0'));
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
-                            Bastions[^1].Id,
-                            Bastion.Radius
+                            Keeps[^1].Id,
+                            Keep.Radius
                         ));
                         break;
                     case 'W':
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Constants.BLOCKED;
-                        Bastions.Add(new(this, SoldierType.Warrior, alliance: ownership[y][x] - '0'));
+                        Keeps.Add(new(this, SoldierType.Warrior, alliance: ownership[y][x] - '0'));
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
-                            Bastions[^1].Id,
-                            Bastion.Radius
+                            Keeps[^1].Id,
+                            Keep.Radius
                         ));
                         break;
                     case 'T':

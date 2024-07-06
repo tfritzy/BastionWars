@@ -25,7 +25,7 @@ public class Soldier : Entity
         Vector2? target = map.GetNextPathPoint(SourceBastionId, TargetBastionId, PathProgress);
         if (target == null)
         {
-            Bastion? bastion = map.Bastions.Find((b) => b.Id == TargetBastionId);
+            Keep? bastion = map.Keeps.Find((b) => b.Id == TargetBastionId);
             bastion?.Breach(this);
             map.RemoveSoldier(Id);
             return;

@@ -12,17 +12,17 @@ public class GameTests
         Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
 
         game.Update(Game.AutoAccrualTime - .1f);
-        foreach (Bastion bastion in game.Map.Bastions)
+        foreach (Keep bastion in game.Map.Keeps)
         {
             Assert.AreEqual(0, bastion.GetCount(bastion.SoldierType));
         }
         game.Update(.2f);
-        foreach (Bastion bastion in game.Map.Bastions)
+        foreach (Keep bastion in game.Map.Keeps)
         {
             Assert.AreEqual(1, bastion.GetCount(bastion.SoldierType));
         }
         game.Update(Game.AutoAccrualTime - .1f);
-        foreach (Bastion bastion in game.Map.Bastions)
+        foreach (Keep bastion in game.Map.Keeps)
         {
             Assert.AreEqual(1, bastion.GetCount(bastion.SoldierType));
         }
@@ -34,7 +34,7 @@ public class GameTests
         Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
 
         game.Update(Game.AutoAccrualTime + .1f);
-        foreach (Bastion bastion in game.Map.Bastions)
+        foreach (Keep bastion in game.Map.Keeps)
         {
             Assert.AreEqual(0, bastion.GetCount(bastion.SoldierType));
         }
@@ -67,9 +67,9 @@ public class GameTests
                 map: game.Map,
                 alliance: 0,
                 type: SoldierType.Warrior,
-                source: game.Map.Bastions[0].Id,
-                target: game.Map.Bastions[1].Id);
-        game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.Bastions[0].Id));
+                source: game.Map.Keeps[0].Id,
+                target: game.Map.Keeps[1].Id);
+        game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.Keeps[0].Id));
         TH.ClearOutbox(game);
         game.Update(Game.NetworkTickTime + .1f);
         Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
@@ -87,7 +87,7 @@ public class GameTests
         Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
         Word firstWord = game.Map.Words.Values.First(w => w != null)!;
         ulong ownerId = game.Map.BastionLands[firstWord.Position];
-        Bastion bastion = game.Map.Bastions.First(b => b.Id == ownerId);
+        Keep bastion = game.Map.Keeps.First(b => b.Id == ownerId);
 
         for (int i = 0; i < firstWord.Text.Length - 1; i++)
         {

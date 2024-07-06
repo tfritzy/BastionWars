@@ -2,7 +2,7 @@ using SpacialPartitioning;
 
 namespace KeepLordWarriors;
 
-public class Bastion : Entity
+public class Keep : Entity
 {
     public int ArcherCount { get; private set; }
     public int WarriorCount { get; private set; }
@@ -18,7 +18,7 @@ public class Bastion : Entity
     /// Overkill damage during a breach is stored here and applied to the next wave
     private float powerOverflow;
 
-    public Bastion(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
+    public Keep(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
     {
         SoldierType = soldierType;
         Map = map;
