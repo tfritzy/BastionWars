@@ -13,6 +13,10 @@ public partial class Typeable : RichTextLabel
         BbcodeEnabled = true;
         FitContent = true;
         AutowrapMode = TextServer.AutowrapMode.Off;
+    }
+
+    public override void _Ready()
+    {
         UpdateProgress(0);
     }
 

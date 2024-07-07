@@ -1,5 +1,3 @@
-using SpacialPartitioning;
-
 namespace KeepLordWarriors;
 
 public class Keep : Entity
@@ -8,8 +6,8 @@ public class Keep : Entity
     public int WarriorCount { get; private set; }
     public SoldierType SoldierType { get; }
     public Map Map { get; private set; }
-
     public List<DeploymentOrder> DeploymentOrders { get; } = new();
+    public string? Name { get; set; }
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .75f;

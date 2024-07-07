@@ -53,13 +53,13 @@ public partial class MapMono : TileMap
 
     private void SpawnBastions()
     {
-        foreach (var bastion in Map.Keeps.Values)
+        foreach (var keep in Map.Keeps.Values)
         {
-            var bastionMono = new BastionMono(bastion);
-            V2Int bastionPos = this.Map.Grid.GetEntityGridPos(bastion.Id).Value;
-            bastionMono.Position =
-                ToGlobal(MapToLocal(new Vector2I(bastionPos.X, bastionPos.Y)));
-            AddChild(bastionMono);
+            var keepMono = new KeepMono(keep);
+            V2Int keepPos = Map.Grid.GetEntityGridPos(keep.Id).Value;
+            keepMono.Position =
+                ToGlobal(MapToLocal(new Vector2I(keepPos.X, keepPos.Y)));
+            AddChild(keepMono);
         }
     }
 

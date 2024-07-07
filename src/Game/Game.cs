@@ -19,6 +19,7 @@ public class Game
     public Game(GameSettings settings)
     {
         Map = new(settings.Map);
+        NameKeeps();
         GenerationMode = settings.GenerationMode;
         PlaceInitialWords();
     }
@@ -79,6 +80,24 @@ public class Game
                 bastion.Accrue();
                 bastionProduceCooldowns[bastion.Id] = AutoAccrualTime;
             }
+        }
+    }
+
+    public void NameKeeps()
+    {
+        Random random = new();
+        HashSet<int> takenNames = new();
+        foreach (Keep keep in Map.Keeps.Values)
+        {
+            int i;
+            do
+            {
+                i = random.Next(0, Constants.KeepNames.Length);
+            }
+            while (takenNames.Contains(i));
+
+            keep.Name = Constants.KeepNames[i];
+            takenNames.Add(i);
         }
     }
 

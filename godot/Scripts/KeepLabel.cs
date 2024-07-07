@@ -1,11 +1,10 @@
 using Godot;
-using KeepLordWarriors;
 
-public partial class BastionLabel : Label
+public partial class KeepLabel : Label
 {
-    private BastionMono bastion;
+    private KeepMono bastion;
 
-    public BastionLabel(BastionMono bastion)
+    public KeepLabel(KeepMono bastion)
     {
         this.bastion = bastion;
         Theme = ResourceLoader.Load<Theme>("res://Theme/theme.tres");
@@ -18,6 +17,6 @@ public partial class BastionLabel : Label
 
     public override void _Process(double delta)
     {
-        Text = $"{bastion.Bastion.WarriorCount}⚔️ {bastion.Bastion.ArcherCount}🏹";
+        Text = $"{bastion.Keep.WarriorCount}⚔️ {bastion.Keep.ArcherCount}🏹";
     }
 }

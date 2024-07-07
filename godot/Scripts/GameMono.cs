@@ -17,6 +17,10 @@ public partial class GameMono : Node
 			mode: GenerationMode.Word,
 			map: map
 		));
+		foreach (var keep in Game.Map.Keeps.Values)
+		{
+			GD.Print(keep.Name);
+		}
 
 		mapMono = new MapMono(Game.Map);
 		AddChild(mapMono);
@@ -48,41 +52,13 @@ public partial class GameMono : Node
 		RenderingServer.SetDefaultClearColor(new Color(1, 1, 1, 1));
 	}
 
-	private Dictionary<Key, char> keys = new() {
-		{ Key.A, 'a'},
-		{ Key.B, 'b'},
-		{ Key.C, 'c'},
-		{ Key.D, 'd'},
-		{ Key.E, 'e'},
-		{ Key.F, 'f'},
-		{ Key.G, 'g'},
-		{ Key.H, 'h'},
-		{ Key.I, 'i'},
-		{ Key.J, 'j'},
-		{ Key.K, 'k'},
-		{ Key.L, 'l'},
-		{ Key.M, 'm'},
-		{ Key.N, 'n'},
-		{ Key.O, 'o'},
-		{ Key.P, 'p'},
-		{ Key.Q, 'q'},
-		{ Key.R, 'r'},
-		{ Key.S, 's'},
-		{ Key.T, 't'},
-		{ Key.U, 'u'},
-		{ Key.V, 'v'},
-		{ Key.W, 'w'},
-		{ Key.X, 'x'},
-		{ Key.Y, 'y'},
-		{ Key.Z, 'z'},
-	};
 	public override void _Input(InputEvent @event)
 	{
 		if (@event is InputEventKey eventKey)
 		{
-			if (eventKey.Pressed && keys.TryGetValue(eventKey.Keycode, out char key))
+			if (eventKey.Pressed && eventKey.Keycode >= Key.A && eventKey.Keycode <= Key.Z)
 			{
-				Game.HandleKeystroke(key);
+				Game.HandleKeystroke((char)('a' + eventKey.Keycode - Key.A), 1);
 				UpdateWords();
 			}
 		}

@@ -111,7 +111,7 @@ public class Map
         {
             for (int y = 0; y < Height; y++)
             {
-                if (Traversable[x, y] == Constants.TRAVERSABLE)
+                if (Traversable[x, y] == Navigation.Constants.TRAVERSABLE)
                 {
                     Words[new V2Int(x, y)] = null;
                 }
@@ -208,7 +208,7 @@ public class Map
                 {
                     case 'A':
                         Tiles[x, y] = TileType.Land;
-                        Traversable[x, y] = Constants.BLOCKED;
+                        Traversable[x, y] = Navigation.Constants.BLOCKED;
                         var archerKeep = new Keep(this, SoldierType.Archer, alliance: ownership[y][x] - '0');
                         Keeps.Add(archerKeep.Id, archerKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
@@ -219,7 +219,7 @@ public class Map
                         break;
                     case 'W':
                         Tiles[x, y] = TileType.Land;
-                        Traversable[x, y] = Constants.BLOCKED;
+                        Traversable[x, y] = Navigation.Constants.BLOCKED;
                         var warriorKeep = new Keep(this, SoldierType.Warrior, alliance: ownership[y][x] - '0');
                         Keeps.Add(warriorKeep.Id, warriorKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
@@ -230,15 +230,15 @@ public class Map
                         break;
                     case 'T':
                         Tiles[x, y] = TileType.Tree;
-                        Traversable[x, y] = Constants.BLOCKED;
+                        Traversable[x, y] = Navigation.Constants.BLOCKED;
                         break;
                     case 'X':
                         Tiles[x, y] = TileType.Water;
-                        Traversable[x, y] = Constants.BLOCKED;
+                        Traversable[x, y] = Navigation.Constants.BLOCKED;
                         break;
                     default:
                         Tiles[x, y] = TileType.Land;
-                        Traversable[x, y] = Constants.TRAVERSABLE;
+                        Traversable[x, y] = Navigation.Constants.TRAVERSABLE;
                         break;
                 }
             }
