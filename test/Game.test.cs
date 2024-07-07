@@ -85,19 +85,35 @@ public class GameTests
     public void Game_IncrementsWordProgress()
     {
         Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        for (int i = 0; i < 10; i++)
+            game.Update(Game.WordPlacementTime + .1f);
+
         Word firstWord = game.Map.Words.Values.First(w => w != null)!;
         ulong ownerId = game.Map.BastionLands[firstWord.Position];
-        Keep bastion = game.Map.Keeps[ownerId];
+        Keep keep = game.Map.Keeps[ownerId];
 
-        for (int i = 0; i < firstWord.Text.Length - 1; i++)
+        for (int i = 0; i < firstWord.Text.Length; i++)
         {
-            game.HandleKeystroke(firstWord.Text[i]);
+            game.HandleKeystroke(firstWord.Text[i], keep.Alliance);
         }
 
-        Assert.AreEqual(0, bastion.GetCount(bastion.SoldierType));
-        game.HandleKeystroke(firstWord.Text[^1]);
-
         // Multiple words could have been completed.
-        Assert.IsTrue(bastion.GetCount(bastion.SoldierType) > 0);
+        Assert.IsTrue(keep.GetCount(keep.SoldierType) > 0);
+    }
+
+    [TestMethod]
+    public void Game_DoestCompleteNonOwnedWords()
+    {
+        Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        Keep allyKeep = game.Map.Keeps.Values.First(b => b.Alliance == 1);
+
+        // Fill in words
+        foreach (V2Int pos in game.Map.Words.Keys)
+            game.Map.Words[pos] = new Word("a", pos);
+
+        int numWordsOwned = game.Map.Words.Values.Count(w => w != null && game.Map.BastionLands[w.Position] == allyKeep.Id);
+        game.HandleKeystroke('a', allyKeep.Alliance);
+        Assert.AreEqual(numWordsOwned, game.Map.Words.Values.Count(w => w == null));
+        Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }
 }

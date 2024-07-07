@@ -111,7 +111,7 @@ public class Game
         }
     }
 
-    public void HandleKeystroke(char key)
+    public void HandleKeystroke(char key, int alliance)
     {
         if (GenerationMode != GenerationMode.Word)
         {
@@ -121,6 +121,12 @@ public class Game
         foreach (Word? word in Map.Words.Values)
         {
             if (word == null)
+            {
+                continue;
+            }
+
+            ulong landOwner = Map.BastionLands[word.Position];
+            if (Map.Keeps[landOwner].Alliance != alliance)
             {
                 continue;
             }
