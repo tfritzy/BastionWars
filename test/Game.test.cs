@@ -89,7 +89,7 @@ public class GameTests
             game.Update(Game.WordPlacementTime + .1f);
 
         Word firstWord = game.Map.Words.Values.First(w => w != null)!;
-        ulong ownerId = game.Map.BastionLands[firstWord.Position];
+        ulong ownerId = game.Map.KeepLands[firstWord.Position];
         Keep keep = game.Map.Keeps[ownerId];
 
         for (int i = 0; i < firstWord.Text.Length; i++)
@@ -111,9 +111,36 @@ public class GameTests
         foreach (V2Int pos in game.Map.Words.Keys)
             game.Map.Words[pos] = new Word("a", pos);
 
-        int numWordsOwned = game.Map.Words.Values.Count(w => w != null && game.Map.BastionLands[w.Position] == allyKeep.Id);
+        int numWordsOwned = game.Map.Words.Values.Count(w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
         game.HandleKeystroke('a', allyKeep.Alliance);
         Assert.AreEqual(numWordsOwned, game.Map.Words.Values.Count(w => w == null));
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
+    }
+
+
+    [TestMethod]
+    public void Map_AttackingDeploysSoldiers()
+    {
+        Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
+        Map map = game.Map;
+
+        map.KeepAt(0).Capture(1);
+        map.KeepAt(1).Capture(2);
+        map.KeepAt(0).SetCount(archers: 2);
+        game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
+
+        Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
+        Assert.AreEqual(2, map.Soldiers.Count);
+
+        foreach (var soldier in map.Soldiers)
+        {
+            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceBastionId);
+            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetBastionId);
+            Assert.AreEqual(SoldierType.Archer, soldier.Type);
+            Assert.AreEqual(1, soldier.Alliance);
+            Assert.AreEqual(0, soldier.PathProgress);
+            V2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
+            Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
+        }
     }
 }

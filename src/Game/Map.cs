@@ -11,7 +11,7 @@ public class Map
     public Grid Grid { get; private set; } = new(0, 0);
     public Dictionary<ulong, Keep> Keeps { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
-    public Dictionary<V2Int, ulong> BastionLands { get; private set; } = new();
+    public Dictionary<V2Int, ulong> KeepLands { get; private set; } = new();
     public Dictionary<V2Int, Word?> Words { get; private set; } = new();
     private Dictionary<ulong, Dictionary<ulong, List<V2Int>>> bastionPaths = new();
     public int Width => Tiles.GetLength(0);
@@ -102,7 +102,7 @@ public class Map
             }
         }
 
-        BastionLands = Ownership.Calculate(Width, Height, locations);
+        KeepLands = Ownership.Calculate(Width, Height, locations);
     }
 
     private void CalculateValidWordPositions()
@@ -139,17 +139,6 @@ public class Map
                 }
             }
         }
-    }
-
-    public void AttackBastion(ulong source, ulong target, SoldierType? type = null, float percent = 1f)
-    {
-        if (!Keeps.ContainsKey(source) || !Keeps.ContainsKey(target))
-        {
-            return;
-        }
-
-        Keep sourceKeep = Keeps[source];
-        sourceKeep.SetDeploymentOrder(target, type, percent);
     }
 
     public void AddSoldier(Soldier soldier, Vector2 pos)

@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://cqcon3io16grl"]
 
-[ext_resource type="FontFile" uid="uid://3deofj7f3514" path="res://Theme/Wittgenstein/static/Wittgenstein-Medium.ttf" id="1_dxmv4"]
+[ext_resource type="FontFile" uid="uid://3deofj7f3514" path="res://Theme/Wittgenstein/static/Wittgenstein-Bold.ttf" id="1_dxmv4"]
 
 [resource]
 default_font = ExtResource("1_dxmv4")
-default_font_size = 60
+default_font_size = 80

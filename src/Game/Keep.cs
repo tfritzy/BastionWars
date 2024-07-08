@@ -8,10 +8,12 @@ public class Keep : Entity
     public Map Map { get; private set; }
     public List<DeploymentOrder> DeploymentOrders { get; } = new();
     public string? Name { get; set; }
+    public delegate void CapturedEventHandler(ulong sender);
+    public event CapturedEventHandler? OnCaptured;
 
     public const float Radius = 2f;
-    public const float DeploymentRefractoryPeriod = .75f;
-    public const int MaxTroopsPerWave = 6;
+    public const float DeploymentRefractoryPeriod = .25f;
+    public const int MaxTroopsPerWave = 1;
 
     /// Overkill damage during a breach is stored here and applied to the next wave
     private float powerOverflow;
@@ -20,6 +22,7 @@ public class Keep : Entity
     {
         SoldierType = soldierType;
         Map = map;
+        SetCount(soldierType, 5);
     }
 
     public int GetCount(SoldierType type)
@@ -36,6 +39,19 @@ public class Keep : Entity
     {
         ArcherCount = archers ?? ArcherCount;
         WarriorCount = warriors ?? WarriorCount;
+    }
+
+    public void SetCount(SoldierType type, int count)
+    {
+        switch (type)
+        {
+            case SoldierType.Archer:
+                ArcherCount = count;
+                break;
+            case SoldierType.Warrior:
+                WarriorCount = count;
+                break;
+        }
     }
 
     public void Accrue()
@@ -204,5 +220,6 @@ public class Keep : Entity
     public void Capture(int alliance)
     {
         Alliance = alliance;
+        OnCaptured?.Invoke(Id);
     }
 }

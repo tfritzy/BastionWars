@@ -1,9 +1,12 @@
+using System;
 using Godot;
 using KeepLordWarriors;
 
 public partial class KeepMono : Sprite2D
 {
     public Keep Keep;
+    public KeepName NameLabel { get; }
+    public Action<Keep> OnSelect { get; set; }
 
     public KeepMono(Keep keep)
     {
@@ -18,10 +21,13 @@ public partial class KeepMono : Sprite2D
         };
         AddChild(label);
 
-        var name = new KeepName(this)
+        NameLabel = new KeepName(this)
         {
-            Position = new Vector2(0, 0)
+            Position = new Vector2(0, 0),
+            OnComplete = () => OnSelect?.Invoke(keep)
         };
-        AddChild(name);
+        AddChild(NameLabel);
     }
+
+
 }

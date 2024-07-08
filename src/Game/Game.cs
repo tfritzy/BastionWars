@@ -130,6 +130,18 @@ public class Game
         }
     }
 
+    public void AttackBastion(ulong source, ulong target, SoldierType? type = null, float percent = 1f)
+    {
+        if (!Map.Keeps.ContainsKey(source) || !Map.Keeps.ContainsKey(target))
+        {
+            return;
+        }
+
+        Keep sourceKeep = Map.Keeps[source];
+        sourceKeep.SetDeploymentOrder(target, type, percent);
+    }
+
+
     public void HandleKeystroke(char key, int alliance)
     {
         if (GenerationMode != GenerationMode.Word)
@@ -144,7 +156,7 @@ public class Game
                 continue;
             }
 
-            ulong landOwner = Map.BastionLands[word.Position];
+            ulong landOwner = Map.KeepLands[word.Position];
             if (Map.Keeps[landOwner].Alliance != alliance)
             {
                 continue;
@@ -155,7 +167,7 @@ public class Game
             if (word.TypedIndex == word.Text.Length)
             {
                 Map.Words[word.Position] = null;
-                if (Map.BastionLands.TryGetValue(word.Position, out ulong ownerId))
+                if (Map.KeepLands.TryGetValue(word.Position, out ulong ownerId))
                 {
                     Keep? bastion = Map.Keeps[ownerId];
                     bastion?.SetCount(warriors: bastion.GetCount(SoldierType.Warrior) + 1);

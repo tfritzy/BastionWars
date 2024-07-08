@@ -109,7 +109,7 @@ public class MapTests
         {
             for (int x = 0; x < map.Width; x++)
             {
-                actualOwnership.Append($"{lookup[map.BastionLands[new V2Int(x, y)]]}");
+                actualOwnership.Append($"{lookup[map.KeepLands[new V2Int(x, y)]]}");
                 if (x != map.Width - 1)
                     actualOwnership.Append(" ");
             }
@@ -135,7 +135,7 @@ public class MapTests
         int numAvailableSpots = 0;
         for (int x = 0; x < map.Width; x++)
             for (int y = 0; y < map.Height; y++)
-                numAvailableSpots += map.Traversable[x, y] == Constants.TRAVERSABLE ? 1 : 0;
+                numAvailableSpots += map.Traversable[x, y] == Navigation.Constants.TRAVERSABLE ? 1 : 0;
 
         Assert.AreEqual(numAvailableSpots, map.Words.Keys.Count);
         Assert.AreEqual(0, map.Words.Values.Count(w => w != null));
@@ -150,30 +150,5 @@ public class MapTests
         }
 
         Assert.AreEqual(numAvailableSpots, map.Words.Values.Count(w => w != null));
-    }
-
-    [TestMethod]
-    public void Map_AttackingDeploysSoldiers()
-    {
-        Map map = new(TestMaps.TenByFive);
-
-        map.KeepAt(0).Capture(1);
-        map.KeepAt(1).Capture(2);
-        map.KeepAt(0).SetCount(archers: 2);
-        map.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
-
-        Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
-        Assert.AreEqual(2, map.Soldiers.Count);
-
-        foreach (var soldier in map.Soldiers)
-        {
-            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceBastionId);
-            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetBastionId);
-            Assert.AreEqual(SoldierType.Archer, soldier.Type);
-            Assert.AreEqual(1, soldier.Alliance);
-            Assert.AreEqual(0, soldier.PathProgress);
-            V2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
-            Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
-        }
     }
 }

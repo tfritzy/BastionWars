@@ -12,7 +12,7 @@ public partial class SoldierMono : Sprite2D
         this.id = id;
 
         Texture = (Texture2D)GD.Load("res://icon.svg");
-        Scale = new Vector2(.1f, .1f);
+        Scale = new Vector2(.4f, .4f);
     }
 
     public override void _Process(double delta)
@@ -24,6 +24,6 @@ public partial class SoldierMono : Sprite2D
         }
 
         var pos = game.Map.Grid.GetEntityPosition(id);
-        Position = new Vector2(pos.X, pos.Y);
+        Position = new Vector2(pos.X, pos.Y) * 128;
     }
 }

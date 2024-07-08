@@ -7,6 +7,8 @@ public partial class GameMono : Node
 	public Game Game;
 	private Dictionary<ulong, SoldierMono> soldiers = new();
 	private MapMono mapMono;
+	private ulong? selectedKeepId;
+	private Label instructionLabel;
 
 	public override void _Ready()
 	{
@@ -26,6 +28,8 @@ public partial class GameMono : Node
 		AddChild(mapMono);
 		AddChild(new InteractiveCamera(mapMono.Center));
 		ConfigureScene();
+		ConfigureKeeps();
+		SpawnInstructionLabel();
 	}
 
 	void SyncSoldiers()
@@ -39,6 +43,21 @@ public partial class GameMono : Node
 				AddChild(soldierMono);
 			}
 		}
+	}
+
+	void SpawnInstructionLabel()
+	{
+		instructionLabel = new Label
+		{
+			Text = "",
+			Position = new Vector2(-200, -200),
+			LabelSettings = new LabelSettings()
+			{
+				FontSize = 60,
+				FontColor = new Color(0, 0, 0, 1)
+			}
+		};
+		AddChild(instructionLabel);
 	}
 
 	public override void _Process(double delta)
@@ -58,8 +77,10 @@ public partial class GameMono : Node
 		{
 			if (eventKey.Pressed && eventKey.Keycode >= Key.A && eventKey.Keycode <= Key.Z)
 			{
-				Game.HandleKeystroke((char)('a' + eventKey.Keycode - Key.A), 1);
+				char key = (char)('a' + eventKey.Keycode - Key.A);
+				Game.HandleKeystroke(key, 1);
 				UpdateWords();
+				UpdateKeepNames(key);
 			}
 		}
 	}
@@ -77,6 +98,56 @@ public partial class GameMono : Node
 			{
 				value.UpdateProgress(word.Value.TypedIndex);
 			}
+		}
+	}
+
+	private void UpdateKeepNames(char key)
+	{
+		foreach (var keep in mapMono.KeepMonos.Values)
+		{
+			keep.NameLabel.HandleKeystroke(key);
+		}
+	}
+
+	private void ConfigureKeeps()
+	{
+		foreach (var keep in mapMono.KeepMonos.Values)
+		{
+			keep.OnSelect = SelectKeep;
+		}
+	}
+
+	private bool IsValidSelection(Keep keep)
+	{
+		if (selectedKeepId == null)
+		{
+			// Don't select enemy keeps
+			if (keep.Alliance != 1)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private void SelectKeep(Keep keep)
+	{
+		if (!IsValidSelection(keep))
+		{
+			return;
+		}
+
+		if (selectedKeepId != null)
+		{
+			Game.AttackBastion(selectedKeepId.Value, keep.Id);
+			selectedKeepId = null;
+			instructionLabel.Text = "";
+		}
+		else
+		{
+			selectedKeepId = keep.Id;
+			instructionLabel.Text = $"Selected {selectedKeepId}. Select a target.";
 		}
 	}
 }

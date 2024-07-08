@@ -11,6 +11,8 @@ public partial class MapMono : TileMap
     public string TileSetPath = "res://Configs/tile_set.tres";
     public Godot.Vector2 Center => CalculateCenter();
     public Dictionary<V2Int, Typeable> Words = new();
+    public Dictionary<ulong, KeepMono> KeepMonos = new();
+    private Dictionary<V2Int, ColorRect> LandColors = new();
 
     public MapMono(Map map)
     {
@@ -30,7 +32,7 @@ public partial class MapMono : TileMap
         this.TileSet = tileSet;
 
         GenerateGrid();
-        SpawnBastions();
+        SpawnKeeps();
         ColorLands();
     }
 
@@ -51,7 +53,7 @@ public partial class MapMono : TileMap
         }
     }
 
-    private void SpawnBastions()
+    private void SpawnKeeps()
     {
         foreach (var keep in Map.Keeps.Values)
         {
@@ -59,7 +61,9 @@ public partial class MapMono : TileMap
             V2Int keepPos = Map.Grid.GetEntityGridPos(keep.Id).Value;
             keepMono.Position =
                 ToGlobal(MapToLocal(new Vector2I(keepPos.X, keepPos.Y)));
+            KeepMonos[keep.Id] = keepMono;
             AddChild(keepMono);
+            keep.OnCaptured += OnKeepCaptured;
         }
     }
 
@@ -91,18 +95,12 @@ public partial class MapMono : TileMap
 
     private void ColorLands()
     {
-        Dictionary<ulong, Keep> keeps = new();
-        foreach (Keep keep in Map.Keeps.Values)
+        foreach (var pos in Map.KeepLands.Keys)
         {
-            keeps.Add(keep.Id, keep);
-        }
-
-        foreach (var pos in Map.BastionLands.Keys)
-        {
-            ulong owner = Map.BastionLands[pos];
-            if (keeps.ContainsKey(owner))
+            ulong owner = Map.KeepLands[pos];
+            if (Map.Keeps.ContainsKey(owner))
             {
-                Keep keep = keeps[owner];
+                Keep keep = Map.Keeps[owner];
                 var worldPos = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)));
                 var color = GetColor(keep.Alliance);
                 var transparentSheet = new ColorRect
@@ -112,6 +110,20 @@ public partial class MapMono : TileMap
                     Position = worldPos
                 };
                 AddChild(transparentSheet);
+                LandColors[pos] = transparentSheet;
+            }
+        }
+    }
+
+    private void OnKeepCaptured(ulong keepId)
+    {
+        foreach (var pos in Map.KeepLands.Keys)
+        {
+            ulong owner = Map.KeepLands[pos];
+            if (owner == keepId)
+            {
+                var color = GetColor(Map.Keeps[keepId].Alliance);
+                LandColors[pos].Color = color;
             }
         }
     }

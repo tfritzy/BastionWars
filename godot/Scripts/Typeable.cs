@@ -1,9 +1,11 @@
+using System;
 using Godot;
 using KeepLordWarriors;
 
 public partial class Typeable : RichTextLabel
 {
     public int Progress { get; private set; }
+    public Action OnComplete { get; set; }
     private string word;
 
     public Typeable(string text)
@@ -22,6 +24,25 @@ public partial class Typeable : RichTextLabel
 
     public void UpdateProgress(int progress)
     {
-        Text = $"[color=#222222]{word[..progress]}[/color][color=#555555]{word[progress..]}[/color]";
+        Text = $"[outline_size=15][outline_color=#000000][color=#00ff00]{word[..progress]}[/color][color=#ffffff]{word[progress..]}[/color][/outline_color]";
+
+        if (progress >= word.Length)
+        {
+            OnComplete?.Invoke();
+        }
+    }
+
+    public void HandleKeystroke(char key)
+    {
+        if (Progress < word.Length && word[Progress] == key)
+        {
+            Progress++;
+            UpdateProgress(Progress);
+        }
+        else
+        {
+            Progress = 0;
+            UpdateProgress(Progress);
+        }
     }
 }
