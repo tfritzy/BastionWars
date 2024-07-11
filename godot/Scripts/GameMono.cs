@@ -38,7 +38,7 @@ public partial class GameMono : Node
 		{
 			if (!soldiers.ContainsKey(soldier.Id))
 			{
-				SoldierMono soldierMono = new(Game, soldier.Id);
+				SoldierMono soldierMono = new SoldierMono(Game, soldier.Id);
 				soldiers[soldier.Id] = soldierMono;
 				AddChild(soldierMono);
 			}
@@ -103,8 +103,13 @@ public partial class GameMono : Node
 
 	private void UpdateKeepNames(char key)
 	{
-		foreach (var keep in mapMono.KeepMonos.Values)
+		foreach (KeepMono keep in mapMono.KeepMonos.Values)
 		{
+			if (selectedKeepId == null && keep.Keep.Alliance != 1)
+			{
+				continue;
+			}
+
 			keep.NameLabel.HandleKeystroke(key);
 		}
 	}

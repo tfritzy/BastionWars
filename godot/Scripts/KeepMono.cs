@@ -28,6 +28,4 @@ public partial class KeepMono : Sprite2D
         };
         AddChild(NameLabel);
     }
-
-
 }
