@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dk8q4rknsn8pt"
+path="res://.godot/imported/detail_rocksLarge.obj-36f0f76fa9cbea2f7d0923b84e37d00a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/detail_rocksLarge.obj-36f0f76fa9cbea2f7d0923b84e37d00a.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/detail_rocksLarge.obj"
+dest_files=["res://.godot/imported/detail_rocksLarge.obj-36f0f76fa9cbea2f7d0923b84e37d00a.mesh", "res://.godot/imported/detail_rocksLarge.obj-36f0f76fa9cbea2f7d0923b84e37d00a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 
-public partial class MapMono : TileMap
+public partial class MapMono : GridMap
 {
     private Map Map;
-    public string TileSetPath = "res://Configs/tile_set.tres";
-    public Godot.Vector2 Center => CalculateCenter();
+    public string MeshLibraryPath = "res://Configs/mesh_set.tres";
     public Dictionary<V2Int, Typeable> Words = new();
     public Dictionary<ulong, KeepMono> KeepMonos = new();
     private Dictionary<V2Int, ColorRect> LandColors = new();
@@ -18,28 +17,29 @@ public partial class MapMono : TileMap
     {
         Map = map;
         Words = new();
+        CellSize = new Godot.Vector3(1, 1, 1);
     }
 
     public override void _Ready()
     {
-        TileSet tileSet = GD.Load<TileSet>(TileSetPath);
-        if (tileSet == null)
+        MeshLibrary meshLibrary = GD.Load<MeshLibrary>(MeshLibraryPath);
+        if (meshLibrary == null)
         {
-            GD.Print("Failed to load TileSet from path: " + TileSetPath);
+            GD.Print("Failed to load TileSet from path: " + MeshLibraryPath);
             return;
         }
 
-        this.TileSet = tileSet;
+        this.MeshLibrary = meshLibrary;
 
         GenerateGrid();
         SpawnKeeps();
-        ColorLands();
+        // ColorLands();
     }
 
-    public override void _Process(double delta)
-    {
-        SyncWords();
-    }
+    // public override void _Process(double delta)
+    // {
+    //     SyncWords();
+    // }
 
     private void GenerateGrid()
     {
@@ -48,7 +48,7 @@ public partial class MapMono : TileMap
             for (int y = 0; y < Map.Height; y++)
             {
                 TileType type = Map.Tiles[x, y];
-                SetCell(0, new Vector2I(x, y), (int)type, new Vector2I(0, 0));
+                SetCellItem(new Vector3I(x, 0, y), (int)type);
             }
         }
     }
@@ -60,60 +60,60 @@ public partial class MapMono : TileMap
             var keepMono = new KeepMono(keep);
             V2Int keepPos = Map.Grid.GetEntityGridPos(keep.Id).Value;
             keepMono.Position =
-                ToGlobal(MapToLocal(new Vector2I(keepPos.X, keepPos.Y)));
+                ToGlobal(MapToLocal(new Vector3I(keepPos.X, 0, keepPos.Y)));
             KeepMonos[keep.Id] = keepMono;
             AddChild(keepMono);
             keep.OnCaptured += OnKeepCaptured;
         }
     }
 
-    private void SyncWords()
-    {
-        foreach (var pos in Map.Words.Keys)
-        {
-            var word = Map.Words[pos];
-            if (word != null && !Words.ContainsKey(pos))
-            {
-                Words[pos] = new Typeable(word.Text)
-                {
-                    Position = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)))
-                };
-                AddChild(Words[pos]);
-            }
-        }
+    // private void SyncWords()
+    // {
+    //     foreach (var pos in Map.Words.Keys)
+    //     {
+    //         var word = Map.Words[pos];
+    //         if (word != null && !Words.ContainsKey(pos))
+    //         {
+    //             Words[pos] = new Typeable(word.Text)
+    //             {
+    //                 Position = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)))
+    //             };
+    //             AddChild(Words[pos]);
+    //         }
+    //     }
 
-        foreach (var pos in Words.Keys)
-        {
-            var word = Map.Words[pos];
-            if (word == null)
-            {
-                RemoveChild(Words[pos]);
-                Words.Remove(pos);
-            }
-        }
-    }
+    //     foreach (var pos in Words.Keys)
+    //     {
+    //         var word = Map.Words[pos];
+    //         if (word == null)
+    //         {
+    //             RemoveChild(Words[pos]);
+    //             Words.Remove(pos);
+    //         }
+    //     }
+    // }
 
-    private void ColorLands()
-    {
-        foreach (var pos in Map.KeepLands.Keys)
-        {
-            ulong owner = Map.KeepLands[pos];
-            if (Map.Keeps.ContainsKey(owner))
-            {
-                Keep keep = Map.Keeps[owner];
-                var worldPos = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)));
-                var color = GetColor(keep.Alliance);
-                var transparentSheet = new ColorRect
-                {
-                    Color = color,
-                    Size = new Godot.Vector2(128, 128),
-                    Position = worldPos
-                };
-                AddChild(transparentSheet);
-                LandColors[pos] = transparentSheet;
-            }
-        }
-    }
+    // private void ColorLands()
+    // {
+    //     foreach (var pos in Map.KeepLands.Keys)
+    //     {
+    //         ulong owner = Map.KeepLands[pos];
+    //         if (Map.Keeps.ContainsKey(owner))
+    //         {
+    //             Keep keep = Map.Keeps[owner];
+    //             var worldPos = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)));
+    //             var color = GetColor(keep.Alliance);
+    //             var transparentSheet = new ColorRect
+    //             {
+    //                 Color = color,
+    //                 Size = new Godot.Vector2(128, 128),
+    //                 Position = worldPos
+    //             };
+    //             AddChild(transparentSheet);
+    //             LandColors[pos] = transparentSheet;
+    //         }
+    //     }
+    // }
 
     private void OnKeepCaptured(ulong keepId)
     {
@@ -141,17 +141,17 @@ public partial class MapMono : TileMap
         }
     }
 
-    private Godot.Vector2 CalculateCenter()
-    {
-        var rect = GetUsedRect();
+    // private Godot.Vector2 CalculateCenter()
+    // {
+    //     var rect = GetUsedRect();
 
-        GD.Print("Rect: " + rect);
+    //     GD.Print("Rect: " + rect);
 
-        var center_x = Position.X + (rect.Size.X / 2);
-        var center_y = Position.Y + (rect.Size.Y / 2);
+    //     var center_x = Position.X + (rect.Size.X / 2);
+    //     var center_y = Position.Y + (rect.Size.Y / 2);
 
-        GD.Print("Center: " + center_x + ", " + center_y);
+    //     GD.Print("Center: " + center_x + ", " + center_y);
 
-        return new Godot.Vector2(center_x, center_y);
-    }
+    //     return new Godot.Vector2(center_x, center_y);
+    // }
 }

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bg18752dsmyqx"
+path="res://.godot/imported/towerRound_middleB.obj-b9bcf9c4c548f901be06c637e28bfe7b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/towerRound_middleB.obj-b9bcf9c4c548f901be06c637e28bfe7b.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/towerRound_middleB.obj"
+dest_files=["res://.godot/imported/towerRound_middleB.obj-b9bcf9c4c548f901be06c637e28bfe7b.mesh", "res://.godot/imported/towerRound_middleB.obj-b9bcf9c4c548f901be06c637e28bfe7b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

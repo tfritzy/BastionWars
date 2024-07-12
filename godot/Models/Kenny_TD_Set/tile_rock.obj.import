@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://uc5ed7e0kwid"
+path="res://.godot/imported/tile_rock.obj-82cdb810edeb6c301edc05aaf86c3aed.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tile_rock.obj-82cdb810edeb6c301edc05aaf86c3aed.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/tile_rock.obj"
+dest_files=["res://.godot/imported/tile_rock.obj-82cdb810edeb6c301edc05aaf86c3aed.mesh", "res://.godot/imported/tile_rock.obj-82cdb810edeb6c301edc05aaf86c3aed.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

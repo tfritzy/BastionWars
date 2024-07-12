@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://1fmb66knrc35"
+path="res://.godot/imported/snow_tile_riverStraight.obj-3445a1f4ac6a88afe1a7dee79a2a7aba.mesh"
+
+[deps]
+
+files=["res://.godot/imported/snow_tile_riverStraight.obj-3445a1f4ac6a88afe1a7dee79a2a7aba.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/snow_tile_riverStraight.obj"
+dest_files=["res://.godot/imported/snow_tile_riverStraight.obj-3445a1f4ac6a88afe1a7dee79a2a7aba.mesh", "res://.godot/imported/snow_tile_riverStraight.obj-3445a1f4ac6a88afe1a7dee79a2a7aba.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

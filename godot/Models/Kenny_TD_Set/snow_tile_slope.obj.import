@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://brwt8ahrg4qtq"
+path="res://.godot/imported/snow_tile_slope.obj-a9bb7580e396919fb746dbc5f273e62b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/snow_tile_slope.obj-a9bb7580e396919fb746dbc5f273e62b.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/snow_tile_slope.obj"
+dest_files=["res://.godot/imported/snow_tile_slope.obj-a9bb7580e396919fb746dbc5f273e62b.mesh", "res://.godot/imported/snow_tile_slope.obj-a9bb7580e396919fb746dbc5f273e62b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

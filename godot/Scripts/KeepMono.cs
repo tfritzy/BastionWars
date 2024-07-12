@@ -2,7 +2,7 @@ using System;
 using Godot;
 using KeepLordWarriors;
 
-public partial class KeepMono : Sprite2D
+public partial class KeepMono : MeshInstance3D
 {
     public Keep Keep;
     public KeepName NameLabel { get; }
@@ -12,8 +12,7 @@ public partial class KeepMono : Sprite2D
     {
         this.Name = keep.Name;
         this.Keep = keep;
-        Texture2D texture = (Texture2D)GD.Load("res://Sprites/keep.png");
-        Texture = texture;
+        Mesh = (Mesh)GD.Load("res://Models/Kenny_TD_Set/towerRound_sampleF.obj");
 
         var label = new KeepLabel(this)
         {

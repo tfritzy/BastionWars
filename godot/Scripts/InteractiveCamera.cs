@@ -1,44 +1,48 @@
 using Godot;
 using System;
 
-public partial class InteractiveCamera : Camera2D
+public partial class InteractiveCamera : Camera3D
 {
-    // Configurable properties
     [Export]
-    public float ZoomSpeed = 0.1f; // Speed of zooming in/out
+    public float MoveSpeed = 10.0f;
     [Export]
-    public float PanSpeed = 10.0f; // Speed of panning
-
-
-    public InteractiveCamera(Vector2 startPos)
-    {
-    }
+    public float MouseSensitivity = 0.1f;
 
     public override void _Ready()
     {
-        AnchorMode = Camera2D.AnchorModeEnum.FixedTopLeft;
-        Zoom = new Vector2(.22f, .22f);
-        Position += new Vector2(-700, -400);
-        var viewport = GetTree().Root;
-        viewport.Scaling3DMode = Viewport.Scaling3DModeEnum.Fsr2;
     }
 
     public override void _Input(InputEvent @event)
     {
-        // Handle zoom with mouse wheel
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.ButtonIndex == MouseButton.WheelDown)
+        if (@event is InputEventMouseMotion)
         {
-            Zoom *= new Vector2(1.0f - ZoomSpeed, 1.0f - ZoomSpeed);
+            InputEventMouseMotion mouseEvent = @event as InputEventMouseMotion;
+            RotateX(Mathf.DegToRad(-mouseEvent.Relative.Y * MouseSensitivity));
+            RotateY(Mathf.DegToRad(-mouseEvent.Relative.X * MouseSensitivity));
+            Vector3 cameraRotation = RotationDegrees;
+            cameraRotation.X = Mathf.Clamp(cameraRotation.X, -90, 90);
+            RotationDegrees = cameraRotation;
         }
-        else if (@event is InputEventMouseButton eventMouseButtonDown && eventMouseButtonDown.ButtonIndex == MouseButton.WheelUp)
-        {
-            Zoom *= new Vector2(1.0f + ZoomSpeed, 1.0f + ZoomSpeed);
-        }
+    }
 
-        if (@event is InputEventMouseMotion eventMouseMotion && Input.IsMouseButtonPressed(MouseButton.Left))
-        {
-            var motion = eventMouseMotion.Relative;
-            Position -= motion * Zoom * PanSpeed * 0.1f;
-        }
+    public override void _Process(double delta)
+    {
+        Vector3 direction = new Vector3();
+
+        if (Input.IsKeyPressed(Key.W))
+            direction.Z -= 1;
+        if (Input.IsKeyPressed(Key.S))
+            direction.Z += 1;
+        if (Input.IsKeyPressed(Key.D))
+            direction.X += 1;
+        if (Input.IsKeyPressed(Key.A))
+            direction.X -= 1;
+        if (Input.IsKeyPressed(Key.Space))
+            direction.Y += 1;
+        if (Input.IsKeyPressed(Key.Shift))
+            direction.Y -= 1;
+
+        direction = direction.Normalized() * MoveSpeed * (float)delta;
+        Translate(direction);
     }
 }

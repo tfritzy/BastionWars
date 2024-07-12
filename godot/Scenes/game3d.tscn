@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brhilccl8gihn"]
+
+[ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_36yro"]
+
+[node name="Game3d" type="Node3D"]
+script = ExtResource("1_36yro")

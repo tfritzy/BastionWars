@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dd4aworq1dhh8"
+path="res://.godot/imported/tile_straight.obj-b9320fec47ed323ad5bbbe48f537e297.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tile_straight.obj-b9320fec47ed323ad5bbbe48f537e297.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/tile_straight.obj"
+dest_files=["res://.godot/imported/tile_straight.obj-b9320fec47ed323ad5bbbe48f537e297.mesh", "res://.godot/imported/tile_straight.obj-b9320fec47ed323ad5bbbe48f537e297.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

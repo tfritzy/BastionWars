@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dm24t73wf2c4m"
+path="res://.godot/imported/tile_riverStraight.obj-5a8f4cccf2e32f5475ca04ec4a19d36d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tile_riverStraight.obj-5a8f4cccf2e32f5475ca04ec4a19d36d.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/tile_riverStraight.obj"
+dest_files=["res://.godot/imported/tile_riverStraight.obj-5a8f4cccf2e32f5475ca04ec4a19d36d.mesh", "res://.godot/imported/tile_riverStraight.obj-5a8f4cccf2e32f5475ca04ec4a19d36d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

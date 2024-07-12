@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://chhkq7cvae37g"
+path="res://.godot/imported/snow_tile_cornerRound.obj-b13b45ad63aa00680f07a55a0da9e1eb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/snow_tile_cornerRound.obj-b13b45ad63aa00680f07a55a0da9e1eb.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/snow_tile_cornerRound.obj"
+dest_files=["res://.godot/imported/snow_tile_cornerRound.obj-b13b45ad63aa00680f07a55a0da9e1eb.mesh", "res://.godot/imported/snow_tile_cornerRound.obj-b13b45ad63aa00680f07a55a0da9e1eb.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

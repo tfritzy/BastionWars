@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://du6b0yt3ybltk"
+path="res://.godot/imported/tile_cornerOuter.obj-b5fc3aa7efed85c195f8e4e92405daba.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tile_cornerOuter.obj-b5fc3aa7efed85c195f8e4e92405daba.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/tile_cornerOuter.obj"
+dest_files=["res://.godot/imported/tile_cornerOuter.obj-b5fc3aa7efed85c195f8e4e92405daba.mesh", "res://.godot/imported/tile_cornerOuter.obj-b5fc3aa7efed85c195f8e4e92405daba.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

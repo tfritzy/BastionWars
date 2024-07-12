@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b3eqnf2c7eose"
+path="res://.godot/imported/enemy_ufoGreenWeapon.obj-88439a34676ffd86d88158b75d7f86bf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/enemy_ufoGreenWeapon.obj-88439a34676ffd86d88158b75d7f86bf.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/enemy_ufoGreenWeapon.obj"
+dest_files=["res://.godot/imported/enemy_ufoGreenWeapon.obj-88439a34676ffd86d88158b75d7f86bf.mesh", "res://.godot/imported/enemy_ufoGreenWeapon.obj-88439a34676ffd86d88158b75d7f86bf.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

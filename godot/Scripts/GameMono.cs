@@ -26,7 +26,7 @@ public partial class GameMono : Node
 
 		mapMono = new MapMono(Game.Map);
 		AddChild(mapMono);
-		AddChild(new InteractiveCamera(mapMono.Center));
+		AddChild(new InteractiveCamera());
 		ConfigureScene();
 		ConfigureKeeps();
 		SpawnInstructionLabel();
