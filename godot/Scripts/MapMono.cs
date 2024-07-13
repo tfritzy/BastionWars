@@ -8,10 +8,10 @@ using System.Numerics;
 public partial class MapMono : GridMap
 {
     private Map Map;
-    public string MeshLibraryPath = "res://Configs/mesh_set.tres";
     public Dictionary<V2Int, Typeable> Words = new();
     public Dictionary<ulong, KeepMono> KeepMonos = new();
-    private Dictionary<V2Int, ColorRect> LandColors = new();
+    private Dictionary<V2Int, MeshInstance3D> lands = new();
+    private Dictionary<int, Material> playerMaterials = new();
 
     public MapMono(Map map)
     {
@@ -22,10 +22,10 @@ public partial class MapMono : GridMap
 
     public override void _Ready()
     {
-        MeshLibrary meshLibrary = GD.Load<MeshLibrary>(MeshLibraryPath);
+        MeshLibrary meshLibrary = GD.Load<MeshLibrary>("res://Configs/mesh_set.tres");
         if (meshLibrary == null)
         {
-            GD.Print("Failed to load TileSet from path: " + MeshLibraryPath);
+            GD.Print("Failed to load TileSet from path");
             return;
         }
 
@@ -33,7 +33,7 @@ public partial class MapMono : GridMap
 
         GenerateGrid();
         SpawnKeeps();
-        // ColorLands();
+        ColorLands();
     }
 
     public override void _Process(double delta)
@@ -48,7 +48,11 @@ public partial class MapMono : GridMap
             for (int y = 0; y < Map.Height; y++)
             {
                 TileType type = Map.Tiles[x, y];
-                SetCellItem(new Vector3I(x, 0, y), (int)type);
+                MeshInstance3D meshInst = new MeshInstance3D();
+                meshInst.Mesh = MeshLibrary.GetItemMesh((int)type);
+                meshInst.Position = ToGlobal(MapToLocal(new Vector3I(x, 0, y)));
+                lands[new V2Int(x, y)] = meshInst;
+                AddChild(meshInst);
             }
         }
     }
@@ -94,27 +98,19 @@ public partial class MapMono : GridMap
         }
     }
 
-    // private void ColorLands()
-    // {
-    //     foreach (var pos in Map.KeepLands.Keys)
-    //     {
-    //         ulong owner = Map.KeepLands[pos];
-    //         if (Map.Keeps.ContainsKey(owner))
-    //         {
-    //             Keep keep = Map.Keeps[owner];
-    //             var worldPos = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)));
-    //             var color = GetColor(keep.Alliance);
-    //             var transparentSheet = new ColorRect
-    //             {
-    //                 Color = color,
-    //                 Size = new Godot.Vector2(128, 128),
-    //                 Position = worldPos
-    //             };
-    //             AddChild(transparentSheet);
-    //             LandColors[pos] = transparentSheet;
-    //         }
-    //     }
-    // }
+    private void ColorLands()
+    {
+        foreach (var pos in Map.KeepLands.Keys)
+        {
+            ulong owner = Map.KeepLands[pos];
+            if (Map.Keeps.ContainsKey(owner))
+            {
+                Keep keep = Map.Keeps[owner];
+                var color = GetColor(keep.Alliance);
+                SetLandMeshColor(lands[pos], color);
+            }
+        }
+    }
 
     private void OnKeepCaptured(ulong keepId)
     {
@@ -124,9 +120,17 @@ public partial class MapMono : GridMap
             if (owner == keepId)
             {
                 var color = GetColor(Map.Keeps[keepId].Alliance);
-                LandColors[pos].Color = color;
+                SetLandMeshColor(lands[pos], color);
             }
         }
+    }
+
+    private void SetLandMeshColor(MeshInstance3D mesh, Color color)
+    {
+        var activeMaterial = mesh.Mesh.SurfaceGetMaterial(1);
+        var overrideMaterial = activeMaterial.Duplicate() as StandardMaterial3D;
+        overrideMaterial.AlbedoColor = color;
+        mesh.SetSurfaceOverrideMaterial(1, overrideMaterial);
     }
 
     private Color GetColor(int alliance)
@@ -134,11 +138,11 @@ public partial class MapMono : GridMap
         switch (alliance)
         {
             case 1:
-                return new Color(1, 0, 0, .25f);
+                return new Color("#495f94");
             case 2:
-                return new Color(0, 0, 1, .25f);
+                return new Color("#9d4343");
             default:
-                return new Color(0, 0, 0, 0);
+                return new Color("#3c6c54");
         }
     }
 
