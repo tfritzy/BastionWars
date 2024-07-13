@@ -1,15 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0srxy5w2ngpg"]
+[gd_scene load_steps=2 format=3 uid="uid://b0srxy5w2ngpg"]
 
 [ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_0ktn8"]
-[ext_resource type="Theme" uid="uid://cqcon3io16grl" path="res://Theme/theme.tres" id="2_tblku"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_0ktn8")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_right = 136.0
-offset_bottom = 69.0
-theme = ExtResource("2_tblku")
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-bbcode_enabled = true
-text = "[color=red]Fuck[/color]"

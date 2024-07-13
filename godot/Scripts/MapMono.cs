@@ -36,10 +36,10 @@ public partial class MapMono : GridMap
         // ColorLands();
     }
 
-    // public override void _Process(double delta)
-    // {
-    //     SyncWords();
-    // }
+    public override void _Process(double delta)
+    {
+        SyncWords();
+    }
 
     private void GenerateGrid()
     {
@@ -67,31 +67,32 @@ public partial class MapMono : GridMap
         }
     }
 
-    // private void SyncWords()
-    // {
-    //     foreach (var pos in Map.Words.Keys)
-    //     {
-    //         var word = Map.Words[pos];
-    //         if (word != null && !Words.ContainsKey(pos))
-    //         {
-    //             Words[pos] = new Typeable(word.Text)
-    //             {
-    //                 Position = ToGlobal(MapToLocal(new Vector2I(pos.X, pos.Y)))
-    //             };
-    //             AddChild(Words[pos]);
-    //         }
-    //     }
+    private void SyncWords()
+    {
+        foreach (var pos in Map.Words.Keys)
+        {
+            var word = Map.Words[pos];
+            if (word != null && !Words.ContainsKey(pos))
+            {
+                Camera3D cam = GetViewport().GetCamera3D();
+                Words[pos] = new Typeable(word.Text)
+                {
+                    Position = cam.UnprojectPosition(new Godot.Vector3(pos.X, 0, pos.Y))
+                };
+                AddChild(Words[pos]);
+            }
+        }
 
-    //     foreach (var pos in Words.Keys)
-    //     {
-    //         var word = Map.Words[pos];
-    //         if (word == null)
-    //         {
-    //             RemoveChild(Words[pos]);
-    //             Words.Remove(pos);
-    //         }
-    //     }
-    // }
+        foreach (var pos in Words.Keys)
+        {
+            var word = Map.Words[pos];
+            if (word == null)
+            {
+                RemoveChild(Words[pos]);
+                Words.Remove(pos);
+            }
+        }
+    }
 
     // private void ColorLands()
     // {

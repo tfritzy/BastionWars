@@ -1,6 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://brhilccl8gihn"]
+[gd_scene load_steps=5 format=3 uid="uid://brhilccl8gihn"]
 
 [ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_36yro"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_q7n5c"]
+ground_bottom_color = Color(0.552941, 0.858824, 0.768627, 1)
+ground_horizon_color = Color(0.552941, 0.858824, 0.768627, 1)
+
+[sub_resource type="Sky" id="Sky_gcvp2"]
+sky_material = SubResource("ProceduralSkyMaterial_q7n5c")
+
+[sub_resource type="Environment" id="Environment_dpg5e"]
+background_mode = 2
+sky = SubResource("Sky_gcvp2")
+tonemap_mode = 2
+glow_enabled = true
+
 [node name="Game3d" type="Node3D"]
 script = ExtResource("1_36yro")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dpg5e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.450651, 0.544898, 0, -0.770602, 0.637316, 0.707107, -0.450651, -0.544898, 0, 27.2393, 0)
+shadow_enabled = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = 266.0
+offset_top = 170.0
+offset_right = 521.0
+offset_bottom = 273.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[font_size=14]Hallow[/font_size]"

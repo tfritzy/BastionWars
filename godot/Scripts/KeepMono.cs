@@ -22,9 +22,14 @@ public partial class KeepMono : MeshInstance3D
 
         NameLabel = new KeepName(this)
         {
-            Position = new Vector2(0, 0),
             OnComplete = () => OnSelect?.Invoke(keep)
         };
         AddChild(NameLabel);
+    }
+
+    public override void _Ready()
+    {
+        Camera3D cam = GetViewport().GetCamera3D();
+        NameLabel.Position = cam.UnprojectPosition(Position);
     }
 }

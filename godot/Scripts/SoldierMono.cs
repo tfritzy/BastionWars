@@ -1,7 +1,7 @@
 using Godot;
 using KeepLordWarriors;
 
-public partial class SoldierMono : Sprite2D
+public partial class SoldierMono : MeshInstance3D
 {
     private Game game;
     private ulong id;
@@ -11,8 +11,7 @@ public partial class SoldierMono : Sprite2D
         this.game = game;
         this.id = id;
 
-        Texture = (Texture2D)GD.Load("res://icon.svg");
-        Scale = new Vector2(.4f, .4f);
+        Mesh = (Mesh)GD.Load<Mesh>("res://Models/Kenny_TD_Set/detail_treeLarge.obj");
     }
 
     public override void _Process(double delta)
@@ -24,6 +23,6 @@ public partial class SoldierMono : Sprite2D
         }
 
         var pos = game.Map.Grid.GetEntityPosition(id);
-        Position = new Vector2(pos.X, pos.Y) * 128;
+        Position = new Vector3(pos.X, 0, pos.Y);
     }
 }

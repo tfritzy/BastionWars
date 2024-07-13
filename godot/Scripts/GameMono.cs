@@ -25,11 +25,16 @@ public partial class GameMono : Node
 		}
 
 		mapMono = new MapMono(Game.Map);
+		var cam = new InteractiveCamera();
+		cam.Position = new Vector3(Game.Map.Width / 2, 17, Game.Map.Height);
+		AddChild(cam);
+		cam.LookAt(new Vector3(Game.Map.Width / 2f, 0, Game.Map.Height / 2f));
+
 		AddChild(mapMono);
-		AddChild(new InteractiveCamera());
 		ConfigureScene();
 		ConfigureKeeps();
 		SpawnInstructionLabel();
+
 	}
 
 	void SyncSoldiers()

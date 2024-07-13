@@ -15,6 +15,7 @@ public partial class Typeable : RichTextLabel
         BbcodeEnabled = true;
         FitContent = true;
         AutowrapMode = TextServer.AutowrapMode.Off;
+        ClipContents = false;
     }
 
     public override void _Ready()
