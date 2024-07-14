@@ -2,16 +2,18 @@
 
 [ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_36yro"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_q7n5c"]
-ground_bottom_color = Color(0.552941, 0.858824, 0.768627, 1)
-ground_horizon_color = Color(0.552941, 0.858824, 0.768627, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n2rg1"]
+sky_top_color = Color(0.484398, 0.484398, 0.484398, 1)
+sky_horizon_color = Color(0.369107, 0.369107, 0.369107, 1)
+ground_bottom_color = Color(0.988235, 0.984314, 0.952941, 1)
+ground_horizon_color = Color(0.988235, 0.984314, 0.952941, 1)
 
-[sub_resource type="Sky" id="Sky_gcvp2"]
-sky_material = SubResource("ProceduralSkyMaterial_q7n5c")
+[sub_resource type="Sky" id="Sky_dxmb4"]
+sky_material = SubResource("ProceduralSkyMaterial_n2rg1")
 
 [sub_resource type="Environment" id="Environment_dpg5e"]
 background_mode = 2
-sky = SubResource("Sky_gcvp2")
+sky = SubResource("Sky_dxmb4")
 tonemap_mode = 2
 glow_enabled = true
 

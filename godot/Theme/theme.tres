@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://cqcon3io16grl"]
 
-[ext_resource type="FontFile" uid="uid://3deofj7f3514" path="res://Theme/Roboto_Mono/static/RobotoMono-Medium.ttf" id="1_dxmv4"]
+[ext_resource type="FontFile" uid="uid://ua2ao6r85lb5" path="res://Theme/Roboto_Mono/static/RobotoMono-Medium.ttf" id="1_dxmv4"]
 
 [resource]
 default_font = ExtResource("1_dxmv4")

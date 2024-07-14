@@ -142,7 +142,7 @@ public partial class MapMono : GridMap
             case 2:
                 return new Color("#9d4343");
             default:
-                return new Color("#3c6c54");
+                return new Color("#fcfbf3");
         }
     }
 }

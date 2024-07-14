@@ -7,6 +7,9 @@ public partial class Typeable : RichTextLabel
     public int Progress { get; private set; }
     public Action OnComplete { get; set; }
     private string word;
+    public virtual string CompletedTextColor => "#4e9363";
+    public virtual string UnCompletedTextColor => "#fcfbf3";
+    public virtual string OutlineColor => "#2e2e43";
 
     public Typeable(string text)
     {
@@ -25,7 +28,7 @@ public partial class Typeable : RichTextLabel
 
     public void UpdateProgress(int progress)
     {
-        Text = $"[outline_size=10][outline_color=#000000][color=#00ff00]{word[..progress]}[/color][color=#ffffff]{word[progress..]}[/color][/outline_color]";
+        Text = $"[outline_size=3][outline_color={OutlineColor}][color={CompletedTextColor}]{word[..progress]}[/color][color={UnCompletedTextColor}]{word[progress..]}[/color][/outline_color]";
         if (progress >= word.Length)
         {
             OnComplete?.Invoke();

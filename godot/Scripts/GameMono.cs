@@ -34,15 +34,6 @@ public partial class GameMono : Node
 		ConfigureScene();
 		ConfigureKeeps();
 		SpawnInstructionLabel();
-
-
-		foreach (string word in Dictionary.MostCommon)
-		{
-			if (word.Length <= 5)
-			{
-				GD.Print($"\"{word}\",");
-			}
-		}
 	}
 
 	void SyncSoldiers()
