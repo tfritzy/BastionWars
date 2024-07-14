@@ -145,18 +145,4 @@ public partial class MapMono : GridMap
                 return new Color("#3c6c54");
         }
     }
-
-    // private Godot.Vector2 CalculateCenter()
-    // {
-    //     var rect = GetUsedRect();
-
-    //     GD.Print("Rect: " + rect);
-
-    //     var center_x = Position.X + (rect.Size.X / 2);
-    //     var center_y = Position.Y + (rect.Size.Y / 2);
-
-    //     GD.Print("Center: " + center_x + ", " + center_y);
-
-    //     return new Godot.Vector2(center_x, center_y);
-    // }
 }

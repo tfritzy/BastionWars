@@ -111,7 +111,7 @@ public class Map
         {
             for (int y = 0; y < Height; y++)
             {
-                if (Traversable[x, y] == Navigation.Constants.TRAVERSABLE)
+                if (Traversable[x, y] == Navigation.Constants.TRAVERSABLE && x % 2 == 0 && y % 2 == 0)
                 {
                     Words[new V2Int(x, y)] = null;
                 }
@@ -133,14 +133,17 @@ public class Map
                 placement -= 1;
                 if (placement < 0)
                 {
-                    Random r = new Random();
-                    var letters = "abcdefghijklmnopqrstuvwxyz".OrderBy(c => r.Next());
-                    string word = String.Join("", letters.Take(4));
+                    string word = GetRandomWord();
                     Words[pos] = new Word(word, pos);
                     return;
                 }
             }
         }
+    }
+
+    public static string GetRandomWord()
+    {
+        return Dictionary.MostCommon[Randy.Random.Next(0, Dictionary.MostCommon.Length)];
     }
 
     public void AddSoldier(Soldier soldier, Vector2 pos)

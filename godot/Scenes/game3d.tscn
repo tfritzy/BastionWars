@@ -24,13 +24,3 @@ environment = SubResource("Environment_dpg5e")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.450651, 0.544898, 0, -0.770602, 0.637316, 0.707107, -0.450651, -0.544898, 0, 27.2393, 0)
 shadow_enabled = true
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-texture_filter = 1
-offset_left = 266.0
-offset_top = 170.0
-offset_right = 521.0
-offset_bottom = 273.0
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-bbcode_enabled = true
-text = "[font_size=14]Hallow[/font_size]"
