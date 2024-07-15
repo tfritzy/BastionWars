@@ -55,6 +55,21 @@ public partial class MapMono : GridMap
                 AddChild(meshInst);
             }
         }
+
+        Random random = new Random();
+        int[] orientations = new int[] { 0, 10, 16, 22 };
+        for (int x = -3; x < Map.Width + 3; x++)
+        {
+            for (int y = -3; y < Map.Height + 3; y++)
+            {
+                if (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height)
+                {
+                    continue;
+                }
+
+                SetCellItem(new Vector3I(x, 0, y), (int)TileType.Tree, orientations[random.Next(0, 3)]);
+            }
+        }
     }
 
     private void SpawnKeeps()
@@ -127,10 +142,13 @@ public partial class MapMono : GridMap
 
     private void SetLandMeshColor(MeshInstance3D mesh, Color color)
     {
-        var activeMaterial = mesh.Mesh.SurfaceGetMaterial(1);
-        var overrideMaterial = activeMaterial.Duplicate() as StandardMaterial3D;
-        overrideMaterial.AlbedoColor = color;
-        mesh.SetSurfaceOverrideMaterial(1, overrideMaterial);
+        for (int i = 0; i < mesh.Mesh.GetSurfaceCount(); i++)
+        {
+            var activeMaterial = mesh.Mesh.SurfaceGetMaterial(i);
+            var overrideMaterial = activeMaterial.Duplicate() as StandardMaterial3D;
+            overrideMaterial.AlbedoColor = color;
+            mesh.SetSurfaceOverrideMaterial(i, overrideMaterial);
+        }
     }
 
     private Color GetColor(int alliance)

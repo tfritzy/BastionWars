@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://5qiq6ewc3lmr"
+path="res://.godot/imported/water_tile.obj-04a505d77e3eb2d7bea12e81b4edf4e8.mesh"
+
+[deps]
+
+files=["res://.godot/imported/water_tile.obj-04a505d77e3eb2d7bea12e81b4edf4e8.mesh"]
+
+source_file="res://Models/Kenny_TD_Set/water_tile.obj"
+dest_files=["res://.godot/imported/water_tile.obj-04a505d77e3eb2d7bea12e81b4edf4e8.mesh", "res://.godot/imported/water_tile.obj-04a505d77e3eb2d7bea12e81b4edf4e8.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

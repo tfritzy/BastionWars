@@ -24,13 +24,9 @@ public partial class GameMono : Node
 			GD.Print(keep.Name);
 		}
 
-		mapMono = new MapMono(Game.Map);
-		var cam = new InteractiveCamera();
-		cam.Position = new Vector3(Game.Map.Width / 2, 17, Game.Map.Height);
-		AddChild(cam);
-		cam.LookAt(new Vector3(Game.Map.Width / 2f, 0, Game.Map.Height / 2f));
-
-		AddChild(mapMono);
+		ConfigureCamera();
+		ConfigureMap();
+		ConfigureFog();
 		ConfigureScene();
 		ConfigureKeeps();
 		SpawnInstructionLabel();
@@ -68,6 +64,14 @@ public partial class GameMono : Node
 	{
 		Game.Update(delta);
 		SyncSoldiers();
+	}
+
+	void ConfigureCamera()
+	{
+		var cam = new InteractiveCamera();
+		cam.Position = new Vector3(Game.Map.Width / 2, 17, Game.Map.Height);
+		AddChild(cam);
+		cam.LookAt(new Vector3(Game.Map.Width / 2f, 0, (Game.Map.Height + 5) / 2f));
 	}
 
 	void ConfigureScene()
@@ -116,6 +120,37 @@ public partial class GameMono : Node
 
 			keep.NameLabel.HandleKeystroke(key);
 		}
+	}
+
+	private void ConfigureMap()
+	{
+		mapMono = new MapMono(Game.Map);
+		AddChild(mapMono);
+	}
+
+	private void ConfigureFog()
+	{
+		for (float y = 1; y <= 2; y += .5f)
+		{
+			MeshInstance3D fog = new MeshInstance3D();
+			fog.Mesh = new QuadMesh();
+			fog.Mesh.SurfaceSetMaterial(
+				0,
+				GD.Load<Material>("res://Rendering/Materials/fog.tres")
+			);
+			fog.Scale = new Vector3(Game.Map.Width + 6, Game.Map.Height + 6, 1);
+			fog.Position = new Vector3(Game.Map.Width / 2, y, Game.Map.Height / 2);
+			fog.RotateX(-Mathf.Pi / 2);
+			AddChild(fog);
+		}
+
+		MeshInstance3D wordBound = new MeshInstance3D();
+		wordBound.Mesh = new QuadMesh();
+		wordBound.Scale = new Vector3(100, 100, 1);
+		wordBound.RotateX(-Mathf.Pi / 2);
+		// wordBound.Position = new Vector3(Game.Map.Width / 2, 1, Game.Map.Height + 100);
+		wordBound.Position = new Vector3(0, 0, -50 - 6);
+		AddChild(wordBound);
 	}
 
 	private void ConfigureKeeps()

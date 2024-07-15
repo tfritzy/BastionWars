@@ -2,9 +2,9 @@ using Godot;
 
 public partial class KeepName : Typeable
 {
-    public override string CompletedTextColor => "#9d4343";
-    public override string UnCompletedTextColor => "#fceba8";
-    public override string OutlineColor => "#2a152d";
+    // public override string CompletedTextColor => "#9d4343";
+    // public override string UnCompletedTextColor => "#fceba8";
+    // public override string OutlineColor => "#2a152d";
 
     public KeepName(KeepMono keep) : base(keep.Keep.Name)
     {

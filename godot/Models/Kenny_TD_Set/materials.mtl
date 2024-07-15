@@ -1,19 +1,19 @@
 # Created by Kenney (www.kenney.nl)
 
 newmtl dirt
-Kd 1 1 1
+Kd 0.988 0.984 0.952
 
 newmtl foliage
-Kd 1 1 1
+Kd 0.988 0.984 0.952
 
 newmtl wood
-Kd 1 1 1
+Kd 0.988 0.984 0.952
 
 newmtl stone
-Kd 1 1 1
+Kd 0.988 0.984 0.952
 
 newmtl red
-Kd 1 1 1
+Kd 0.988 0.984 0.952
 
 newmtl stoneDark
-Kd 1 1 1
+Kd 0.988 0.984 0.952

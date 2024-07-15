@@ -35,5 +35,5 @@ fonts/dynamic_fonts/use_oversampling=false
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(1, 1, 1, 1)
+environment/defaults/default_clear_color=Color(0.74978, 0.74978, 0.74978, 1)
 viewport/hdr_2d=true

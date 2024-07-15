@@ -2,7 +2,7 @@
 
 [ext_resource type="ArrayMesh" uid="uid://dy6pjw8mkkwf2" path="res://Models/Kenny_TD_Set/tile_dirt.obj" id="1_68tox"]
 [ext_resource type="ArrayMesh" uid="uid://bpandhmvcktnt" path="res://Models/Kenny_TD_Set/tile.obj" id="2_i5edw"]
-[ext_resource type="ArrayMesh" uid="uid://dm24t73wf2c4m" path="res://Models/Kenny_TD_Set/tile_riverStraight.obj" id="3_m4x3p"]
+[ext_resource type="ArrayMesh" uid="uid://5qiq6ewc3lmr" path="res://Models/Kenny_TD_Set/water_tile.obj" id="3_dccfc"]
 [ext_resource type="ArrayMesh" uid="uid://b064dgcu6fbey" path="res://Models/Kenny_TD_Set/tile_treeQuad.obj" id="4_r3srv"]
 
 [resource]
@@ -19,7 +19,7 @@ item/1/shapes = []
 item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 item/1/navigation_layers = 1
 item/2/name = ""
-item/2/mesh = ExtResource("3_m4x3p")
+item/2/mesh = ExtResource("3_dccfc")
 item/2/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 item/2/shapes = []
 item/2/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

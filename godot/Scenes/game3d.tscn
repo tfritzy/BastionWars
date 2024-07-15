@@ -2,19 +2,19 @@
 
 [ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_36yro"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n2rg1"]
-sky_top_color = Color(0.484398, 0.484398, 0.484398, 1)
-sky_horizon_color = Color(0.369107, 0.369107, 0.369107, 1)
-ground_bottom_color = Color(0.988235, 0.984314, 0.952941, 1)
-ground_horizon_color = Color(0.988235, 0.984314, 0.952941, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a0jmw"]
 
-[sub_resource type="Sky" id="Sky_dxmb4"]
-sky_material = SubResource("ProceduralSkyMaterial_n2rg1")
+[sub_resource type="Sky" id="Sky_8g05u"]
+sky_material = SubResource("ProceduralSkyMaterial_a0jmw")
 
 [sub_resource type="Environment" id="Environment_dpg5e"]
 background_mode = 2
-sky = SubResource("Sky_dxmb4")
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_8g05u")
+ambient_light_color = Color(0.719076, 0.719077, 0.719076, 1)
 tonemap_mode = 2
+ssao_radius = 0.25
+ssao_intensity = 1.38
 glow_enabled = true
 
 [node name="Game3d" type="Node3D"]
@@ -26,3 +26,7 @@ environment = SubResource("Environment_dpg5e")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.450651, 0.544898, 0, -0.770602, 0.637316, 0.707107, -0.450651, -0.544898, 0, 27.2393, 0)
 shadow_enabled = true
+shadow_transmittance_bias = 16.0
+shadow_opacity = 0.9
+directional_shadow_mode = 0
+directional_shadow_max_distance = 30.0
