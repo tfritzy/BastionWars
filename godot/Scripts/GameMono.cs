@@ -69,9 +69,10 @@ public partial class GameMono : Node
 	void ConfigureCamera()
 	{
 		var cam = new InteractiveCamera();
-		cam.Position = new Vector3(Game.Map.Width / 2, 17, Game.Map.Height);
+		cam.Fov = 50;
+		cam.Position = new Vector3(Game.Map.Width / 2, 27, Game.Map.Height);
 		AddChild(cam);
-		cam.LookAt(new Vector3(Game.Map.Width / 2f, 0, (Game.Map.Height + 5) / 2f));
+		cam.LookAt(new Vector3(Game.Map.Width / 2f, 0, (Game.Map.Height + 2) / 2f));
 	}
 
 	void ConfigureScene()
@@ -130,27 +131,31 @@ public partial class GameMono : Node
 
 	private void ConfigureFog()
 	{
-		for (float y = 1; y <= 2; y += .5f)
+		for (int i = 0; i < 10; i++)
 		{
 			MeshInstance3D fog = new MeshInstance3D();
 			fog.Mesh = new QuadMesh();
-			fog.Mesh.SurfaceSetMaterial(
-				0,
-				GD.Load<Material>("res://Rendering/Materials/fog.tres")
-			);
+			ShaderMaterial material = GD.Load<ShaderMaterial>("res://Rendering/Materials/fog.tres");
+			material.SetShaderParameter("range_size", .1 + (i * .01f));
+			fog.Mesh.SurfaceSetMaterial(0, material);
 			fog.Scale = new Vector3(Game.Map.Width + 6, Game.Map.Height + 6, 1);
-			fog.Position = new Vector3(Game.Map.Width / 2, y, Game.Map.Height / 2);
+			fog.Position = new Vector3(Game.Map.Width / 2, 1 + i * .1f, Game.Map.Height / 2);
 			fog.RotateX(-Mathf.Pi / 2);
+			fog.CastShadow = GeometryInstance3D.ShadowCastingSetting.Off;
 			AddChild(fog);
 		}
 
-		MeshInstance3D wordBound = new MeshInstance3D();
-		wordBound.Mesh = new QuadMesh();
-		wordBound.Scale = new Vector3(100, 100, 1);
-		wordBound.RotateX(-Mathf.Pi / 2);
-		// wordBound.Position = new Vector3(Game.Map.Width / 2, 1, Game.Map.Height + 100);
-		wordBound.Position = new Vector3(0, 0, -50 - 6);
-		AddChild(wordBound);
+		MeshInstance3D plane = new MeshInstance3D();
+		plane.Mesh = new QuadMesh();
+		plane.Mesh.SurfaceSetMaterial(
+			0,
+			GD.Load<Material>("res://Rendering/Materials/color.tres")
+		);
+		plane.Scale = new Vector3(500, 500, 1);
+		plane.Position = new Vector3(Game.Map.Width / 2, -1, Game.Map.Height / 2);
+		plane.RotateX(-Mathf.Pi / 2);
+		plane.CastShadow = GeometryInstance3D.ShadowCastingSetting.Off;
+		AddChild(plane);
 	}
 
 	private void ConfigureKeeps()

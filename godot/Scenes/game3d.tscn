@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://brhilccl8gihn"]
+[gd_scene load_steps=7 format=3 uid="uid://brhilccl8gihn"]
 
 [ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_36yro"]
+[ext_resource type="Material" uid="uid://c1ka73e5p538x" path="res://Rendering/Materials/color.tres" id="2_yglqg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a0jmw"]
 
@@ -17,6 +18,8 @@ ssao_radius = 0.25
 ssao_intensity = 1.38
 glow_enabled = true
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_keqt0"]
+
 [node name="Game3d" type="Node3D"]
 script = ExtResource("1_36yro")
 
@@ -30,3 +33,7 @@ shadow_transmittance_bias = 16.0
 shadow_opacity = 0.9
 directional_shadow_mode = 0
 directional_shadow_max_distance = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_keqt0")
+surface_material_override/0 = ExtResource("2_yglqg")
