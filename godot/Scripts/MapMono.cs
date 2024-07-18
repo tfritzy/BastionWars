@@ -156,9 +156,9 @@ public partial class MapMono : GridMap
         switch (alliance)
         {
             case 1:
-                return new Color("#495f94");
+                return new Color("#7396d5");
             case 2:
-                return new Color("#9d4343");
+                return new Color("#e39764");
             default:
                 return new Color("#fcfbf3");
         }
