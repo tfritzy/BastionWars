@@ -23,6 +23,6 @@ public partial class SoldierMono : MeshInstance3D
         }
 
         var pos = game.Map.Grid.GetEntityPosition(id);
-        Position = new Vector3(pos.X, 0, pos.Y);
+        Position = new Vector3(pos.X, 1, pos.Y);
     }
 }
