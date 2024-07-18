@@ -14,17 +14,17 @@ public class GameTests
         game.Update(Game.AutoAccrualTime - .1f);
         foreach (Keep bastion in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(0, bastion.GetCount(bastion.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount, bastion.GetCount(bastion.SoldierType));
         }
         game.Update(.2f);
         foreach (Keep bastion in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(1, bastion.GetCount(bastion.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount + 1, bastion.GetCount(bastion.SoldierType));
         }
         game.Update(Game.AutoAccrualTime - .1f);
         foreach (Keep bastion in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(1, bastion.GetCount(bastion.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount + 1, bastion.GetCount(bastion.SoldierType));
         }
     }
 
@@ -36,7 +36,7 @@ public class GameTests
         game.Update(Game.AutoAccrualTime + .1f);
         foreach (Keep keep in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(0, keep.GetCount(keep.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(keep.SoldierType));
         }
     }
 
@@ -106,6 +106,7 @@ public class GameTests
     {
         Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
         Keep allyKeep = game.Map.Keeps.Values.First(b => b.Alliance == 1);
+        allyKeep.SetCount(archers: 0, warriors: 0);
 
         // Fill in words
         foreach (V2Int pos in game.Map.Words.Keys)
@@ -126,7 +127,7 @@ public class GameTests
 
         map.KeepAt(0).Capture(1);
         map.KeepAt(1).Capture(2);
-        map.KeepAt(0).SetCount(archers: 2);
+        map.KeepAt(0).SetCount(archers: 2, warriors: 0);
         game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
 
         Assert.AreEqual(0, map.KeepAt(0).ArcherCount);

@@ -134,9 +134,15 @@ public class MapTests
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         int numAvailableSpots = 0;
         for (int x = 0; x < map.Width; x++)
+        {
             for (int y = 0; y < map.Height; y++)
-                numAvailableSpots += map.Traversable[x, y] == Navigation.Constants.TRAVERSABLE ? 1 : 0;
-
+            {
+                if (x % 2 == 0 && y % 2 == 0)
+                {
+                    numAvailableSpots += map.Traversable[x, y] == Navigation.Constants.TRAVERSABLE ? 1 : 0;
+                }
+            }
+        }
         Assert.AreEqual(numAvailableSpots, map.Words.Keys.Count);
         Assert.AreEqual(0, map.Words.Values.Count(w => w != null));
         map.PlaceWord();
