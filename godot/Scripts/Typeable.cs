@@ -28,7 +28,7 @@ public partial class Typeable : RichTextLabel
 
     public void UpdateProgress(int progress)
     {
-        Text = $"[outline_size=10][outline_color={OutlineColor}][color={CompletedTextColor}]{word[..progress]}[/color][color={UnCompletedTextColor}]{word[progress..]}[/color][/outline_color]";
+        Text = $"[outline_size=10][outline_color={OutlineColor}][center][color={CompletedTextColor}]{word[..progress]}[/color][color={UnCompletedTextColor}]{word[progress..]}[/color][/center][/outline_color]";
         if (progress >= word.Length)
         {
             OnComplete?.Invoke();

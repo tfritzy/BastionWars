@@ -69,8 +69,8 @@ public partial class GameMono : Node
 	void ConfigureCamera()
 	{
 		var cam = new InteractiveCamera();
-		cam.Fov = 50;
-		cam.Position = new Vector3(Game.Map.Width / 2, 27, Game.Map.Height);
+		cam.Fov = 45;
+		cam.Position = new Vector3(Game.Map.Width / 2, 27, Game.Map.Height + 3);
 		AddChild(cam);
 		cam.LookAt(new Vector3(Game.Map.Width / 2f, 0, (Game.Map.Height + 2) / 2f));
 	}
@@ -136,7 +136,7 @@ public partial class GameMono : Node
 			MeshInstance3D fog = new MeshInstance3D();
 			fog.Mesh = new QuadMesh();
 			ShaderMaterial material = GD.Load<ShaderMaterial>("res://Rendering/Materials/fog.tres");
-			material.SetShaderParameter("range_size", .1 + (i * .01f));
+			material.SetShaderParameter("range_size", .12);
 			fog.Mesh.SurfaceSetMaterial(0, material);
 			fog.Scale = new Vector3(Game.Map.Width + 6, Game.Map.Height + 6, 1);
 			fog.Position = new Vector3(Game.Map.Width / 2, 1 + i * .1f, Game.Map.Height / 2);

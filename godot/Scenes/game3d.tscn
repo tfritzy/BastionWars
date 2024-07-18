@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://brhilccl8gihn"]
+[gd_scene load_steps=5 format=3 uid="uid://brhilccl8gihn"]
 
 [ext_resource type="Script" path="res://Scripts/GameMono.cs" id="1_36yro"]
-[ext_resource type="Material" uid="uid://c1ka73e5p538x" path="res://Rendering/Materials/color.tres" id="2_yglqg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a0jmw"]
 
@@ -12,13 +11,12 @@ sky_material = SubResource("ProceduralSkyMaterial_a0jmw")
 background_mode = 2
 background_color = Color(1, 1, 1, 1)
 sky = SubResource("Sky_8g05u")
-ambient_light_color = Color(0.719076, 0.719077, 0.719076, 1)
-tonemap_mode = 2
-ssao_radius = 0.25
+ambient_light_color = Color(0.507972, 0.507971, 0.507971, 1)
+ambient_light_energy = 1.28
+tonemap_mode = 3
+ssao_radius = 0.01
 ssao_intensity = 1.38
 glow_enabled = true
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_keqt0"]
 
 [node name="Game3d" type="Node3D"]
 script = ExtResource("1_36yro")
@@ -32,8 +30,6 @@ shadow_enabled = true
 shadow_transmittance_bias = 16.0
 shadow_opacity = 0.9
 directional_shadow_mode = 0
-directional_shadow_max_distance = 30.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_keqt0")
-surface_material_override/0 = ExtResource("2_yglqg")
+directional_shadow_fade_start = 0.924
+directional_shadow_max_distance = 70.0
+directional_shadow_pancake_size = 0.5
