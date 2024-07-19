@@ -13,7 +13,7 @@ public class Keep : Entity
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .25f;
-    public const int MaxTroopsPerWave = 1;
+    public const int MaxTroopsPerWave = 6;
     public const int StartTroopCount = 5;
 
     /// Overkill damage during a breach is stored here and applied to the next wave

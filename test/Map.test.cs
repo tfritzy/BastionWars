@@ -157,4 +157,28 @@ public class MapTests
 
         Assert.AreEqual(numAvailableSpots, map.Words.Values.Count(w => w != null));
     }
+
+    [TestMethod]
+    public void Map_RenderTiles()
+    {
+        KeepLordWarriors.Map map = new(TestMaps.ThreeByThree);
+        RenderTType[,] expected = new RenderTType[,]
+        {
+            {RenderTType.FullWater, RenderTType.FullWater, RenderTType.FullWater, RenderTType.FullWater},
+            {RenderTType.L_0001, RenderTType.L_0010, RenderTType.L_0001, RenderTType.L_0010},
+            {RenderTType.L_0101, RenderTType.L_1011, RenderTType.L_0110, RenderTType.L_1000},
+            {RenderTType.L_0100, RenderTType.L_1100, RenderTType.L_1000, RenderTType.FullWater},
+        };
+
+        for (int x = 0; x < map.Width; x++)
+        {
+            for (int y = 0; y < map.Height; y++)
+            {
+                Assert.AreEqual(
+                    expected[y, x],
+                    map.RenderTiles[x, y],
+                    $"Index ({x}, {y}) incorrect. Expected {expected[y, x]}, actual{map.RenderTiles[x, y]}");
+            }
+        }
+    }
 }

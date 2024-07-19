@@ -7,6 +7,7 @@ namespace KeepLordWarriors;
 public class Map
 {
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
+    public RenderTType[,] RenderTiles { get; private set; } = new RenderTType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
     public Dictionary<ulong, Keep> Keeps { get; private set; } = new();
@@ -237,5 +238,66 @@ public class Map
                 }
             }
         }
+
+        ParseRenderTiles();
+    }
+
+    private void ParseRenderTiles()
+    {
+        RenderTiles = new RenderTType[Width + 1, Height + 1];
+
+        for (int x = -1; x < Width; x++)
+        {
+            for (int y = -1; y < Height; y++)
+            {
+                RenderTiles[x + 1, y + 1] = GetRenderTileCase(
+                    tl: GetMaybeOOBTile(x, y),
+                    tr: GetMaybeOOBTile(x + 1, y),
+                    bl: GetMaybeOOBTile(x + 1, y + 1),
+                    br: GetMaybeOOBTile(x, y + 1)
+                );
+            }
+        }
+    }
+
+    private TileType GetMaybeOOBTile(int x, int y)
+    {
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
+        {
+            return TileType.Water;
+        }
+
+        return Tiles[x, y];
+    }
+
+    private RenderTType GetRenderTileCase(
+        TileType tl,
+        TileType tr,
+        TileType bl,
+        TileType br
+    )
+    {
+        int tileCase = 0;
+        if (tl != TileType.Water)
+        {
+            tileCase |= 1;
+        }
+
+        if (tr != TileType.Water)
+        {
+            tileCase |= 2;
+        }
+
+        if (br != TileType.Water)
+        {
+            tileCase |= 4;
+        }
+
+        if (bl != TileType.Water)
+        {
+            tileCase |= 8;
+        }
+
+        return (RenderTType)tileCase;
     }
 }

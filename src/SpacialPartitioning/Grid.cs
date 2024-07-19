@@ -5,7 +5,7 @@ namespace SpacialPartitioning;
 public class Grid
 {
     public int EntityCount => entityPartitionLookup.Count;
-    public const int PartitionSize = 5;
+    public const int PartitionSize = 1;
 
     readonly Partition[,] partitions;
     readonly Dictionary<ulong, V2Int> entityPartitionLookup;
