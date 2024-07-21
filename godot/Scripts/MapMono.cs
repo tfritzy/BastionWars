@@ -41,33 +41,25 @@ public partial class MapMono : GridMap
         SyncWords();
     }
 
+    struct MeshDetails
+    {
+        public int Index;
+        public int Orientation;
+    }
+
+    static readonly int[] orientations = new int[] { 0, 10, 16, 22 };
     private void GenerateGrid()
     {
-        for (int x = 0; x < Map.Width; x++)
+        for (int x = 0; x < Map.RenderTiles.GetLength(0); x++)
         {
-            for (int y = 0; y < Map.Height; y++)
+            for (int y = 0; y < Map.RenderTiles.GetLength(1); y++)
             {
-                TileType type = Map.Tiles[x, y];
+                RenderTType type = Map.RenderTiles[x, y];
                 MeshInstance3D meshInst = new MeshInstance3D();
                 meshInst.Mesh = MeshLibrary.GetItemMesh((int)type);
                 meshInst.Position = ToGlobal(MapToLocal(new Vector3I(x, 0, y)));
                 lands[new V2Int(x, y)] = meshInst;
                 AddChild(meshInst);
-            }
-        }
-
-        Random random = new Random();
-        int[] orientations = new int[] { 0, 10, 16, 22 };
-        for (int x = -3; x < Map.Width + 3; x++)
-        {
-            for (int y = -3; y < Map.Height + 3; y++)
-            {
-                if (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height)
-                {
-                    continue;
-                }
-
-                SetCellItem(new Vector3I(x, 0, y), (int)TileType.Tree, orientations[random.Next(0, 3)]);
             }
         }
     }

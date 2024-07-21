@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c8jufe4tendc0"
+path="res://.godot/imported/land_tile.obj-b41c32042af14da574c4fe14e9e8ae53.mesh"
+
+[deps]
+
+files=["res://.godot/imported/land_tile.obj-b41c32042af14da574c4fe14e9e8ae53.mesh"]
+
+source_file="res://Rendering/Models/land_tile.obj"
+dest_files=["res://.godot/imported/land_tile.obj-b41c32042af14da574c4fe14e9e8ae53.mesh", "res://.godot/imported/land_tile.obj-b41c32042af14da574c4fe14e9e8ae53.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

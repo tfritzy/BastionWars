@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dh6y3w6s4kcg8"
+path="res://.godot/imported/water_corner_tile.obj-cecf754dc6956c234511d6b3ebf6f3ee.mesh"
+
+[deps]
+
+files=["res://.godot/imported/water_corner_tile.obj-cecf754dc6956c234511d6b3ebf6f3ee.mesh"]
+
+source_file="res://Rendering/Models/water_corner_tile.obj"
+dest_files=["res://.godot/imported/water_corner_tile.obj-cecf754dc6956c234511d6b3ebf6f3ee.mesh", "res://.godot/imported/water_corner_tile.obj-cecf754dc6956c234511d6b3ebf6f3ee.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
