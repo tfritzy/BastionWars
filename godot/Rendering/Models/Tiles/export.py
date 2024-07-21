@@ -1,36 +1,42 @@
 import bpy
 import os
-
-# Define the directory containing the .blend files
-source_directory = "C:/development/BastionWars/godot/Rendering/Models/Tiles/blend"
-# Define the directory where the .obj files will be saved
-destination_directory = "C:/development/BastionWars/godot/Rendering/Models/Tiles/glb"
-
-# Make sure the destination directory exists
-if not os.path.exists(destination_directory):
-    os.makedirs(destination_directory)
-
-# Iterate through all files in the source directory
-for filename in os.listdir(source_directory):
-    if filename.endswith(".blend"):
-        # Construct the full file path
-        blend_file_path = os.path.join(source_directory, filename)
-
-        # Load the .blend file
-        bpy.ops.wm.open_mainfile(filepath=blend_file_path)
-
-        # Define the output path for the .obj file
-        obj_file_path = os.path.join(
-            destination_directory, os.path.splitext(filename)[0] + ".obj"
-        )
-
-        # Export the .blend file as .obj
-        bpy.ops.export_scene.gltf(
-            filepath=destination_directory,
-            export_format="GLB",  # Export format
-            export_materials="NONE",  # Do not export materials
-            export_apply=True,  # Apply transformations
-        )
+import sys
 
 
-print("Export completed.")
+def export_to_gltf(blend_file_path, output_folder):
+    # Open the .blend file
+    bpy.ops.wm.open_mainfile(filepath=blend_file_path)
+
+    # Ensure the context is correctly set
+    if not bpy.context.view_layer.objects.active:
+        for obj in bpy.context.view_layer.objects:
+            if obj.type == "MESH":
+                bpy.context.view_layer.objects.active = obj
+                break
+
+    # Set the output file path
+    output_file_path = os.path.join(
+        output_folder, os.path.splitext(os.path.basename(blend_file_path))[0] + ".gltf"
+    )
+
+    # Export to glTF
+    bpy.ops.export_scene.gltf(filepath=output_file_path, export_format="GLTF_SEPARATE")
+
+
+def main(folder_path, output_folder):
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # List all .blend files in the folder
+    blend_files = [f for f in os.listdir(folder_path) if f.endswith(".blend")]
+
+    for blend_file in blend_files:
+        blend_file_path = os.path.join(folder_path, blend_file)
+        export_to_gltf(blend_file_path, output_folder)
+        print(f"Exported {blend_file} to glTF")
+
+
+if __name__ == "__main__":
+    folder_path = "C:/development/BastionWars/godot/Rendering/Models/Tiles/blend"
+    output_folder = "C:/development/BastionWars/godot/Rendering/Models/Tiles/glb"
+    main(folder_path, output_folder)
