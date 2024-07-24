@@ -18,15 +18,16 @@
   </head>
   <body>
     <canvas id="myCanvas"></canvas>
-    <script>
+    <script type="module">
+      import { drawPentagon } from "./rendering.js";
+      import { CanvasControls } from "./controls.js";
+
       const canvas = document.getElementById("myCanvas");
       const ctx = canvas.getContext("2d");
 
-      let scale = 1;
-      let offsetX = 0;
-      let offsetY = 0;
-      let isDragging = false;
-      let lastX, lastY;
+      let lastTime = 0;
+      let budgetPercentage = 0;
+      let fps = 0;
 
       function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -35,6 +36,8 @@
       }
 
       function draw() {
+        const { scale, offsetX, offsetY } = controls.getTransform();
+
         ctx.save();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.scale(scale, scale);
@@ -42,11 +45,13 @@
 
         drawGrid();
         drawShapes();
+        drawPerformanceMetrics();
 
         ctx.restore();
       }
 
       function drawGrid() {
+        const { offsetX, offsetY } = controls.getTransform();
         ctx.fillStyle = "#cbd5e1";
         const gridSize = 20;
         const roundedX = Math.trunc(offsetX / gridSize) * gridSize;
@@ -60,110 +65,45 @@
         }
       }
 
-      function drawShapes() {
-        // Rectangle
-        ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
-        ctx.fillRect(50, 50, 100, 80);
+      function update(currentTime) {
+        requestAnimationFrame((time) => update(time));
+        const startTime = performance.now();
 
-        // Circle
-        ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
-        ctx.beginPath();
-        ctx.arc(250, 100, 50, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Triangle
-        ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
-        ctx.beginPath();
-        ctx.moveTo(400, 50);
-        ctx.lineTo(450, 150);
-        ctx.lineTo(350, 150);
-        ctx.closePath();
-        ctx.fill();
-
-        // Star
-        ctx.fillStyle = "rgba(255, 255, 0, 0.5)";
-        ctx.beginPath();
-        for (let i = 0; i < 5; i++) {
-          const angle = (i * 4 * Math.PI) / 5;
-          const x = 100 + Math.cos(angle) * 50;
-          const y = 300 + Math.sin(angle) * 50;
-          ctx.lineTo(x, y);
-        }
-        ctx.closePath();
-        ctx.fill();
-
-        // Pentagon
-        ctx.fillStyle = "rgba(255, 0, 255, 0.5)";
-        ctx.beginPath();
-        for (let i = 0; i < 5; i++) {
-          const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2;
-          const x = 300 + Math.cos(angle) * 50;
-          const y = 300 + Math.sin(angle) * 50;
-          ctx.lineTo(x, y);
-        }
-        ctx.closePath();
-        ctx.fill();
-
-        // Hexagon
-        ctx.fillStyle = "rgba(0, 255, 255, 0.5)";
-        ctx.beginPath();
-        for (let i = 0; i < 6; i++) {
-          const angle = (i * 2 * Math.PI) / 6;
-          const x = 500 + Math.cos(angle) * 50;
-          const y = 300 + Math.sin(angle) * 50;
-          ctx.lineTo(x, y);
-        }
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      function handleWheel(event) {
-        event.preventDefault();
-        const zoom = event.deltaY < 0 ? 1.1 : 0.9;
-        const mouseX = event.clientX / scale - offsetX;
-        const mouseY = event.clientY / scale - offsetY;
-
-        offsetX -= mouseX * (zoom - 1);
-        offsetY -= mouseY * (zoom - 1);
-        scale *= zoom;
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
 
         draw();
+        const endTime = performance.now();
+        budgetPercentage = ((endTime - startTime) / deltaTime) * 100;
       }
 
-      function startDrag(event) {
-        isDragging = true;
-        lastX = event.clientX;
-        lastY = event.clientY;
-        canvas.style.cursor = "grabbing";
+      function drawShapes() {
+        drawPentagon(ctx, 300, 300, 50, "rgba(255, 0, 255, 0.5)");
       }
 
-      function drag(event) {
-        if (isDragging) {
-          const deltaX = event.clientX - lastX;
-          const deltaY = event.clientY - lastY;
-          offsetX += deltaX / scale;
-          offsetY += deltaY / scale;
-          lastX = event.clientX;
-          lastY = event.clientY;
-          draw();
-        }
+      function drawPerformanceMetrics() {
+        ctx.save();
+        ctx.resetTransform(); // Reset any transformations
+
+        ctx.font = "14px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "top";
+
+        const metrics = `${budgetPercentage.toFixed(0)}%`;
+        ctx.fillText(metrics, canvas.width - 10, 10);
+
+        ctx.restore();
       }
 
-      function endDrag() {
-        isDragging = false;
-        canvas.style.cursor = "default";
-      }
+      const controls = new CanvasControls(canvas, draw);
 
       // Initial setup
       resizeCanvas();
+      update();
 
       // Event listeners
       window.addEventListener("resize", resizeCanvas);
-      canvas.addEventListener("wheel", handleWheel);
-      canvas.addEventListener("mousedown", startDrag);
-      canvas.addEventListener("mousemove", drag);
-      canvas.addEventListener("mouseup", endDrag);
-      canvas.addEventListener("mouseout", endDrag);
     </script>
   </body>
 </html>
