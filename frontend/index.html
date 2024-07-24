@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zoomable Canvas with Grid and Shapes</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let scale = 1;
+      let offsetX = 0;
+      let offsetY = 0;
+      let isDragging = false;
+      let lastX, lastY;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        draw();
+      }
+
+      function draw() {
+        ctx.save();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(scale, scale);
+        ctx.translate(offsetX, offsetY);
+
+        drawGrid();
+        drawShapes();
+
+        ctx.restore();
+      }
+
+      function drawGrid() {
+        ctx.fillStyle = "#cbd5e1";
+        const gridSize = 20;
+        const roundedX = Math.trunc(offsetX / gridSize) * gridSize;
+        const roundedY = Math.trunc(offsetY / gridSize) * gridSize;
+        for (let x = -roundedX; x < canvas.width - roundedX; x += gridSize) {
+          for (let y = -roundedY; y < canvas.height - roundedY; y += gridSize) {
+            ctx.beginPath();
+            ctx.arc(x, y, 1, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      function drawShapes() {
+        // Rectangle
+        ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+        ctx.fillRect(50, 50, 100, 80);
+
+        // Circle
+        ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
+        ctx.beginPath();
+        ctx.arc(250, 100, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Triangle
+        ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
+        ctx.beginPath();
+        ctx.moveTo(400, 50);
+        ctx.lineTo(450, 150);
+        ctx.lineTo(350, 150);
+        ctx.closePath();
+        ctx.fill();
+
+        // Star
+        ctx.fillStyle = "rgba(255, 255, 0, 0.5)";
+        ctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 4 * Math.PI) / 5;
+          const x = 100 + Math.cos(angle) * 50;
+          const y = 300 + Math.sin(angle) * 50;
+          ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+
+        // Pentagon
+        ctx.fillStyle = "rgba(255, 0, 255, 0.5)";
+        ctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+          const x = 300 + Math.cos(angle) * 50;
+          const y = 300 + Math.sin(angle) * 50;
+          ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+
+        // Hexagon
+        ctx.fillStyle = "rgba(0, 255, 255, 0.5)";
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const angle = (i * 2 * Math.PI) / 6;
+          const x = 500 + Math.cos(angle) * 50;
+          const y = 300 + Math.sin(angle) * 50;
+          ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function handleWheel(event) {
+        event.preventDefault();
+        const zoom = event.deltaY < 0 ? 1.1 : 0.9;
+        const mouseX = event.clientX / scale - offsetX;
+        const mouseY = event.clientY / scale - offsetY;
+
+        offsetX -= mouseX * (zoom - 1);
+        offsetY -= mouseY * (zoom - 1);
+        scale *= zoom;
+
+        draw();
+      }
+
+      function startDrag(event) {
+        isDragging = true;
+        lastX = event.clientX;
+        lastY = event.clientY;
+        canvas.style.cursor = "grabbing";
+      }
+
+      function drag(event) {
+        if (isDragging) {
+          const deltaX = event.clientX - lastX;
+          const deltaY = event.clientY - lastY;
+          offsetX += deltaX / scale;
+          offsetY += deltaY / scale;
+          lastX = event.clientX;
+          lastY = event.clientY;
+          draw();
+        }
+      }
+
+      function endDrag() {
+        isDragging = false;
+        canvas.style.cursor = "default";
+      }
+
+      // Initial setup
+      resizeCanvas();
+
+      // Event listeners
+      window.addEventListener("resize", resizeCanvas);
+      canvas.addEventListener("wheel", handleWheel);
+      canvas.addEventListener("mousedown", startDrag);
+      canvas.addEventListener("mousemove", drag);
+      canvas.addEventListener("mouseup", endDrag);
+      canvas.addEventListener("mouseout", endDrag);
+    </script>
+  </body>
+</html>
