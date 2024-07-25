@@ -2,14 +2,6 @@ syntax = "proto3";
 
 package Schema;
 
-enum TileType
-{
-    Invalid = 0;
-    Land = 1;
-    Water = 2;
-    Tree = 3;
-}
-
 message OneofUpdate {
     string recipient_id = 1;
     string game_id = 2;
@@ -18,6 +10,33 @@ message OneofUpdate {
         AllSoldierPositions all_soldier_positions = 4;
     }
 }
+
+message Chunk {
+    int32 index = 1;
+    int32 maxIndex = 2;
+    bytes data = 3;
+}
+
+enum PacketType {
+    UPDATE = 0;
+    HEARTBEAT = 1;
+}
+
+message Packet {
+    repeated Chunk chunks = 1;
+    uint64 id = 2;
+    PacketType type = 3;
+    int32 sent_ms = 4;
+}
+
+enum TileType
+{
+    Invalid = 0;
+    Land = 1;
+    Water = 2;
+    Tree = 3;
+}
+
 
 message V2 {
     float x = 1;

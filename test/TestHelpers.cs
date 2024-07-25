@@ -1,5 +1,6 @@
 using System.Numerics;
 using KeepLordWarriors;
+using Schema;
 
 namespace Tests;
 
@@ -42,4 +43,15 @@ public static class TH
     {
         return game.Outbox.Where((u) => u.UpdateCase == type).ToList();
     }
+
+    // public static List<Schema.OneofUpdate> GetMessagesSentToPlayerOfType(
+    //     Game game,
+    //     string playerId,
+    //     Schema.OneofUpdate.UpdateOneofCase type)
+    // {
+    //     Player player = game.Players[playerId];
+    //     var packets = player.PendingPackets;
+
+    //     var unchunked = MessageChunker.ExtractFullUpdate(ref packets);
+    // }
 }

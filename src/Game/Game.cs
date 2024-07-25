@@ -6,7 +6,7 @@ public class Game
 {
     public Map Map { get; private set; }
     public GenerationMode GenerationMode { get; private set; }
-    public Queue<OneofUpdate> Outbox { get; private set; } = new();
+    public List<OneofUpdate> Outbox { get; private set; } = new();
     public Dictionary<string, Player> Players { get; private set; } = new();
 
     private double lastNetworkTick = 0f;
@@ -36,7 +36,25 @@ public class Game
         {
             NetworkTick();
             lastNetworkTick = 0f;
+            Packetize();
         }
+    }
+
+    private void Packetize()
+    {
+        foreach (OneofUpdate update in Outbox)
+        {
+            Players[update.RecipientId].HoldingArea.Add(update);
+        }
+
+        foreach (Player player in Players.Values)
+        {
+            var packets = MessageChunker.Chunk(player.HoldingArea, player.HighestPacketId);
+            player.EnqueuePackets(packets);
+            player.HoldingArea.Clear();
+        }
+
+        Outbox.Clear();
     }
 
     private void NetworkTick()
@@ -56,7 +74,7 @@ public class Game
             });
         }
 
-        Outbox.Enqueue(new OneofUpdate { AllSoldierPositions = allSoldierPositions });
+        Outbox.Append(new OneofUpdate { AllSoldierPositions = allSoldierPositions });
     }
 
     private Dictionary<ulong, double> bastionProduceCooldowns = new();
@@ -145,7 +163,7 @@ public class Game
     public void JoinGame(Player player)
     {
         Players[player.Id] = player;
-        Outbox.Enqueue(new OneofUpdate { InitialState = GetInitialState() });
+        Outbox.Add(new OneofUpdate { InitialState = GetInitialState() });
     }
 
     public void HandleKeystroke(char key, int alliance)
@@ -182,7 +200,7 @@ public class Game
         }
     }
 
-    private InitialState GetInitialState()
+    public InitialState GetInitialState()
     {
         var state = new InitialState()
         {
