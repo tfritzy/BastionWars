@@ -29,6 +29,17 @@ public static class TH
 
     public static void ClearOutbox(Game game)
     {
-        game.outbox.Clear();
+        game.Outbox.Clear();
+    }
+
+    public static void AddPlayer(Game game)
+    {
+        int playerCount = game.Players.Count;
+        game.JoinGame(new Player(name: $"test{playerCount}", id: playerCount.ToString()));
+    }
+
+    public static List<Schema.OneofUpdate> GetMessagesOfType(Game game, Schema.OneofUpdate.UpdateOneofCase type)
+    {
+        return game.Outbox.Where((u) => u.UpdateCase == type).ToList();
     }
 }

@@ -6,7 +6,8 @@ public class Game
 {
     public Map Map { get; private set; }
     public GenerationMode GenerationMode { get; private set; }
-    public Queue<Schema.OneofUpdate> outbox { get; private set; } = new();
+    public Queue<OneofUpdate> Outbox { get; private set; } = new();
+    public Dictionary<string, Player> Players { get; private set; } = new();
 
     private double lastNetworkTick = 0f;
     private double lastWordPlacement = 0f;
@@ -55,7 +56,7 @@ public class Game
             });
         }
 
-        outbox.Enqueue(new OneofUpdate { AllSoldierPositions = allSoldierPositions });
+        Outbox.Enqueue(new OneofUpdate { AllSoldierPositions = allSoldierPositions });
     }
 
     private Dictionary<ulong, double> bastionProduceCooldowns = new();
@@ -141,6 +142,11 @@ public class Game
         sourceKeep.SetDeploymentOrder(target, type, percent);
     }
 
+    public void JoinGame(Player player)
+    {
+        Players[player.Id] = player;
+        Outbox.Enqueue(new OneofUpdate { InitialState = GetInitialState() });
+    }
 
     public void HandleKeystroke(char key, int alliance)
     {
@@ -174,5 +180,25 @@ public class Game
                 }
             }
         }
+    }
+
+    private InitialState GetInitialState()
+    {
+        var state = new InitialState()
+        {
+            MapWidth = Map.Width,
+            MapHeight = Map.Height,
+        };
+        state.Tiles.AddRange(Map.Tiles.Cast<TileType>().ToArray());
+        state.Keeps.AddRange(Map.Keeps.Values.Select(k => new Schema.KeepState()
+        {
+            Id = k.Id,
+            Name = k.Name,
+            Alliance = k.Alliance,
+            Pos = Map.Grid.GetEntitySchemaPosition(k.Id),
+            WarriorCount = k.GetCount(SoldierType.Warrior),
+            ArcherCount = k.GetCount(SoldierType.Archer),
+        }));
+        return state;
     }
 }

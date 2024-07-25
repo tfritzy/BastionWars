@@ -6,14 +6,6 @@ namespace Tests;
 public class GridTest
 {
     [TestMethod]
-    public void Grid_MustBeDivisibleByPartitionSize()
-    {
-        Assert.ThrowsException<ArgumentException>(() => new Grid(3, 10));
-        Assert.ThrowsException<ArgumentException>(() => new Grid(10, 3));
-        Grid grid = new(30, 20);
-    }
-
-    [TestMethod]
     public void Grid_AddEntity()
     {
         Grid grid = new(30, 30);

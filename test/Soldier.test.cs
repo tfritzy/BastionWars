@@ -16,7 +16,7 @@ public class SoldierTests
         var path = map.GetPathBetweenBastions(keep0.Id, keep1.Id)!;
         map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
 
-        HashSet<V2Int?> visited = new();
+        HashSet<Vector2Int?> visited = new();
         for (int i = 0; i < 200; i++)
         {
             visited.Add(map.Grid.GetEntityGridPos(soldier.Id));

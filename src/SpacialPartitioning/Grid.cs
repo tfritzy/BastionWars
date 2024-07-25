@@ -8,7 +8,7 @@ public class Grid
     public const int PartitionSize = 1;
 
     readonly Partition[,] partitions;
-    readonly Dictionary<ulong, V2Int> entityPartitionLookup;
+    readonly Dictionary<ulong, Vector2Int> entityPartitionLookup;
 
     public Grid(int sizeX, int sizeY)
     {
@@ -34,19 +34,19 @@ public class Grid
         int y = (int)(entity.Position.Y / PartitionSize);
         partitions[x, y].AddEntity(entity);
 
-        entityPartitionLookup.Add(entity.Id, new V2Int(x, y));
+        entityPartitionLookup.Add(entity.Id, new Vector2Int(x, y));
     }
 
     public void RemoveEntity(ulong id)
     {
-        V2Int index = entityPartitionLookup[id];
+        Vector2Int index = entityPartitionLookup[id];
         partitions[index.X, index.Y].RemoveEntity(id);
         entityPartitionLookup.Remove(id);
     }
 
     public void MoveEntity(ulong id, Vector2 newPosition)
     {
-        V2Int newPartition = new(
+        Vector2Int newPartition = new(
             (int)(newPosition.X / PartitionSize),
             (int)(newPosition.Y / PartitionSize));
 
@@ -110,7 +110,7 @@ public class Grid
         return GetPartition(id).GetEntity(id).Position;
     }
 
-    public Schema.Vector2 GetEntitySchemaPosition(ulong id)
+    public Schema.V2 GetEntitySchemaPosition(ulong id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
         {
@@ -119,21 +119,21 @@ public class Grid
 
         var pos = GetPartition(id).GetEntity(id).Position;
 
-        return new Schema.Vector2
+        return new Schema.V2
         {
             X = pos.X,
             Y = pos.Y
         };
     }
 
-    public V2Int? GetEntityGridPos(ulong id)
+    public Vector2Int? GetEntityGridPos(ulong id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
         {
             return null;
         }
 
-        return V2Int.From(GetPartition(id).GetEntity(id).Position);
+        return Vector2Int.From(GetPartition(id).GetEntity(id).Position);
     }
 
     private Partition GetPartition(ulong id)

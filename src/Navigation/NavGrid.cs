@@ -4,29 +4,29 @@ namespace Navigation;
 
 public static class NavGrid
 {
-    public static List<V2Int> FindPath(V2Int start, V2Int end, short[,] traversable)
+    public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int end, short[,] traversable)
     {
         ushort[,] prevMap = InitPrevMap(traversable);
-        Queue<V2Int> q = new();
-        HashSet<V2Int> visited = new();
+        Queue<Vector2Int> q = new();
+        HashSet<Vector2Int> visited = new();
         BFS(start, end, q, visited, prevMap, traversable);
         return ReconstructPath(start, end, prevMap);
     }
 
-    public static ushort[,] GetPathMap(V2Int start, short[,] traversable)
+    public static ushort[,] GetPathMap(Vector2Int start, short[,] traversable)
     {
         ushort[,] prevMap = InitPrevMap(traversable);
-        Queue<V2Int> q = new();
-        HashSet<V2Int> visited = new();
+        Queue<Vector2Int> q = new();
+        HashSet<Vector2Int> visited = new();
         BFS(start, null, q, visited, prevMap, traversable);
         return prevMap;
     }
 
     private static void BFS(
-        V2Int start,
-        V2Int? end,
-        Queue<V2Int> q,
-        HashSet<V2Int> visited,
+        Vector2Int start,
+        Vector2Int? end,
+        Queue<Vector2Int> q,
+        HashSet<Vector2Int> visited,
         ushort[,] prevMap,
         short[,] traversable)
     {
@@ -35,7 +35,7 @@ public static class NavGrid
 
         while (q.Count > 0)
         {
-            V2Int current = q.Dequeue();
+            Vector2Int current = q.Dequeue();
             if (current == end)
             {
                 return;
@@ -43,7 +43,7 @@ public static class NavGrid
 
             for (int i = 0; i < 8; i++)
             {
-                V2Int neighbor = current + V2Int.GetDirection(i);
+                Vector2Int neighbor = current + Vector2Int.GetDirection(i);
                 if (!InBounds(neighbor, traversable))
                 {
                     continue;
@@ -70,27 +70,27 @@ public static class NavGrid
         }
     }
 
-    private static bool InBounds(V2Int pos, short[,] traversable)
+    private static bool InBounds(Vector2Int pos, short[,] traversable)
     {
         return pos.Y >= 0 && pos.Y < traversable.GetLength(1) && pos.X >= 0 && pos.X < traversable.GetLength(0);
     }
 
-    private static bool IsTraversable(V2Int pos, short[,] traversable)
+    private static bool IsTraversable(Vector2Int pos, short[,] traversable)
     {
         return traversable[pos.X, pos.Y] == Constants.TRAVERSABLE;
     }
 
-    public static List<V2Int> ReconstructPath(V2Int start, V2Int end, ushort[,] prevMap)
+    public static List<Vector2Int> ReconstructPath(Vector2Int start, Vector2Int end, ushort[,] prevMap)
     {
-        List<V2Int> path = new();
-        V2Int current = end;
+        List<Vector2Int> path = new();
+        Vector2Int current = end;
         while (current != start)
         {
             path.Add(current);
             ushort prev = prevMap[current.X, current.Y];
 
             if (prev == ushort.MaxValue)
-                return new List<V2Int>();
+                return new List<Vector2Int>();
 
             current = GetPosition(prev, prevMap.GetLength(0));
         }
@@ -100,14 +100,14 @@ public static class NavGrid
         return path;
     }
 
-    public static ushort GetIndex(V2Int pos, int width)
+    public static ushort GetIndex(Vector2Int pos, int width)
     {
         return (ushort)(pos.Y * width + pos.X);
     }
 
-    public static V2Int GetPosition(ushort index, int width)
+    public static Vector2Int GetPosition(ushort index, int width)
     {
-        return new V2Int(index % width, index / width);
+        return new Vector2Int(index % width, index / width);
     }
 
     private static ushort[,] InitPrevMap(short[,] traversable)

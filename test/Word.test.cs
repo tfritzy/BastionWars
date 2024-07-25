@@ -9,7 +9,7 @@ public class WordTests
     [TestMethod]
     public void Word_IncrementsProgress()
     {
-        Word word = new("test", new V2Int(0, 0));
+        Word word = new("test", new Vector2Int(0, 0));
         Assert.AreEqual(0, word.TypedIndex);
         word.HandleKeystroke('t');
         Assert.AreEqual(1, word.TypedIndex);

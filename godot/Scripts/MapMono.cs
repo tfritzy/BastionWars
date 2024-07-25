@@ -8,9 +8,9 @@ using System.Numerics;
 public partial class MapMono : GridMap
 {
     private Map Map;
-    public Dictionary<V2Int, Typeable> Words = new();
+    public Dictionary<Vector2Int, Typeable> Words = new();
     public Dictionary<ulong, KeepMono> KeepMonos = new();
-    private Dictionary<V2Int, MeshInstance3D> lands = new();
+    private Dictionary<Vector2Int, MeshInstance3D> lands = new();
     private Dictionary<int, Material> playerMaterials = new();
 
     public MapMono(Map map)
@@ -58,7 +58,7 @@ public partial class MapMono : GridMap
                 MeshInstance3D meshInst = new MeshInstance3D();
                 meshInst.Mesh = MeshLibrary.GetItemMesh((int)type);
                 meshInst.Position = ToGlobal(MapToLocal(new Vector3I(x, 0, y)));
-                lands[new V2Int(x, y)] = meshInst;
+                lands[new Vector2Int(x, y)] = meshInst;
                 AddChild(meshInst);
             }
         }
@@ -69,7 +69,7 @@ public partial class MapMono : GridMap
         foreach (var keep in Map.Keeps.Values)
         {
             var keepMono = new KeepMono(keep);
-            V2Int keepPos = Map.Grid.GetEntityGridPos(keep.Id).Value;
+            Vector2Int keepPos = Map.Grid.GetEntityGridPos(keep.Id).Value;
             keepMono.Position =
                 ToGlobal(MapToLocal(new Vector3I(keepPos.X, 0, keepPos.Y)));
             KeepMonos[keep.Id] = keepMono;

@@ -6,9 +6,9 @@ public class Word
 {
     public string Text { get; private set; }
     public int TypedIndex { get; private set; }
-    public V2Int Position { get; set; }
+    public Vector2Int Position { get; set; }
 
-    public Word(string text, V2Int position)
+    public Word(string text, Vector2Int position)
     {
         Text = text.ToLower();
         TypedIndex = 0;

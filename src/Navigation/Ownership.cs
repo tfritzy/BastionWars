@@ -5,13 +5,13 @@ namespace Navigation;
 
 public static class Ownership
 {
-    public static Dictionary<V2Int, ulong> Calculate(int width, int height, Dictionary<ulong, V2Int> bastionLocations)
+    public static Dictionary<Vector2Int, ulong> Calculate(int width, int height, Dictionary<ulong, Vector2Int> bastionLocations)
     {
-        Dictionary<V2Int, ulong> ownership = new();
-        Dictionary<ulong, Queue<V2Int>> queue = new();
+        Dictionary<Vector2Int, ulong> ownership = new();
+        Dictionary<ulong, Queue<Vector2Int>> queue = new();
         foreach (ulong id in bastionLocations.Keys)
         {
-            queue[id] = new(new V2Int[] { bastionLocations[id] });
+            queue[id] = new(new Vector2Int[] { bastionLocations[id] });
             ownership[bastionLocations[id]] = id;
         }
 
@@ -21,18 +21,18 @@ public static class Ownership
             allEmpty = true;
             foreach (ulong id in queue.Keys)
             {
-                Queue<V2Int> newItems = new();
+                Queue<Vector2Int> newItems = new();
                 while (queue[id].Count > 0)
                 {
                     allEmpty = false;
 
-                    V2Int current = queue[id].Dequeue();
+                    Vector2Int current = queue[id].Dequeue();
                     if (ownership.ContainsKey(current) && ownership[current] != id)
                         continue;
                     ownership[current] = id;
                     for (int i = 0; i < 8; i++)
                     {
-                        V2Int neighbor = current + V2Int.GetDirection(i);
+                        Vector2Int neighbor = current + Vector2Int.GetDirection(i);
                         if (!IsInBounds(neighbor, width, height))
                         {
                             continue;
@@ -54,7 +54,7 @@ public static class Ownership
         return ownership;
     }
 
-    private static bool IsInBounds(V2Int pos, int width, int height)
+    private static bool IsInBounds(Vector2Int pos, int width, int height)
     {
         return pos.Y >= 0 && pos.Y < height && pos.X >= 0 && pos.X < width;
     }

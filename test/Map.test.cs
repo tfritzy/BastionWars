@@ -34,10 +34,10 @@ public class MapTests
                     continue;
                 }
 
-                List<V2Int>? path = map.GetPathBetweenBastions(bastion.Id, other.Id);
+                List<Vector2Int>? path = map.GetPathBetweenBastions(bastion.Id, other.Id);
                 Assert.IsTrue(path?.Count > 0);
-                Assert.AreEqual(V2Int.From(map.Grid.GetEntityPosition(bastion.Id)), path[0]);
-                Assert.AreEqual(V2Int.From(map.Grid.GetEntityPosition(other.Id)), path[^1]);
+                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(bastion.Id)), path[0]);
+                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(other.Id)), path[^1]);
             }
         }
     }
@@ -47,14 +47,14 @@ public class MapTests
     {
         Map map = new(TestMaps.TenByFive);
         List<int> expectedAlliances = new() { 1, 0, 0, 0, 0, 2 };
-        List<V2Int> expectedPositions = new()
+        List<Vector2Int> expectedPositions = new()
         {
-            new V2Int(1, 0),
-            new V2Int(3, 0),
-            new V2Int(2, 2),
-            new V2Int(0, 3),
-            new V2Int(2, 4),
-            new V2Int(4, 4),
+            new Vector2Int(1, 0),
+            new Vector2Int(3, 0),
+            new Vector2Int(2, 2),
+            new Vector2Int(0, 3),
+            new Vector2Int(2, 4),
+            new Vector2Int(4, 4),
         };
         List<SoldierType> expectedTypes = new()
         {
@@ -109,7 +109,7 @@ public class MapTests
         {
             for (int x = 0; x < map.Width; x++)
             {
-                actualOwnership.Append($"{lookup[map.KeepLands[new V2Int(x, y)]]}");
+                actualOwnership.Append($"{lookup[map.KeepLands[new Vector2Int(x, y)]]}");
                 if (x != map.Width - 1)
                     actualOwnership.Append(" ");
             }

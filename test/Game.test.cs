@@ -29,6 +29,39 @@ public class GameTests
     }
 
     [TestMethod]
+    public void Game_SendsInitialStateWhenPlayerJoins()
+    {
+        Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
+        TH.AddPlayer(game);
+        var initialStates = TH.GetMessagesOfType(game, Schema.OneofUpdate.UpdateOneofCase.InitialState);
+        Assert.AreEqual(1, initialStates.Count);
+        var s = initialStates[0].InitialState;
+        Assert.AreEqual(game.Map.Width, s.MapWidth);
+        Assert.AreEqual(game.Map.Height, s.MapHeight);
+        for (int x = 0; x < game.Map.Width; x++)
+        {
+            for (int y = 0; y < game.Map.Height; y++)
+            {
+                Assert.AreEqual(game.Map.Tiles[x, y], s.Tiles[y * game.Map.Width + x]);
+            }
+        }
+
+        foreach (Keep keep in game.Map.Keeps.Values)
+        {
+            Assert.AreEqual(1, s.Keeps.Count(k => k.Id == keep.Id));
+            Schema.KeepState keepState = s.Keeps.First(k => k.Id == keep.Id);
+            Assert.AreEqual(keep.ArcherCount, keepState.ArcherCount);
+            Assert.AreEqual(keep.WarriorCount, keepState.WarriorCount);
+            Assert.AreEqual(keep.Alliance, keepState.Alliance);
+            Assert.AreEqual(keep.Name, keepState.Name);
+            Assert.AreEqual(keep.Id, keepState.Id);
+            Vector2 keepPos = game.Map.Grid.GetEntityPosition(keep.Id);
+            Assert.AreEqual(keepPos.X, keepState.Pos.X);
+            Assert.AreEqual(keepPos.Y, keepState.Pos.Y);
+        }
+    }
+
+    [TestMethod]
     public void Game_DoesntAccrueIfWordMode()
     {
         Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
@@ -59,7 +92,7 @@ public class GameTests
     {
         Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
         game.Update(Game.NetworkTickTime + .1f);
-        var positionUpdate = game.outbox
+        var positionUpdate = game.Outbox
             .First((u) => u.UpdateCase == Schema.OneofUpdate.UpdateOneofCase.AllSoldierPositions);
         Assert.AreEqual(0, positionUpdate.AllSoldierPositions.SoldierPositions.Count);
         Soldier soldier =
@@ -73,7 +106,7 @@ public class GameTests
         TH.ClearOutbox(game);
         game.Update(Game.NetworkTickTime + .1f);
         Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
-        positionUpdate = game.outbox
+        positionUpdate = game.Outbox
             .First((u) => u.UpdateCase == Schema.OneofUpdate.UpdateOneofCase.AllSoldierPositions);
         Assert.AreEqual(1, positionUpdate.AllSoldierPositions.SoldierPositions.Count);
         Assert.AreEqual(soldier.Id, positionUpdate.AllSoldierPositions.SoldierPositions[0].Id);
@@ -109,7 +142,7 @@ public class GameTests
         allyKeep.SetCount(archers: 0, warriors: 0);
 
         // Fill in words
-        foreach (V2Int pos in game.Map.Words.Keys)
+        foreach (Vector2Int pos in game.Map.Words.Keys)
             game.Map.Words[pos] = new Word("a", pos);
 
         int numWordsOwned = game.Map.Words.Values.Count(w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
@@ -140,7 +173,7 @@ public class GameTests
             Assert.AreEqual(SoldierType.Archer, soldier.Type);
             Assert.AreEqual(1, soldier.Alliance);
             Assert.AreEqual(0, soldier.PathProgress);
-            V2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
+            Vector2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }
     }
