@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package Schema;
+
+message Hello
+{
+    string message = 1;
+}
+
+message OneofRequest {
+    string sender_id = 1;
+    oneof request {
+        Hello hello = 2;
+    }
+}
+
+
+message OneofUpdate {
+    string recipient_id = 1;
+    oneof update {
+        InitialState initial_state = 2;
+        AllSoldierPositions all_soldier_positions = 3;
+    }
+}
+
+message Chunk {
+    int32 index = 1;
+    int32 maxIndex = 2;
+    bytes data = 3;
+}
+
+enum PacketType {
+    UPDATE = 0;
+    HEARTBEAT = 1;
+}
+
+message Packet {
+    repeated Chunk chunks = 1;
+    uint64 id = 2;
+    PacketType type = 3;
+    int32 sent_ms = 4;
+}
+
+enum TileType
+{
+    Invalid = 0;
+    Land = 1;
+    Water = 2;
+    Tree = 3;
+}
+
+
+message V2 {
+    float x = 1;
+    float y = 2;
+}
+
+message V2Int {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message AllSoldierPositions {
+    repeated SoldierPosition soldier_positions = 1;
+}
+
+message SoldierPosition {
+    uint64 id = 1;
+    V2 pos = 2;
+    V2 velocity = 3;
+}
+
+message KeepState {
+    uint64 id = 1;
+    V2 pos = 2;
+    int32 warrior_count = 3;
+    int32 archer_count = 4;
+    string name = 5;
+    int32 alliance = 6;
+}
+
+message InitialState {
+    repeated KeepState keeps = 1;
+    int32 map_width = 2;
+    int32 map_height = 3;
+    repeated TileType tiles = 4;
+}
