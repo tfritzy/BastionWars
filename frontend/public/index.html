@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zoomable Canvas with Grid and Shapes</title>
+    <title>Keep Lord: Warriors</title>
     <style>
       body,
       html {
@@ -19,15 +19,16 @@
   <body>
     <canvas id="myCanvas"></canvas>
     <script type="module">
-      import { drawPentagon } from "./rendering.js";
-      import { CanvasControls } from "./controls.js";
+      import { drawPentagon } from "./dist/rendering.js";
+      import { CanvasControls } from "./dist/controls.js";
+      import { Connection } from "./dist/connection.js";
+      import { Performance } from "./dist/performance.js";
 
       const canvas = document.getElementById("myCanvas");
       const ctx = canvas.getContext("2d");
-
-      let lastTime = 0;
-      let budgetPercentage = 0;
-      let fps = 0;
+      const controls = new CanvasControls(canvas, draw);
+      const connection = new Connection();
+      const performance = new Performance();
 
       function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -45,7 +46,6 @@
 
         drawGrid();
         drawShapes();
-        drawPerformanceMetrics();
 
         ctx.restore();
       }
@@ -67,36 +67,17 @@
 
       function update(currentTime) {
         requestAnimationFrame((time) => update(time));
-        const startTime = performance.now();
-
-        const deltaTime = currentTime - lastTime;
-        lastTime = currentTime;
+        performance.start();
 
         draw();
-        const endTime = performance.now();
-        budgetPercentage = ((endTime - startTime) / deltaTime) * 100;
+
+        performance.stop();
+        performance.draw(ctx, canvas);
       }
 
       function drawShapes() {
         drawPentagon(ctx, 300, 300, 50, "rgba(255, 0, 255, 0.5)");
       }
-
-      function drawPerformanceMetrics() {
-        ctx.save();
-        ctx.resetTransform(); // Reset any transformations
-
-        ctx.font = "14px Arial";
-        ctx.fillStyle = "black";
-        ctx.textAlign = "right";
-        ctx.textBaseline = "top";
-
-        const metrics = `${budgetPercentage.toFixed(0)}%`;
-        ctx.fillText(metrics, canvas.width - 10, 10);
-
-        ctx.restore();
-      }
-
-      const controls = new CanvasControls(canvas, draw);
 
       // Initial setup
       resizeCanvas();
