@@ -17,9 +17,9 @@
     </style>
   </head>
   <body>
-    <canvas id="myCanvas"></canvas>
+    <canvas id="myCanvas" style="background-color: #fcfbf3"></canvas>
     <script type="module">
-      import { drawPentagon } from "./dist/rendering.js";
+      import { drawPentagon, drawGrid } from "./dist/rendering.js";
       import { CanvasControls } from "./dist/controls.js";
       import { Connection } from "./dist/connection.js";
       import { Performance } from "./dist/performance.js";
@@ -27,7 +27,7 @@
       const canvas = document.getElementById("myCanvas");
       const ctx = canvas.getContext("2d");
       const controls = new CanvasControls(canvas, draw);
-      const connection = new Connection();
+      const connection = new Connection("tkn_001");
       const performance = new Performance();
 
       function resizeCanvas() {
@@ -44,25 +44,10 @@
         ctx.scale(scale, scale);
         ctx.translate(offsetX, offsetY);
 
-        drawGrid();
+        drawGrid(ctx, controls, canvas.width, canvas.height);
         drawShapes();
 
         ctx.restore();
-      }
-
-      function drawGrid() {
-        const { offsetX, offsetY } = controls.getTransform();
-        ctx.fillStyle = "#cbd5e1";
-        const gridSize = 20;
-        const roundedX = Math.trunc(offsetX / gridSize) * gridSize;
-        const roundedY = Math.trunc(offsetY / gridSize) * gridSize;
-        for (let x = -roundedX; x < canvas.width - roundedX; x += gridSize) {
-          for (let y = -roundedY; y < canvas.height - roundedY; y += gridSize) {
-            ctx.beginPath();
-            ctx.arc(x, y, 1, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
       }
 
       function update(currentTime) {

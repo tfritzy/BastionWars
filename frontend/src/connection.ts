@@ -3,8 +3,8 @@ import { CONFIG } from "./config";
 export class Connection {
   private socket: WebSocket;
 
-  constructor() {
-    this.socket = new WebSocket(CONFIG.WEBSOCKET_URL);
+  constructor(id: string) {
+    this.socket = new WebSocket(CONFIG.WEBSOCKET_URL + "?id=" + id);
 
     this.socket.onopen = this.handleOpen.bind(this);
     this.socket.onmessage = this.handleMessage.bind(this);

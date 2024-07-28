@@ -73,6 +73,7 @@ public class Server
         var id = context.Request.QueryString["id"];
         if (id == null)
         {
+            Console.WriteLine("Client did not specify an id. Kicking them.");
             context.Response.StatusCode = 400;
             context.Response.Close();
             return;

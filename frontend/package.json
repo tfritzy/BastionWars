@@ -9,10 +9,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build:server": "bun build ./index.ts --outfile ./dist/server.js --target bun",
-    "build:client": "bun build ./src/**/*.ts --outdir ./dist --target browser",
-    "b": "bun run build:server && bun run build:client",
-    "watch:client": "bun build ./src/**/*.ts --outdir ./dist --target browser --watch",
-    "serve": "bun run ./dist/server.js"
+    "watch": "bun build ./src/**/*.ts --outdir ./dist --target browser --watch",
+    "serve": "bun run ./index.ts"
   }
 }
