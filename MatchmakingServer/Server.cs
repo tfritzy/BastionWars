@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Cache;
 using System.Net.WebSockets;
 using DotNetEnv;
+using Google.Protobuf;
 using Schema;
 
 namespace MatchmakingServer;
@@ -23,6 +24,29 @@ public class Server
         int delay = (int)(nextTick - DateTime.Now).TotalMilliseconds;
         if (delay > 0)
             Thread.Sleep(delay);
+    }
+
+    public async Task HandleRequest(OneofMatchmakingRequest request)
+    {
+        Console.WriteLine("Handling request: " + request.ToString());
+        switch (request.RequestCase)
+        {
+            case OneofMatchmakingRequest.RequestOneofCase.SearchForGame:
+                await SendMessage(new Schema.OneofMatchmakingUpdate
+                {
+                    RecipientId = request.SenderId,
+                    FoundGame = new FoundGame()
+                    {
+                        GameId = "game_001",
+                        ServerUrl = "localhost:7251",
+                    }
+                });
+                break;
+            default:
+                Console.WriteLine(new InvalidOperationException("Invalid type: " + request.RequestCase));
+                break;
+
+        }
     }
 
     public async void StartAcceptingConnections()
@@ -113,8 +137,9 @@ public class Server
                 {
                     using (var ms = new MemoryStream(receiveBuffer, 0, messageLength))
                     {
-                        OneofRequest request = OneofRequest.Parser.ParseFrom(ms);
-                        Console.WriteLine(request.ToString());
+                        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
+                        await HandleRequest(request);
+                        Console.WriteLine("Recieved request: " + request.ToString() + " from " + token);
                     }
                 }
                 else if (receiveResult.MessageType == WebSocketMessageType.Close)
@@ -129,5 +154,21 @@ public class Server
         {
             Console.WriteLine("Exception in listen loop: " + e.Message);
         }
+    }
+
+    private async Task SendMessage(OneofMatchmakingUpdate message)
+    {
+        if (!ConnectedPlayers.ContainsKey(message.RecipientId))
+        {
+            return;
+        }
+
+        WebSocket webSocket = ConnectedPlayers[message.RecipientId];
+        byte[] data = message.ToByteArray();
+        await webSocket.SendAsync(
+            new ArraySegment<byte>(data, 0, data.Length),
+            WebSocketMessageType.Binary,
+            true,
+            CancellationToken.None);
     }
 }

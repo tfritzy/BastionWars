@@ -1,15 +1,24 @@
+import type { Connection } from "./connection.ts";
+import type { OneofMatchmakingRequest, SearchForGame } from "./Schema.ts";
 import { Typeable } from "./typeable.ts";
 
 export class MainMenu {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private buttons: Array<Typeable>;
+  private connection: Connection;
 
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+  constructor(
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+    connection: Connection
+  ) {
     this.canvas = canvas;
     this.ctx = ctx;
+    this.connection = connection;
+
     this.buttons = [
-      new Typeable("Start", () => console.log("Start complete"), canvas, ctx),
+      new Typeable("Start", () => this.findGame(), canvas, ctx),
       new Typeable(
         "Options",
         () => console.log("Options complete"),
@@ -37,5 +46,18 @@ export class MainMenu {
     });
 
     this.ctx.restore();
+  }
+
+  private findGame() {
+    const searchForGame: SearchForGame = {
+      ranked: true,
+    };
+
+    const request: OneofMatchmakingRequest = {
+      sender_id: "tkn_001",
+      search_for_game: searchForGame,
+    };
+
+    this.connection.sendMessage(request);
   }
 }

@@ -9,3 +9,6 @@ if [ -f "$CS_FILE" ]; then
 else
   echo "Warning: $CS_FILE not found. Skipping text replacement."
 fi
+
+echo "Generating js"
+npx pbjs schema.proto --ts "../frontend/src/Schema.ts" 

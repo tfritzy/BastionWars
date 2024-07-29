@@ -1,4 +1,10 @@
 import { CONFIG } from "./config";
+import {
+  decodeOneofMatchmakingUpdate,
+  encodeOneofMatchmakingRequest,
+  encodeOneofRequest,
+  type OneofMatchmakingRequest,
+} from "./Schema";
 
 export class Connection {
   private socket: WebSocket;
@@ -19,6 +25,17 @@ export class Connection {
 
   private handleMessage(event: MessageEvent): void {
     console.log("Message received:", event.data);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result instanceof ArrayBuffer) {
+        const buffer = new Uint8Array(reader.result);
+        const update = decodeOneofMatchmakingUpdate(buffer);
+
+        console.log("Parsed update", update);
+      }
+    };
+    reader.readAsArrayBuffer(event.data);
   }
 
   private handleClose(event: CloseEvent): void {
@@ -27,5 +44,10 @@ export class Connection {
 
   private handleError(error: Event): void {
     console.error("WebSocket error:", error);
+  }
+
+  sendMessage(message: OneofMatchmakingRequest) {
+    console.log("Sending message", message);
+    this.socket.send(encodeOneofMatchmakingRequest(message));
   }
 }

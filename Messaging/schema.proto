@@ -2,9 +2,41 @@ syntax = "proto3";
 
 package Schema;
 
+// #########################
+// ###### Matchmaking ######
+// #########################
+message SearchForGame
+{
+    bool ranked = 1;
+}
+
+message OneofMatchmakingRequest {
+    string sender_id = 1;
+    oneof request {
+        SearchForGame search_for_game = 2;
+    }
+}
+
+message FoundGame
+{
+    string game_id = 1;
+    string server_url = 2;
+}
+
+message OneofMatchmakingUpdate {
+    string recipient_id = 1;
+    oneof update {
+        FoundGame found_game = 2;
+    }
+}
+
+// #####################
+// ###### In game ######
+// #####################
+
 message Hello
 {
-    string message = 1;
+    string name = 1;
 }
 
 message OneofRequest {
@@ -13,7 +45,6 @@ message OneofRequest {
         Hello hello = 2;
     }
 }
-
 
 message OneofUpdate {
     string recipient_id = 1;

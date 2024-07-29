@@ -20,7 +20,7 @@ export class Game {
     this.controls = new CanvasControls(this.canvas, this.draw.bind(this));
     this.connection = new Connection("tkn_001");
     this.performance = new Performance();
-    this.mainMenu = new MainMenu(this.canvas, this.ctx);
+    this.mainMenu = new MainMenu(this.canvas, this.ctx, this.connection);
     this.dpr = window.devicePixelRatio || 1;
     this.lastTime = performance.now();
 
@@ -39,7 +39,7 @@ export class Game {
   }
 
   private calculateCanvasSize(): { width: number; height: number } {
-    const maxSize = 16384; // Maximum canvas size for most browsers
+    const maxSize = 16384;
     let width = window.innerWidth * this.dpr;
     let height = window.innerHeight * this.dpr;
 
