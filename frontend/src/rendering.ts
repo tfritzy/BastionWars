@@ -30,7 +30,7 @@ export function drawGrid(
   height: number
 ) {
   const { offsetX, offsetY } = controls.getTransform();
-  ctx.fillStyle = "#a9bcbf";
+  ctx.fillStyle = "#e6eeed";
   const gridSize = 20;
   const roundedX = Math.trunc(offsetX / gridSize) * gridSize;
   const roundedY = Math.trunc(offsetY / gridSize) * gridSize;

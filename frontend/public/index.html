@@ -19,57 +19,8 @@
   <body>
     <canvas id="myCanvas" style="background-color: #fcfbf3"></canvas>
     <script type="module">
-      import { drawPentagon, drawGrid } from "./dist/rendering.js";
-      import { CanvasControls } from "./dist/controls.js";
-      import { Connection } from "./dist/connection.js";
-      import { Performance } from "./dist/performance.js";
-
-      const canvas = document.getElementById("myCanvas");
-      const ctx = canvas.getContext("2d");
-      const controls = new CanvasControls(canvas, draw);
-      const connection = new Connection("tkn_001");
-      const performance = new Performance();
-
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        draw();
-      }
-
-      function draw() {
-        const { scale, offsetX, offsetY } = controls.getTransform();
-
-        ctx.save();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.scale(scale, scale);
-        ctx.translate(offsetX, offsetY);
-
-        drawGrid(ctx, controls, canvas.width, canvas.height);
-        drawShapes();
-
-        ctx.restore();
-      }
-
-      function update(currentTime) {
-        requestAnimationFrame((time) => update(time));
-        performance.start();
-
-        draw();
-
-        performance.stop();
-        performance.draw(ctx, canvas);
-      }
-
-      function drawShapes() {
-        drawPentagon(ctx, 300, 300, 50, "rgba(255, 0, 255, 0.5)");
-      }
-
-      // Initial setup
-      resizeCanvas();
-      update();
-
-      // Event listeners
-      window.addEventListener("resize", resizeCanvas);
+      import { Game } from "./dist/game.js";
+      new Game();
     </script>
   </body>
 </html>

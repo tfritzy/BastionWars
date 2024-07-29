@@ -25,7 +25,6 @@ export class CanvasControls {
     this.canvas.addEventListener("mousedown", this.startDrag.bind(this));
     this.canvas.addEventListener("mousemove", this.drag.bind(this));
     this.canvas.addEventListener("mouseup", this.endDrag.bind(this));
-    window.addEventListener("keypress", this.arrowKeys.bind(this));
   }
 
   private zoom(event: WheelEvent): void {
@@ -68,14 +67,6 @@ export class CanvasControls {
   private endDrag(): void {
     this.isDragging = false;
     this.canvas.style.cursor = "default";
-  }
-
-  private arrowKeys(event: KeyboardEvent): void {
-    console.log(event);
-    if (event.key === "ArrowLeft") {
-      this.offsetX -= 1;
-    }
-    // You might want to add other arrow key handlers here
   }
 
   public getTransform(): { scale: number; offsetX: number; offsetY: number } {
