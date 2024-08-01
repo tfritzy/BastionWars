@@ -9,13 +9,26 @@ namespace MatchmakingServer;
 
 public class Server
 {
-    public Dictionary<string, WebSocket> ConnectedPlayers { get; set; }
+    public Dictionary<string, WebSocket> ConnectedPlayers { get; } = new();
+    public List<WebSocket> ConnectedHosts { get; } = new();
 
+    private HashSet<string> hostIpAllowlist = new();
+    private string url;
     private const int interval = 1000 / 15;
 
     public Server()
     {
         ConnectedPlayers = new Dictionary<string, WebSocket>();
+
+        string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
+        string envFile = environment == "Production" ? ".env.production" : ".env";
+        Env.Load(envFile);
+
+        url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
+            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
+        string rawAllowlist = Environment.GetEnvironmentVariable("ALLOWLISTED_HOST_IPS")
+            ?? throw new Exception("Missing ALLOWLISTED_HOST_IPS in env file");
+        hostIpAllowlist = new HashSet<string>(rawAllowlist.Split(","));
     }
 
     public async void Update()
@@ -52,11 +65,7 @@ public class Server
     public async void StartAcceptingConnections()
     {
         HttpListener httpListener = new();
-        string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
-        string envFile = environment == "Production" ? ".env.production" : ".env";
-        Env.Load(envFile);
 
-        string? url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS");
         if (String.IsNullOrEmpty(url))
         {
             throw new Exception("HOSTED_ADDRESS environment variable not set.");
@@ -93,6 +102,40 @@ public class Server
 
     public async Task AcceptConnection(HttpListenerContext context)
     {
+        if (hostIpAllowlist.Contains(context.Request.RemoteEndPoint.Address.ToString()))
+        {
+            await AddHostConnection(context);
+        }
+        else
+        {
+            await AddPlayerConnection(context);
+        }
+    }
+
+    private async Task AddHostConnection(HttpListenerContext context)
+    {
+        WebSocketContext? webSocketContext = null;
+
+        try
+        {
+            webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
+            ConnectedHosts.Add(webSocketContext.WebSocket);
+            Console.WriteLine($"WebSocket connection established at {context.Request.Url}");
+        }
+        catch (Exception e)
+        {
+            context.Response.StatusCode = 500;
+            context.Response.Close();
+            Console.WriteLine("Exception: " + e.Message);
+            return;
+        }
+
+        WebSocket webSocket = webSocketContext.WebSocket;
+        _ = Task.Run(() => ListenLoop(webSocket, id));
+    }
+
+    private async Task AddPlayerConnection(HttpListenerContext context)
+    {
         WebSocketContext? webSocketContext = null;
         var id = context.Request.QueryString["id"];
         if (id == null)
@@ -121,7 +164,7 @@ public class Server
         _ = Task.Run(() => ListenLoop(webSocket, id));
     }
 
-    private async void ListenLoop(WebSocket webSocket, string token)
+    private async void ListenLoop(WebSocket webSocket, string token, Action<MemoryStream> handleRequest)
     {
         try
         {
@@ -135,11 +178,9 @@ public class Server
 
                 if (receiveResult.MessageType == WebSocketMessageType.Binary)
                 {
-                    using (var ms = new MemoryStream(receiveBuffer, 0, messageLength))
+                    using (MemoryStream? ms = new MemoryStream(receiveBuffer, 0, messageLength))
                     {
-                        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
-                        await HandleRequest(request);
-                        Console.WriteLine("Recieved request: " + request.ToString() + " from " + token);
+                        handleRequest(ms);
                     }
                 }
                 else if (receiveResult.MessageType == WebSocketMessageType.Close)
