@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Cache;
 using System.Net.WebSockets;
+using System.Security.Principal;
 using DotNetEnv;
 using Google.Protobuf;
 using Schema;
@@ -39,28 +40,6 @@ public class Server
             Thread.Sleep(delay);
     }
 
-    public async Task HandleRequest(OneofMatchmakingRequest request)
-    {
-        Console.WriteLine("Handling request: " + request.ToString());
-        switch (request.RequestCase)
-        {
-            case OneofMatchmakingRequest.RequestOneofCase.SearchForGame:
-                await SendMessage(new Schema.OneofMatchmakingUpdate
-                {
-                    RecipientId = request.SenderId,
-                    FoundGame = new FoundGame()
-                    {
-                        GameId = "game_001",
-                        ServerUrl = "localhost:7251",
-                    }
-                });
-                break;
-            default:
-                Console.WriteLine(new InvalidOperationException("Invalid type: " + request.RequestCase));
-                break;
-
-        }
-    }
 
     public async void StartAcceptingConnections()
     {
@@ -120,7 +99,7 @@ public class Server
         {
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
             ConnectedHosts.Add(webSocketContext.WebSocket);
-            Console.WriteLine($"WebSocket connection established at {context.Request.Url}");
+            Console.WriteLine($"Host WebSocket connection established at {context.Request.Url}");
         }
         catch (Exception e)
         {
@@ -131,7 +110,7 @@ public class Server
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, id));
+        _ = Task.Run(() => ListenLoop(webSocket, async (ws) => await HandleHostMessage(ws)));
     }
 
     private async Task AddPlayerConnection(HttpListenerContext context)
@@ -150,7 +129,7 @@ public class Server
         {
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
             ConnectedPlayers[id] = webSocketContext.WebSocket;
-            Console.WriteLine($"WebSocket connection established at {context.Request.Url}");
+            Console.WriteLine($"Client websocket (ms) => await connection(ms) established at {context.Request.Url}");
         }
         catch (Exception e)
         {
@@ -161,10 +140,10 @@ public class Server
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, id));
+        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleClientMessage(ms), () => ConnectedPlayers.Remove(id)));
     }
 
-    private async void ListenLoop(WebSocket webSocket, string token, Action<MemoryStream> handleRequest)
+    private async void ListenLoop(WebSocket webSocket, Action<MemoryStream> handleRequest, Action? onClose = null)
     {
         try
         {
@@ -186,8 +165,12 @@ public class Server
                 else if (receiveResult.MessageType == WebSocketMessageType.Close)
                 {
                     Console.WriteLine("WebSocket connection closed by client.");
-                    ConnectedPlayers.Remove(token);
+                    onClose?.Invoke();
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                }
+                else
+                {
+                    Console.WriteLine("Received unparseable message of type " + receiveResult.MessageType);
                 }
             }
         }
@@ -196,6 +179,36 @@ public class Server
             Console.WriteLine("Exception in listen loop: " + e.Message);
         }
     }
+
+    private async Task HandleClientMessage(MemoryStream ms)
+    {
+        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
+        switch (request.RequestCase)
+        {
+            case OneofMatchmakingRequest.RequestOneofCase.SearchForGame:
+                await SendMessage(new Schema.OneofMatchmakingUpdate
+                {
+                    RecipientId = request.SenderId,
+                    FoundGame = new FoundGame()
+                    {
+                        GameId = "game_001",
+                        ServerUrl = "localhost:7251",
+                    }
+                });
+                break;
+            default:
+                Console.WriteLine(new InvalidOperationException("Invalid type: " + request.RequestCase));
+                break;
+
+        }
+    }
+
+    private async Task HandleHostMessage(MemoryStream ms)
+    {
+        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
+        Console.WriteLine("A host said something: " + request.ToString());
+    }
+
 
     private async Task SendMessage(OneofMatchmakingUpdate message)
     {
