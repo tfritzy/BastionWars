@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepLordWarriors", "Game\sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepLordWarriorsTests", "Game\test\KeepLordWarriorsTests.csproj", "{0AA6AA86-83F1-43B0-8DC5-2A8A1B204FE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchmakingServer", "MatchmakingServer\MatchmakingServer.csproj", "{4C8754E3-01B8-4A32-B911-FC81CAF9B736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchmakingServer", "MatchmakingServer\src\MatchmakingServer.csproj", "{4C8754E3-01B8-4A32-B911-FC81CAF9B736}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging", "Messaging\Messaging.csproj", "{10ED8EEC-28F6-4E9E-9B4A-EEA4A2941701}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostServer", "HostServer\HostServer.csproj", "{30A71452-EE14-46EE-ABAE-E1532B63CDDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostServer", "HostServer\src\HostServer.csproj", "{30A71452-EE14-46EE-ABAE-E1532B63CDDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
