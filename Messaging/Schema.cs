@@ -25,41 +25,46 @@ namespace Schema {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CgxzY2hlbWEucHJvdG8SBlNjaGVtYSIfCg1TZWFyY2hGb3JHYW1lEg4KBnJh",
-            "bmtlZBgBIAEoCCJpChdPbmVvZk1hdGNobWFraW5nUmVxdWVzdBIRCglzZW5k",
-            "ZXJfaWQYASABKAkSMAoPc2VhcmNoX2Zvcl9nYW1lGAIgASgLMhUuU2NoZW1h",
-            "LlNlYXJjaEZvckdhbWVIAEIJCgdyZXF1ZXN0IjAKCUZvdW5kR2FtZRIPCgdn",
-            "YW1lX2lkGAEgASgJEhIKCnNlcnZlcl91cmwYAiABKAkiYQoWT25lb2ZNYXRj",
-            "aG1ha2luZ1VwZGF0ZRIUCgxyZWNpcGllbnRfaWQYASABKAkSJwoKZm91bmRf",
-            "Z2FtZRgCIAEoCzIRLlNjaGVtYS5Gb3VuZEdhbWVIAEIICgZ1cGRhdGUiFQoF",
-            "SGVsbG8SDAoEbmFtZRgBIAEoCSJMCgxPbmVvZlJlcXVlc3QSEQoJc2VuZGVy",
-            "X2lkGAEgASgJEh4KBWhlbGxvGAIgASgLMg0uU2NoZW1hLkhlbGxvSABCCQoH",
-            "cmVxdWVzdCKaAQoLT25lb2ZVcGRhdGUSFAoMcmVjaXBpZW50X2lkGAEgASgJ",
-            "Ei0KDWluaXRpYWxfc3RhdGUYAiABKAsyFC5TY2hlbWEuSW5pdGlhbFN0YXRl",
-            "SAASPAoVYWxsX3NvbGRpZXJfcG9zaXRpb25zGAMgASgLMhsuU2NoZW1hLkFs",
-            "bFNvbGRpZXJQb3NpdGlvbnNIAEIICgZ1cGRhdGUiNgoFQ2h1bmsSDQoFaW5k",
-            "ZXgYASABKAUSEAoIbWF4SW5kZXgYAiABKAUSDAoEZGF0YRgDIAEoDCJmCgZQ",
-            "YWNrZXQSHQoGY2h1bmtzGAEgAygLMg0uU2NoZW1hLkNodW5rEgoKAmlkGAIg",
-            "ASgEEiAKBHR5cGUYAyABKA4yEi5TY2hlbWEuUGFja2V0VHlwZRIPCgdzZW50",
-            "X21zGAQgASgFIhoKAlYyEgkKAXgYASABKAISCQoBeRgCIAEoAiIdCgVWMklu",
-            "dBIJCgF4GAEgASgFEgkKAXkYAiABKAUiSQoTQWxsU29sZGllclBvc2l0aW9u",
-            "cxIyChFzb2xkaWVyX3Bvc2l0aW9ucxgBIAMoCzIXLlNjaGVtYS5Tb2xkaWVy",
-            "UG9zaXRpb24iVAoPU29sZGllclBvc2l0aW9uEgoKAmlkGAEgASgEEhcKA3Bv",
-            "cxgCIAEoCzIKLlNjaGVtYS5WMhIcCgh2ZWxvY2l0eRgDIAEoCzIKLlNjaGVt",
-            "YS5WMiJ9CglLZWVwU3RhdGUSCgoCaWQYASABKAQSFwoDcG9zGAIgASgLMgou",
-            "U2NoZW1hLlYyEhUKDXdhcnJpb3JfY291bnQYAyABKAUSFAoMYXJjaGVyX2Nv",
-            "dW50GAQgASgFEgwKBG5hbWUYBSABKAkSEAoIYWxsaWFuY2UYBiABKAUieAoM",
-            "SW5pdGlhbFN0YXRlEiAKBWtlZXBzGAEgAygLMhEuU2NoZW1hLktlZXBTdGF0",
-            "ZRIRCgltYXBfd2lkdGgYAiABKAUSEgoKbWFwX2hlaWdodBgDIAEoBRIfCgV0",
-            "aWxlcxgEIAMoDjIQLlNjaGVtYS5UaWxlVHlwZSonCgpQYWNrZXRUeXBlEgoK",
-            "BlVQREFURRAAEg0KCUhFQVJUQkVBVBABKjYKCFRpbGVUeXBlEgsKB0ludmFs",
-            "aWQQABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEANiBnByb3RvMw=="));
+            "bmtlZBgBIAEoCCIqChBIb3N0SW50cm9kdWN0aW9uEhYKDmZhdm9yaXRlX2Nv",
+            "bG9yGAEgASgJIo0BChdPbmVvZk1hdGNobWFraW5nUmVxdWVzdBIwCg9zZWFy",
+            "Y2hfZm9yX2dhbWUYAiABKAsyFS5TY2hlbWEuU2VhcmNoRm9yR2FtZUgAEjUK",
+            "EWhvc3RfaW50cm9kdWN0aW9uGAMgASgLMhguU2NoZW1hLkhvc3RJbnRyb2R1",
+            "Y3Rpb25IAEIJCgdyZXF1ZXN0IjAKCUZvdW5kR2FtZRIPCgdnYW1lX2lkGAEg",
+            "ASgJEhIKCnNlcnZlcl91cmwYAiABKAkiIwoJSG9zdEhlbGxvEhYKDmZhdm9y",
+            "aXRlX2NvbG9yGAEgASgJInQKFk9uZW9mTWF0Y2htYWtpbmdVcGRhdGUSJwoK",
+            "Zm91bmRfZ2FtZRgCIAEoCzIRLlNjaGVtYS5Gb3VuZEdhbWVIABInCgpob3N0",
+            "X2hlbGxvGAMgASgLMhEuU2NoZW1hLkhvc3RIZWxsb0gAQggKBnVwZGF0ZSIV",
+            "CgVIZWxsbxIMCgRuYW1lGAEgASgJIkwKDE9uZW9mUmVxdWVzdBIRCglzZW5k",
+            "ZXJfaWQYASABKAkSHgoFaGVsbG8YAiABKAsyDS5TY2hlbWEuSGVsbG9IAEIJ",
+            "CgdyZXF1ZXN0IpoBCgtPbmVvZlVwZGF0ZRIUCgxyZWNpcGllbnRfaWQYASAB",
+            "KAkSLQoNaW5pdGlhbF9zdGF0ZRgCIAEoCzIULlNjaGVtYS5Jbml0aWFsU3Rh",
+            "dGVIABI8ChVhbGxfc29sZGllcl9wb3NpdGlvbnMYAyABKAsyGy5TY2hlbWEu",
+            "QWxsU29sZGllclBvc2l0aW9uc0gAQggKBnVwZGF0ZSI2CgVDaHVuaxINCgVp",
+            "bmRleBgBIAEoBRIQCghtYXhJbmRleBgCIAEoBRIMCgRkYXRhGAMgASgMImYK",
+            "BlBhY2tldBIdCgZjaHVua3MYASADKAsyDS5TY2hlbWEuQ2h1bmsSCgoCaWQY",
+            "AiABKAQSIAoEdHlwZRgDIAEoDjISLlNjaGVtYS5QYWNrZXRUeXBlEg8KB3Nl",
+            "bnRfbXMYBCABKAUiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgCIh0KBVYy",
+            "SW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSJJChNBbGxTb2xkaWVyUG9zaXRp",
+            "b25zEjIKEXNvbGRpZXJfcG9zaXRpb25zGAEgAygLMhcuU2NoZW1hLlNvbGRp",
+            "ZXJQb3NpdGlvbiJUCg9Tb2xkaWVyUG9zaXRpb24SCgoCaWQYASABKAQSFwoD",
+            "cG9zGAIgASgLMgouU2NoZW1hLlYyEhwKCHZlbG9jaXR5GAMgASgLMgouU2No",
+            "ZW1hLlYyIn0KCUtlZXBTdGF0ZRIKCgJpZBgBIAEoBBIXCgNwb3MYAiABKAsy",
+            "Ci5TY2hlbWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNoZXJf",
+            "Y291bnQYBCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEoBSJ4",
+            "CgxJbml0aWFsU3RhdGUSIAoFa2VlcHMYASADKAsyES5TY2hlbWEuS2VlcFN0",
+            "YXRlEhEKCW1hcF93aWR0aBgCIAEoBRISCgptYXBfaGVpZ2h0GAMgASgFEh8K",
+            "BXRpbGVzGAQgAygOMhAuU2NoZW1hLlRpbGVUeXBlKicKClBhY2tldFR5cGUS",
+            "CgoGVVBEQVRFEAASDQoJSEVBUlRCRUFUEAEqNgoIVGlsZVR5cGUSCwoHSW52",
+            "YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQA2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.PacketType), typeof(global::Schema.TileType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SearchForGame), global::Schema.SearchForGame.Parser, new[]{ "Ranked" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingRequest), global::Schema.OneofMatchmakingRequest.Parser, new[]{ "SenderId", "SearchForGame" }, new[]{ "Request" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.HostIntroduction), global::Schema.HostIntroduction.Parser, new[]{ "FavoriteColor" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingRequest), global::Schema.OneofMatchmakingRequest.Parser, new[]{ "SearchForGame", "HostIntroduction" }, new[]{ "Request" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.FoundGame), global::Schema.FoundGame.Parser, new[]{ "GameId", "ServerUrl" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingUpdate), global::Schema.OneofMatchmakingUpdate.Parser, new[]{ "RecipientId", "FoundGame" }, new[]{ "Update" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.HostHello), global::Schema.HostHello.Parser, new[]{ "FavoriteColor" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingUpdate), global::Schema.OneofMatchmakingUpdate.Parser, new[]{ "FoundGame", "HostHello" }, new[]{ "Update" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Hello), global::Schema.Hello.Parser, new[]{ "Name" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofRequest), global::Schema.OneofRequest.Parser, new[]{ "SenderId", "Hello" }, new[]{ "Request" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofUpdate), global::Schema.OneofUpdate.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions" }, new[]{ "Update" }, null, null, null),
@@ -286,6 +291,195 @@ namespace Schema {
 
   }
 
+  public sealed partial class HostIntroduction : pb::IMessage<HostIntroduction>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<HostIntroduction> _parser = new pb::MessageParser<HostIntroduction>(() => new HostIntroduction());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<HostIntroduction> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HostIntroduction() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HostIntroduction(HostIntroduction other) : this() {
+      favoriteColor_ = other.favoriteColor_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HostIntroduction Clone() {
+      return new HostIntroduction(this);
+    }
+
+    /// <summary>Field number for the "favorite_color" field.</summary>
+    public const int FavoriteColorFieldNumber = 1;
+    private string favoriteColor_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string FavoriteColor {
+      get { return favoriteColor_; }
+      set {
+        favoriteColor_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as HostIntroduction);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(HostIntroduction other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (FavoriteColor != other.FavoriteColor) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (FavoriteColor.Length != 0) hash ^= FavoriteColor.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (FavoriteColor.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(FavoriteColor);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (FavoriteColor.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(FavoriteColor);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (FavoriteColor.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(FavoriteColor);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(HostIntroduction other) {
+      if (other == null) {
+        return;
+      }
+      if (other.FavoriteColor.Length != 0) {
+        FavoriteColor = other.FavoriteColor;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            FavoriteColor = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            FavoriteColor = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class OneofMatchmakingRequest : pb::IMessage<OneofMatchmakingRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -300,7 +494,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -320,10 +514,12 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public OneofMatchmakingRequest(OneofMatchmakingRequest other) : this() {
-      senderId_ = other.senderId_;
       switch (other.RequestCase) {
         case RequestOneofCase.SearchForGame:
           SearchForGame = other.SearchForGame.Clone();
+          break;
+        case RequestOneofCase.HostIntroduction:
+          HostIntroduction = other.HostIntroduction.Clone();
           break;
       }
 
@@ -334,18 +530,6 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public OneofMatchmakingRequest Clone() {
       return new OneofMatchmakingRequest(this);
-    }
-
-    /// <summary>Field number for the "sender_id" field.</summary>
-    public const int SenderIdFieldNumber = 1;
-    private string senderId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SenderId {
-      get { return senderId_; }
-      set {
-        senderId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
     }
 
     /// <summary>Field number for the "search_for_game" field.</summary>
@@ -360,11 +544,24 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "host_introduction" field.</summary>
+    public const int HostIntroductionFieldNumber = 3;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.HostIntroduction HostIntroduction {
+      get { return requestCase_ == RequestOneofCase.HostIntroduction ? (global::Schema.HostIntroduction) request_ : null; }
+      set {
+        request_ = value;
+        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.HostIntroduction;
+      }
+    }
+
     private object request_;
     /// <summary>Enum of possible cases for the "request" oneof.</summary>
     public enum RequestOneofCase {
       None = 0,
       SearchForGame = 2,
+      HostIntroduction = 3,
     }
     private RequestOneofCase requestCase_ = RequestOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -395,8 +592,8 @@ namespace Schema {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (SenderId != other.SenderId) return false;
       if (!object.Equals(SearchForGame, other.SearchForGame)) return false;
+      if (!object.Equals(HostIntroduction, other.HostIntroduction)) return false;
       if (RequestCase != other.RequestCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -405,8 +602,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (SenderId.Length != 0) hash ^= SenderId.GetHashCode();
       if (requestCase_ == RequestOneofCase.SearchForGame) hash ^= SearchForGame.GetHashCode();
+      if (requestCase_ == RequestOneofCase.HostIntroduction) hash ^= HostIntroduction.GetHashCode();
       hash ^= (int) requestCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -426,13 +623,13 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (SenderId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(SenderId);
-      }
       if (requestCase_ == RequestOneofCase.SearchForGame) {
         output.WriteRawTag(18);
         output.WriteMessage(SearchForGame);
+      }
+      if (requestCase_ == RequestOneofCase.HostIntroduction) {
+        output.WriteRawTag(26);
+        output.WriteMessage(HostIntroduction);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -444,13 +641,13 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (SenderId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(SenderId);
-      }
       if (requestCase_ == RequestOneofCase.SearchForGame) {
         output.WriteRawTag(18);
         output.WriteMessage(SearchForGame);
+      }
+      if (requestCase_ == RequestOneofCase.HostIntroduction) {
+        output.WriteRawTag(26);
+        output.WriteMessage(HostIntroduction);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -462,11 +659,11 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (SenderId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SenderId);
-      }
       if (requestCase_ == RequestOneofCase.SearchForGame) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(SearchForGame);
+      }
+      if (requestCase_ == RequestOneofCase.HostIntroduction) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HostIntroduction);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -480,15 +677,18 @@ namespace Schema {
       if (other == null) {
         return;
       }
-      if (other.SenderId.Length != 0) {
-        SenderId = other.SenderId;
-      }
       switch (other.RequestCase) {
         case RequestOneofCase.SearchForGame:
           if (SearchForGame == null) {
             SearchForGame = new global::Schema.SearchForGame();
           }
           SearchForGame.MergeFrom(other.SearchForGame);
+          break;
+        case RequestOneofCase.HostIntroduction:
+          if (HostIntroduction == null) {
+            HostIntroduction = new global::Schema.HostIntroduction();
+          }
+          HostIntroduction.MergeFrom(other.HostIntroduction);
           break;
       }
 
@@ -507,10 +707,6 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            SenderId = input.ReadString();
-            break;
-          }
           case 18: {
             global::Schema.SearchForGame subBuilder = new global::Schema.SearchForGame();
             if (requestCase_ == RequestOneofCase.SearchForGame) {
@@ -518,6 +714,15 @@ namespace Schema {
             }
             input.ReadMessage(subBuilder);
             SearchForGame = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Schema.HostIntroduction subBuilder = new global::Schema.HostIntroduction();
+            if (requestCase_ == RequestOneofCase.HostIntroduction) {
+              subBuilder.MergeFrom(HostIntroduction);
+            }
+            input.ReadMessage(subBuilder);
+            HostIntroduction = subBuilder;
             break;
           }
         }
@@ -535,10 +740,6 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            SenderId = input.ReadString();
-            break;
-          }
           case 18: {
             global::Schema.SearchForGame subBuilder = new global::Schema.SearchForGame();
             if (requestCase_ == RequestOneofCase.SearchForGame) {
@@ -546,6 +747,15 @@ namespace Schema {
             }
             input.ReadMessage(subBuilder);
             SearchForGame = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Schema.HostIntroduction subBuilder = new global::Schema.HostIntroduction();
+            if (requestCase_ == RequestOneofCase.HostIntroduction) {
+              subBuilder.MergeFrom(HostIntroduction);
+            }
+            input.ReadMessage(subBuilder);
+            HostIntroduction = subBuilder;
             break;
           }
         }
@@ -569,7 +779,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -781,6 +991,195 @@ namespace Schema {
 
   }
 
+  public sealed partial class HostHello : pb::IMessage<HostHello>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<HostHello> _parser = new pb::MessageParser<HostHello>(() => new HostHello());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<HostHello> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HostHello() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HostHello(HostHello other) : this() {
+      favoriteColor_ = other.favoriteColor_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HostHello Clone() {
+      return new HostHello(this);
+    }
+
+    /// <summary>Field number for the "favorite_color" field.</summary>
+    public const int FavoriteColorFieldNumber = 1;
+    private string favoriteColor_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string FavoriteColor {
+      get { return favoriteColor_; }
+      set {
+        favoriteColor_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as HostHello);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(HostHello other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (FavoriteColor != other.FavoriteColor) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (FavoriteColor.Length != 0) hash ^= FavoriteColor.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (FavoriteColor.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(FavoriteColor);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (FavoriteColor.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(FavoriteColor);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (FavoriteColor.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(FavoriteColor);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(HostHello other) {
+      if (other == null) {
+        return;
+      }
+      if (other.FavoriteColor.Length != 0) {
+        FavoriteColor = other.FavoriteColor;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            FavoriteColor = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            FavoriteColor = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class OneofMatchmakingUpdate : pb::IMessage<OneofMatchmakingUpdate>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -795,7 +1194,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -815,10 +1214,12 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public OneofMatchmakingUpdate(OneofMatchmakingUpdate other) : this() {
-      recipientId_ = other.recipientId_;
       switch (other.UpdateCase) {
         case UpdateOneofCase.FoundGame:
           FoundGame = other.FoundGame.Clone();
+          break;
+        case UpdateOneofCase.HostHello:
+          HostHello = other.HostHello.Clone();
           break;
       }
 
@@ -829,18 +1230,6 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public OneofMatchmakingUpdate Clone() {
       return new OneofMatchmakingUpdate(this);
-    }
-
-    /// <summary>Field number for the "recipient_id" field.</summary>
-    public const int RecipientIdFieldNumber = 1;
-    private string recipientId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string RecipientId {
-      get { return recipientId_; }
-      set {
-        recipientId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
     }
 
     /// <summary>Field number for the "found_game" field.</summary>
@@ -855,11 +1244,24 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "host_hello" field.</summary>
+    public const int HostHelloFieldNumber = 3;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.HostHello HostHello {
+      get { return updateCase_ == UpdateOneofCase.HostHello ? (global::Schema.HostHello) update_ : null; }
+      set {
+        update_ = value;
+        updateCase_ = value == null ? UpdateOneofCase.None : UpdateOneofCase.HostHello;
+      }
+    }
+
     private object update_;
     /// <summary>Enum of possible cases for the "update" oneof.</summary>
     public enum UpdateOneofCase {
       None = 0,
       FoundGame = 2,
+      HostHello = 3,
     }
     private UpdateOneofCase updateCase_ = UpdateOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -890,8 +1292,8 @@ namespace Schema {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (RecipientId != other.RecipientId) return false;
       if (!object.Equals(FoundGame, other.FoundGame)) return false;
+      if (!object.Equals(HostHello, other.HostHello)) return false;
       if (UpdateCase != other.UpdateCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -900,8 +1302,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (RecipientId.Length != 0) hash ^= RecipientId.GetHashCode();
       if (updateCase_ == UpdateOneofCase.FoundGame) hash ^= FoundGame.GetHashCode();
+      if (updateCase_ == UpdateOneofCase.HostHello) hash ^= HostHello.GetHashCode();
       hash ^= (int) updateCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -921,13 +1323,13 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (RecipientId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RecipientId);
-      }
       if (updateCase_ == UpdateOneofCase.FoundGame) {
         output.WriteRawTag(18);
         output.WriteMessage(FoundGame);
+      }
+      if (updateCase_ == UpdateOneofCase.HostHello) {
+        output.WriteRawTag(26);
+        output.WriteMessage(HostHello);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -939,13 +1341,13 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (RecipientId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RecipientId);
-      }
       if (updateCase_ == UpdateOneofCase.FoundGame) {
         output.WriteRawTag(18);
         output.WriteMessage(FoundGame);
+      }
+      if (updateCase_ == UpdateOneofCase.HostHello) {
+        output.WriteRawTag(26);
+        output.WriteMessage(HostHello);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -957,11 +1359,11 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (RecipientId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RecipientId);
-      }
       if (updateCase_ == UpdateOneofCase.FoundGame) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(FoundGame);
+      }
+      if (updateCase_ == UpdateOneofCase.HostHello) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HostHello);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -975,15 +1377,18 @@ namespace Schema {
       if (other == null) {
         return;
       }
-      if (other.RecipientId.Length != 0) {
-        RecipientId = other.RecipientId;
-      }
       switch (other.UpdateCase) {
         case UpdateOneofCase.FoundGame:
           if (FoundGame == null) {
             FoundGame = new global::Schema.FoundGame();
           }
           FoundGame.MergeFrom(other.FoundGame);
+          break;
+        case UpdateOneofCase.HostHello:
+          if (HostHello == null) {
+            HostHello = new global::Schema.HostHello();
+          }
+          HostHello.MergeFrom(other.HostHello);
           break;
       }
 
@@ -1002,10 +1407,6 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            RecipientId = input.ReadString();
-            break;
-          }
           case 18: {
             global::Schema.FoundGame subBuilder = new global::Schema.FoundGame();
             if (updateCase_ == UpdateOneofCase.FoundGame) {
@@ -1013,6 +1414,15 @@ namespace Schema {
             }
             input.ReadMessage(subBuilder);
             FoundGame = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Schema.HostHello subBuilder = new global::Schema.HostHello();
+            if (updateCase_ == UpdateOneofCase.HostHello) {
+              subBuilder.MergeFrom(HostHello);
+            }
+            input.ReadMessage(subBuilder);
+            HostHello = subBuilder;
             break;
           }
         }
@@ -1030,10 +1440,6 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            RecipientId = input.ReadString();
-            break;
-          }
           case 18: {
             global::Schema.FoundGame subBuilder = new global::Schema.FoundGame();
             if (updateCase_ == UpdateOneofCase.FoundGame) {
@@ -1041,6 +1447,15 @@ namespace Schema {
             }
             input.ReadMessage(subBuilder);
             FoundGame = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Schema.HostHello subBuilder = new global::Schema.HostHello();
+            if (updateCase_ == UpdateOneofCase.HostHello) {
+              subBuilder.MergeFrom(HostHello);
+            }
+            input.ReadMessage(subBuilder);
+            HostHello = subBuilder;
             break;
           }
         }
@@ -1064,7 +1479,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1253,7 +1668,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1522,7 +1937,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1844,7 +2259,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2107,7 +2522,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2396,7 +2811,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2622,7 +3037,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2848,7 +3263,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3026,7 +3441,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3307,7 +3722,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3690,7 +4105,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

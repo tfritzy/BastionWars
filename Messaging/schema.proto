@@ -10,10 +10,15 @@ message SearchForGame
     bool ranked = 1;
 }
 
+message HostIntroduction
+{
+    string favorite_color = 1;
+}
+
 message OneofMatchmakingRequest {
-    string sender_id = 1;
     oneof request {
         SearchForGame search_for_game = 2;
+        HostIntroduction host_introduction = 3;
     }
 }
 
@@ -23,10 +28,15 @@ message FoundGame
     string server_url = 2;
 }
 
+message HostHello
+{
+    string favorite_color = 1;
+}
+
 message OneofMatchmakingUpdate {
-    string recipient_id = 1;
     oneof update {
         FoundGame found_game = 2;
+        HostHello host_hello = 3;
     }
 }
 

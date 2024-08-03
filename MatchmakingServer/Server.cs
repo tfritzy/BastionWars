@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Cache;
 using System.Net.WebSockets;
@@ -10,17 +11,12 @@ namespace MatchmakingServer;
 
 public class Server
 {
-    public Dictionary<string, WebSocket> ConnectedPlayers { get; } = new();
-    public List<WebSocket> ConnectedHosts { get; } = new();
-
     private HashSet<string> hostIpAllowlist = new();
     private string url;
     private const int interval = 1000 / 15;
 
     public Server()
     {
-        ConnectedPlayers = new Dictionary<string, WebSocket>();
-
         string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
         string envFile = environment == "Production" ? ".env.production" : ".env";
         Env.Load(envFile);
@@ -81,24 +77,20 @@ public class Server
 
     public async Task AcceptConnection(HttpListenerContext context)
     {
-        if (hostIpAllowlist.Contains(context.Request.RemoteEndPoint.Address.ToString()))
-        {
-            await AddHostConnection(context);
-        }
-        else
-        {
-            await AddPlayerConnection(context);
-        }
+        await AddConnection(
+            context,
+            // TODO: Specify they are trying to be a host.
+            hostIpAllowlist.Contains(context.Request.RemoteEndPoint.Address.ToString())
+        );
     }
 
-    private async Task AddHostConnection(HttpListenerContext context)
+    private async Task AddConnection(HttpListenerContext context, bool isHost)
     {
         WebSocketContext? webSocketContext = null;
 
         try
         {
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
-            ConnectedHosts.Add(webSocketContext.WebSocket);
             Console.WriteLine($"Host WebSocket connection established at {context.Request.Url}");
         }
         catch (Exception e)
@@ -110,40 +102,18 @@ public class Server
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, async (ws) => await HandleHostMessage(ws)));
+        if (isHost)
+        {
+            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleHostMessage(webSocket, ms)));
+        }
+        else
+        {
+            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleClientMessage(webSocket, ms)));
+        }
+
     }
 
-    private async Task AddPlayerConnection(HttpListenerContext context)
-    {
-        WebSocketContext? webSocketContext = null;
-        var id = context.Request.QueryString["id"];
-        if (id == null)
-        {
-            Console.WriteLine("Client did not specify an id. Kicking them.");
-            context.Response.StatusCode = 400;
-            context.Response.Close();
-            return;
-        }
-
-        try
-        {
-            webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
-            ConnectedPlayers[id] = webSocketContext.WebSocket;
-            Console.WriteLine($"Client websocket (ms) => await connection(ms) established at {context.Request.Url}");
-        }
-        catch (Exception e)
-        {
-            context.Response.StatusCode = 500;
-            context.Response.Close();
-            Console.WriteLine("Exception: " + e.Message);
-            return;
-        }
-
-        WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleClientMessage(ms), () => ConnectedPlayers.Remove(id)));
-    }
-
-    private async void ListenLoop(WebSocket webSocket, Action<MemoryStream> handleRequest, Action? onClose = null)
+    private async void ListenLoop(WebSocket webSocket, Action<MemoryStream> handleRequest)
     {
         try
         {
@@ -165,8 +135,10 @@ public class Server
                 else if (receiveResult.MessageType == WebSocketMessageType.Close)
                 {
                     Console.WriteLine("WebSocket connection closed by client.");
-                    onClose?.Invoke();
-                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                    await webSocket.CloseAsync(
+                        WebSocketCloseStatus.NormalClosure,
+                        string.Empty,
+                        CancellationToken.None);
                 }
                 else
                 {
@@ -180,44 +152,59 @@ public class Server
         }
     }
 
-    private async Task HandleClientMessage(MemoryStream ms)
+    private async Task HandleClientMessage(WebSocket webSocket, MemoryStream ms)
     {
         OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
         switch (request.RequestCase)
         {
             case OneofMatchmakingRequest.RequestOneofCase.SearchForGame:
-                await SendMessage(new Schema.OneofMatchmakingUpdate
-                {
-                    RecipientId = request.SenderId,
-                    FoundGame = new FoundGame()
+                await SendMessage(
+                    new Schema.OneofMatchmakingUpdate
                     {
-                        GameId = "game_001",
-                        ServerUrl = "localhost:7251",
-                    }
-                });
+                        FoundGame = new FoundGame()
+                        {
+                            GameId = "game_001",
+                            ServerUrl = "localhost:7251",
+                        }
+                    },
+                    webSocket);
                 break;
             default:
-                Console.WriteLine(new InvalidOperationException("Invalid type: " + request.RequestCase));
+                Console.WriteLine("Invalid type: " + request.RequestCase);
                 break;
 
         }
     }
 
-    private async Task HandleHostMessage(MemoryStream ms)
+    private async Task HandleHostMessage(WebSocket webSocket, MemoryStream ms)
     {
         OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
         Console.WriteLine("A host said something: " + request.ToString());
+
+        switch (request.RequestCase)
+        {
+            case OneofMatchmakingRequest.RequestOneofCase.HostIntroduction:
+                await SendMessage(
+                    new OneofMatchmakingUpdate
+                    {
+                        HostHello = new HostHello
+                        {
+                            FavoriteColor = request.HostIntroduction.FavoriteColor
+                        }
+                    },
+                    webSocket
+                );
+                break;
+            default:
+                Console.WriteLine("Invalid message type from host: " + request.RequestCase);
+                break;
+        }
     }
 
 
-    private async Task SendMessage(OneofMatchmakingUpdate message)
+    private async Task SendMessage(OneofMatchmakingUpdate message, WebSocket webSocket)
     {
-        if (!ConnectedPlayers.ContainsKey(message.RecipientId))
-        {
-            return;
-        }
-
-        WebSocket webSocket = ConnectedPlayers[message.RecipientId];
+        Console.WriteLine($"Sending message of type {message.UpdateCase}");
         byte[] data = message.ToByteArray();
         await webSocket.SendAsync(
             new ArraySegment<byte>(data, 0, data.Length),

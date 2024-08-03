@@ -81,9 +81,56 @@ function _decodeSearchForGame(bb: ByteBuffer): SearchForGame {
   return message;
 }
 
+export interface HostIntroduction {
+  favorite_color?: string;
+}
+
+export function encodeHostIntroduction(message: HostIntroduction): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeHostIntroduction(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeHostIntroduction(message: HostIntroduction, bb: ByteBuffer): void {
+  // optional string favorite_color = 1;
+  let $favorite_color = message.favorite_color;
+  if ($favorite_color !== undefined) {
+    writeVarint32(bb, 10);
+    writeString(bb, $favorite_color);
+  }
+}
+
+export function decodeHostIntroduction(binary: Uint8Array): HostIntroduction {
+  return _decodeHostIntroduction(wrapByteBuffer(binary));
+}
+
+function _decodeHostIntroduction(bb: ByteBuffer): HostIntroduction {
+  let message: HostIntroduction = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional string favorite_color = 1;
+      case 1: {
+        message.favorite_color = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface OneofMatchmakingRequest {
-  sender_id?: string;
   search_for_game?: SearchForGame;
+  host_introduction?: HostIntroduction;
 }
 
 export function encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest): Uint8Array {
@@ -93,19 +140,23 @@ export function encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest):
 }
 
 function _encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest, bb: ByteBuffer): void {
-  // optional string sender_id = 1;
-  let $sender_id = message.sender_id;
-  if ($sender_id !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $sender_id);
-  }
-
   // optional SearchForGame search_for_game = 2;
   let $search_for_game = message.search_for_game;
   if ($search_for_game !== undefined) {
     writeVarint32(bb, 18);
     let nested = popByteBuffer();
     _encodeSearchForGame($search_for_game, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional HostIntroduction host_introduction = 3;
+  let $host_introduction = message.host_introduction;
+  if ($host_introduction !== undefined) {
+    writeVarint32(bb, 26);
+    let nested = popByteBuffer();
+    _encodeHostIntroduction($host_introduction, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -126,16 +177,18 @@ function _decodeOneofMatchmakingRequest(bb: ByteBuffer): OneofMatchmakingRequest
       case 0:
         break end_of_message;
 
-      // optional string sender_id = 1;
-      case 1: {
-        message.sender_id = readString(bb, readVarint32(bb));
-        break;
-      }
-
       // optional SearchForGame search_for_game = 2;
       case 2: {
         let limit = pushTemporaryLength(bb);
         message.search_for_game = _decodeSearchForGame(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional HostIntroduction host_introduction = 3;
+      case 3: {
+        let limit = pushTemporaryLength(bb);
+        message.host_introduction = _decodeHostIntroduction(bb);
         bb.limit = limit;
         break;
       }
@@ -209,9 +262,56 @@ function _decodeFoundGame(bb: ByteBuffer): FoundGame {
   return message;
 }
 
+export interface HostHello {
+  favorite_color?: string;
+}
+
+export function encodeHostHello(message: HostHello): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeHostHello(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeHostHello(message: HostHello, bb: ByteBuffer): void {
+  // optional string favorite_color = 1;
+  let $favorite_color = message.favorite_color;
+  if ($favorite_color !== undefined) {
+    writeVarint32(bb, 10);
+    writeString(bb, $favorite_color);
+  }
+}
+
+export function decodeHostHello(binary: Uint8Array): HostHello {
+  return _decodeHostHello(wrapByteBuffer(binary));
+}
+
+function _decodeHostHello(bb: ByteBuffer): HostHello {
+  let message: HostHello = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional string favorite_color = 1;
+      case 1: {
+        message.favorite_color = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface OneofMatchmakingUpdate {
-  recipient_id?: string;
   found_game?: FoundGame;
+  host_hello?: HostHello;
 }
 
 export function encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate): Uint8Array {
@@ -221,19 +321,23 @@ export function encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate): U
 }
 
 function _encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate, bb: ByteBuffer): void {
-  // optional string recipient_id = 1;
-  let $recipient_id = message.recipient_id;
-  if ($recipient_id !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $recipient_id);
-  }
-
   // optional FoundGame found_game = 2;
   let $found_game = message.found_game;
   if ($found_game !== undefined) {
     writeVarint32(bb, 18);
     let nested = popByteBuffer();
     _encodeFoundGame($found_game, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional HostHello host_hello = 3;
+  let $host_hello = message.host_hello;
+  if ($host_hello !== undefined) {
+    writeVarint32(bb, 26);
+    let nested = popByteBuffer();
+    _encodeHostHello($host_hello, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -254,16 +358,18 @@ function _decodeOneofMatchmakingUpdate(bb: ByteBuffer): OneofMatchmakingUpdate {
       case 0:
         break end_of_message;
 
-      // optional string recipient_id = 1;
-      case 1: {
-        message.recipient_id = readString(bb, readVarint32(bb));
-        break;
-      }
-
       // optional FoundGame found_game = 2;
       case 2: {
         let limit = pushTemporaryLength(bb);
         message.found_game = _decodeFoundGame(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional HostHello host_hello = 3;
+      case 3: {
+        let limit = pushTemporaryLength(bb);
+        message.host_hello = _decodeHostHello(bb);
         bb.limit = limit;
         break;
       }
