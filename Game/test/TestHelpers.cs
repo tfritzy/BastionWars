@@ -6,6 +6,15 @@ namespace Tests;
 
 public static class TH
 {
+    public static GameSettings GetGameSettings(GenerationMode mode = GenerationMode.AutoAccrue, string? map = null)
+    {
+        return new GameSettings()
+        {
+            Map = map ?? TestMaps.TenByFive,
+            GenerationMode = mode,
+        };
+    }
+
     public static SpacialPartitioning.Entity BuildEntity(float x, float y, float radius = .2f)
     {
         return new SpacialPartitioning.Entity(new Vector2(x, y), KeepLordWarriors.IdGenerator.NextId(), radius);

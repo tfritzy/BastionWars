@@ -1,4 +1,5 @@
 using System.Numerics;
+using Schema;
 using Tests;
 
 namespace KeepLordWarriors;
@@ -9,7 +10,7 @@ public class GameTests
     [TestMethod]
     public void Game_AutoAccrues()
     {
-        Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings());
 
         game.Update(Game.AutoAccrualTime - .1f);
         foreach (Keep bastion in game.Map.Keeps.Values)
@@ -31,7 +32,7 @@ public class GameTests
     [TestMethod]
     public void Game_SendsInitialStateWhenPlayerJoins()
     {
-        Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings());
         TH.AddPlayer(game);
         var initialStates = TH.GetMessagesOfType(game, Schema.OneofUpdate.UpdateOneofCase.InitialState);
         Assert.AreEqual(1, initialStates.Count);
@@ -64,7 +65,7 @@ public class GameTests
     [TestMethod]
     public void Game_DoesntAccrueIfWordMode()
     {
-        Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
 
         game.Update(Game.AutoAccrualTime + .1f);
         foreach (Keep keep in game.Map.Keeps.Values)
@@ -76,7 +77,7 @@ public class GameTests
     [TestMethod]
     public void Game_PlacesWords()
     {
-        Game game = new Game(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        Game game = new Game(TH.GetGameSettings(mode: GenerationMode.Word));
 
         Assert.AreEqual(Game.InitialWordCount, game.Map.Words.Values.Count(w => w != null));
         game.Update(Game.AutoAccrualTime + .1f);
@@ -90,7 +91,7 @@ public class GameTests
     [TestMethod]
     public void Game_ReportsSoldierPositions()
     {
-        Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings());
         TH.AddPlayer(game);
         TH.AddPlayer(game);
         game.Update(Game.NetworkTickTime + .1f);
@@ -122,7 +123,7 @@ public class GameTests
     [TestMethod]
     public void Game_IncrementsWordProgress()
     {
-        Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         for (int i = 0; i < 10; i++)
             game.Update(Game.WordPlacementTime + .1f);
 
@@ -142,7 +143,7 @@ public class GameTests
     [TestMethod]
     public void Game_DoestCompleteNonOwnedWords()
     {
-        Game game = new(new GameSettings(GenerationMode.Word, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         Keep allyKeep = game.Map.Keeps.Values.First(b => b.Alliance == 1);
         allyKeep.SetCount(archers: 0, warriors: 0);
 
@@ -160,7 +161,7 @@ public class GameTests
     [TestMethod]
     public void Map_AttackingDeploysSoldiers()
     {
-        Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.TenByFive));
+        Game game = new(TH.GetGameSettings());
         Map map = game.Map;
 
         map.KeepAt(0).Capture(1);

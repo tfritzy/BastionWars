@@ -2,6 +2,16 @@ syntax = "proto3";
 
 package Schema;
 
+enum GenerationMode {
+    AutoAccrue = 0;
+    Word = 1;
+}
+
+message GameSettings {
+    GenerationMode generation_mode = 1;
+    string map = 2;
+}
+
 // #########################
 // ###### Matchmaking ######
 // #########################
@@ -10,15 +20,15 @@ message SearchForGame
     bool ranked = 1;
 }
 
-message HostIntroduction
+message GameReady
 {
-    string favorite_color = 1;
+    string game_id = 1;
 }
 
 message OneofMatchmakingRequest {
     oneof request {
         SearchForGame search_for_game = 2;
-        HostIntroduction host_introduction = 3;
+        GameReady game_ready = 3;
     }
 }
 
@@ -28,15 +38,16 @@ message FoundGame
     string server_url = 2;
 }
 
-message HostHello
+message CreateGame
 {
-    string favorite_color = 1;
+    string game_id = 1;
+    GameSettings settings = 2;
 }
 
 message OneofMatchmakingUpdate {
     oneof update {
         FoundGame found_game = 2;
-        HostHello host_hello = 3;
+        CreateGame create_game = 3;
     }
 }
 

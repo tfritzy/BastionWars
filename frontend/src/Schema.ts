@@ -1,3 +1,18 @@
+export const enum GenerationMode {
+  AutoAccrue = "AutoAccrue",
+  Word = "Word",
+}
+
+export const encodeGenerationMode: { [key: string]: number } = {
+  AutoAccrue: 0,
+  Word: 1,
+};
+
+export const decodeGenerationMode: { [key: number]: GenerationMode } = {
+  0: GenerationMode.AutoAccrue,
+  1: GenerationMode.Word,
+};
+
 export const enum PacketType {
   UPDATE = "UPDATE",
   HEARTBEAT = "HEARTBEAT",
@@ -33,6 +48,67 @@ export const decodeTileType: { [key: number]: TileType } = {
   2: TileType.Water,
   3: TileType.Tree,
 };
+
+export interface GameSettings {
+  generation_mode?: GenerationMode;
+  map?: string;
+}
+
+export function encodeGameSettings(message: GameSettings): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeGameSettings(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeGameSettings(message: GameSettings, bb: ByteBuffer): void {
+  // optional GenerationMode generation_mode = 1;
+  let $generation_mode = message.generation_mode;
+  if ($generation_mode !== undefined) {
+    writeVarint32(bb, 8);
+    writeVarint32(bb, encodeGenerationMode[$generation_mode]);
+  }
+
+  // optional string map = 2;
+  let $map = message.map;
+  if ($map !== undefined) {
+    writeVarint32(bb, 18);
+    writeString(bb, $map);
+  }
+}
+
+export function decodeGameSettings(binary: Uint8Array): GameSettings {
+  return _decodeGameSettings(wrapByteBuffer(binary));
+}
+
+function _decodeGameSettings(bb: ByteBuffer): GameSettings {
+  let message: GameSettings = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional GenerationMode generation_mode = 1;
+      case 1: {
+        message.generation_mode = decodeGenerationMode[readVarint32(bb)];
+        break;
+      }
+
+      // optional string map = 2;
+      case 2: {
+        message.map = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
 
 export interface SearchForGame {
   ranked?: boolean;
@@ -81,31 +157,31 @@ function _decodeSearchForGame(bb: ByteBuffer): SearchForGame {
   return message;
 }
 
-export interface HostIntroduction {
-  favorite_color?: string;
+export interface GameReady {
+  game_id?: string;
 }
 
-export function encodeHostIntroduction(message: HostIntroduction): Uint8Array {
+export function encodeGameReady(message: GameReady): Uint8Array {
   let bb = popByteBuffer();
-  _encodeHostIntroduction(message, bb);
+  _encodeGameReady(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeHostIntroduction(message: HostIntroduction, bb: ByteBuffer): void {
-  // optional string favorite_color = 1;
-  let $favorite_color = message.favorite_color;
-  if ($favorite_color !== undefined) {
+function _encodeGameReady(message: GameReady, bb: ByteBuffer): void {
+  // optional string game_id = 1;
+  let $game_id = message.game_id;
+  if ($game_id !== undefined) {
     writeVarint32(bb, 10);
-    writeString(bb, $favorite_color);
+    writeString(bb, $game_id);
   }
 }
 
-export function decodeHostIntroduction(binary: Uint8Array): HostIntroduction {
-  return _decodeHostIntroduction(wrapByteBuffer(binary));
+export function decodeGameReady(binary: Uint8Array): GameReady {
+  return _decodeGameReady(wrapByteBuffer(binary));
 }
 
-function _decodeHostIntroduction(bb: ByteBuffer): HostIntroduction {
-  let message: HostIntroduction = {} as any;
+function _decodeGameReady(bb: ByteBuffer): GameReady {
+  let message: GameReady = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -114,9 +190,9 @@ function _decodeHostIntroduction(bb: ByteBuffer): HostIntroduction {
       case 0:
         break end_of_message;
 
-      // optional string favorite_color = 1;
+      // optional string game_id = 1;
       case 1: {
-        message.favorite_color = readString(bb, readVarint32(bb));
+        message.game_id = readString(bb, readVarint32(bb));
         break;
       }
 
@@ -130,7 +206,7 @@ function _decodeHostIntroduction(bb: ByteBuffer): HostIntroduction {
 
 export interface OneofMatchmakingRequest {
   search_for_game?: SearchForGame;
-  host_introduction?: HostIntroduction;
+  game_ready?: GameReady;
 }
 
 export function encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest): Uint8Array {
@@ -151,12 +227,12 @@ function _encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest, bb: By
     pushByteBuffer(nested);
   }
 
-  // optional HostIntroduction host_introduction = 3;
-  let $host_introduction = message.host_introduction;
-  if ($host_introduction !== undefined) {
+  // optional GameReady game_ready = 3;
+  let $game_ready = message.game_ready;
+  if ($game_ready !== undefined) {
     writeVarint32(bb, 26);
     let nested = popByteBuffer();
-    _encodeHostIntroduction($host_introduction, nested);
+    _encodeGameReady($game_ready, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -185,10 +261,10 @@ function _decodeOneofMatchmakingRequest(bb: ByteBuffer): OneofMatchmakingRequest
         break;
       }
 
-      // optional HostIntroduction host_introduction = 3;
+      // optional GameReady game_ready = 3;
       case 3: {
         let limit = pushTemporaryLength(bb);
-        message.host_introduction = _decodeHostIntroduction(bb);
+        message.game_ready = _decodeGameReady(bb);
         bb.limit = limit;
         break;
       }
@@ -262,31 +338,43 @@ function _decodeFoundGame(bb: ByteBuffer): FoundGame {
   return message;
 }
 
-export interface HostHello {
-  favorite_color?: string;
+export interface CreateGame {
+  game_id?: string;
+  settings?: GameSettings;
 }
 
-export function encodeHostHello(message: HostHello): Uint8Array {
+export function encodeCreateGame(message: CreateGame): Uint8Array {
   let bb = popByteBuffer();
-  _encodeHostHello(message, bb);
+  _encodeCreateGame(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeHostHello(message: HostHello, bb: ByteBuffer): void {
-  // optional string favorite_color = 1;
-  let $favorite_color = message.favorite_color;
-  if ($favorite_color !== undefined) {
+function _encodeCreateGame(message: CreateGame, bb: ByteBuffer): void {
+  // optional string game_id = 1;
+  let $game_id = message.game_id;
+  if ($game_id !== undefined) {
     writeVarint32(bb, 10);
-    writeString(bb, $favorite_color);
+    writeString(bb, $game_id);
+  }
+
+  // optional GameSettings settings = 2;
+  let $settings = message.settings;
+  if ($settings !== undefined) {
+    writeVarint32(bb, 18);
+    let nested = popByteBuffer();
+    _encodeGameSettings($settings, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
   }
 }
 
-export function decodeHostHello(binary: Uint8Array): HostHello {
-  return _decodeHostHello(wrapByteBuffer(binary));
+export function decodeCreateGame(binary: Uint8Array): CreateGame {
+  return _decodeCreateGame(wrapByteBuffer(binary));
 }
 
-function _decodeHostHello(bb: ByteBuffer): HostHello {
-  let message: HostHello = {} as any;
+function _decodeCreateGame(bb: ByteBuffer): CreateGame {
+  let message: CreateGame = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -295,9 +383,17 @@ function _decodeHostHello(bb: ByteBuffer): HostHello {
       case 0:
         break end_of_message;
 
-      // optional string favorite_color = 1;
+      // optional string game_id = 1;
       case 1: {
-        message.favorite_color = readString(bb, readVarint32(bb));
+        message.game_id = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      // optional GameSettings settings = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        message.settings = _decodeGameSettings(bb);
+        bb.limit = limit;
         break;
       }
 
@@ -311,7 +407,7 @@ function _decodeHostHello(bb: ByteBuffer): HostHello {
 
 export interface OneofMatchmakingUpdate {
   found_game?: FoundGame;
-  host_hello?: HostHello;
+  create_game?: CreateGame;
 }
 
 export function encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate): Uint8Array {
@@ -332,12 +428,12 @@ function _encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate, bb: Byte
     pushByteBuffer(nested);
   }
 
-  // optional HostHello host_hello = 3;
-  let $host_hello = message.host_hello;
-  if ($host_hello !== undefined) {
+  // optional CreateGame create_game = 3;
+  let $create_game = message.create_game;
+  if ($create_game !== undefined) {
     writeVarint32(bb, 26);
     let nested = popByteBuffer();
-    _encodeHostHello($host_hello, nested);
+    _encodeCreateGame($create_game, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -366,10 +462,10 @@ function _decodeOneofMatchmakingUpdate(bb: ByteBuffer): OneofMatchmakingUpdate {
         break;
       }
 
-      // optional HostHello host_hello = 3;
+      // optional CreateGame create_game = 3;
       case 3: {
         let limit = pushTemporaryLength(bb);
-        message.host_hello = _decodeHostHello(bb);
+        message.create_game = _decodeCreateGame(bb);
         bb.limit = limit;
         break;
       }

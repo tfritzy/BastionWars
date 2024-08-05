@@ -183,18 +183,6 @@ public class Server
 
         switch (request.RequestCase)
         {
-            case OneofMatchmakingRequest.RequestOneofCase.HostIntroduction:
-                await SendMessage(
-                    new OneofMatchmakingUpdate
-                    {
-                        HostHello = new HostHello
-                        {
-                            FavoriteColor = request.HostIntroduction.FavoriteColor
-                        }
-                    },
-                    webSocket
-                );
-                break;
             default:
                 Console.WriteLine("Invalid message type from host: " + request.RequestCase);
                 break;

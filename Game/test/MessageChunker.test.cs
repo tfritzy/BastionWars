@@ -11,7 +11,7 @@ namespace KeepLordWarriors
     {
         private Schema.OneofUpdate getBigMessage()
         {
-            Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.ThirtyByTwenty));
+            Game game = new(TH.GetGameSettings(map: TestMaps.ThirtyByTwenty));
             return new Schema.OneofUpdate
             {
                 InitialState = game.GetInitialState(),
@@ -20,7 +20,7 @@ namespace KeepLordWarriors
 
         private Schema.OneofUpdate getSmolMessage()
         {
-            Game game = new(new GameSettings(GenerationMode.AutoAccrue, TestMaps.ThreeByThree));
+            Game game = new(TH.GetGameSettings(map: TestMaps.ThreeByThree));
             return new Schema.OneofUpdate
             {
                 InitialState = game.GetInitialState(),
