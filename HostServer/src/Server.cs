@@ -102,22 +102,15 @@ public class Host
     {
         string gameSettings = Convert.ToBase64String(createGame.Settings.ToByteArray());
 
-        try
-        {
-            Process process = new();
-            process.StartInfo.FileName = $"{createGame.GameId}.exe";
-            process.StartInfo.Arguments = $"{createGame.GameId} {gameSettings}";
-            process.StartInfo.UseShellExecute = true;
+        string currentDirectory = Directory.GetCurrentDirectory();
+        Console.WriteLine("Current working directory: " + currentDirectory);
 
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+        Process process = new();
+        process.StartInfo.FileName = $"GameServer.exe";
+        process.StartInfo.Arguments = $"{createGame.GameId} {gameSettings}";
+        process.StartInfo.UseShellExecute = true;
 
-            process.WaitForExit();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Exception: {ex.Message}");
-        }
+        process.Start();
+        process.WaitForExit();
     }
 }

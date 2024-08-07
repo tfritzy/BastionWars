@@ -41,7 +41,6 @@ public class Responses
         Host server = new(ws);
 
         Assert.AreEqual(0, sentMessages.Count);
-
         server.ConnectWithMatchmakingServer();
         var createGame = new Schema.OneofMatchmakingUpdate
         {
