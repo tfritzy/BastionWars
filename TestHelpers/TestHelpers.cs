@@ -2,7 +2,7 @@ using System.Numerics;
 using KeepLordWarriors;
 using Schema;
 
-namespace Tests;
+namespace TestHelpers;
 
 public static class TH
 {

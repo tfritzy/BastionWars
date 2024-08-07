@@ -1,4 +1,8 @@
+using System.Net.WebSockets;
+using Helpers;
 using Server;
 
-Host host = new();
+WebSocketClient ws = new();
+Host host = new(ws);
 await host.ConnectWithMatchmakingServer();
+await host.ListenLoop();

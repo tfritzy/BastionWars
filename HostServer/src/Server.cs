@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using DotNetEnv;
 using Google.Protobuf;
+using Helpers;
 using Schema;
 
 namespace Server;
@@ -10,11 +11,9 @@ public class Host
 {
     private string matchmakingServerAddress;
     private string hostedAddress;
+    private IWebSocketClient ws;
 
-    public delegate void MessageHandler(object sender, byte[] bytes);
-    public event MessageHandler OnMessageSent;
-
-    public Host()
+    public Host(IWebSocketClient ws)
     {
         string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
         string envFile = environment == "Production" ? ".env.production" : ".env";
@@ -24,54 +23,59 @@ public class Host
             ?? throw new Exception("MATCHMAKING_SERVER_ADDRESS environment variable not set.");
         hostedAddress = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
             ?? throw new Exception("HOSTED_ADDRESS variable missing");
+
+        this.ws = ws;
     }
 
     public async Task ConnectWithMatchmakingServer()
     {
-        ClientWebSocket ws = new();
         await ws.ConnectAsync(new Uri(matchmakingServerAddress + $"?id=host_asdf"), CancellationToken.None);
-        await ListenLoop(ws);
     }
 
-    private async Task ListenLoop(WebSocket ws)
+    public async Task ListenLoop()
     {
         byte[] buffer = new byte[1024];
-        while (true)
+        var result = await ws.ReceiveAsync(
+            new ArraySegment<byte>(buffer),
+            CancellationToken.None);
+        int messageLength = result.Count;
+        if (result.MessageType == WebSocketMessageType.Binary)
         {
-            var result = await ws.ReceiveAsync(
-                new ArraySegment<byte>(buffer),
-                CancellationToken.None);
-            int messageLength = result.Count;
-            if (result.MessageType == WebSocketMessageType.Binary)
+            using (MemoryStream? ms = new MemoryStream(buffer, 0, messageLength))
             {
-                using (MemoryStream? ms = new MemoryStream(buffer, 0, messageLength))
+                try
                 {
-                    await HandleMessage(ws, ms);
+                    OneofMatchmakingUpdate message = OneofMatchmakingUpdate.Parser.ParseFrom(ms);
+                    await HandleMessage(message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Host server got unparsable message. " + e.ToString());
                 }
             }
-            else if (result.MessageType == WebSocketMessageType.Close)
-            {
-                Console.WriteLine("WebSocket connection closed by matchmaking server.");
-                await ws.CloseAsync(
-                    WebSocketCloseStatus.NormalClosure,
-                    string.Empty,
-                    CancellationToken.None);
-            }
-            else
-            {
-                Console.WriteLine("Invalid message of type " + result.MessageType);
-            }
         }
+        else if (result.MessageType == WebSocketMessageType.Close)
+        {
+            Console.WriteLine("WebSocket connection closed by matchmaking server.");
+            await ws.CloseAsync(
+                WebSocketCloseStatus.NormalClosure,
+                string.Empty,
+                CancellationToken.None);
+        }
+        else
+        {
+            Console.WriteLine("Invalid message of type " + result.MessageType);
+        }
+
+        await ListenLoop();
     }
 
-    private async Task HandleMessage(WebSocket ws, MemoryStream ms)
+    public async Task HandleMessage(OneofMatchmakingUpdate message)
     {
-        OneofMatchmakingUpdate message = OneofMatchmakingUpdate.Parser.ParseFrom(ms);
-        Console.WriteLine($"Received message from host of type {message.UpdateCase}");
         switch (message.UpdateCase)
         {
             case OneofMatchmakingUpdate.UpdateOneofCase.CreateGame:
-                StartGameInstance();
+                StartGameInstance(message.CreateGame);
                 await SendMessage(
                     new OneofMatchmakingRequest
                     {
@@ -79,8 +83,7 @@ public class Host
                         {
                             GameId = message.CreateGame.GameId,
                         }
-                    },
-                    ws);
+                    });
                 break;
             default:
                 Console.WriteLine("Uknown message type: " + message.UpdateCase);
@@ -89,11 +92,10 @@ public class Host
         }
     }
 
-    private async Task SendMessage(OneofMatchmakingRequest req, WebSocket ws)
+    private async Task SendMessage(OneofMatchmakingRequest req)
     {
         byte[] bytesToSend = req.ToByteArray();
         await ws.SendAsync(bytesToSend, WebSocketMessageType.Binary, true, CancellationToken.None);
-        OnMessageSent.Invoke(this, bytesToSend);
     }
 
     private static void StartGameInstance(CreateGame createGame)
@@ -116,45 +118,6 @@ public class Host
         catch (Exception ex)
         {
             Console.WriteLine($"Exception: {ex.Message}");
-        }
-    }
-
-    private static void StartGameInstance()
-    {
-        string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-#if DEBUG
-        string buildConfig = "Debug";
-#else
-            string buildConfig = "Release";
-#endif
-
-        // Construct the relative path to the other project's executable
-        string relativePath = $@"..\..\OtherProject\bin\{buildConfig}\OtherProject.exe";
-        string exePath = Path.GetFullPath(Path.Combine(currentDirectory, relativePath));
-
-        // Create a new process start info
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = exePath,
-            Arguments = "", // Add any arguments here if needed
-            UseShellExecute = false, // Set to true if you want to use the OS shell to start the process
-            RedirectStandardOutput = false, // Set to true if you want to read the standard output
-            RedirectStandardError = false, // Set to true if you want to read the standard error
-            CreateNoWindow = false // Set to true if you don't want to create a window
-        };
-
-        try
-        {
-            // Start the process
-            using (Process process = Process.Start(startInfo))
-            {
-                Console.WriteLine("Process started successfully.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed to start process: {ex.Message}");
         }
     }
 }

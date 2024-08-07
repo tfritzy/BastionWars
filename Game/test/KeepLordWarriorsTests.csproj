@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\KeepLordWarriors.csproj" />
+    <ProjectReference Include="..\..\TestHelpers\TestHelpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

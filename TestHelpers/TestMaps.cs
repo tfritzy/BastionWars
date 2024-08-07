@@ -1,4 +1,4 @@
-namespace Tests;
+namespace TestHelpers;
 
 public static class TestMaps
 {
