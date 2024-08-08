@@ -25,4 +25,9 @@ public class WebSocketClient : IWebSocketClient
     {
         await ws.SendAsync(buffer, messageType, endOfMessage, cancellationToken);
     }
+
+    public List<ArraySegment<byte>> TestOnly_GetSentMessages()
+    {
+        throw new NotImplementedException("Test only >:(");
+    }
 }

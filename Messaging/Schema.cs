@@ -26,49 +26,51 @@ namespace Schema {
           string.Concat(
             "CgxzY2hlbWEucHJvdG8SBlNjaGVtYSJMCgxHYW1lU2V0dGluZ3MSLwoPZ2Vu",
             "ZXJhdGlvbl9tb2RlGAEgASgOMhYuU2NoZW1hLkdlbmVyYXRpb25Nb2RlEgsK",
-            "A21hcBgCIAEoCSIfCg1TZWFyY2hGb3JHYW1lEg4KBnJhbmtlZBgBIAEoCCIc",
-            "CglHYW1lUmVhZHkSDwoHZ2FtZV9pZBgBIAEoCSJ/ChdPbmVvZk1hdGNobWFr",
-            "aW5nUmVxdWVzdBIwCg9zZWFyY2hfZm9yX2dhbWUYAiABKAsyFS5TY2hlbWEu",
-            "U2VhcmNoRm9yR2FtZUgAEicKCmdhbWVfcmVhZHkYAyABKAsyES5TY2hlbWEu",
-            "R2FtZVJlYWR5SABCCQoHcmVxdWVzdCIwCglGb3VuZEdhbWUSDwoHZ2FtZV9p",
-            "ZBgBIAEoCRISCgpzZXJ2ZXJfdXJsGAIgASgJIkUKCkNyZWF0ZUdhbWUSDwoH",
-            "Z2FtZV9pZBgBIAEoCRImCghzZXR0aW5ncxgCIAEoCzIULlNjaGVtYS5HYW1l",
-            "U2V0dGluZ3MidgoWT25lb2ZNYXRjaG1ha2luZ1VwZGF0ZRInCgpmb3VuZF9n",
-            "YW1lGAIgASgLMhEuU2NoZW1hLkZvdW5kR2FtZUgAEikKC2NyZWF0ZV9nYW1l",
-            "GAMgASgLMhIuU2NoZW1hLkNyZWF0ZUdhbWVIAEIICgZ1cGRhdGUiFQoFSGVs",
-            "bG8SDAoEbmFtZRgBIAEoCSJMCgxPbmVvZlJlcXVlc3QSEQoJc2VuZGVyX2lk",
-            "GAEgASgJEh4KBWhlbGxvGAIgASgLMg0uU2NoZW1hLkhlbGxvSABCCQoHcmVx",
-            "dWVzdCKaAQoLT25lb2ZVcGRhdGUSFAoMcmVjaXBpZW50X2lkGAEgASgJEi0K",
-            "DWluaXRpYWxfc3RhdGUYAiABKAsyFC5TY2hlbWEuSW5pdGlhbFN0YXRlSAAS",
-            "PAoVYWxsX3NvbGRpZXJfcG9zaXRpb25zGAMgASgLMhsuU2NoZW1hLkFsbFNv",
-            "bGRpZXJQb3NpdGlvbnNIAEIICgZ1cGRhdGUiNgoFQ2h1bmsSDQoFaW5kZXgY",
-            "ASABKAUSEAoIbWF4SW5kZXgYAiABKAUSDAoEZGF0YRgDIAEoDCJmCgZQYWNr",
-            "ZXQSHQoGY2h1bmtzGAEgAygLMg0uU2NoZW1hLkNodW5rEgoKAmlkGAIgASgE",
-            "EiAKBHR5cGUYAyABKA4yEi5TY2hlbWEuUGFja2V0VHlwZRIPCgdzZW50X21z",
-            "GAQgASgFIhoKAlYyEgkKAXgYASABKAISCQoBeRgCIAEoAiIdCgVWMkludBIJ",
-            "CgF4GAEgASgFEgkKAXkYAiABKAUiSQoTQWxsU29sZGllclBvc2l0aW9ucxIy",
-            "ChFzb2xkaWVyX3Bvc2l0aW9ucxgBIAMoCzIXLlNjaGVtYS5Tb2xkaWVyUG9z",
-            "aXRpb24iVAoPU29sZGllclBvc2l0aW9uEgoKAmlkGAEgASgEEhcKA3BvcxgC",
-            "IAEoCzIKLlNjaGVtYS5WMhIcCgh2ZWxvY2l0eRgDIAEoCzIKLlNjaGVtYS5W",
-            "MiJ9CglLZWVwU3RhdGUSCgoCaWQYASABKAQSFwoDcG9zGAIgASgLMgouU2No",
-            "ZW1hLlYyEhUKDXdhcnJpb3JfY291bnQYAyABKAUSFAoMYXJjaGVyX2NvdW50",
-            "GAQgASgFEgwKBG5hbWUYBSABKAkSEAoIYWxsaWFuY2UYBiABKAUieAoMSW5p",
-            "dGlhbFN0YXRlEiAKBWtlZXBzGAEgAygLMhEuU2NoZW1hLktlZXBTdGF0ZRIR",
-            "CgltYXBfd2lkdGgYAiABKAUSEgoKbWFwX2hlaWdodBgDIAEoBRIfCgV0aWxl",
-            "cxgEIAMoDjIQLlNjaGVtYS5UaWxlVHlwZSoqCg5HZW5lcmF0aW9uTW9kZRIO",
-            "CgpBdXRvQWNjcnVlEAASCAoEV29yZBABKicKClBhY2tldFR5cGUSCgoGVVBE",
-            "QVRFEAASDQoJSEVBUlRCRUFUEAEqNgoIVGlsZVR5cGUSCwoHSW52YWxpZBAA",
-            "EggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQA2IGcHJvdG8z"));
+            "A21hcBgCIAEoCSIfCg1TZWFyY2hGb3JHYW1lEg4KBnJhbmtlZBgBIAEoCCJJ",
+            "ChJHYW1lRm91bmRGb3JQbGF5ZXISDwoHZ2FtZV9pZBgBIAEoCRIRCglwbGF5",
+            "ZXJfaWQYAiABKAkSDwoHYWRkcmVzcxgDIAEoCSKTAQoXT25lb2ZNYXRjaG1h",
+            "a2luZ1JlcXVlc3QSMAoPc2VhcmNoX2Zvcl9nYW1lGAIgASgLMhUuU2NoZW1h",
+            "LlNlYXJjaEZvckdhbWVIABI7ChVnYW1lX2ZvdW5kX2Zvcl9wbGF5ZXIYAyAB",
+            "KAsyGi5TY2hlbWEuR2FtZUZvdW5kRm9yUGxheWVySABCCQoHcmVxdWVzdCIw",
+            "CglGb3VuZEdhbWUSDwoHZ2FtZV9pZBgBIAEoCRISCgpzZXJ2ZXJfdXJsGAIg",
+            "ASgJIiYKEVBsYWNlUGxheWVySW5HYW1lEhEKCXBsYXllcl9pZBgBIAEoCSKG",
+            "AQoWT25lb2ZNYXRjaG1ha2luZ1VwZGF0ZRInCgpmb3VuZF9nYW1lGAIgASgL",
+            "MhEuU2NoZW1hLkZvdW5kR2FtZUgAEjkKFHBsYWNlX3BsYXllcl9pbl9nYW1l",
+            "GAMgASgLMhkuU2NoZW1hLlBsYWNlUGxheWVySW5HYW1lSABCCAoGdXBkYXRl",
+            "IhUKBUhlbGxvEgwKBG5hbWUYASABKAkiTAoMT25lb2ZSZXF1ZXN0EhEKCXNl",
+            "bmRlcl9pZBgBIAEoCRIeCgVoZWxsbxgCIAEoCzINLlNjaGVtYS5IZWxsb0gA",
+            "QgkKB3JlcXVlc3QimgEKC09uZW9mVXBkYXRlEhQKDHJlY2lwaWVudF9pZBgB",
+            "IAEoCRItCg1pbml0aWFsX3N0YXRlGAIgASgLMhQuU2NoZW1hLkluaXRpYWxT",
+            "dGF0ZUgAEjwKFWFsbF9zb2xkaWVyX3Bvc2l0aW9ucxgDIAEoCzIbLlNjaGVt",
+            "YS5BbGxTb2xkaWVyUG9zaXRpb25zSABCCAoGdXBkYXRlIjYKBUNodW5rEg0K",
+            "BWluZGV4GAEgASgFEhAKCG1heEluZGV4GAIgASgFEgwKBGRhdGEYAyABKAwi",
+            "ZgoGUGFja2V0Eh0KBmNodW5rcxgBIAMoCzINLlNjaGVtYS5DaHVuaxIKCgJp",
+            "ZBgCIAEoBBIgCgR0eXBlGAMgASgOMhIuU2NoZW1hLlBhY2tldFR5cGUSDwoH",
+            "c2VudF9tcxgEIAEoBSIaCgJWMhIJCgF4GAEgASgCEgkKAXkYAiABKAIiHQoF",
+            "VjJJbnQSCQoBeBgBIAEoBRIJCgF5GAIgASgFIkkKE0FsbFNvbGRpZXJQb3Np",
+            "dGlvbnMSMgoRc29sZGllcl9wb3NpdGlvbnMYASADKAsyFy5TY2hlbWEuU29s",
+            "ZGllclBvc2l0aW9uIlQKD1NvbGRpZXJQb3NpdGlvbhIKCgJpZBgBIAEoBBIX",
+            "CgNwb3MYAiABKAsyCi5TY2hlbWEuVjISHAoIdmVsb2NpdHkYAyABKAsyCi5T",
+            "Y2hlbWEuVjIifQoJS2VlcFN0YXRlEgoKAmlkGAEgASgEEhcKA3BvcxgCIAEo",
+            "CzIKLlNjaGVtYS5WMhIVCg13YXJyaW9yX2NvdW50GAMgASgFEhQKDGFyY2hl",
+            "cl9jb3VudBgEIAEoBRIMCgRuYW1lGAUgASgJEhAKCGFsbGlhbmNlGAYgASgF",
+            "IngKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVtYS5LZWVw",
+            "U3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQYAyABKAUS",
+            "HwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5cGUqKgoOR2VuZXJhdGlv",
+            "bk1vZGUSDgoKQXV0b0FjY3J1ZRAAEggKBFdvcmQQASonCgpQYWNrZXRUeXBl",
+            "EgoKBlVQREFURRAAEg0KCUhFQVJUQkVBVBABKjYKCFRpbGVUeXBlEgsKB0lu",
+            "dmFsaWQQABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEANiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.PacketType), typeof(global::Schema.TileType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameSettings), global::Schema.GameSettings.Parser, new[]{ "GenerationMode", "Map" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SearchForGame), global::Schema.SearchForGame.Parser, new[]{ "Ranked" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameReady), global::Schema.GameReady.Parser, new[]{ "GameId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingRequest), global::Schema.OneofMatchmakingRequest.Parser, new[]{ "SearchForGame", "GameReady" }, new[]{ "Request" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameFoundForPlayer), global::Schema.GameFoundForPlayer.Parser, new[]{ "GameId", "PlayerId", "Address" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingRequest), global::Schema.OneofMatchmakingRequest.Parser, new[]{ "SearchForGame", "GameFoundForPlayer" }, new[]{ "Request" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.FoundGame), global::Schema.FoundGame.Parser, new[]{ "GameId", "ServerUrl" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.CreateGame), global::Schema.CreateGame.Parser, new[]{ "GameId", "Settings" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingUpdate), global::Schema.OneofMatchmakingUpdate.Parser, new[]{ "FoundGame", "CreateGame" }, new[]{ "Update" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.PlacePlayerInGame), global::Schema.PlacePlayerInGame.Parser, new[]{ "PlayerId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofMatchmakingUpdate), global::Schema.OneofMatchmakingUpdate.Parser, new[]{ "FoundGame", "PlacePlayerInGame" }, new[]{ "Update" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Hello), global::Schema.Hello.Parser, new[]{ "Name" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofRequest), global::Schema.OneofRequest.Parser, new[]{ "SenderId", "Hello" }, new[]{ "Request" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.OneofUpdate), global::Schema.OneofUpdate.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions" }, new[]{ "Update" }, null, null, null),
@@ -526,16 +528,16 @@ namespace Schema {
 
   }
 
-  public sealed partial class GameReady : pb::IMessage<GameReady>
+  public sealed partial class GameFoundForPlayer : pb::IMessage<GameFoundForPlayer>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<GameReady> _parser = new pb::MessageParser<GameReady>(() => new GameReady());
+    private static readonly pb::MessageParser<GameFoundForPlayer> _parser = new pb::MessageParser<GameFoundForPlayer>(() => new GameFoundForPlayer());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<GameReady> Parser { get { return _parser; } }
+    public static pb::MessageParser<GameFoundForPlayer> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -551,7 +553,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GameReady() {
+    public GameFoundForPlayer() {
       OnConstruction();
     }
 
@@ -559,15 +561,17 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GameReady(GameReady other) : this() {
+    public GameFoundForPlayer(GameFoundForPlayer other) : this() {
       gameId_ = other.gameId_;
+      playerId_ = other.playerId_;
+      address_ = other.address_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GameReady Clone() {
-      return new GameReady(this);
+    public GameFoundForPlayer Clone() {
+      return new GameFoundForPlayer(this);
     }
 
     /// <summary>Field number for the "game_id" field.</summary>
@@ -582,15 +586,39 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "player_id" field.</summary>
+    public const int PlayerIdFieldNumber = 2;
+    private string playerId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override bool Equals(object other) {
-      return Equals(other as GameReady);
+    public string PlayerId {
+      get { return playerId_; }
+      set {
+        playerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "address" field.</summary>
+    public const int AddressFieldNumber = 3;
+    private string address_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Address {
+      get { return address_; }
+      set {
+        address_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(GameReady other) {
+    public override bool Equals(object other) {
+      return Equals(other as GameFoundForPlayer);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(GameFoundForPlayer other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -598,6 +626,8 @@ namespace Schema {
         return true;
       }
       if (GameId != other.GameId) return false;
+      if (PlayerId != other.PlayerId) return false;
+      if (Address != other.Address) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -606,6 +636,8 @@ namespace Schema {
     public override int GetHashCode() {
       int hash = 1;
       if (GameId.Length != 0) hash ^= GameId.GetHashCode();
+      if (PlayerId.Length != 0) hash ^= PlayerId.GetHashCode();
+      if (Address.Length != 0) hash ^= Address.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -628,6 +660,14 @@ namespace Schema {
         output.WriteRawTag(10);
         output.WriteString(GameId);
       }
+      if (PlayerId.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(PlayerId);
+      }
+      if (Address.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Address);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -642,6 +682,14 @@ namespace Schema {
         output.WriteRawTag(10);
         output.WriteString(GameId);
       }
+      if (PlayerId.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(PlayerId);
+      }
+      if (Address.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Address);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -655,6 +703,12 @@ namespace Schema {
       if (GameId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(GameId);
       }
+      if (PlayerId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerId);
+      }
+      if (Address.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Address);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -663,12 +717,18 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(GameReady other) {
+    public void MergeFrom(GameFoundForPlayer other) {
       if (other == null) {
         return;
       }
       if (other.GameId.Length != 0) {
         GameId = other.GameId;
+      }
+      if (other.PlayerId.Length != 0) {
+        PlayerId = other.PlayerId;
+      }
+      if (other.Address.Length != 0) {
+        Address = other.Address;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -689,6 +749,14 @@ namespace Schema {
             GameId = input.ReadString();
             break;
           }
+          case 18: {
+            PlayerId = input.ReadString();
+            break;
+          }
+          case 26: {
+            Address = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -706,6 +774,14 @@ namespace Schema {
             break;
           case 10: {
             GameId = input.ReadString();
+            break;
+          }
+          case 18: {
+            PlayerId = input.ReadString();
+            break;
+          }
+          case 26: {
+            Address = input.ReadString();
             break;
           }
         }
@@ -753,8 +829,8 @@ namespace Schema {
         case RequestOneofCase.SearchForGame:
           SearchForGame = other.SearchForGame.Clone();
           break;
-        case RequestOneofCase.GameReady:
-          GameReady = other.GameReady.Clone();
+        case RequestOneofCase.GameFoundForPlayer:
+          GameFoundForPlayer = other.GameFoundForPlayer.Clone();
           break;
       }
 
@@ -779,15 +855,15 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "game_ready" field.</summary>
-    public const int GameReadyFieldNumber = 3;
+    /// <summary>Field number for the "game_found_for_player" field.</summary>
+    public const int GameFoundForPlayerFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.GameReady GameReady {
-      get { return requestCase_ == RequestOneofCase.GameReady ? (global::Schema.GameReady) request_ : null; }
+    public global::Schema.GameFoundForPlayer GameFoundForPlayer {
+      get { return requestCase_ == RequestOneofCase.GameFoundForPlayer ? (global::Schema.GameFoundForPlayer) request_ : null; }
       set {
         request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.GameReady;
+        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.GameFoundForPlayer;
       }
     }
 
@@ -796,7 +872,7 @@ namespace Schema {
     public enum RequestOneofCase {
       None = 0,
       SearchForGame = 2,
-      GameReady = 3,
+      GameFoundForPlayer = 3,
     }
     private RequestOneofCase requestCase_ = RequestOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -828,7 +904,7 @@ namespace Schema {
         return true;
       }
       if (!object.Equals(SearchForGame, other.SearchForGame)) return false;
-      if (!object.Equals(GameReady, other.GameReady)) return false;
+      if (!object.Equals(GameFoundForPlayer, other.GameFoundForPlayer)) return false;
       if (RequestCase != other.RequestCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -838,7 +914,7 @@ namespace Schema {
     public override int GetHashCode() {
       int hash = 1;
       if (requestCase_ == RequestOneofCase.SearchForGame) hash ^= SearchForGame.GetHashCode();
-      if (requestCase_ == RequestOneofCase.GameReady) hash ^= GameReady.GetHashCode();
+      if (requestCase_ == RequestOneofCase.GameFoundForPlayer) hash ^= GameFoundForPlayer.GetHashCode();
       hash ^= (int) requestCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -862,9 +938,9 @@ namespace Schema {
         output.WriteRawTag(18);
         output.WriteMessage(SearchForGame);
       }
-      if (requestCase_ == RequestOneofCase.GameReady) {
+      if (requestCase_ == RequestOneofCase.GameFoundForPlayer) {
         output.WriteRawTag(26);
-        output.WriteMessage(GameReady);
+        output.WriteMessage(GameFoundForPlayer);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -880,9 +956,9 @@ namespace Schema {
         output.WriteRawTag(18);
         output.WriteMessage(SearchForGame);
       }
-      if (requestCase_ == RequestOneofCase.GameReady) {
+      if (requestCase_ == RequestOneofCase.GameFoundForPlayer) {
         output.WriteRawTag(26);
-        output.WriteMessage(GameReady);
+        output.WriteMessage(GameFoundForPlayer);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -897,8 +973,8 @@ namespace Schema {
       if (requestCase_ == RequestOneofCase.SearchForGame) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(SearchForGame);
       }
-      if (requestCase_ == RequestOneofCase.GameReady) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(GameReady);
+      if (requestCase_ == RequestOneofCase.GameFoundForPlayer) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(GameFoundForPlayer);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -919,11 +995,11 @@ namespace Schema {
           }
           SearchForGame.MergeFrom(other.SearchForGame);
           break;
-        case RequestOneofCase.GameReady:
-          if (GameReady == null) {
-            GameReady = new global::Schema.GameReady();
+        case RequestOneofCase.GameFoundForPlayer:
+          if (GameFoundForPlayer == null) {
+            GameFoundForPlayer = new global::Schema.GameFoundForPlayer();
           }
-          GameReady.MergeFrom(other.GameReady);
+          GameFoundForPlayer.MergeFrom(other.GameFoundForPlayer);
           break;
       }
 
@@ -952,12 +1028,12 @@ namespace Schema {
             break;
           }
           case 26: {
-            global::Schema.GameReady subBuilder = new global::Schema.GameReady();
-            if (requestCase_ == RequestOneofCase.GameReady) {
-              subBuilder.MergeFrom(GameReady);
+            global::Schema.GameFoundForPlayer subBuilder = new global::Schema.GameFoundForPlayer();
+            if (requestCase_ == RequestOneofCase.GameFoundForPlayer) {
+              subBuilder.MergeFrom(GameFoundForPlayer);
             }
             input.ReadMessage(subBuilder);
-            GameReady = subBuilder;
+            GameFoundForPlayer = subBuilder;
             break;
           }
         }
@@ -985,12 +1061,12 @@ namespace Schema {
             break;
           }
           case 26: {
-            global::Schema.GameReady subBuilder = new global::Schema.GameReady();
-            if (requestCase_ == RequestOneofCase.GameReady) {
-              subBuilder.MergeFrom(GameReady);
+            global::Schema.GameFoundForPlayer subBuilder = new global::Schema.GameFoundForPlayer();
+            if (requestCase_ == RequestOneofCase.GameFoundForPlayer) {
+              subBuilder.MergeFrom(GameFoundForPlayer);
             }
             input.ReadMessage(subBuilder);
-            GameReady = subBuilder;
+            GameFoundForPlayer = subBuilder;
             break;
           }
         }
@@ -1226,16 +1302,16 @@ namespace Schema {
 
   }
 
-  public sealed partial class CreateGame : pb::IMessage<CreateGame>
+  public sealed partial class PlacePlayerInGame : pb::IMessage<PlacePlayerInGame>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<CreateGame> _parser = new pb::MessageParser<CreateGame>(() => new CreateGame());
+    private static readonly pb::MessageParser<PlacePlayerInGame> _parser = new pb::MessageParser<PlacePlayerInGame>(() => new PlacePlayerInGame());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<CreateGame> Parser { get { return _parser; } }
+    public static pb::MessageParser<PlacePlayerInGame> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1251,7 +1327,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public CreateGame() {
+    public PlacePlayerInGame() {
       OnConstruction();
     }
 
@@ -1259,59 +1335,45 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public CreateGame(CreateGame other) : this() {
-      gameId_ = other.gameId_;
-      settings_ = other.settings_ != null ? other.settings_.Clone() : null;
+    public PlacePlayerInGame(PlacePlayerInGame other) : this() {
+      playerId_ = other.playerId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public CreateGame Clone() {
-      return new CreateGame(this);
+    public PlacePlayerInGame Clone() {
+      return new PlacePlayerInGame(this);
     }
 
-    /// <summary>Field number for the "game_id" field.</summary>
-    public const int GameIdFieldNumber = 1;
-    private string gameId_ = "";
+    /// <summary>Field number for the "player_id" field.</summary>
+    public const int PlayerIdFieldNumber = 1;
+    private string playerId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string GameId {
-      get { return gameId_; }
+    public string PlayerId {
+      get { return playerId_; }
       set {
-        gameId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "settings" field.</summary>
-    public const int SettingsFieldNumber = 2;
-    private global::Schema.GameSettings settings_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.GameSettings Settings {
-      get { return settings_; }
-      set {
-        settings_ = value;
+        playerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as CreateGame);
+      return Equals(other as PlacePlayerInGame);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(CreateGame other) {
+    public bool Equals(PlacePlayerInGame other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (GameId != other.GameId) return false;
-      if (!object.Equals(Settings, other.Settings)) return false;
+      if (PlayerId != other.PlayerId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1319,8 +1381,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (GameId.Length != 0) hash ^= GameId.GetHashCode();
-      if (settings_ != null) hash ^= Settings.GetHashCode();
+      if (PlayerId.Length != 0) hash ^= PlayerId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1339,13 +1400,9 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (GameId.Length != 0) {
+      if (PlayerId.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(GameId);
-      }
-      if (settings_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Settings);
+        output.WriteString(PlayerId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1357,13 +1414,9 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (GameId.Length != 0) {
+      if (PlayerId.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(GameId);
-      }
-      if (settings_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Settings);
+        output.WriteString(PlayerId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1375,11 +1428,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (GameId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(GameId);
-      }
-      if (settings_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Settings);
+      if (PlayerId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1389,18 +1439,12 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(CreateGame other) {
+    public void MergeFrom(PlacePlayerInGame other) {
       if (other == null) {
         return;
       }
-      if (other.GameId.Length != 0) {
-        GameId = other.GameId;
-      }
-      if (other.settings_ != null) {
-        if (settings_ == null) {
-          Settings = new global::Schema.GameSettings();
-        }
-        Settings.MergeFrom(other.Settings);
+      if (other.PlayerId.Length != 0) {
+        PlayerId = other.PlayerId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1418,14 +1462,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            GameId = input.ReadString();
-            break;
-          }
-          case 18: {
-            if (settings_ == null) {
-              Settings = new global::Schema.GameSettings();
-            }
-            input.ReadMessage(Settings);
+            PlayerId = input.ReadString();
             break;
           }
         }
@@ -1444,14 +1481,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            GameId = input.ReadString();
-            break;
-          }
-          case 18: {
-            if (settings_ == null) {
-              Settings = new global::Schema.GameSettings();
-            }
-            input.ReadMessage(Settings);
+            PlayerId = input.ReadString();
             break;
           }
         }
@@ -1499,8 +1529,8 @@ namespace Schema {
         case UpdateOneofCase.FoundGame:
           FoundGame = other.FoundGame.Clone();
           break;
-        case UpdateOneofCase.CreateGame:
-          CreateGame = other.CreateGame.Clone();
+        case UpdateOneofCase.PlacePlayerInGame:
+          PlacePlayerInGame = other.PlacePlayerInGame.Clone();
           break;
       }
 
@@ -1525,15 +1555,15 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "create_game" field.</summary>
-    public const int CreateGameFieldNumber = 3;
+    /// <summary>Field number for the "place_player_in_game" field.</summary>
+    public const int PlacePlayerInGameFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.CreateGame CreateGame {
-      get { return updateCase_ == UpdateOneofCase.CreateGame ? (global::Schema.CreateGame) update_ : null; }
+    public global::Schema.PlacePlayerInGame PlacePlayerInGame {
+      get { return updateCase_ == UpdateOneofCase.PlacePlayerInGame ? (global::Schema.PlacePlayerInGame) update_ : null; }
       set {
         update_ = value;
-        updateCase_ = value == null ? UpdateOneofCase.None : UpdateOneofCase.CreateGame;
+        updateCase_ = value == null ? UpdateOneofCase.None : UpdateOneofCase.PlacePlayerInGame;
       }
     }
 
@@ -1542,7 +1572,7 @@ namespace Schema {
     public enum UpdateOneofCase {
       None = 0,
       FoundGame = 2,
-      CreateGame = 3,
+      PlacePlayerInGame = 3,
     }
     private UpdateOneofCase updateCase_ = UpdateOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1574,7 +1604,7 @@ namespace Schema {
         return true;
       }
       if (!object.Equals(FoundGame, other.FoundGame)) return false;
-      if (!object.Equals(CreateGame, other.CreateGame)) return false;
+      if (!object.Equals(PlacePlayerInGame, other.PlacePlayerInGame)) return false;
       if (UpdateCase != other.UpdateCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1584,7 +1614,7 @@ namespace Schema {
     public override int GetHashCode() {
       int hash = 1;
       if (updateCase_ == UpdateOneofCase.FoundGame) hash ^= FoundGame.GetHashCode();
-      if (updateCase_ == UpdateOneofCase.CreateGame) hash ^= CreateGame.GetHashCode();
+      if (updateCase_ == UpdateOneofCase.PlacePlayerInGame) hash ^= PlacePlayerInGame.GetHashCode();
       hash ^= (int) updateCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1608,9 +1638,9 @@ namespace Schema {
         output.WriteRawTag(18);
         output.WriteMessage(FoundGame);
       }
-      if (updateCase_ == UpdateOneofCase.CreateGame) {
+      if (updateCase_ == UpdateOneofCase.PlacePlayerInGame) {
         output.WriteRawTag(26);
-        output.WriteMessage(CreateGame);
+        output.WriteMessage(PlacePlayerInGame);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1626,9 +1656,9 @@ namespace Schema {
         output.WriteRawTag(18);
         output.WriteMessage(FoundGame);
       }
-      if (updateCase_ == UpdateOneofCase.CreateGame) {
+      if (updateCase_ == UpdateOneofCase.PlacePlayerInGame) {
         output.WriteRawTag(26);
-        output.WriteMessage(CreateGame);
+        output.WriteMessage(PlacePlayerInGame);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1643,8 +1673,8 @@ namespace Schema {
       if (updateCase_ == UpdateOneofCase.FoundGame) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(FoundGame);
       }
-      if (updateCase_ == UpdateOneofCase.CreateGame) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CreateGame);
+      if (updateCase_ == UpdateOneofCase.PlacePlayerInGame) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlacePlayerInGame);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1665,11 +1695,11 @@ namespace Schema {
           }
           FoundGame.MergeFrom(other.FoundGame);
           break;
-        case UpdateOneofCase.CreateGame:
-          if (CreateGame == null) {
-            CreateGame = new global::Schema.CreateGame();
+        case UpdateOneofCase.PlacePlayerInGame:
+          if (PlacePlayerInGame == null) {
+            PlacePlayerInGame = new global::Schema.PlacePlayerInGame();
           }
-          CreateGame.MergeFrom(other.CreateGame);
+          PlacePlayerInGame.MergeFrom(other.PlacePlayerInGame);
           break;
       }
 
@@ -1698,12 +1728,12 @@ namespace Schema {
             break;
           }
           case 26: {
-            global::Schema.CreateGame subBuilder = new global::Schema.CreateGame();
-            if (updateCase_ == UpdateOneofCase.CreateGame) {
-              subBuilder.MergeFrom(CreateGame);
+            global::Schema.PlacePlayerInGame subBuilder = new global::Schema.PlacePlayerInGame();
+            if (updateCase_ == UpdateOneofCase.PlacePlayerInGame) {
+              subBuilder.MergeFrom(PlacePlayerInGame);
             }
             input.ReadMessage(subBuilder);
-            CreateGame = subBuilder;
+            PlacePlayerInGame = subBuilder;
             break;
           }
         }
@@ -1731,12 +1761,12 @@ namespace Schema {
             break;
           }
           case 26: {
-            global::Schema.CreateGame subBuilder = new global::Schema.CreateGame();
-            if (updateCase_ == UpdateOneofCase.CreateGame) {
-              subBuilder.MergeFrom(CreateGame);
+            global::Schema.PlacePlayerInGame subBuilder = new global::Schema.PlacePlayerInGame();
+            if (updateCase_ == UpdateOneofCase.PlacePlayerInGame) {
+              subBuilder.MergeFrom(PlacePlayerInGame);
             }
             input.ReadMessage(subBuilder);
-            CreateGame = subBuilder;
+            PlacePlayerInGame = subBuilder;
             break;
           }
         }

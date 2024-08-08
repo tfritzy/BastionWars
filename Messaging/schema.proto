@@ -20,15 +20,17 @@ message SearchForGame
     bool ranked = 1;
 }
 
-message GameReady
+message GameFoundForPlayer
 {
     string game_id = 1;
+    string player_id = 2;
+    string address = 3;
 }
 
 message OneofMatchmakingRequest {
     oneof request {
         SearchForGame search_for_game = 2;
-        GameReady game_ready = 3;
+        GameFoundForPlayer game_found_for_player = 3;
     }
 }
 
@@ -38,16 +40,15 @@ message FoundGame
     string server_url = 2;
 }
 
-message CreateGame
+message PlacePlayerInGame
 {
-    string game_id = 1;
-    GameSettings settings = 2;
+    string player_id = 1;
 }
 
 message OneofMatchmakingUpdate {
     oneof update {
         FoundGame found_game = 2;
-        CreateGame create_game = 3;
+        PlacePlayerInGame place_player_in_game = 3;
     }
 }
 

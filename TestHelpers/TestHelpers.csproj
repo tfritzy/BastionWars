@@ -3,6 +3,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Messaging\Messaging.csproj" />
     <ProjectReference Include="..\Game\src\KeepLordWarriors.csproj" />
+    <ProjectReference Include="..\Helpers\Helpers.csproj" />
+    <PackageReference Include="Moq" Version="4.20.70" />
   </ItemGroup>
 
   <PropertyGroup>
