@@ -41,13 +41,6 @@ public partial class MapMono : GridMap
         SyncWords();
     }
 
-    struct MeshDetails
-    {
-        public int Index;
-        public int Orientation;
-    }
-
-    static readonly int[] orientations = new int[] { 0, 10, 16, 22 };
     private void GenerateGrid()
     {
         for (int x = 0; x < Map.RenderTiles.GetLength(0); x++)

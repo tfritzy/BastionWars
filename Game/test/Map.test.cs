@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Text;
 using KeepLordWarriors;
 using Navigation;
+using TestHelpers;
 
 namespace Tests;
 

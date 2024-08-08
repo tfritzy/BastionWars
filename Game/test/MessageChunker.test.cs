@@ -2,6 +2,7 @@ using System.Text;
 using Google.Protobuf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Schema;
+using TestHelpers;
 using Tests;
 
 namespace KeepLordWarriors

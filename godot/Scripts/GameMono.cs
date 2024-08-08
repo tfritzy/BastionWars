@@ -15,10 +15,11 @@ public partial class GameMono : Node
 		using var file = FileAccess.Open("res://Maps/map.txt", FileAccess.ModeFlags.Read);
 		string map = file.GetAsText();
 
-		Game = new Game(new GameSettings(
-			mode: GenerationMode.Word,
-			map: map
-		));
+		Game = new Game(new Schema.GameSettings
+		{
+			GenerationMode = Schema.GenerationMode.Word,
+			Map = map,
+		});
 		foreach (var keep in Game.Map.Keeps.Values)
 		{
 			GD.Print(keep.Name);
