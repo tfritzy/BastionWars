@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Messaging\Messaging.csproj" />
     <PackageReference Include="Google.Protobuf" Version="3.27.1" />
+    <PackageReference Include="DotNetEnv" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,9 +17,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /I &quot;$(TargetDir)$(TargetName).exe&quot; &quot;$(ProjectDir)..\..\HostServer\src\bin\$(Configuration)\net8.0\&quot;" />
-    <Exec Command="xcopy /Y /I &quot;$(TargetDir)$(TargetName).exe&quot; &quot;$(ProjectDir)..\..\HostServer\test\bin\$(Configuration)\net8.0\&quot;" />
-  </Target>
+  <ItemGroup>
+    <None Update=".env">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update=".env.production">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

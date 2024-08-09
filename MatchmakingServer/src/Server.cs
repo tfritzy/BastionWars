@@ -36,7 +36,6 @@ public class Server
             Thread.Sleep(delay);
     }
 
-
     public async void StartAcceptingConnections()
     {
         HttpListener httpListener = new();

@@ -126,10 +126,27 @@ public class Host
         Process process = new();
         process.StartInfo.FileName = $"GameServer.exe";
         process.StartInfo.Arguments = $"{gameId} {port} {gameSettings}";
-        process.StartInfo.UseShellExecute = true;
+
+        // Redirect standard output and error so we can capture them
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.UseShellExecute = false;
 
         process.Start();
-        process.WaitForExit();
+
+        // Capture output and errors asynchronously
+        string output = await process.StandardOutput.ReadToEndAsync();
+        string error = await process.StandardError.ReadToEndAsync();
+
+        // Log the output and error
+        Console.WriteLine($"Output: {output}");
+        Console.WriteLine($"Error: {error}");
+
+        if (!string.IsNullOrEmpty(error))
+        {
+            // Handle the error, log it, or throw an exception based on the content of 'error'
+            throw new Exception($"GameServer.exe encountered an error: {error}");
+        }
 
         WebSocketClient webSocket = new();
         await webSocket.ConnectAsync(new Uri($"ws://localhost:{port}"), CancellationToken.None);
@@ -141,6 +158,7 @@ public class Host
             Id = gameId
         });
     }
+
 
     private GameInstanceDetails GetGameForPlayer(PlacePlayerInGame placePlayer)
     {

@@ -24,5 +24,6 @@ else
     port = "7250";
 }
 
-GameInstance gameInstance = new(gameId, gameSettings);
+GameInstance gameInstance = new(gameId, port, gameSettings);
+gameInstance.StartAcceptingConnections();
 gameInstance.StartGame();
