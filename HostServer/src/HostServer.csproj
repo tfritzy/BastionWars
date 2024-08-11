@@ -24,5 +24,6 @@
         <ProjectReference Include="..\..\Messaging\Messaging.csproj" />
         <ProjectReference Include="..\..\Game\src\KeepLordWarriors.csproj" />
         <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
+        <ProjectReference Include="..\..\GameServer\src\GameServer.csproj" />
     </ItemGroup>
 </Project>

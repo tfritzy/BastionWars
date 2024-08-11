@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\HostServer.csproj" />
     <ProjectReference Include="..\..\TestHelpers\TestHelpers.csproj" />
+    <ProjectReference Include="..\..\GameServer\src\GameServer.csproj" />
   </ItemGroup>
 
 </Project>

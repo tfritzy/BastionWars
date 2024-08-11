@@ -16,7 +16,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <CopyOutputToFolder>
-      $(MSBuildProjectDirectory)\..\..\HostServer\src\bin\$(Configuration)\$(TargetFramework)\
+      $(MSBuildProjectDirectory)\..\build\
     </CopyOutputToFolder>
   </PropertyGroup>
 

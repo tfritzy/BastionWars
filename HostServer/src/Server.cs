@@ -124,8 +124,8 @@ public class Host
         availablePorts.RemoveAt(0);
 
         Process process = new();
-        process.StartInfo.FileName = $"GameServer.exe";
-        process.StartInfo.Arguments = $"{gameId} {port} {gameSettings}";
+        process.StartInfo.FileName = $"../../../../../GameServer/build/GameServer.exe";
+        process.StartInfo.Arguments = $"{gameId} {gameSettings} {port}";
 
         // Redirect standard output and error so we can capture them
         process.StartInfo.RedirectStandardOutput = true;
