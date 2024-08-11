@@ -11,29 +11,16 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <CopyOutputToFolder>
-      $(MSBuildProjectDirectory)\..\build\
-    </CopyOutputToFolder>
   </PropertyGroup>
 
-  <!-- Gather all files from the OutputPath directory -->
   <ItemGroup>
-    <OutputFiles Include="$(OutputPath)**\*.*" />
-  </ItemGroup>
-
-  <Target Name="CopyOutput" AfterTargets="Build">
-    <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(CopyOutputToFolder)" />
-  </Target>
-
-  <ItemGroup>
-    <None Update=".env">
+    <None Update="game_server.env">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update=".env.production">
+    <None Update="game_server.env.production">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

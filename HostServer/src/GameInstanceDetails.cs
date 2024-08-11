@@ -5,8 +5,7 @@ namespace HostServer;
 
 public struct GameInstanceDetails
 {
-    public Process Process;
-    public WebSocketClient WebSocket;
+    public Task Task;
     public int Port;
     public string Id;
 }

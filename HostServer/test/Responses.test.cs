@@ -14,6 +14,7 @@ public class Responses
     [TestMethod]
     public void StandsUpGame()
     {
+        Console.WriteLine("Stands up game?");
         List<ArraySegment<byte>> sentMessages = [];
         Host server = new(new TestWebSocketFactory());
 

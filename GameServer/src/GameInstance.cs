@@ -5,28 +5,30 @@ using Schema;
 
 namespace GameServer;
 
-class GameInstance
+public class GameInstance
 {
     public string Id { get; private set; }
     public Schema.GameSettings GameSettings { get; private set; }
 
     private string url;
 
-    public GameInstance(string id, string port, Schema.GameSettings gameSettings)
+    public GameInstance(string id, int port, GameSettings gameSettings)
     {
         Id = id;
         GameSettings = gameSettings;
         string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
-        string envFile = environment == "Production" ? ".env.production" : ".env";
+        string envFile = environment == "Production" ? "game_server.env.production" : "game_server.env";
         Env.Load(envFile);
 
         url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
             ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
         url = $"{url}:{port}/";
+        Console.WriteLine("url: " + url);
     }
 
     public void StartGame()
     {
+        StartAcceptingConnections();
         Console.WriteLine($"Starting game {Id}");
         while (true) ;
     }
@@ -42,7 +44,7 @@ class GameInstance
 
         httpListener.Prefixes.Add(url);
         httpListener.Start();
-        Console.WriteLine("Listening on " + url);
+        Console.WriteLine("GameServer instance listening on " + url);
 
         try
         {

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net.WebSockets;
 using DotNetEnv;
+using GameServer;
 using Google.Protobuf;
 using Helpers;
 using Schema;
@@ -39,6 +40,7 @@ public class Host
 
     public async Task Setup()
     {
+        Console.WriteLine("Starting up host server");
         await StartGameInstance();
         await HostWS.ConnectAsync(new Uri(matchmakingServerAddress + $"?id=host_asdf"), CancellationToken.None);
     }
@@ -113,47 +115,22 @@ public class Host
 
     private async Task StartGameInstance()
     {
+        Console.WriteLine("Starting up game instance");
         var settings = new GameSettings
         {
             GenerationMode = GenerationMode.Word,
             Map = ""
         };
-        string gameSettings = Convert.ToBase64String(settings.ToByteArray());
         string gameId = IdGenerator.GenerateGameId();
         int port = availablePorts.First();
         availablePorts.RemoveAt(0);
 
-        Process process = new();
-        process.StartInfo.FileName = $"../../../../../GameServer/build/GameServer.exe";
-        process.StartInfo.Arguments = $"{gameId} {gameSettings} {port}";
+        var inst = new GameInstance(gameId, port, settings);
+        Task task = Task.Run(() => inst.StartGame());
 
-        // Redirect standard output and error so we can capture them
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.StartInfo.UseShellExecute = false;
-
-        process.Start();
-
-        // Capture output and errors asynchronously
-        string output = await process.StandardOutput.ReadToEndAsync();
-        string error = await process.StandardError.ReadToEndAsync();
-
-        // Log the output and error
-        Console.WriteLine($"Output: {output}");
-        Console.WriteLine($"Error: {error}");
-
-        if (!string.IsNullOrEmpty(error))
-        {
-            // Handle the error, log it, or throw an exception based on the content of 'error'
-            throw new Exception($"GameServer.exe encountered an error: {error}");
-        }
-
-        WebSocketClient webSocket = new();
-        await webSocket.ConnectAsync(new Uri($"ws://localhost:{port}"), CancellationToken.None);
         Games.Add(new GameInstanceDetails
         {
-            Process = process,
-            WebSocket = webSocket,
+            Task = task,
             Port = port,
             Id = gameId
         });
