@@ -15,7 +15,19 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <CopyOutputToFolder>
+      $(MSBuildProjectDirectory)\..\..\HostServer\src\bin\$(Configuration)\$(TargetFramework)\
+    </CopyOutputToFolder>
   </PropertyGroup>
+
+  <!-- Gather all files from the OutputPath directory -->
+  <ItemGroup>
+    <OutputFiles Include="$(OutputPath)**\*.*" />
+  </ItemGroup>
+
+  <Target Name="CopyOutput" AfterTargets="Build">
+    <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(CopyOutputToFolder)" />
+  </Target>
 
   <ItemGroup>
     <None Update=".env">
