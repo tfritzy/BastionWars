@@ -12,9 +12,6 @@ message GameSettings {
     string map = 2;
 }
 
-// #########################
-// ###### Matchmaking ######
-// #########################
 message SearchForGame
 {
     bool ranked = 1;
@@ -27,28 +24,38 @@ message GameFoundForPlayer
     string address = 3;
 }
 
-message OneofMatchmakingRequest {
-    oneof request {
-        SearchForGame search_for_game = 2;
-        GameFoundForPlayer game_found_for_player = 3;
-    }
-}
-
-message FoundGame
-{
-    string game_id = 1;
-    string server_url = 2;
-}
-
 message PlacePlayerInGame
 {
     string player_id = 1;
 }
 
-message OneofMatchmakingUpdate {
-    oneof update {
-        FoundGame found_game = 2;
+message Oneof_PlayerToMatchmaker {
+    oneof msg {
+        SearchForGame search_for_game = 2;
+    }
+}
+
+message Oneof_MatchMakerToPlayer {
+    oneof msg {
+        GameFoundForPlayer found_game = 2;
+    }
+}
+
+message Oneof_HostServerToMatchmaker {
+    oneof msg {
+        GameFoundForPlayer game_found_for_player = 3;
+    }
+}
+
+message Oneof_MatchmakerToHostServer {
+    oneof msg {
         PlacePlayerInGame place_player_in_game = 3;
+    }
+}
+
+message Oneof_HostServerToGameServer {
+    oneof msg {
+        Hello hello = 1;
     }
 }
 

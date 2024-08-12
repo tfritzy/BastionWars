@@ -232,140 +232,6 @@ function _decodeGameFoundForPlayer(bb: ByteBuffer): GameFoundForPlayer {
   return message;
 }
 
-export interface OneofMatchmakingRequest {
-  search_for_game?: SearchForGame;
-  game_found_for_player?: GameFoundForPlayer;
-}
-
-export function encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeOneofMatchmakingRequest(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeOneofMatchmakingRequest(message: OneofMatchmakingRequest, bb: ByteBuffer): void {
-  // optional SearchForGame search_for_game = 2;
-  let $search_for_game = message.search_for_game;
-  if ($search_for_game !== undefined) {
-    writeVarint32(bb, 18);
-    let nested = popByteBuffer();
-    _encodeSearchForGame($search_for_game, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
-  }
-
-  // optional GameFoundForPlayer game_found_for_player = 3;
-  let $game_found_for_player = message.game_found_for_player;
-  if ($game_found_for_player !== undefined) {
-    writeVarint32(bb, 26);
-    let nested = popByteBuffer();
-    _encodeGameFoundForPlayer($game_found_for_player, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
-  }
-}
-
-export function decodeOneofMatchmakingRequest(binary: Uint8Array): OneofMatchmakingRequest {
-  return _decodeOneofMatchmakingRequest(wrapByteBuffer(binary));
-}
-
-function _decodeOneofMatchmakingRequest(bb: ByteBuffer): OneofMatchmakingRequest {
-  let message: OneofMatchmakingRequest = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // optional SearchForGame search_for_game = 2;
-      case 2: {
-        let limit = pushTemporaryLength(bb);
-        message.search_for_game = _decodeSearchForGame(bb);
-        bb.limit = limit;
-        break;
-      }
-
-      // optional GameFoundForPlayer game_found_for_player = 3;
-      case 3: {
-        let limit = pushTemporaryLength(bb);
-        message.game_found_for_player = _decodeGameFoundForPlayer(bb);
-        bb.limit = limit;
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
-export interface FoundGame {
-  game_id?: string;
-  server_url?: string;
-}
-
-export function encodeFoundGame(message: FoundGame): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeFoundGame(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeFoundGame(message: FoundGame, bb: ByteBuffer): void {
-  // optional string game_id = 1;
-  let $game_id = message.game_id;
-  if ($game_id !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $game_id);
-  }
-
-  // optional string server_url = 2;
-  let $server_url = message.server_url;
-  if ($server_url !== undefined) {
-    writeVarint32(bb, 18);
-    writeString(bb, $server_url);
-  }
-}
-
-export function decodeFoundGame(binary: Uint8Array): FoundGame {
-  return _decodeFoundGame(wrapByteBuffer(binary));
-}
-
-function _decodeFoundGame(bb: ByteBuffer): FoundGame {
-  let message: FoundGame = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // optional string game_id = 1;
-      case 1: {
-        message.game_id = readString(bb, readVarint32(bb));
-        break;
-      }
-
-      // optional string server_url = 2;
-      case 2: {
-        message.server_url = readString(bb, readVarint32(bb));
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
 export interface PlacePlayerInGame {
   player_id?: string;
 }
@@ -413,29 +279,176 @@ function _decodePlacePlayerInGame(bb: ByteBuffer): PlacePlayerInGame {
   return message;
 }
 
-export interface OneofMatchmakingUpdate {
-  found_game?: FoundGame;
-  place_player_in_game?: PlacePlayerInGame;
+export interface Oneof_PlayerToMatchmaker {
+  search_for_game?: SearchForGame;
 }
 
-export function encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate): Uint8Array {
+export function encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker): Uint8Array {
   let bb = popByteBuffer();
-  _encodeOneofMatchmakingUpdate(message, bb);
+  _encodeOneof_PlayerToMatchmaker(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate, bb: ByteBuffer): void {
-  // optional FoundGame found_game = 2;
-  let $found_game = message.found_game;
-  if ($found_game !== undefined) {
+function _encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker, bb: ByteBuffer): void {
+  // optional SearchForGame search_for_game = 2;
+  let $search_for_game = message.search_for_game;
+  if ($search_for_game !== undefined) {
     writeVarint32(bb, 18);
     let nested = popByteBuffer();
-    _encodeFoundGame($found_game, nested);
+    _encodeSearchForGame($search_for_game, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
+}
 
+export function decodeOneof_PlayerToMatchmaker(binary: Uint8Array): Oneof_PlayerToMatchmaker {
+  return _decodeOneof_PlayerToMatchmaker(wrapByteBuffer(binary));
+}
+
+function _decodeOneof_PlayerToMatchmaker(bb: ByteBuffer): Oneof_PlayerToMatchmaker {
+  let message: Oneof_PlayerToMatchmaker = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional SearchForGame search_for_game = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        message.search_for_game = _decodeSearchForGame(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface Oneof_MatchMakerToPlayer {
+  found_game?: GameFoundForPlayer;
+}
+
+export function encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeOneof_MatchMakerToPlayer(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer, bb: ByteBuffer): void {
+  // optional GameFoundForPlayer found_game = 2;
+  let $found_game = message.found_game;
+  if ($found_game !== undefined) {
+    writeVarint32(bb, 18);
+    let nested = popByteBuffer();
+    _encodeGameFoundForPlayer($found_game, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+}
+
+export function decodeOneof_MatchMakerToPlayer(binary: Uint8Array): Oneof_MatchMakerToPlayer {
+  return _decodeOneof_MatchMakerToPlayer(wrapByteBuffer(binary));
+}
+
+function _decodeOneof_MatchMakerToPlayer(bb: ByteBuffer): Oneof_MatchMakerToPlayer {
+  let message: Oneof_MatchMakerToPlayer = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional GameFoundForPlayer found_game = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        message.found_game = _decodeGameFoundForPlayer(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface Oneof_HostServerToMatchmaker {
+  game_found_for_player?: GameFoundForPlayer;
+}
+
+export function encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeOneof_HostServerToMatchmaker(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker, bb: ByteBuffer): void {
+  // optional GameFoundForPlayer game_found_for_player = 3;
+  let $game_found_for_player = message.game_found_for_player;
+  if ($game_found_for_player !== undefined) {
+    writeVarint32(bb, 26);
+    let nested = popByteBuffer();
+    _encodeGameFoundForPlayer($game_found_for_player, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+}
+
+export function decodeOneof_HostServerToMatchmaker(binary: Uint8Array): Oneof_HostServerToMatchmaker {
+  return _decodeOneof_HostServerToMatchmaker(wrapByteBuffer(binary));
+}
+
+function _decodeOneof_HostServerToMatchmaker(bb: ByteBuffer): Oneof_HostServerToMatchmaker {
+  let message: Oneof_HostServerToMatchmaker = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional GameFoundForPlayer game_found_for_player = 3;
+      case 3: {
+        let limit = pushTemporaryLength(bb);
+        message.game_found_for_player = _decodeGameFoundForPlayer(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface Oneof_MatchmakerToHostServer {
+  place_player_in_game?: PlacePlayerInGame;
+}
+
+export function encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServer): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeOneof_MatchmakerToHostServer(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServer, bb: ByteBuffer): void {
   // optional PlacePlayerInGame place_player_in_game = 3;
   let $place_player_in_game = message.place_player_in_game;
   if ($place_player_in_game !== undefined) {
@@ -448,12 +461,12 @@ function _encodeOneofMatchmakingUpdate(message: OneofMatchmakingUpdate, bb: Byte
   }
 }
 
-export function decodeOneofMatchmakingUpdate(binary: Uint8Array): OneofMatchmakingUpdate {
-  return _decodeOneofMatchmakingUpdate(wrapByteBuffer(binary));
+export function decodeOneof_MatchmakerToHostServer(binary: Uint8Array): Oneof_MatchmakerToHostServer {
+  return _decodeOneof_MatchmakerToHostServer(wrapByteBuffer(binary));
 }
 
-function _decodeOneofMatchmakingUpdate(bb: ByteBuffer): OneofMatchmakingUpdate {
-  let message: OneofMatchmakingUpdate = {} as any;
+function _decodeOneof_MatchmakerToHostServer(bb: ByteBuffer): Oneof_MatchmakerToHostServer {
+  let message: Oneof_MatchmakerToHostServer = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -462,18 +475,63 @@ function _decodeOneofMatchmakingUpdate(bb: ByteBuffer): OneofMatchmakingUpdate {
       case 0:
         break end_of_message;
 
-      // optional FoundGame found_game = 2;
-      case 2: {
-        let limit = pushTemporaryLength(bb);
-        message.found_game = _decodeFoundGame(bb);
-        bb.limit = limit;
-        break;
-      }
-
       // optional PlacePlayerInGame place_player_in_game = 3;
       case 3: {
         let limit = pushTemporaryLength(bb);
         message.place_player_in_game = _decodePlacePlayerInGame(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface Oneof_HostServerToGameServer {
+  hello?: Hello;
+}
+
+export function encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServer): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeOneof_HostServerToGameServer(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServer, bb: ByteBuffer): void {
+  // optional Hello hello = 1;
+  let $hello = message.hello;
+  if ($hello !== undefined) {
+    writeVarint32(bb, 10);
+    let nested = popByteBuffer();
+    _encodeHello($hello, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+}
+
+export function decodeOneof_HostServerToGameServer(binary: Uint8Array): Oneof_HostServerToGameServer {
+  return _decodeOneof_HostServerToGameServer(wrapByteBuffer(binary));
+}
+
+function _decodeOneof_HostServerToGameServer(bb: ByteBuffer): Oneof_HostServerToGameServer {
+  let message: Oneof_HostServerToGameServer = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional Hello hello = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        message.hello = _decodeHello(bb);
         bb.limit = limit;
         break;
       }

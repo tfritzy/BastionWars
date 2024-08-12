@@ -11,11 +11,11 @@ namespace HostServer;
 public class Host
 {
     public IWebSocketClient HostWS { get; private set; }
+    public readonly List<GameInstanceDetails> Games = [];
 
     private readonly string matchmakingServerAddress;
     private readonly string hostedAddress;
     private readonly string selfAddress;
-    private readonly List<GameInstanceDetails> Games = [];
     private readonly List<int> availablePorts;
 
     private const int START_PORT = 1750;
@@ -58,7 +58,7 @@ public class Host
             {
                 try
                 {
-                    OneofMatchmakingUpdate message = OneofMatchmakingUpdate.Parser.ParseFrom(ms);
+                    Oneof_MatchmakerToHostServer message = Oneof_MatchmakerToHostServer.Parser.ParseFrom(ms);
                     await HandleMessage(message);
                 }
                 catch (Exception e)
@@ -83,14 +83,14 @@ public class Host
         await ListenLoop();
     }
 
-    public async Task HandleMessage(OneofMatchmakingUpdate message)
+    public async Task HandleMessage(Oneof_MatchmakerToHostServer message)
     {
-        switch (message.UpdateCase)
+        switch (message.MsgCase)
         {
-            case OneofMatchmakingUpdate.UpdateOneofCase.PlacePlayerInGame:
+            case Oneof_MatchmakerToHostServer.MsgOneofCase.PlacePlayerInGame:
                 GameInstanceDetails details = GetGameForPlayer(message.PlacePlayerInGame);
                 await SendMessage(
-                    new OneofMatchmakingRequest
+                    new Oneof_HostServerToMatchmaker
                     {
                         GameFoundForPlayer = new GameFoundForPlayer
                         {
@@ -101,13 +101,13 @@ public class Host
                     });
                 break;
             default:
-                Console.WriteLine("Uknown message type: " + message.UpdateCase);
+                Console.WriteLine("Uknown message type: " + message.MsgCase);
                 break;
 
         }
     }
 
-    private async Task SendMessage(OneofMatchmakingRequest req)
+    private async Task SendMessage(Oneof_HostServerToMatchmaker req)
     {
         byte[] bytesToSend = req.ToByteArray();
         await HostWS.SendAsync(bytesToSend, WebSocketMessageType.Binary, true, CancellationToken.None);

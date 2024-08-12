@@ -14,23 +14,28 @@ public class Responses
     [TestMethod]
     public void StandsUpGame()
     {
-        Console.WriteLine("Stands up game?");
-        List<ArraySegment<byte>> sentMessages = [];
-        Host server = new(new TestWebSocketFactory());
-
-        Assert.AreEqual(0, sentMessages.Count);
+        var server = new Host(new TestWebSocketFactory());
+        Assert.AreEqual(0, server.Games.Count);
         server.Setup().Wait();
-        var placePlayer = new OneofMatchmakingUpdate
-        {
-            PlacePlayerInGame = new PlacePlayerInGame
+        Assert.AreEqual(1, server.Games.Count);
+    }
+
+    [TestMethod]
+    public void PlacesPlayersInGame()
+    {
+        var server = new Host(new TestWebSocketFactory());
+        server.Setup().Wait();
+
+        server.HandleMessage(
+            new Oneof_MatchmakerToHostServer
             {
-                PlayerId = "plyr_0001"
+                PlacePlayerInGame = new PlacePlayerInGame
+                {
+                    PlayerId = "plyr_001"
+                }
             }
-        };
-        server.HandleMessage(placePlayer).Wait();
-        Assert.AreEqual(1, sentMessages.Count);
-        OneofMatchmakingRequest req = OneofMatchmakingRequest.Parser.ParseFrom(sentMessages.FirstOrDefault());
-        Assert.AreEqual(OneofMatchmakingRequest.RequestOneofCase.GameFoundForPlayer, req.RequestCase);
-        Assert.AreEqual("plyr_0001", placePlayer.PlacePlayerInGame.PlayerId);
+        ).Wait();
+
+        Assert.Fail("Check that the host server sent a message to the matchmaking server");
     }
 }

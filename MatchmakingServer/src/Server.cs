@@ -85,11 +85,11 @@ public class Server
 
     private async Task AddConnection(HttpListenerContext context, bool isHost)
     {
-        WebSocketContext? webSocketContext = null;
+        WebSocketContext? wsContext = null;
 
         try
         {
-            webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
+            wsContext = await context.AcceptWebSocketAsync(subProtocol: null);
             Console.WriteLine($"Host WebSocket connection established at {context.Request.Url}");
         }
         catch (Exception e)
@@ -100,14 +100,16 @@ public class Server
             return;
         }
 
-        WebSocket webSocket = webSocketContext.WebSocket;
+        var user = wsContext.User;
+        WebSocket webSocket = wsContext.WebSocket;
+
         if (isHost)
         {
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleHostMessage(webSocket, ms)));
+            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromHostServer(wsContext, ms)));
         }
         else
         {
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleClientMessage(webSocket, ms)));
+            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(wsContext, ms)));
         }
 
     }
@@ -151,47 +153,66 @@ public class Server
         }
     }
 
-    private async Task HandleClientMessage(WebSocket webSocket, MemoryStream ms)
+    private async Task HandleMsgFromPlayer(WebSocketContext context, MemoryStream ms)
     {
-        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
-        switch (request.RequestCase)
+        Oneof_PlayerToMatchmaker request = Oneof_PlayerToMatchmaker.Parser.ParseFrom(ms);
+        switch (request.MsgCase)
         {
-            case OneofMatchmakingRequest.RequestOneofCase.SearchForGame:
-                await SendMessage(
-                    new Schema.OneofMatchmakingUpdate
+            case Oneof_PlayerToMatchmaker.MsgOneofCase.SearchForGame:
+                await SendMessageToHostServer(
+                    new Oneof_MatchmakerToHostServer
                     {
-                        FoundGame = new FoundGame()
+                        PlacePlayerInGame = new PlacePlayerInGame()
                         {
-                            GameId = "game_001",
-                            ServerUrl = "localhost:7251",
+                            PlayerId = context.User?.Identity?.Name,
                         }
                     },
-                    webSocket);
+                    context.WebSocket);
                 break;
             default:
-                Console.WriteLine("Invalid type: " + request.RequestCase);
+                Console.WriteLine("Invalid type: " + request.MsgCase);
                 break;
 
         }
     }
 
-    private async Task HandleHostMessage(WebSocket webSocket, MemoryStream ms)
+    private async Task HandleMsgFromHostServer(WebSocketContext context, MemoryStream ms)
     {
-        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
+        Oneof_HostServerToMatchmaker request = Oneof_HostServerToMatchmaker.Parser.ParseFrom(ms);
         Console.WriteLine("A host said something: " + request.ToString());
 
-        switch (request.RequestCase)
+        switch (request.MsgCase)
         {
+            case Oneof_HostServerToMatchmaker.MsgOneofCase.GameFoundForPlayer:
+                await SendMessageToPlayer(
+                    new Oneof_MatchMakerToPlayer
+                    {
+                        FoundGame = request.GameFoundForPlayer
+                    },
+                    context.WebSocket
+                );
+                break;
             default:
-                Console.WriteLine("Invalid message type from host: " + request.RequestCase);
+                Console.WriteLine("Invalid message type from host: " + request.MsgCase);
                 break;
         }
     }
 
 
-    private async Task SendMessage(OneofMatchmakingUpdate message, WebSocket webSocket)
+    private async Task SendMessageToPlayer(Oneof_MatchMakerToPlayer message, WebSocket webSocket)
     {
-        Console.WriteLine($"Sending message of type {message.UpdateCase}");
+        Console.WriteLine($"Matchmaker sending message of type {message.MsgCase} to player");
+        byte[] data = message.ToByteArray();
+        await webSocket.SendAsync(
+            new ArraySegment<byte>(data, 0, data.Length),
+            WebSocketMessageType.Binary,
+            true,
+            CancellationToken.None);
+    }
+
+    private async Task SendMessageToHostServer(Oneof_MatchmakerToHostServer message, WebSocket webSocket)
+    {
+        Console.WriteLine($"Matchmaker sending message of type {message.MsgCase} to host server");
         byte[] data = message.ToByteArray();
         await webSocket.SendAsync(
             new ArraySegment<byte>(data, 0, data.Length),

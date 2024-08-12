@@ -88,7 +88,7 @@ public class GameInstance
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleHostMessage(webSocket, ms)));
+        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromHost(webSocket, ms)));
     }
 
 
@@ -128,19 +128,19 @@ public class GameInstance
         catch (Exception e)
         {
             Console.WriteLine("Exception in listen loop: " + e.Message);
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleHostMessage(webSocket, ms)));
+            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromHost(webSocket, ms)));
         }
     }
 
-    private async Task HandleHostMessage(WebSocket webSocket, MemoryStream ms)
+    private async Task HandleMsgFromHost(WebSocket webSocket, MemoryStream ms)
     {
-        OneofMatchmakingRequest request = OneofMatchmakingRequest.Parser.ParseFrom(ms);
+        Oneof_HostServerToGameServer request = Oneof_HostServerToGameServer.Parser.ParseFrom(ms);
         Console.WriteLine("A host said something: " + request.ToString());
 
-        switch (request.RequestCase)
+        switch (request.MsgCase)
         {
             default:
-                Console.WriteLine("Invalid message type from host: " + request.RequestCase);
+                Console.WriteLine("GameServer got invalid message type from host: " + request.MsgCase);
                 break;
         }
     }
