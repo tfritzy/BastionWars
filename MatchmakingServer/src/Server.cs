@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Cache;
 using System.Net.WebSockets;
@@ -12,8 +13,8 @@ namespace MatchmakingServer;
 public class Server
 {
     private HashSet<string> hostIpAllowlist = new();
-    private string url;
-    private const int interval = 1000 / 15;
+    private readonly Dictionary<string, Func<HttpListenerContext, Task>> _routes = new();
+    private List<string> connectedHosts = new();
 
     public Server()
     {
@@ -21,23 +22,16 @@ public class Server
         string envFile = environment == "Production" ? ".env.production" : ".env";
         Env.Load(envFile);
 
-        url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
-            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
         string rawAllowlist = Environment.GetEnvironmentVariable("ALLOWLISTED_HOST_IPS")
             ?? throw new Exception("Missing ALLOWLISTED_HOST_IPS in env file");
         hostIpAllowlist = new HashSet<string>(rawAllowlist.Split(","));
     }
 
-    public async void Update()
+    public async Task SetupAndListen()
     {
-        var nextTick = DateTime.Now.AddMilliseconds(interval);
-        int delay = (int)(nextTick - DateTime.Now).TotalMilliseconds;
-        if (delay > 0)
-            Thread.Sleep(delay);
-    }
+        string url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
+            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
 
-    public async void StartAcceptingConnections()
-    {
         HttpListener httpListener = new();
 
         if (String.IsNullOrEmpty(url))
@@ -49,175 +43,105 @@ public class Server
         httpListener.Start();
         Console.WriteLine("Listening on " + url);
 
+        _routes.Add("/searchForGame", HandleSearchForGame);
+        _routes.Add("/host/register", HandleRegisterHost);
+
+        await Listen(httpListener);
+    }
+
+    public async Task Listen(HttpListener httpListener)
+    {
         try
         {
-            while (true)
+            var context = await httpListener.GetContextAsync();
+            var path = context.Request.Url?.AbsolutePath.ToLower() ?? "";
+
+            if (_routes.ContainsKey(path))
             {
-                var context = await httpListener.GetContextAsync();
-                if (context.Request.IsWebSocketRequest)
-                {
-                    var _ = Task.Run(() => AcceptConnection(context));
-                }
-                else
-                {
-                    context.Response.StatusCode = 400;
-                    context.Response.Close();
-                }
+                var action = _routes[path];
+                var _ = Task.Run(() => action(context));
+            }
+            else
+            {
+                HandleNotFound(context);
             }
         }
         catch (Exception e)
         {
             Console.WriteLine("Failed to accept connection: " + e.Message);
-
-            _ = Task.Run(() => StartAcceptingConnections());
         }
+
+        await Listen(httpListener);
     }
 
-
-    public async Task AcceptConnection(HttpListenerContext context)
+    private async Task HandleRegisterHost(HttpListenerContext context)
     {
-        await AddConnection(
-            context,
-            // TODO: Specify they are trying to be a host.
-            hostIpAllowlist.Contains(context.Request.RemoteEndPoint.Address.ToString())
-        );
-    }
-
-    private async Task AddConnection(HttpListenerContext context, bool isHost)
-    {
-        WebSocketContext? wsContext = null;
-
-        try
+        string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
+        if (!hostIpAllowlist.Contains(ipAddress))
         {
-            wsContext = await context.AcceptWebSocketAsync(subProtocol: null);
-            Console.WriteLine($"Host WebSocket connection established at {context.Request.Url}");
-        }
-        catch (Exception e)
-        {
-            context.Response.StatusCode = 500;
+            context.Response.StatusCode = 400;
             context.Response.Close();
-            Console.WriteLine("Exception: " + e.Message);
-            return;
         }
 
-        var user = wsContext.User;
-        WebSocket webSocket = wsContext.WebSocket;
+        Register? register = await ReadBody<Register>(context);
+        if (register == null) return;
 
-        if (isHost)
-        {
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromHostServer(wsContext, ms)));
-        }
-        else
-        {
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(wsContext, ms)));
-        }
+        connectedHosts.Add(ipAddress + register.Port);
 
+        context.Response.StatusCode = 200;
+        context.Response.Close();
     }
 
-    private async void ListenLoop(WebSocket webSocket, Action<MemoryStream> handleRequest)
+    private async Task HandleSearchForGame(HttpListenerContext context)
+    {
+        if (context.Request.HttpMethod != "POST")
+        {
+            context.Response.StatusCode = 405;
+            context.Response.Close();
+        }
+
+        using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+        {
+            string requestBody = await reader.ReadToEndAsync();
+            var searchForGame = JsonParser.Default.Parse<SearchForGame>(requestBody);
+
+            // Process the SearchForGame request here
+            // ...
+
+            var placePlayerRequest = new Oneof_MatchmakerToHostServer
+            {
+                PlacePlayerInGame = new PlacePlayerInGame()
+                {
+                    PlayerId = context.User?.Identity?.Name,
+                }
+            };
+
+            context.Response.StatusCode = 200;
+            context.Response.Close();
+        }
+    }
+
+    private void HandleNotFound(HttpListenerContext context)
+    {
+        context.Response.StatusCode = 404;
+        context.Response.Close();
+    }
+
+    private async Task<T?> ReadBody<T>(HttpListenerContext context) where T : IMessage<T>, new()
     {
         try
         {
-            byte[] receiveBuffer = new byte[1024];
-            while (webSocket.State == WebSocketState.Open)
+            using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
             {
-                var receiveResult = await webSocket.ReceiveAsync(
-                    new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
-
-                int messageLength = receiveResult.Count;
-
-                if (receiveResult.MessageType == WebSocketMessageType.Binary)
-                {
-                    using (MemoryStream? ms = new MemoryStream(receiveBuffer, 0, messageLength))
-                    {
-                        handleRequest(ms);
-                    }
-                }
-                else if (receiveResult.MessageType == WebSocketMessageType.Close)
-                {
-                    Console.WriteLine("WebSocket connection closed by client.");
-                    await webSocket.CloseAsync(
-                        WebSocketCloseStatus.NormalClosure,
-                        string.Empty,
-                        CancellationToken.None);
-                }
-                else
-                {
-                    Console.WriteLine("Received unparseable message of type " + receiveResult.MessageType);
-                }
+                string requestBody = await reader.ReadToEndAsync();
+                return JsonParser.Default.Parse<T>(requestBody);
             }
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine("Exception in listen loop: " + e.Message);
+            context.Response.StatusCode = 400;
+            context.Response.Close();
+            return default(T);
         }
-    }
-
-    private async Task HandleMsgFromPlayer(WebSocketContext context, MemoryStream ms)
-    {
-        Oneof_PlayerToMatchmaker request = Oneof_PlayerToMatchmaker.Parser.ParseFrom(ms);
-        switch (request.MsgCase)
-        {
-            case Oneof_PlayerToMatchmaker.MsgOneofCase.SearchForGame:
-                await SendMessageToHostServer(
-                    new Oneof_MatchmakerToHostServer
-                    {
-                        PlacePlayerInGame = new PlacePlayerInGame()
-                        {
-                            PlayerId = context.User?.Identity?.Name,
-                        }
-                    },
-                    context.WebSocket);
-                break;
-            default:
-                Console.WriteLine("Invalid type: " + request.MsgCase);
-                break;
-
-        }
-    }
-
-    private async Task HandleMsgFromHostServer(WebSocketContext context, MemoryStream ms)
-    {
-        Oneof_HostServerToMatchmaker request = Oneof_HostServerToMatchmaker.Parser.ParseFrom(ms);
-        Console.WriteLine("A host said something: " + request.ToString());
-
-        switch (request.MsgCase)
-        {
-            case Oneof_HostServerToMatchmaker.MsgOneofCase.GameFoundForPlayer:
-                await SendMessageToPlayer(
-                    new Oneof_MatchMakerToPlayer
-                    {
-                        FoundGame = request.GameFoundForPlayer
-                    },
-                    context.WebSocket
-                );
-                break;
-            default:
-                Console.WriteLine("Invalid message type from host: " + request.MsgCase);
-                break;
-        }
-    }
-
-
-    private async Task SendMessageToPlayer(Oneof_MatchMakerToPlayer message, WebSocket webSocket)
-    {
-        Console.WriteLine($"Matchmaker sending message of type {message.MsgCase} to player");
-        byte[] data = message.ToByteArray();
-        await webSocket.SendAsync(
-            new ArraySegment<byte>(data, 0, data.Length),
-            WebSocketMessageType.Binary,
-            true,
-            CancellationToken.None);
-    }
-
-    private async Task SendMessageToHostServer(Oneof_MatchmakerToHostServer message, WebSocket webSocket)
-    {
-        Console.WriteLine($"Matchmaker sending message of type {message.MsgCase} to host server");
-        byte[] data = message.ToByteArray();
-        await webSocket.SendAsync(
-            new ArraySegment<byte>(data, 0, data.Length),
-            WebSocketMessageType.Binary,
-            true,
-            CancellationToken.None);
     }
 }

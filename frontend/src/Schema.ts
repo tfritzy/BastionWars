@@ -279,6 +279,53 @@ function _decodePlacePlayerInGame(bb: ByteBuffer): PlacePlayerInGame {
   return message;
 }
 
+export interface Register {
+  port?: string;
+}
+
+export function encodeRegister(message: Register): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeRegister(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeRegister(message: Register, bb: ByteBuffer): void {
+  // optional string port = 1;
+  let $port = message.port;
+  if ($port !== undefined) {
+    writeVarint32(bb, 10);
+    writeString(bb, $port);
+  }
+}
+
+export function decodeRegister(binary: Uint8Array): Register {
+  return _decodeRegister(wrapByteBuffer(binary));
+}
+
+function _decodeRegister(bb: ByteBuffer): Register {
+  let message: Register = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional string port = 1;
+      case 1: {
+        message.port = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface Oneof_PlayerToMatchmaker {
   search_for_game?: SearchForGame;
 }
@@ -492,7 +539,7 @@ function _decodeOneof_MatchmakerToHostServer(bb: ByteBuffer): Oneof_MatchmakerTo
 }
 
 export interface Oneof_HostServerToGameServer {
-  hello?: Hello;
+  register?: Register;
 }
 
 export function encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServer): Uint8Array {
@@ -502,12 +549,12 @@ export function encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGa
 }
 
 function _encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServer, bb: ByteBuffer): void {
-  // optional Hello hello = 1;
-  let $hello = message.hello;
-  if ($hello !== undefined) {
+  // optional Register register = 1;
+  let $register = message.register;
+  if ($register !== undefined) {
     writeVarint32(bb, 10);
     let nested = popByteBuffer();
-    _encodeHello($hello, nested);
+    _encodeRegister($register, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -528,124 +575,10 @@ function _decodeOneof_HostServerToGameServer(bb: ByteBuffer): Oneof_HostServerTo
       case 0:
         break end_of_message;
 
-      // optional Hello hello = 1;
+      // optional Register register = 1;
       case 1: {
         let limit = pushTemporaryLength(bb);
-        message.hello = _decodeHello(bb);
-        bb.limit = limit;
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
-export interface Hello {
-  name?: string;
-}
-
-export function encodeHello(message: Hello): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeHello(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeHello(message: Hello, bb: ByteBuffer): void {
-  // optional string name = 1;
-  let $name = message.name;
-  if ($name !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $name);
-  }
-}
-
-export function decodeHello(binary: Uint8Array): Hello {
-  return _decodeHello(wrapByteBuffer(binary));
-}
-
-function _decodeHello(bb: ByteBuffer): Hello {
-  let message: Hello = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // optional string name = 1;
-      case 1: {
-        message.name = readString(bb, readVarint32(bb));
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
-export interface OneofRequest {
-  sender_id?: string;
-  hello?: Hello;
-}
-
-export function encodeOneofRequest(message: OneofRequest): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeOneofRequest(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeOneofRequest(message: OneofRequest, bb: ByteBuffer): void {
-  // optional string sender_id = 1;
-  let $sender_id = message.sender_id;
-  if ($sender_id !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $sender_id);
-  }
-
-  // optional Hello hello = 2;
-  let $hello = message.hello;
-  if ($hello !== undefined) {
-    writeVarint32(bb, 18);
-    let nested = popByteBuffer();
-    _encodeHello($hello, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
-  }
-}
-
-export function decodeOneofRequest(binary: Uint8Array): OneofRequest {
-  return _decodeOneofRequest(wrapByteBuffer(binary));
-}
-
-function _decodeOneofRequest(bb: ByteBuffer): OneofRequest {
-  let message: OneofRequest = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // optional string sender_id = 1;
-      case 1: {
-        message.sender_id = readString(bb, readVarint32(bb));
-        break;
-      }
-
-      // optional Hello hello = 2;
-      case 2: {
-        let limit = pushTemporaryLength(bb);
-        message.hello = _decodeHello(bb);
+        message.register = _decodeRegister(bb);
         bb.limit = limit;
         break;
       }

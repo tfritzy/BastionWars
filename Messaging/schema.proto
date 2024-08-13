@@ -29,6 +29,12 @@ message PlacePlayerInGame
     string player_id = 1;
 }
 
+message Register
+{
+    string port = 1;
+}
+
+
 message Oneof_PlayerToMatchmaker {
     oneof msg {
         SearchForGame search_for_game = 2;
@@ -55,7 +61,7 @@ message Oneof_MatchmakerToHostServer {
 
 message Oneof_HostServerToGameServer {
     oneof msg {
-        Hello hello = 1;
+        Register register = 1;
     }
 }
 
@@ -63,17 +69,6 @@ message Oneof_HostServerToGameServer {
 // ###### In game ######
 // #####################
 
-message Hello
-{
-    string name = 1;
-}
-
-message OneofRequest {
-    string sender_id = 1;
-    oneof request {
-        Hello hello = 2;
-    }
-}
 
 message OneofUpdate {
     string recipient_id = 1;
