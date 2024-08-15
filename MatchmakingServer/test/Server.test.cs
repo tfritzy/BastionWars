@@ -21,6 +21,8 @@ namespace MatchmakingServer.Tests
             Assert.AreEqual(200, resp.StatusCode);
             Assert.AreEqual(1, server.ConnectedHosts.Count);
             Assert.AreEqual("::1:7250", server.ConnectedHosts.First());
+
+            Assert.Fail("Assert body is right");
         }
 
         [TestMethod]
