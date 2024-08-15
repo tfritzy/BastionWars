@@ -18,7 +18,7 @@ public class Server
     public List<string> ConnectedHosts = [];
     private readonly HttpClient httpClient;
 
-    public Server()
+    public Server(HttpClient client)
     {
         string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
         string envFile = environment == "Production" ? ".env.production" : ".env";
@@ -27,7 +27,7 @@ public class Server
         string rawAllowlist = Environment.GetEnvironmentVariable("ALLOWLISTED_HOST_IPS")
             ?? throw new Exception("Missing ALLOWLISTED_HOST_IPS in env file");
         hostIpAllowlist = new HashSet<string>(rawAllowlist.Split(","));
-        httpClient = new();
+        httpClient = client;
     }
 
     public async Task SetupAndListen()
@@ -46,7 +46,15 @@ public class Server
         httpListener.Start();
         Console.WriteLine("Listening on " + url);
 
-        _routes.Add("/searchForGame", HandleSearchForGame);
+        _routes.Add("/searchForGame", async (HttpListenerContext context) =>
+        {
+            string playerId = context.User.Identity.Name;
+            var body = await ReadBody<SearchForGame>(context);
+            if (body == null) return;
+            var response = await HandleSearchForGame(playerId, body);
+            context.Response.StatusCode = response.StatusCode;
+            WriteBody(response.Body, context.Response);
+        });
         _routes.Add("/host/register", async (HttpListenerContext context) =>
         {
             string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
@@ -96,10 +104,30 @@ public class Server
             };
         }
 
-        string address = $"{ipAddress}:{request.Port}";
-        if (!ConnectedHosts.Contains(address))
+        string formattedAddress;
+        if (IPAddress.TryParse(ipAddress, out IPAddress? parsedIp))
         {
-            ConnectedHosts.Add(address);
+            if (parsedIp.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+            {
+                formattedAddress = $"[{ipAddress}]:{request.Port}";
+            }
+            else
+            {
+                formattedAddress = $"{ipAddress}:{request.Port}";
+            }
+        }
+        else
+        {
+            return new ResponseDetails<Registered>
+            {
+                StatusCode = 400,
+                Body = null
+            };
+        }
+
+        if (!ConnectedHosts.Contains(formattedAddress))
+        {
+            ConnectedHosts.Add(formattedAddress);
         }
 
         return new ResponseDetails<Registered>
@@ -123,13 +151,19 @@ public class Server
         };
 
         var host = ConnectedHosts.First();
+        Console.WriteLine($"http://{host}/place-player");
         var response = await httpClient.PostAsync(
             $"http://{host}/place-player",
             new ByteArrayContent(placePlayerRequest.ToByteArray()));
 
-        // Call place_player api on one of the connected hosts
+        PlacePlayerInGame placePlayerDetails =
+            PlacePlayerInGame.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
 
-        // return PlacePlayerInGame from this api
+        return new ResponseDetails<PlacePlayerInGame>
+        {
+            Body = placePlayerDetails,
+            StatusCode = 200,
+        };
     }
 
     private void HandleNotFound(HttpListenerContext context)

@@ -15,7 +15,7 @@ namespace MatchmakingServer.Tests
         [TestMethod]
         public void HandleRegisterHost_AllowlistedIP_Returns200()
         {
-            var server = new Server();
+            var server = new Server(new HttpClient());
             var register = new Register
             {
                 Port = "7250",
@@ -31,7 +31,7 @@ namespace MatchmakingServer.Tests
         [TestMethod]
         public void HandleRegisterHost_NotAllowlistedIP_Returns400()
         {
-            var server = new Server();
+            var server = new Server(new HttpClient());
             var register = new Register
             {
                 Port = "7250",
@@ -43,9 +43,15 @@ namespace MatchmakingServer.Tests
         }
 
         [TestMethod]
+        public void HandleRegisterHost_ParsesBothIpv4AndIpv6()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod]
         public void HandleRegisterHost_DoestAddHostMultipleTimes()
         {
-            var server = new Server();
+            var server = new Server(new HttpClient());
             var register = new Register { Port = "7250" };
             var resp = server.HandleRegisterHost("::1", register);
             Assert.AreEqual(200, resp.StatusCode);
@@ -55,24 +61,28 @@ namespace MatchmakingServer.Tests
         }
 
         [TestMethod]
-        public void HandleSearch_PlacesPlayerInConnectedHost()
+        public async Task HandleSearch_PlacesPlayerInConnectedHost()
         {
-            var server = new Server();
-            var resp = server.HandleRegisterHost("::1", new Register { Port = "7250" });
-
-            var handler = new Mock<HttpMessageHandler>();
             GameFoundForPlayer response = new GameFoundForPlayer
             {
                 PlayerId = "plyr_001",
                 Address = "::1:6001",
                 GameId = "game_001"
             };
+            var handler = new Mock<HttpMessageHandler>();
             handler.SetupAnyRequest()
                 .ReturnsResponse(HttpStatusCode.OK, response.ToByteArray(), "application/x-protobuf");
             var httpClient = handler.CreateClient();
             httpClient.BaseAddress = new Uri("http://testhost.com");
+            var server = new Server(httpClient);
+            var resp = server.HandleRegisterHost("::1", new Register { Port = "7250" });
 
-            server.HandleSearchForGame("plyr_001", slkdfj)
+            SearchForGame searchForGame = new SearchForGame
+            {
+                Ranked = true,
+            };
+
+            await server.HandleSearchForGame("plyr_001", searchForGame);
         }
     }
 }
