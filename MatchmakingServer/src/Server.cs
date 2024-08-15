@@ -16,6 +16,7 @@ public class Server
     private readonly HashSet<string> hostIpAllowlist = [];
     private readonly Dictionary<string, Func<HttpListenerContext, Task>> _routes = [];
     public List<string> ConnectedHosts = [];
+    private readonly HttpClient httpClient;
 
     public Server()
     {
@@ -26,6 +27,7 @@ public class Server
         string rawAllowlist = Environment.GetEnvironmentVariable("ALLOWLISTED_HOST_IPS")
             ?? throw new Exception("Missing ALLOWLISTED_HOST_IPS in env file");
         hostIpAllowlist = new HashSet<string>(rawAllowlist.Split(","));
+        httpClient = new();
     }
 
     public async Task SetupAndListen()
@@ -52,7 +54,7 @@ public class Server
             if (body == null) return;
             var response = HandleRegisterHost(ipAddress, body);
             context.Response.StatusCode = response.StatusCode;
-            // Write body.
+            WriteBody(response.Body, context.Response);
         });
 
         await Listen(httpListener);
@@ -94,7 +96,12 @@ public class Server
             };
         }
 
-        ConnectedHosts.Add($"{ipAddress}:{request.Port}");
+        string address = $"{ipAddress}:{request.Port}";
+        if (!ConnectedHosts.Contains(address))
+        {
+            ConnectedHosts.Add(address);
+        }
+
         return new ResponseDetails<Registered>
         {
             StatusCode = 200,
@@ -105,33 +112,24 @@ public class Server
         };
     }
 
-    public async Task HandleSearchForGame(HttpListenerContext context)
+    public async Task<ResponseDetails<PlacePlayerInGame>> HandleSearchForGame(string playerId, SearchForGame request)
     {
-        if (context.Request.HttpMethod != "POST")
+        var placePlayerRequest = new Oneof_MatchmakerToHostServer
         {
-            context.Response.StatusCode = 405;
-            context.Response.Close();
-        }
-
-        using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
-        {
-            string requestBody = await reader.ReadToEndAsync();
-            var searchForGame = JsonParser.Default.Parse<SearchForGame>(requestBody);
-
-            // Process the SearchForGame request here
-            // ...
-
-            var placePlayerRequest = new Oneof_MatchmakerToHostServer
+            PlacePlayerInGame = new PlacePlayerInGame()
             {
-                PlacePlayerInGame = new PlacePlayerInGame()
-                {
-                    PlayerId = context.User?.Identity?.Name,
-                }
-            };
+                PlayerId = playerId,
+            }
+        };
 
-            context.Response.StatusCode = 200;
-            context.Response.Close();
-        }
+        var host = ConnectedHosts.First();
+        var response = await httpClient.PostAsync(
+            $"http://{host}/place-player",
+            new ByteArrayContent(placePlayerRequest.ToByteArray()));
+
+        // Call place_player api on one of the connected hosts
+
+        // return PlacePlayerInGame from this api
     }
 
     private void HandleNotFound(HttpListenerContext context)
@@ -155,6 +153,21 @@ public class Server
             context.Response.StatusCode = 400;
             context.Response.Close();
             return default(T);
+        }
+    }
+
+    private void WriteBody(IMessage? message, HttpListenerResponse response)
+    {
+        response.ContentType = "application/x-protobuf";
+
+        if (message == null)
+        {
+            return;
+        }
+
+        using (var outputStream = response.OutputStream)
+        {
+            message.WriteTo(outputStream);
         }
     }
 }
