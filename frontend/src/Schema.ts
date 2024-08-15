@@ -279,6 +279,53 @@ function _decodePlacePlayerInGame(bb: ByteBuffer): PlacePlayerInGame {
   return message;
 }
 
+export interface Registered {
+  port?: string;
+}
+
+export function encodeRegistered(message: Registered): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeRegistered(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeRegistered(message: Registered, bb: ByteBuffer): void {
+  // optional string port = 1;
+  let $port = message.port;
+  if ($port !== undefined) {
+    writeVarint32(bb, 10);
+    writeString(bb, $port);
+  }
+}
+
+export function decodeRegistered(binary: Uint8Array): Registered {
+  return _decodeRegistered(wrapByteBuffer(binary));
+}
+
+function _decodeRegistered(bb: ByteBuffer): Registered {
+  let message: Registered = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional string port = 1;
+      case 1: {
+        message.port = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface Register {
   port?: string;
 }
@@ -337,10 +384,10 @@ export function encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker
 }
 
 function _encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker, bb: ByteBuffer): void {
-  // optional SearchForGame search_for_game = 2;
+  // optional SearchForGame search_for_game = 1;
   let $search_for_game = message.search_for_game;
   if ($search_for_game !== undefined) {
-    writeVarint32(bb, 18);
+    writeVarint32(bb, 10);
     let nested = popByteBuffer();
     _encodeSearchForGame($search_for_game, nested);
     writeVarint32(bb, nested.limit);
@@ -363,8 +410,8 @@ function _decodeOneof_PlayerToMatchmaker(bb: ByteBuffer): Oneof_PlayerToMatchmak
       case 0:
         break end_of_message;
 
-      // optional SearchForGame search_for_game = 2;
-      case 2: {
+      // optional SearchForGame search_for_game = 1;
+      case 1: {
         let limit = pushTemporaryLength(bb);
         message.search_for_game = _decodeSearchForGame(bb);
         bb.limit = limit;
@@ -390,10 +437,10 @@ export function encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer
 }
 
 function _encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer, bb: ByteBuffer): void {
-  // optional GameFoundForPlayer found_game = 2;
+  // optional GameFoundForPlayer found_game = 1;
   let $found_game = message.found_game;
   if ($found_game !== undefined) {
-    writeVarint32(bb, 18);
+    writeVarint32(bb, 10);
     let nested = popByteBuffer();
     _encodeGameFoundForPlayer($found_game, nested);
     writeVarint32(bb, nested.limit);
@@ -416,8 +463,8 @@ function _decodeOneof_MatchMakerToPlayer(bb: ByteBuffer): Oneof_MatchMakerToPlay
       case 0:
         break end_of_message;
 
-      // optional GameFoundForPlayer found_game = 2;
-      case 2: {
+      // optional GameFoundForPlayer found_game = 1;
+      case 1: {
         let limit = pushTemporaryLength(bb);
         message.found_game = _decodeGameFoundForPlayer(bb);
         bb.limit = limit;
@@ -443,10 +490,10 @@ export function encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMa
 }
 
 function _encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker, bb: ByteBuffer): void {
-  // optional GameFoundForPlayer game_found_for_player = 3;
+  // optional GameFoundForPlayer game_found_for_player = 1;
   let $game_found_for_player = message.game_found_for_player;
   if ($game_found_for_player !== undefined) {
-    writeVarint32(bb, 26);
+    writeVarint32(bb, 10);
     let nested = popByteBuffer();
     _encodeGameFoundForPlayer($game_found_for_player, nested);
     writeVarint32(bb, nested.limit);
@@ -469,8 +516,8 @@ function _decodeOneof_HostServerToMatchmaker(bb: ByteBuffer): Oneof_HostServerTo
       case 0:
         break end_of_message;
 
-      // optional GameFoundForPlayer game_found_for_player = 3;
-      case 3: {
+      // optional GameFoundForPlayer game_found_for_player = 1;
+      case 1: {
         let limit = pushTemporaryLength(bb);
         message.game_found_for_player = _decodeGameFoundForPlayer(bb);
         bb.limit = limit;
@@ -487,6 +534,7 @@ function _decodeOneof_HostServerToMatchmaker(bb: ByteBuffer): Oneof_HostServerTo
 
 export interface Oneof_MatchmakerToHostServer {
   place_player_in_game?: PlacePlayerInGame;
+  registered?: Registered;
 }
 
 export function encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServer): Uint8Array {
@@ -496,12 +544,23 @@ export function encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHo
 }
 
 function _encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServer, bb: ByteBuffer): void {
-  // optional PlacePlayerInGame place_player_in_game = 3;
+  // optional PlacePlayerInGame place_player_in_game = 1;
   let $place_player_in_game = message.place_player_in_game;
   if ($place_player_in_game !== undefined) {
-    writeVarint32(bb, 26);
+    writeVarint32(bb, 10);
     let nested = popByteBuffer();
     _encodePlacePlayerInGame($place_player_in_game, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional Registered registered = 2;
+  let $registered = message.registered;
+  if ($registered !== undefined) {
+    writeVarint32(bb, 18);
+    let nested = popByteBuffer();
+    _encodeRegistered($registered, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -522,10 +581,18 @@ function _decodeOneof_MatchmakerToHostServer(bb: ByteBuffer): Oneof_MatchmakerTo
       case 0:
         break end_of_message;
 
-      // optional PlacePlayerInGame place_player_in_game = 3;
-      case 3: {
+      // optional PlacePlayerInGame place_player_in_game = 1;
+      case 1: {
         let limit = pushTemporaryLength(bb);
         message.place_player_in_game = _decodePlacePlayerInGame(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional Registered registered = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        message.registered = _decodeRegistered(bb);
         bb.limit = limit;
         break;
       }

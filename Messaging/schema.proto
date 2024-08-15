@@ -29,6 +29,11 @@ message PlacePlayerInGame
     string player_id = 1;
 }
 
+message Registered
+{
+    string port = 1;
+}
+
 message Register
 {
     string port = 1;
@@ -37,25 +42,26 @@ message Register
 
 message Oneof_PlayerToMatchmaker {
     oneof msg {
-        SearchForGame search_for_game = 2;
+        SearchForGame search_for_game = 1;
     }
 }
 
 message Oneof_MatchMakerToPlayer {
     oneof msg {
-        GameFoundForPlayer found_game = 2;
+        GameFoundForPlayer found_game = 1;
     }
 }
 
 message Oneof_HostServerToMatchmaker {
     oneof msg {
-        GameFoundForPlayer game_found_for_player = 3;
+        GameFoundForPlayer game_found_for_player = 1;
     }
 }
 
 message Oneof_MatchmakerToHostServer {
     oneof msg {
-        PlacePlayerInGame place_player_in_game = 3;
+        PlacePlayerInGame place_player_in_game = 1;
+        Registered registered = 2;
     }
 }
 

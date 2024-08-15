@@ -6,15 +6,16 @@ using System.Net.WebSockets;
 using System.Security.Principal;
 using DotNetEnv;
 using Google.Protobuf;
+using Helpers;
 using Schema;
 
 namespace MatchmakingServer;
 
 public class Server
 {
-    private HashSet<string> hostIpAllowlist = new();
-    private readonly Dictionary<string, Func<HttpListenerContext, Task>> _routes = new();
-    private List<string> connectedHosts = new();
+    private readonly HashSet<string> hostIpAllowlist = [];
+    private readonly Dictionary<string, Func<HttpListenerContext, Task>> _routes = [];
+    public List<string> ConnectedHosts = [];
 
     public Server()
     {
@@ -44,7 +45,15 @@ public class Server
         Console.WriteLine("Listening on " + url);
 
         _routes.Add("/searchForGame", HandleSearchForGame);
-        _routes.Add("/host/register", HandleRegisterHost);
+        _routes.Add("/host/register", async (HttpListenerContext context) =>
+        {
+            string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
+            var body = await ReadBody<Register>(context);
+            if (body == null) return;
+            var response = HandleRegisterHost(ipAddress, body);
+            context.Response.StatusCode = response.StatusCode;
+            // Write body.
+        });
 
         await Listen(httpListener);
     }
@@ -74,25 +83,29 @@ public class Server
         await Listen(httpListener);
     }
 
-    private async Task HandleRegisterHost(HttpListenerContext context)
+    public ResponseDetails<Registered> HandleRegisterHost(string ipAddress, Register request)
     {
-        string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
         if (!hostIpAllowlist.Contains(ipAddress))
         {
-            context.Response.StatusCode = 400;
-            context.Response.Close();
+            return new ResponseDetails<Registered>
+            {
+                StatusCode = 400,
+                Body = null
+            };
         }
 
-        Register? register = await ReadBody<Register>(context);
-        if (register == null) return;
-
-        connectedHosts.Add(ipAddress + register.Port);
-
-        context.Response.StatusCode = 200;
-        context.Response.Close();
+        ConnectedHosts.Add($"{ipAddress}:{request.Port}");
+        return new ResponseDetails<Registered>
+        {
+            StatusCode = 200,
+            Body = new Registered
+            {
+                Port = request.Port
+            }
+        };
     }
 
-    private async Task HandleSearchForGame(HttpListenerContext context)
+    public async Task HandleSearchForGame(HttpListenerContext context)
     {
         if (context.Request.HttpMethod != "POST")
         {

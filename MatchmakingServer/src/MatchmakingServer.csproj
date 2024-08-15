@@ -22,5 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Messaging\Messaging.csproj" />
+    <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
   </ItemGroup>
 </Project>
