@@ -46,23 +46,31 @@ public class Server
         httpListener.Start();
         Console.WriteLine("Listening on " + url);
 
-        _routes.Add("/searchForGame", async (HttpListenerContext context) =>
+        _routes.Add("/search-for-game", async (HttpListenerContext context) =>
         {
             string playerId = context.User.Identity.Name;
             var body = await ReadBody<SearchForGame>(context);
             if (body == null) return;
-            var response = await HandleSearchForGame(playerId, body);
-            context.Response.StatusCode = response.StatusCode;
-            WriteBody(response.Body, context.Response);
+            var searchResult = await HandleSearchForGame(playerId, body);
+            var responseBody = new Oneof_MatchMakerToPlayer
+            {
+                FoundGame = searchResult.Body,
+            };
+            context.Response.StatusCode = searchResult.StatusCode;
+            WriteBodyForPlayer(responseBody, context.Response);
         });
         _routes.Add("/host/register", async (HttpListenerContext context) =>
         {
             string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
             var body = await ReadBody<Register>(context);
             if (body == null) return;
-            var response = HandleRegisterHost(ipAddress, body);
-            context.Response.StatusCode = response.StatusCode;
-            WriteBody(response.Body, context.Response);
+            var registerResult = HandleRegisterHost(ipAddress, body);
+            var responseBody = new Oneof_MatchmakerToHostServer
+            {
+                Registered = registerResult.Body
+            };
+            context.Response.StatusCode = registerResult.StatusCode;
+            WriteBodyForHostServer(responseBody, context.Response);
         });
 
         await Listen(httpListener);
@@ -140,9 +148,9 @@ public class Server
         };
     }
 
-    public async Task<ResponseDetails<PlacePlayerInGame>> HandleSearchForGame(string playerId, SearchForGame request)
+    public async Task<ResponseDetails<GameFoundForPlayer>> HandleSearchForGame(string playerId, SearchForGame request)
     {
-        var placePlayerRequest = new Oneof_MatchmakerToHostServer
+        Oneof_MatchmakerToHostServer placePlayerRequest = new()
         {
             PlacePlayerInGame = new PlacePlayerInGame()
             {
@@ -150,18 +158,18 @@ public class Server
             }
         };
 
-        var host = ConnectedHosts.First();
+        string host = ConnectedHosts.First();
         Console.WriteLine($"http://{host}/place-player");
-        var response = await httpClient.PostAsync(
+        HttpResponseMessage response = await httpClient.PostAsync(
             $"http://{host}/place-player",
             new ByteArrayContent(placePlayerRequest.ToByteArray()));
 
-        PlacePlayerInGame placePlayerDetails =
-            PlacePlayerInGame.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
+        GameFoundForPlayer gameFound =
+            GameFoundForPlayer.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
 
-        return new ResponseDetails<PlacePlayerInGame>
+        return new ResponseDetails<GameFoundForPlayer>
         {
-            Body = placePlayerDetails,
+            Body = gameFound,
             StatusCode = 200,
         };
     }
@@ -190,7 +198,22 @@ public class Server
         }
     }
 
-    private void WriteBody(IMessage? message, HttpListenerResponse response)
+    private void WriteBodyForHostServer(Oneof_MatchmakerToHostServer message, HttpListenerResponse response)
+    {
+        response.ContentType = "application/x-protobuf";
+
+        if (message == null)
+        {
+            return;
+        }
+
+        using (var outputStream = response.OutputStream)
+        {
+            message.WriteTo(outputStream);
+        }
+    }
+
+    private void WriteBodyForPlayer(Oneof_MatchMakerToPlayer message, HttpListenerResponse response)
     {
         response.ContentType = "application/x-protobuf";
 

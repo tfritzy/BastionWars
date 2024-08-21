@@ -24,11 +24,6 @@ message GameFoundForPlayer
     string address = 3;
 }
 
-message PlacePlayerInGame
-{
-    string player_id = 1;
-}
-
 message Registered
 {
     string port = 1;
