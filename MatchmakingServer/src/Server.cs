@@ -158,11 +158,26 @@ public class Server
             }
         };
 
+        if (ConnectedHosts.Count == 0)
+        {
+            return new ResponseDetails<GameFoundForPlayer>
+            {
+                StatusCode = 500,
+                Body = null
+            };
+        }
+
         string host = ConnectedHosts.First();
         Console.WriteLine($"http://{host}/place-player");
         HttpResponseMessage response = await httpClient.PostAsync(
             $"http://{host}/place-player",
             new ByteArrayContent(placePlayerRequest.ToByteArray()));
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            ConnectedHosts.Remove(host);
+            return await HandleSearchForGame(playerId, request);
+        }
 
         GameFoundForPlayer gameFound =
             GameFoundForPlayer.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());

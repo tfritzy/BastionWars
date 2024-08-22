@@ -12,7 +12,7 @@ public class GameInstance
 
     private string url;
 
-    public GameInstance(string id, int port, GameSettings gameSettings)
+    public GameInstance(string id, string port, GameSettings gameSettings)
     {
         Id = id;
         GameSettings = gameSettings;
@@ -88,7 +88,7 @@ public class GameInstance
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromHost(webSocket, ms)));
+        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
     }
 
 
@@ -128,11 +128,11 @@ public class GameInstance
         catch (Exception e)
         {
             Console.WriteLine("Exception in listen loop: " + e.Message);
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromHost(webSocket, ms)));
+            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
         }
     }
 
-    private async Task HandleMsgFromHost(WebSocket webSocket, MemoryStream ms)
+    private async Task HandleMsgFromPlayer(WebSocket webSocket, MemoryStream ms)
     {
         Oneof_HostServerToGameServer request = Oneof_HostServerToGameServer.Parser.ParseFrom(ms);
         Console.WriteLine("A host said something: " + request.ToString());
@@ -140,7 +140,7 @@ public class GameInstance
         switch (request.MsgCase)
         {
             default:
-                Console.WriteLine("GameServer got invalid message type from host: " + request.MsgCase);
+                Console.WriteLine("GameServer got invalid message type from player: " + request.MsgCase);
                 break;
         }
     }

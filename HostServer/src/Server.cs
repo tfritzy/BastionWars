@@ -1,27 +1,25 @@
-using System.Diagnostics;
-using System.Net.WebSockets;
+using System.Net;
 using DotNetEnv;
 using GameServer;
 using Google.Protobuf;
 using Helpers;
+using HostServer;
 using Schema;
 
-namespace HostServer;
+namespace MatchmakingServer;
 
-public class Host
+public class Server
 {
-    public IWebSocketClient HostWS { get; private set; }
+    private readonly Dictionary<string, Func<HttpListenerContext, Task>> _routes = [];
+    private readonly HttpClient httpClient;
     public readonly List<GameInstanceDetails> Games = [];
-
-    private readonly string matchmakingServerAddress;
-    private readonly string hostedAddress;
-    private readonly string selfAddress;
     private readonly List<int> availablePorts;
+    private readonly string matchmakingServerAddress;
 
     private const int START_PORT = 1750;
-    private const int MAX_GAMES = 10;
+    private const int MAX_GAMES = 100;
 
-    public Host(WebSocketFactory webSocketFactory)
+    public Server(HttpClient client)
     {
         string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
         string envFile = environment == "Production" ? ".env.production" : ".env";
@@ -29,91 +27,137 @@ public class Host
 
         matchmakingServerAddress = Environment.GetEnvironmentVariable("MATCHMAKING_SERVER_ADDRESS")
             ?? throw new Exception("MATCHMAKING_SERVER_ADDRESS environment variable not set.");
-        hostedAddress = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
-            ?? throw new Exception("HOSTED_ADDRESS variable missing");
-        selfAddress = Environment.GetEnvironmentVariable("SELF_ADDRESS")
-            ?? throw new Exception("SELF_ADDRESS variable missing");
 
-        HostWS = webSocketFactory.Build();
+        httpClient = client;
         availablePorts = GetInitialPorts();
+
+        StartGameInstance();
     }
 
-    public async Task Setup()
+    public async Task SetupAndListen()
     {
-        Console.WriteLine("Starting up host server");
-        await StartGameInstance();
-        await HostWS.ConnectAsync(new Uri(matchmakingServerAddress + $"?id=host_asdf"), CancellationToken.None);
-    }
+        string url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
+            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
 
-    public async Task ListenLoop()
-    {
-        byte[] buffer = new byte[1024];
-        var result = await HostWS.ReceiveAsync(
-            new ArraySegment<byte>(buffer),
-            CancellationToken.None);
-        int messageLength = result.Count;
-        if (result.MessageType == WebSocketMessageType.Binary)
+        HttpListener httpListener = new();
+
+        if (string.IsNullOrEmpty(url))
         {
-            using (MemoryStream? ms = new MemoryStream(buffer, 0, messageLength))
+            throw new Exception("HOSTED_ADDRESS environment variable not set.");
+        }
+
+        httpListener.Prefixes.Add(url);
+        httpListener.Start();
+        Console.WriteLine("Listening on " + url);
+
+        _routes.Add("/place-player", async (HttpListenerContext context) =>
+        {
+            string playerId = context.User.Identity.Name;
+            var body = await ReadBody<PlacePlayerInGame>(context);
+            if (body == null) return;
+            var gameDetails = await HandlePlacePlayer(body);
+            var responseBody = new Oneof_HostServerToMatchmaker
             {
-                try
-                {
-                    Oneof_MatchmakerToHostServer message = Oneof_MatchmakerToHostServer.Parser.ParseFrom(ms);
-                    await HandleMessage(message);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Host server got unparsable message. " + e.ToString());
-                }
+                GameAvailableOnPort = gameDetails.Body
+            };
+            context.Response.StatusCode = gameDetails.StatusCode;
+            WriteBodyForMatchmaker(responseBody, context.Response);
+        });
+
+        await Listen(httpListener);
+    }
+
+    public async Task Listen(HttpListener httpListener)
+    {
+        try
+        {
+            var context = await httpListener.GetContextAsync();
+            var path = context.Request.Url?.AbsolutePath.ToLower() ?? "";
+
+            if (_routes.ContainsKey(path))
+            {
+                var action = _routes[path];
+                var _ = Task.Run(() => action(context));
+            }
+            else
+            {
+                HandleNotFound(context);
             }
         }
-        else if (result.MessageType == WebSocketMessageType.Close)
+        catch (Exception e)
         {
-            Console.WriteLine("WebSocket connection closed by matchmaking server.");
-            await HostWS.CloseAsync(
-                WebSocketCloseStatus.NormalClosure,
-                string.Empty,
-                CancellationToken.None);
-        }
-        else
-        {
-            Console.WriteLine("Invalid message of type " + result.MessageType);
+            Console.WriteLine("Failed to accept connection: " + e.Message);
         }
 
-        await ListenLoop();
+        await Listen(httpListener);
     }
 
-    public async Task HandleMessage(Oneof_MatchmakerToHostServer message)
+
+    public async Task<ResponseDetails<GameAvailableOnPort>> HandlePlacePlayer(PlacePlayerInGame placePlayer)
     {
-        switch (message.MsgCase)
-        {
-            case Oneof_MatchmakerToHostServer.MsgOneofCase.PlacePlayerInGame:
-                GameInstanceDetails details = GetGameForPlayer(message.PlacePlayerInGame);
-                await SendMessage(
-                    new Oneof_HostServerToMatchmaker
-                    {
-                        GameFoundForPlayer = new GameFoundForPlayer
-                        {
-                            GameId = details.Id,
-                            PlayerId = message.PlacePlayerInGame.PlayerId,
-                            Address = $"{selfAddress}:{details.Port}"
-                        }
-                    });
-                break;
-            default:
-                Console.WriteLine("Uknown message type: " + message.MsgCase);
-                break;
+        GameInstanceDetails details = GetGameForPlayer(placePlayer);
 
+        return new ResponseDetails<GameAvailableOnPort>
+        {
+            Body = new GameAvailableOnPort()
+            {
+                Port = details.Port,
+                GameId = details.Id,
+                PlayerId = placePlayer.PlayerId,
+            },
+            StatusCode = 200,
+        };
+    }
+
+    private void HandleNotFound(HttpListenerContext context)
+    {
+        context.Response.StatusCode = 404;
+        context.Response.Close();
+    }
+
+    private async Task<T?> ReadBody<T>(HttpListenerContext context) where T : IMessage<T>, new()
+    {
+        try
+        {
+            using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            {
+                string requestBody = await reader.ReadToEndAsync();
+                return JsonParser.Default.Parse<T>(requestBody);
+            }
+        }
+        catch
+        {
+            context.Response.StatusCode = 400;
+            context.Response.Close();
+            return default(T);
         }
     }
 
-    private async Task SendMessage(Oneof_HostServerToMatchmaker req)
+    private void WriteBodyForMatchmaker(Oneof_HostServerToMatchmaker message, HttpListenerResponse response)
     {
-        byte[] bytesToSend = req.ToByteArray();
-        await HostWS.SendAsync(bytesToSend, WebSocketMessageType.Binary, true, CancellationToken.None);
+        response.ContentType = "application/x-protobuf";
+
+        if (message == null)
+        {
+            return;
+        }
+
+        using (var outputStream = response.OutputStream)
+        {
+            message.WriteTo(outputStream);
+        }
     }
 
-    private async Task StartGameInstance()
+
+    private GameInstanceDetails GetGameForPlayer(PlacePlayerInGame placePlayer)
+    {
+        // Eventually this should do stuff like check how many players are in game
+        // And how many starting locations are available
+        return Games.First();
+    }
+
+
+    private void StartGameInstance()
     {
         Console.WriteLine("Starting up game instance");
         var settings = new GameSettings
@@ -122,7 +166,7 @@ public class Host
             Map = ""
         };
         string gameId = IdGenerator.GenerateGameId();
-        int port = availablePorts.First();
+        string port = availablePorts.First().ToString();
         availablePorts.RemoveAt(0);
 
         var inst = new GameInstance(gameId, port, settings);
@@ -136,14 +180,6 @@ public class Host
         });
     }
 
-
-    private GameInstanceDetails GetGameForPlayer(PlacePlayerInGame placePlayer)
-    {
-        // Eventually this should do stuff like check how many players are in game
-        // And how many starting locations are available
-        return Games.First();
-    }
-
     private static List<int> GetInitialPorts()
     {
         List<int> ports = new(MAX_GAMES);
@@ -154,4 +190,5 @@ public class Host
 
         return ports;
     }
+
 }

@@ -106,16 +106,15 @@ namespace MatchmakingServer.Tests
             GameFoundForPlayer found = new()
             {
                 PlayerId = "plyr_001",
-                Address = "[::1]:6001",
+                Address = "127.0.0.1:6001",
                 GameId = "game_001"
             };
-
             var handler = new Mock<HttpMessageHandler>();
             handler
-                .SetupRequest(HttpMethod.Post, "http://[::1]:7250/search")
+                .SetupRequest(HttpMethod.Post, "http://[::1]:7250/place-player")
                 .ReturnsResponse(HttpStatusCode.BadGateway);
             handler
-                .SetupRequest(HttpMethod.Post, "http://127.0.0.1:7250/search")
+                .SetupRequest(HttpMethod.Post, "http://127.0.0.1:7250/place-player")
                 .ReturnsResponse(
                     HttpStatusCode.OK,
                     found.ToByteArray(),
@@ -130,11 +129,29 @@ namespace MatchmakingServer.Tests
                 Ranked = true,
             };
 
+            Assert.AreEqual(2, server.ConnectedHosts.Count);
             var response = await server.HandleSearchForGame("plyr_001", searchForGame);
             Assert.AreEqual(200, response.StatusCode);
             Assert.AreEqual("plyr_001", response.Body!.PlayerId);
             Assert.AreEqual("127.0.0.1:6001", response.Body!.Address);
             Assert.AreEqual("game_001", response.Body!.GameId);
+            Assert.AreEqual(1, server.ConnectedHosts.Count);
+        }
+
+        [TestMethod]
+        public async Task HandleSearch_HandlesNoHosts()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            var httpClient = handler.CreateClient();
+            var server = new Server(httpClient);
+
+            SearchForGame searchForGame = new()
+            {
+                Ranked = true,
+            };
+
+            var response = await server.HandleSearchForGame("plyr_001", searchForGame);
+            Assert.AreEqual(500, response.StatusCode);
         }
     }
 }

@@ -17,11 +17,23 @@ message SearchForGame
     bool ranked = 1;
 }
 
+message GameAvailableOnPort
+{
+    string game_id = 1;
+    string player_id = 2;
+    string port = 3;
+}
+
 message GameFoundForPlayer
 {
     string game_id = 1;
     string player_id = 2;
     string address = 3;
+}
+
+message PlacePlayerInGame
+{
+    string player_id = 1;
 }
 
 message Registered
@@ -49,7 +61,7 @@ message Oneof_MatchMakerToPlayer {
 
 message Oneof_HostServerToMatchmaker {
     oneof msg {
-        GameFoundForPlayer game_found_for_player = 1;
+        GameAvailableOnPort game_available_on_port = 1;
     }
 }
 

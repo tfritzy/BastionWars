@@ -157,6 +157,81 @@ function _decodeSearchForGame(bb: ByteBuffer): SearchForGame {
   return message;
 }
 
+export interface GameAvailableOnPort {
+  game_id?: string;
+  player_id?: string;
+  port?: string;
+}
+
+export function encodeGameAvailableOnPort(message: GameAvailableOnPort): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeGameAvailableOnPort(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeGameAvailableOnPort(message: GameAvailableOnPort, bb: ByteBuffer): void {
+  // optional string game_id = 1;
+  let $game_id = message.game_id;
+  if ($game_id !== undefined) {
+    writeVarint32(bb, 10);
+    writeString(bb, $game_id);
+  }
+
+  // optional string player_id = 2;
+  let $player_id = message.player_id;
+  if ($player_id !== undefined) {
+    writeVarint32(bb, 18);
+    writeString(bb, $player_id);
+  }
+
+  // optional string port = 3;
+  let $port = message.port;
+  if ($port !== undefined) {
+    writeVarint32(bb, 26);
+    writeString(bb, $port);
+  }
+}
+
+export function decodeGameAvailableOnPort(binary: Uint8Array): GameAvailableOnPort {
+  return _decodeGameAvailableOnPort(wrapByteBuffer(binary));
+}
+
+function _decodeGameAvailableOnPort(bb: ByteBuffer): GameAvailableOnPort {
+  let message: GameAvailableOnPort = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional string game_id = 1;
+      case 1: {
+        message.game_id = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      // optional string player_id = 2;
+      case 2: {
+        message.player_id = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      // optional string port = 3;
+      case 3: {
+        message.port = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface GameFoundForPlayer {
   game_id?: string;
   player_id?: string;
@@ -480,7 +555,7 @@ function _decodeOneof_MatchMakerToPlayer(bb: ByteBuffer): Oneof_MatchMakerToPlay
 }
 
 export interface Oneof_HostServerToMatchmaker {
-  game_found_for_player?: GameFoundForPlayer;
+  game_available_on_port?: GameAvailableOnPort;
 }
 
 export function encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker): Uint8Array {
@@ -490,12 +565,12 @@ export function encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMa
 }
 
 function _encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker, bb: ByteBuffer): void {
-  // optional GameFoundForPlayer game_found_for_player = 1;
-  let $game_found_for_player = message.game_found_for_player;
-  if ($game_found_for_player !== undefined) {
+  // optional GameAvailableOnPort game_available_on_port = 1;
+  let $game_available_on_port = message.game_available_on_port;
+  if ($game_available_on_port !== undefined) {
     writeVarint32(bb, 10);
     let nested = popByteBuffer();
-    _encodeGameFoundForPlayer($game_found_for_player, nested);
+    _encodeGameAvailableOnPort($game_available_on_port, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -516,10 +591,10 @@ function _decodeOneof_HostServerToMatchmaker(bb: ByteBuffer): Oneof_HostServerTo
       case 0:
         break end_of_message;
 
-      // optional GameFoundForPlayer game_found_for_player = 1;
+      // optional GameAvailableOnPort game_available_on_port = 1;
       case 1: {
         let limit = pushTemporaryLength(bb);
-        message.game_found_for_player = _decodeGameFoundForPlayer(bb);
+        message.game_available_on_port = _decodeGameAvailableOnPort(bb);
         bb.limit = limit;
         break;
       }

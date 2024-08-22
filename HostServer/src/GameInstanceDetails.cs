@@ -6,6 +6,6 @@ namespace HostServer;
 public struct GameInstanceDetails
 {
     public Task Task;
-    public int Port;
+    public string Port;
     public string Id;
 }
