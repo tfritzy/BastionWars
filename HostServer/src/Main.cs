@@ -1,7 +1,5 @@
-using Helpers;
 using HostServer;
 
-LiveWebSocketFactory factory = new();
-Host host = new(factory);
+Server host = new(new HttpClient());
 await host.Setup();
-await host.ListenLoop();
+await host.Listen();

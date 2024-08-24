@@ -9,7 +9,7 @@ using Google.Protobuf;
 using Helpers;
 using Schema;
 
-namespace MatchmakingServer;
+namespace HostServer;
 
 public class Server
 {
@@ -49,7 +49,7 @@ public class Server
         _routes.Add("/search-for-game", async (HttpListenerContext context) =>
         {
             string playerId = context.User.Identity.Name;
-            var body = await ReadBody<SearchForGame>(context);
+            var body = await ReadBodyMatchmaker<SearchForGame>(context);
             if (body == null) return;
             var searchResult = await HandleSearchForGame(playerId, body);
             var responseBody = new Oneof_MatchMakerToPlayer
@@ -62,9 +62,9 @@ public class Server
         _routes.Add("/host/register", async (HttpListenerContext context) =>
         {
             string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
-            var body = await ReadBody<Register>(context);
+            var body = await ReadBodyMatchmaker(context);
             if (body == null) return;
-            var registerResult = HandleRegisterHost(ipAddress, body);
+            var registerResult = HandleRegisterHost(ipAddress, body.Reg);
             var responseBody = new Oneof_MatchmakerToHostServer
             {
                 Registered = registerResult.Body
@@ -105,6 +105,7 @@ public class Server
     {
         if (!hostIpAllowlist.Contains(ipAddress))
         {
+            Console.WriteLine($"Not allowlisted host tried registering: {ipAddress}");
             return new ResponseDetails<Registered>
             {
                 StatusCode = 400,
@@ -126,6 +127,7 @@ public class Server
         }
         else
         {
+            Console.WriteLine($"Could not parse address: {ipAddress}");
             return new ResponseDetails<Registered>
             {
                 StatusCode = 400,
@@ -168,7 +170,6 @@ public class Server
         }
 
         string host = ConnectedHosts.First();
-        Console.WriteLine($"http://{host}/place-player");
         HttpResponseMessage response = await httpClient.PostAsync(
             $"http://{host}/place-player",
             new ByteArrayContent(placePlayerRequest.ToByteArray()));
@@ -191,25 +192,30 @@ public class Server
 
     private void HandleNotFound(HttpListenerContext context)
     {
+        Console.WriteLine($"Unhandled route: {context.Request.Url}");
         context.Response.StatusCode = 404;
         context.Response.Close();
     }
 
-    private async Task<T?> ReadBody<T>(HttpListenerContext context) where T : IMessage<T>, new()
+    private async Task<Oneof_HostServerToMatchmaker?> ReadBodyMatchmaker(HttpListenerContext context)
     {
         try
         {
-            using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            using (var memoryStream = new MemoryStream())
             {
-                string requestBody = await reader.ReadToEndAsync();
-                return JsonParser.Default.Parse<T>(requestBody);
+                await context.Request.InputStream.CopyToAsync(memoryStream);
+                byte[] bodyBytes = memoryStream.ToArray();
+
+                // Use a static helper method to get the Parser and parse the message
+                return Oneof_HostServerToMatchmaker.Parser.ParseFrom(bodyBytes);
             }
         }
         catch
         {
+            Console.WriteLine("Could not parse body into expected format");
             context.Response.StatusCode = 400;
             context.Response.Close();
-            return default(T);
+            return null;
         }
     }
 

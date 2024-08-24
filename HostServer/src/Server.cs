@@ -1,12 +1,12 @@
 using System.Net;
+using System.Net.Http.Headers;
 using DotNetEnv;
 using GameServer;
 using Google.Protobuf;
 using Helpers;
-using HostServer;
 using Schema;
 
-namespace MatchmakingServer;
+namespace HostServer;
 
 public class Server
 {
@@ -15,6 +15,8 @@ public class Server
     public readonly List<GameInstanceDetails> Games = [];
     private readonly List<int> availablePorts;
     private readonly string matchmakingServerAddress;
+    private readonly string port;
+    private HttpListener httpListener;
 
     private const int START_PORT = 1750;
     private const int MAX_GAMES = 100;
@@ -27,28 +29,14 @@ public class Server
 
         matchmakingServerAddress = Environment.GetEnvironmentVariable("MATCHMAKING_SERVER_ADDRESS")
             ?? throw new Exception("MATCHMAKING_SERVER_ADDRESS environment variable not set.");
+        port = Environment.GetEnvironmentVariable("PORT")
+            ?? throw new Exception("Missing PORT in env file");
 
         httpClient = client;
         availablePorts = GetInitialPorts();
 
-        StartGameInstance();
-    }
-
-    public async Task SetupAndListen()
-    {
-        string url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
-            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
-
-        HttpListener httpListener = new();
-
-        if (string.IsNullOrEmpty(url))
-        {
-            throw new Exception("HOSTED_ADDRESS environment variable not set.");
-        }
-
-        httpListener.Prefixes.Add(url);
-        httpListener.Start();
-        Console.WriteLine("Listening on " + url);
+        httpListener = new();
+        httpListener.Prefixes.Add($"http://localhost:{port}/");
 
         _routes.Add("/place-player", async (HttpListenerContext context) =>
         {
@@ -64,11 +52,24 @@ public class Server
             WriteBodyForMatchmaker(responseBody, context.Response);
         });
 
-        await Listen(httpListener);
+        StartGameInstance();
     }
 
-    public async Task Listen(HttpListener httpListener)
+    public async Task Setup()
     {
+        httpListener.Start();
+        await RegisterWithMatchmakingServer();
+    }
+
+    public void TearDown()
+    {
+        httpListener.Stop();
+    }
+
+    public async Task Listen()
+    {
+        Console.WriteLine("Listening on " + port);
+
         try
         {
             var context = await httpListener.GetContextAsync();
@@ -89,7 +90,7 @@ public class Server
             Console.WriteLine("Failed to accept connection: " + e.Message);
         }
 
-        await Listen(httpListener);
+        await Listen();
     }
 
 
@@ -191,4 +192,22 @@ public class Server
         return ports;
     }
 
+    private async Task RegisterWithMatchmakingServer()
+    {
+        Register request = new Register
+        {
+            Port = port
+        };
+
+        var content = new ByteArrayContent(request.ToByteArray());
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/x-protobuf");
+        HttpResponseMessage response = await httpClient.PostAsync(
+            $"{matchmakingServerAddress}/host/register",
+            content);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Unable to connect with matchmaking server. {response}");
+        }
+    }
 }

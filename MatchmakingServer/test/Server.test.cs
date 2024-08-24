@@ -7,7 +7,7 @@ using Moq;
 using Moq.Contrib.HttpClient;
 using Schema;
 
-namespace MatchmakingServer.Tests
+namespace HostServer.Tests
 {
     [TestClass]
     public class ServerTests

@@ -20,16 +20,13 @@ public class GameInstance
         string envFile = environment == "Production" ? "game_server.env.production" : "game_server.env";
         Env.Load(envFile);
 
-        url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
-            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
-        url = $"{url}:{port}/";
-        Console.WriteLine("url: " + url);
+        url = $"http://localhost:{port}/";
     }
 
     public void StartGame()
     {
         StartAcceptingConnections();
-        Console.WriteLine($"Starting game {Id}");
+        Console.WriteLine($"Starting game {Id} on {url}");
         while (true) ;
     }
 
