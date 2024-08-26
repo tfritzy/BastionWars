@@ -48,9 +48,12 @@ public class Server
 
         _routes.Add("/search-for-game", async (HttpListenerContext context) =>
         {
-            string playerId = context.User.Identity.Name;
+            Console.WriteLine("Received search for game");
+            string playerId = // TODO: Pass playerId in proto
+            Console.WriteLine("Player id: " + playerId);
             var body = await ReadBodyPlayer(context);
-            if (body?.SearchForGame == null) return;
+            Console.WriteLine("body: " + body);
+            if (body == null) return;
             var searchResult = await HandleSearchForGame(playerId, body.SearchForGame);
             var responseBody = new Oneof_MatchMakerToPlayer
             {
@@ -61,9 +64,10 @@ public class Server
         });
         _routes.Add("/host/register", async (HttpListenerContext context) =>
         {
+            Console.WriteLine("Received register");
             string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
             var body = await ReadBodyMatchmaker(context);
-            if (body?.Register == null) return;
+            if (body == null) return;
             var registerResult = HandleRegisterHost(ipAddress, body.Register);
             var responseBody = new Oneof_MatchmakerToHostServer
             {
