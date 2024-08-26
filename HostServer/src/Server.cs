@@ -98,6 +98,7 @@ public class Server
     {
         GameInstanceDetails details = GetGameForPlayer(placePlayer);
 
+        Console.WriteLine($"Asked to place player {placePlayer.PlayerId} in a game. Giving them {details.Id} on port {details.Port}");
         return new ResponseDetails<GameAvailableOnPort>
         {
             Body = new GameAvailableOnPort()
@@ -194,9 +195,12 @@ public class Server
 
     private async Task RegisterWithMatchmakingServer()
     {
-        Register request = new Register
+        Oneof_HostServerToMatchmaker request = new()
         {
-            Port = port
+            Register = new Register
+            {
+                Port = port
+            }
         };
 
         var content = new ByteArrayContent(request.ToByteArray());
@@ -209,5 +213,7 @@ public class Server
         {
             throw new Exception($"Unable to connect with matchmaking server. {response}");
         }
+
+        Console.WriteLine("Registered with matchmaking server");
     }
 }

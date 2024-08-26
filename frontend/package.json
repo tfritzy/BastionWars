@@ -1,15 +1,20 @@
 {
-  "name": "frontend",
-  "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "scripts": {
-    "watch": "bun build ./src/**/*.ts --outdir ./dist --target browser --watch",
-    "serve": "bun run ./index.ts"
-  }
+ "name": "frontend",
+ "module": "index.ts",
+ "type": "module",
+ "devDependencies": {
+  "@types/bun": "latest"
+ },
+ "peerDependencies": {
+  "typescript": "^5.0.0"
+ },
+ "scripts": {
+  "watch": "bun build ./src/**/*.ts --outdir ./dist --target browser --watch",
+  "serve": "bun run ./index.ts"
+ },
+ "dependencies": {
+  "dotenv": "^16.4.5",
+  "fs": "^0.0.1-security",
+  "path": "^0.12.7"
+ }
 }

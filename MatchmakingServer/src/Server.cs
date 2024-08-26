@@ -49,9 +49,9 @@ public class Server
         _routes.Add("/search-for-game", async (HttpListenerContext context) =>
         {
             string playerId = context.User.Identity.Name;
-            var body = await ReadBodyMatchmaker<SearchForGame>(context);
-            if (body == null) return;
-            var searchResult = await HandleSearchForGame(playerId, body);
+            var body = await ReadBodyPlayer(context);
+            if (body?.SearchForGame == null) return;
+            var searchResult = await HandleSearchForGame(playerId, body.SearchForGame);
             var responseBody = new Oneof_MatchMakerToPlayer
             {
                 FoundGame = searchResult.Body,
@@ -63,8 +63,8 @@ public class Server
         {
             string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
             var body = await ReadBodyMatchmaker(context);
-            if (body == null) return;
-            var registerResult = HandleRegisterHost(ipAddress, body.Reg);
+            if (body?.Register == null) return;
+            var registerResult = HandleRegisterHost(ipAddress, body.Register);
             var responseBody = new Oneof_MatchmakerToHostServer
             {
                 Registered = registerResult.Body
@@ -140,6 +140,8 @@ public class Server
             ConnectedHosts.Add(formattedAddress);
         }
 
+        Console.WriteLine($"Host connected from: {ipAddress} on port {request.Port}");
+
         return new ResponseDetails<Registered>
         {
             StatusCode = 200,
@@ -152,6 +154,7 @@ public class Server
 
     public async Task<ResponseDetails<GameFoundForPlayer>> HandleSearchForGame(string playerId, SearchForGame request)
     {
+        Console.WriteLine($"Player {playerId} searched for a game");
         Oneof_MatchmakerToHostServer placePlayerRequest = new()
         {
             PlacePlayerInGame = new PlacePlayerInGame()
@@ -162,6 +165,7 @@ public class Server
 
         if (ConnectedHosts.Count == 0)
         {
+            Console.WriteLine($"No hosts available for {playerId}!");
             return new ResponseDetails<GameFoundForPlayer>
             {
                 StatusCode = 500,
@@ -176,6 +180,7 @@ public class Server
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
+            Console.WriteLine($"Host {host} is actually dead. Removing them.");
             ConnectedHosts.Remove(host);
             return await HandleSearchForGame(playerId, request);
         }
@@ -183,6 +188,7 @@ public class Server
         GameFoundForPlayer gameFound =
             GameFoundForPlayer.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
 
+        Console.WriteLine($"Telling {playerId} to join {gameFound.Address}");
         return new ResponseDetails<GameFoundForPlayer>
         {
             Body = gameFound,
@@ -197,7 +203,19 @@ public class Server
         context.Response.Close();
     }
 
-    private async Task<Oneof_HostServerToMatchmaker?> ReadBodyMatchmaker(HttpListenerContext context)
+    private static async Task<Oneof_PlayerToMatchmaker?> ReadBodyPlayer(HttpListenerContext context)
+    {
+        return await ReadBody(context, Oneof_PlayerToMatchmaker.Parser.ParseFrom);
+    }
+
+    private static async Task<Oneof_HostServerToMatchmaker?> ReadBodyMatchmaker(HttpListenerContext context)
+    {
+        return await ReadBody(context, Oneof_HostServerToMatchmaker.Parser.ParseFrom);
+    }
+
+    private static async Task<T?> ReadBody<T>(
+        HttpListenerContext context,
+        Func<byte[], T> parseMessage)
     {
         try
         {
@@ -205,9 +223,7 @@ public class Server
             {
                 await context.Request.InputStream.CopyToAsync(memoryStream);
                 byte[] bodyBytes = memoryStream.ToArray();
-
-                // Use a static helper method to get the Parser and parse the message
-                return Oneof_HostServerToMatchmaker.Parser.ParseFrom(bodyBytes);
+                return parseMessage(bodyBytes);
             }
         }
         catch
@@ -215,7 +231,7 @@ public class Server
             Console.WriteLine("Could not parse body into expected format");
             context.Response.StatusCode = 400;
             context.Response.Close();
-            return null;
+            return default;
         }
     }
 

@@ -48,24 +48,24 @@ public static class TH
         game.JoinGame(new Player(name: $"test{playerCount}", id: playerCount.ToString()));
     }
 
-    public static List<Schema.OneofUpdate> GetMessagesOfType(Game game, Schema.OneofUpdate.UpdateOneofCase type)
+    public static List<Oneof_GameServerToPlayer> GetMessagesOfType(Game game, Oneof_GameServerToPlayer.MsgOneofCase type)
     {
-        return game.Outbox.Where((u) => u.UpdateCase == type).ToList();
+        return game.Outbox.Where((u) => u.MsgCase == type).ToList();
     }
 
-    public static Schema.OneofUpdate? GetMessageSentToPlayerOfType(
+    public static Oneof_GameServerToPlayer? GetMessageSentToPlayerOfType(
         Game game,
         string playerId,
-        Schema.OneofUpdate.UpdateOneofCase type)
+        Oneof_GameServerToPlayer.MsgOneofCase type)
     {
         Player player = game.Players[playerId];
         var packets = player.PendingPackets;
 
-        Schema.OneofUpdate? unchunked = null;
+        Oneof_GameServerToPlayer? unchunked = null;
         do
         {
             unchunked = MessageChunker.ExtractFullUpdate(ref packets);
-            if (unchunked?.UpdateCase == type)
+            if (unchunked?.MsgCase == type)
             {
                 return unchunked;
             }

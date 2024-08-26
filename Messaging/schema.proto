@@ -48,8 +48,9 @@ message Register
 
 
 message Oneof_PlayerToMatchmaker {
+    string player_id = 1;
     oneof msg {
-        SearchForGame search_for_game = 1;
+        SearchForGame search_for_game = 2;
     }
 }
 
@@ -62,6 +63,7 @@ message Oneof_MatchMakerToPlayer {
 message Oneof_HostServerToMatchmaker {
     oneof msg {
         GameAvailableOnPort game_available_on_port = 1;
+        Register register = 2;
     }
 }
 
@@ -82,10 +84,16 @@ message Oneof_HostServerToGameServer {
 // ###### In game ######
 // #####################
 
+message Oneof_PlayerToGameServer {
+    string sender_id = 1;
+    oneof msg {
+        Hi hi = 2;
+    }
+}
 
-message OneofUpdate {
+message Oneof_GameServerToPlayer {
     string recipient_id = 1;
-    oneof update {
+    oneof msg {
         InitialState initial_state = 2;
         AllSoldierPositions all_soldier_positions = 3;
     }
@@ -152,4 +160,8 @@ message InitialState {
     int32 map_width = 2;
     int32 map_height = 3;
     repeated TileType tiles = 4;
+}
+
+message Hi {
+    string hi = 1;
 }

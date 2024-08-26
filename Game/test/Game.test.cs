@@ -35,7 +35,7 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings());
         TH.AddPlayer(game);
-        var initialStates = TH.GetMessagesOfType(game, Schema.OneofUpdate.UpdateOneofCase.InitialState);
+        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
         Assert.AreEqual(1, initialStates.Count);
         var s = initialStates[0].InitialState;
         Assert.AreEqual(game.Map.Width, s.MapWidth);
@@ -99,7 +99,7 @@ public class GameTests
         var positionUpdate = TH.GetMessageSentToPlayerOfType(
             game,
             game.Players.Values.First().Id,
-            Schema.OneofUpdate.UpdateOneofCase.AllSoldierPositions)!.AllSoldierPositions;
+            Oneof_GameServerToPlayer.MsgOneofCase.AllSoldierPositions)!.AllSoldierPositions;
         Assert.AreEqual(0, positionUpdate.SoldierPositions.Count);
         Soldier soldier =
             new Soldier(
@@ -114,7 +114,7 @@ public class GameTests
         positionUpdate = TH.GetMessageSentToPlayerOfType(
             game,
             game.Players.Values.First().Id,
-            Schema.OneofUpdate.UpdateOneofCase.AllSoldierPositions)!.AllSoldierPositions;
+            Oneof_GameServerToPlayer.MsgOneofCase.AllSoldierPositions)!.AllSoldierPositions;
         Assert.AreEqual(1, positionUpdate.SoldierPositions.Count);
         Assert.AreEqual(soldier.Id, positionUpdate.SoldierPositions[0].Id);
         Assert.AreEqual(newPos.X, positionUpdate.SoldierPositions[0].Pos.X);

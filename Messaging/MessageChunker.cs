@@ -10,13 +10,13 @@ namespace Schema
         public const int ChunkSize = 512;
         private static byte[] buffer = new byte[ChunkSize];
 
-        public static List<Schema.Packet> Chunk(List<Schema.OneofUpdate> updates, ulong currentVersion)
+        public static List<Schema.Packet> Chunk(List<Oneof_GameServerToPlayer> updates, ulong currentVersion)
         {
             List<Schema.Packet> packets = new List<Schema.Packet>();
             Schema.Packet currentPacket = new Schema.Packet();
             int currentPacketSize = 0;
 
-            foreach (Schema.OneofUpdate update in updates)
+            foreach (Oneof_GameServerToPlayer update in updates)
             {
                 byte[] bytes = update.ToByteArray();
                 int totalChunks = (int)Math.Ceiling((double)bytes.Length / ChunkSize);
@@ -59,7 +59,7 @@ namespace Schema
             return packets;
         }
 
-        public static Schema.OneofUpdate? ExtractFullUpdate(ref List<Schema.Packet> packets)
+        public static Oneof_GameServerToPlayer? ExtractFullUpdate(ref List<Schema.Packet> packets)
         {
             int? updateEndPacketIndex = null;
             int? updateEndChunkIndex = null;
@@ -119,7 +119,7 @@ namespace Schema
             packets.RemoveRange(0, numPacketsToRemove);
 
             byte[] data = ReassembleUpdateData(chunks);
-            return Schema.OneofUpdate.Parser.ParseFrom(data);
+            return Oneof_GameServerToPlayer.Parser.ParseFrom(data);
         }
 
         private static byte[] ReassembleUpdateData(List<Schema.Chunk> chunks)

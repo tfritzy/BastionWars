@@ -6,7 +6,7 @@ public class Player
 {
     public string Name { get; private set; }
     public string Id { get; private set; }
-    public List<OneofUpdate> HoldingArea { get; } = new();
+    public List<Oneof_GameServerToPlayer> HoldingArea { get; } = new();
     public List<Packet> PendingPackets { get; } = new();
     public ulong HighestPacketId { get; private set; } = 0;
 

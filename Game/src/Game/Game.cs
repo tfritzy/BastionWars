@@ -7,7 +7,7 @@ public class Game
 {
     public Map Map { get; private set; }
     public GenerationMode GenerationMode { get; private set; }
-    public List<OneofUpdate> Outbox { get; private set; } = new();
+    public List<Oneof_GameServerToPlayer> Outbox { get; private set; } = new();
     public Dictionary<string, Player> Players { get; private set; } = new();
 
     private double lastNetworkTick = 0f;
@@ -43,7 +43,7 @@ public class Game
 
     private void Packetize()
     {
-        foreach (OneofUpdate update in Outbox)
+        foreach (Oneof_GameServerToPlayer update in Outbox)
         {
             Players[update.RecipientId].HoldingArea.Add(update);
         }
@@ -75,7 +75,7 @@ public class Game
             });
         }
 
-        AddMessageToOutbox(new OneofUpdate { AllSoldierPositions = allSoldierPositions });
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
     }
 
     private Dictionary<ulong, double> bastionProduceCooldowns = new();
@@ -164,7 +164,7 @@ public class Game
     public void JoinGame(Player player)
     {
         Players[player.Id] = player;
-        AddMessageToOutbox(new OneofUpdate { InitialState = GetInitialState() }, player.Id);
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { InitialState = GetInitialState() }, player.Id);
     }
 
     public void HandleKeystroke(char key, int alliance)
@@ -221,7 +221,7 @@ public class Game
         return state;
     }
 
-    private void AddMessageToOutbox(OneofUpdate update, string? recipient = null)
+    private void AddMessageToOutbox(Oneof_GameServerToPlayer update, string? recipient = null)
     {
         if (recipient == null)
         {
