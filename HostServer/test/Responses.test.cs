@@ -22,11 +22,14 @@ public class Responses
     public void RegistersWithMatchmakingServer()
     {
         server = new Server(new HttpClient());
-        var placePlayer = new PlacePlayerInGame
+        var request = new Oneof_MatchmakerToHostServer
         {
-            PlayerId = "plyr_001"
+            PlacePlayerInGame = new PlacePlayerInGame()
+            {
+                PlayerId = "plyr_001"
+            }
         };
-        var deets = server.HandlePlacePlayer(placePlayer).Result;
+        var deets = server.HandlePlacePlayer(request).Result;
 
         Assert.AreEqual(200, deets.StatusCode);
         Assert.AreEqual(server.Games[0].Id, deets.Body!.GameId);

@@ -48,13 +48,10 @@ public class Server
 
         _routes.Add("/search-for-game", async (HttpListenerContext context) =>
         {
-            Console.WriteLine("Received search for game");
-            string playerId = // TODO: Pass playerId in proto
-            Console.WriteLine("Player id: " + playerId);
             var body = await ReadBodyPlayer(context);
             Console.WriteLine("body: " + body);
             if (body == null) return;
-            var searchResult = await HandleSearchForGame(playerId, body.SearchForGame);
+            var searchResult = await HandleSearchForGame(body);
             var responseBody = new Oneof_MatchMakerToPlayer
             {
                 FoundGame = searchResult.Body,
@@ -85,17 +82,30 @@ public class Server
         try
         {
             var context = await httpListener.GetContextAsync();
-            var path = context.Request.Url?.AbsolutePath.ToLower() ?? "";
 
-            if (_routes.ContainsKey(path))
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:7250");
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+
+            if (context.Request.HttpMethod == "OPTIONS")
             {
-                var action = _routes[path];
-                var _ = Task.Run(() => action(context));
+                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                context.Response.Close();
             }
             else
             {
-                HandleNotFound(context);
+                var path = context.Request.Url?.AbsolutePath.ToLower() ?? "";
+
+                if (_routes.ContainsKey(path))
+                {
+                    var action = _routes[path];
+                    var _ = Task.Run(() => action(context));
+                }
+                else
+                {
+                    HandleNotFound(context);
+                }
             }
+
         }
         catch (Exception e)
         {
@@ -156,26 +166,37 @@ public class Server
         };
     }
 
-    public async Task<ResponseDetails<GameFoundForPlayer>> HandleSearchForGame(string playerId, SearchForGame request)
+    public async Task<ResponseDetails<GameFoundForPlayer>> HandleSearchForGame(Oneof_PlayerToMatchmaker request)
     {
-        Console.WriteLine($"Player {playerId} searched for a game");
-        Oneof_MatchmakerToHostServer placePlayerRequest = new()
+        Console.WriteLine($"Player {request.PlayerId} searched for a game");
+
+        if (string.IsNullOrEmpty(request.PlayerId))
         {
-            PlacePlayerInGame = new PlacePlayerInGame()
+            return new ResponseDetails<GameFoundForPlayer>
             {
-                PlayerId = playerId,
-            }
-        };
+                StatusCode = 400,
+                Body = null
+            };
+        }
 
         if (ConnectedHosts.Count == 0)
         {
-            Console.WriteLine($"No hosts available for {playerId}!");
+            Console.WriteLine($"No hosts available for {request.PlayerId}!");
             return new ResponseDetails<GameFoundForPlayer>
             {
                 StatusCode = 500,
                 Body = null
             };
         }
+
+
+        Oneof_MatchmakerToHostServer placePlayerRequest = new()
+        {
+            PlacePlayerInGame = new PlacePlayerInGame()
+            {
+                PlayerId = request.PlayerId,
+            }
+        };
 
         string host = ConnectedHosts.First();
         HttpResponseMessage response = await httpClient.PostAsync(
@@ -184,15 +205,15 @@ public class Server
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            Console.WriteLine($"Host {host} is actually dead. Removing them.");
+            Console.WriteLine($"Host {host} returned a {response.StatusCode} removing them.");
             ConnectedHosts.Remove(host);
-            return await HandleSearchForGame(playerId, request);
+            return await HandleSearchForGame(request);
         }
 
         GameFoundForPlayer gameFound =
             GameFoundForPlayer.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
 
-        Console.WriteLine($"Telling {playerId} to join {gameFound.Address}");
+        Console.WriteLine($"Telling {request.PlayerId} to join {gameFound.Address}");
         return new ResponseDetails<GameFoundForPlayer>
         {
             Body = gameFound,

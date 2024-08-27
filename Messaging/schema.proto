@@ -69,8 +69,8 @@ message Oneof_HostServerToMatchmaker {
 
 message Oneof_MatchmakerToHostServer {
     oneof msg {
-        PlacePlayerInGame place_player_in_game = 1;
-        Registered registered = 2;
+        PlacePlayerInGame place_player_in_game = 2;
+        Registered registered = 3;
     }
 }
 

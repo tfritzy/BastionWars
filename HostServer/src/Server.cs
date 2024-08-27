@@ -40,8 +40,8 @@ public class Server
 
         _routes.Add("/place-player", async (HttpListenerContext context) =>
         {
-            string playerId = context.User.Identity.Name;
-            var body = await ReadBody<PlacePlayerInGame>(context);
+            Console.WriteLine("Asked to place player in game");
+            var body = await ReadBodyMatchmaker(context);
             if (body == null) return;
             var gameDetails = await HandlePlacePlayer(body);
             var responseBody = new Oneof_HostServerToMatchmaker
@@ -73,16 +73,30 @@ public class Server
         try
         {
             var context = await httpListener.GetContextAsync();
-            var path = context.Request.Url?.AbsolutePath.ToLower() ?? "";
 
-            if (_routes.ContainsKey(path))
+            Console.WriteLine("Got one");
+
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:7249");
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+
+            if (context.Request.HttpMethod == "OPTIONS")
             {
-                var action = _routes[path];
-                var _ = Task.Run(() => action(context));
+                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                context.Response.Close();
             }
             else
             {
-                HandleNotFound(context);
+                var path = context.Request.Url?.AbsolutePath.ToLower() ?? "";
+
+                if (_routes.ContainsKey(path))
+                {
+                    var action = _routes[path];
+                    var _ = Task.Run(() => action(context));
+                }
+                else
+                {
+                    HandleNotFound(context);
+                }
             }
         }
         catch (Exception e)
@@ -94,18 +108,19 @@ public class Server
     }
 
 
-    public async Task<ResponseDetails<GameAvailableOnPort>> HandlePlacePlayer(PlacePlayerInGame placePlayer)
+    public async Task<ResponseDetails<GameAvailableOnPort>> HandlePlacePlayer(Oneof_MatchmakerToHostServer request)
     {
-        GameInstanceDetails details = GetGameForPlayer(placePlayer);
+        Console.WriteLine($"Asked to place player {request.PlacePlayerInGame.PlayerId} in a game.");
 
-        Console.WriteLine($"Asked to place player {placePlayer.PlayerId} in a game. Giving them {details.Id} on port {details.Port}");
+        GameInstanceDetails details = GetGameForPlayer(request.PlacePlayerInGame);
+        Console.WriteLine($"Giving them {details.Id} on port {details.Port}");
         return new ResponseDetails<GameAvailableOnPort>
         {
             Body = new GameAvailableOnPort()
             {
                 Port = details.Port,
                 GameId = details.Id,
-                PlayerId = placePlayer.PlayerId,
+                PlayerId = request.PlacePlayerInGame.PlayerId,
             },
             StatusCode = 200,
         };
@@ -117,24 +132,32 @@ public class Server
         context.Response.Close();
     }
 
-    private async Task<T?> ReadBody<T>(HttpListenerContext context) where T : IMessage<T>, new()
+    private static async Task<Oneof_MatchmakerToHostServer?> ReadBodyMatchmaker(HttpListenerContext context)
+    {
+        return await ReadBody(context, Oneof_MatchmakerToHostServer.Parser.ParseFrom);
+    }
+
+    private static async Task<T?> ReadBody<T>(
+        HttpListenerContext context,
+        Func<byte[], T> parseMessage)
     {
         try
         {
-            using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            using (var memoryStream = new MemoryStream())
             {
-                string requestBody = await reader.ReadToEndAsync();
-                return JsonParser.Default.Parse<T>(requestBody);
+                await context.Request.InputStream.CopyToAsync(memoryStream);
+                byte[] bodyBytes = memoryStream.ToArray();
+                return parseMessage(bodyBytes);
             }
         }
         catch
         {
+            Console.WriteLine("Could not parse body into expected format");
             context.Response.StatusCode = 400;
             context.Response.Close();
-            return default(T);
+            return default;
         }
     }
-
     private void WriteBodyForMatchmaker(Oneof_HostServerToMatchmaker message, HttpListenerResponse response)
     {
         response.ContentType = "application/x-protobuf";

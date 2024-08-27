@@ -87,18 +87,12 @@ namespace HostServer.Tests
             var server = new Server(httpClient);
             var resp = server.HandleRegisterHost("::1", new Register { Port = "7250" });
 
-            SearchForGame searchForGame = new SearchForGame
-            {
-                Ranked = true,
-            };
-
-            var response = await server.HandleSearchForGame("plyr_001", searchForGame);
+            var response = await server.HandleSearchForGame(BuildSearchBody());
             Assert.AreEqual(200, response.StatusCode);
             Assert.AreEqual("plyr_001", response.Body!.PlayerId);
             Assert.AreEqual("[::1]:6001", response.Body!.Address);
             Assert.AreEqual("game_001", response.Body!.GameId);
         }
-
 
         [TestMethod]
         public async Task HandleSearch_CleansUpDeadHost()
@@ -124,13 +118,8 @@ namespace HostServer.Tests
             server.HandleRegisterHost("::1", new Register { Port = "7250" });
             server.HandleRegisterHost("127.0.0.1", new Register { Port = "7250" });
 
-            SearchForGame searchForGame = new()
-            {
-                Ranked = true,
-            };
-
             Assert.AreEqual(2, server.ConnectedHosts.Count);
-            var response = await server.HandleSearchForGame("plyr_001", searchForGame);
+            var response = await server.HandleSearchForGame(BuildSearchBody());
             Assert.AreEqual(200, response.StatusCode);
             Assert.AreEqual("plyr_001", response.Body!.PlayerId);
             Assert.AreEqual("127.0.0.1:6001", response.Body!.Address);
@@ -145,13 +134,31 @@ namespace HostServer.Tests
             var httpClient = handler.CreateClient();
             var server = new Server(httpClient);
 
-            SearchForGame searchForGame = new()
-            {
-                Ranked = true,
-            };
-
-            var response = await server.HandleSearchForGame("plyr_001", searchForGame);
+            var response = await server.HandleSearchForGame(BuildSearchBody());
             Assert.AreEqual(500, response.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task HandleSearch_NoPlayerNoGame()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            var httpClient = handler.CreateClient();
+            var server = new Server(httpClient);
+
+            var response = await server.HandleSearchForGame(BuildSearchBody(""));
+            Assert.AreEqual(400, response.StatusCode);
+        }
+
+        private static Oneof_PlayerToMatchmaker BuildSearchBody(string playerId = "plyr_001")
+        {
+            return new()
+            {
+                PlayerId = playerId,
+                SearchForGame = new SearchForGame
+                {
+                    Ranked = true,
+                }
+            };
         }
     }
 }
