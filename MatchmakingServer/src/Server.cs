@@ -3,13 +3,14 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Net.Cache;
 using System.Net.WebSockets;
+using System.Reflection.Metadata;
 using System.Security.Principal;
 using DotNetEnv;
 using Google.Protobuf;
 using Helpers;
 using Schema;
 
-namespace HostServer;
+namespace MatchmakingServer;
 
 public class Server
 {
@@ -32,16 +33,16 @@ public class Server
         string apiUrl = EnvHelpers.Get("API_URL");
         string url = $"{apiUrl}:{port}/";
         HttpListener httpListener = new();
-        Console.WriteLine($"I am is: {url}");
+        Logger.Log($"I am is: {url}");
 
         httpListener.Prefixes.Add(url);
         httpListener.Start();
-        Console.WriteLine("Listening on " + url);
+        Logger.Log("Listening on " + url);
 
         _routes.Add("/search-for-game", async (HttpListenerContext context) =>
         {
             var body = await ReadBodyPlayer(context);
-            Console.WriteLine("body: " + body);
+            Logger.Log("body: " + body);
             if (body == null) return;
             var searchResult = await HandleSearchForGame(body);
             var responseBody = new Oneof_MatchMakerToPlayer
@@ -53,7 +54,7 @@ public class Server
         });
         _routes.Add("/host/register", async (HttpListenerContext context) =>
         {
-            Console.WriteLine("Received register");
+            Logger.Log("Received register");
             string ipAddress = context.Request.RemoteEndPoint.Address.ToString();
             var body = await ReadBodyMatchmaker(context);
             if (body == null) return;
@@ -102,7 +103,7 @@ public class Server
         }
         catch (Exception e)
         {
-            Console.WriteLine("Failed to accept connection: " + e.Message);
+            Logger.Log("Failed to accept connection: " + e.Message);
         }
 
         await Listen(httpListener);
@@ -112,7 +113,7 @@ public class Server
     {
         if (!hostIpAllowlist.Contains(ipAddress))
         {
-            Console.WriteLine($"Not allowlisted host tried registering: {ipAddress}");
+            Logger.Log($"Not allowlisted host tried registering: {ipAddress}");
             return new ResponseDetails<Registered>
             {
                 StatusCode = 400,
@@ -134,7 +135,7 @@ public class Server
         }
         else
         {
-            Console.WriteLine($"Could not parse address: {ipAddress}");
+            Logger.Log($"Could not parse address: {ipAddress}");
             return new ResponseDetails<Registered>
             {
                 StatusCode = 400,
@@ -147,7 +148,7 @@ public class Server
             ConnectedHosts.Add(formattedAddress);
         }
 
-        Console.WriteLine($"Host connected from: {ipAddress} on port {request.Port}");
+        Logger.Log($"Host connected from: {ipAddress} on port {request.Port}");
 
         return new ResponseDetails<Registered>
         {
@@ -161,7 +162,7 @@ public class Server
 
     public async Task<ResponseDetails<GameFoundForPlayer>> HandleSearchForGame(Oneof_PlayerToMatchmaker request)
     {
-        Console.WriteLine($"Player {request.PlayerId} searched for a game");
+        Logger.Log($"Player {request.PlayerId} searched for a game");
 
         if (string.IsNullOrEmpty(request.PlayerId))
         {
@@ -174,7 +175,7 @@ public class Server
 
         if (ConnectedHosts.Count == 0)
         {
-            Console.WriteLine($"No hosts available for {request.PlayerId}!");
+            Logger.Log($"No hosts available for {request.PlayerId}!");
             return new ResponseDetails<GameFoundForPlayer>
             {
                 StatusCode = 500,
@@ -198,25 +199,34 @@ public class Server
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            Console.WriteLine($"Host {host} returned a {response.StatusCode} removing them.");
+            Logger.Log($"Host {host} returned a {response.StatusCode} removing them.");
             ConnectedHosts.Remove(host);
             return await HandleSearchForGame(request);
         }
 
-        GameFoundForPlayer gameFound =
-            GameFoundForPlayer.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
+        Oneof_HostServerToMatchmaker hstm =
+            Oneof_HostServerToMatchmaker.Parser.ParseFrom(await response.Content.ReadAsByteArrayAsync());
+        Logger.Log("Game found body: " + hstm.GameAvailableOnPort.ToString());
 
-        Console.WriteLine($"Telling {request.PlayerId} to join {gameFound.Address}");
+        Logger.Log("TODO: use a host object instead of string splitting");
+        string hostIp = host.Split("]:")[0] + "]";
+        string address = $"ws://{hostIp}:{hstm.GameAvailableOnPort.Port}";
+        Logger.Log($"Telling {request.PlayerId} to join {address}");
         return new ResponseDetails<GameFoundForPlayer>
         {
-            Body = gameFound,
+            Body = new GameFoundForPlayer
+            {
+                Address = address,
+                GameId = hstm.GameAvailableOnPort.GameId,
+                PlayerId = hstm.GameAvailableOnPort.PlayerId
+            },
             StatusCode = 200,
         };
     }
 
     private void HandleNotFound(HttpListenerContext context)
     {
-        Console.WriteLine($"Unhandled route: {context.Request.Url}");
+        Logger.Log($"Unhandled route: {context.Request.Url}");
         context.Response.StatusCode = 404;
         context.Response.Close();
     }
@@ -246,7 +256,7 @@ public class Server
         }
         catch
         {
-            Console.WriteLine("Could not parse body into expected format");
+            Logger.Log("Could not parse body into expected format");
             context.Response.StatusCode = 400;
             context.Response.Close();
             return default;

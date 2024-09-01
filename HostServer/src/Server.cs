@@ -32,14 +32,14 @@ public class Server
         port = EnvHelpers.Get("PORT");
         matchmakingServerAddress = $"{apiUrl}:{mmPort}";
         string listenUrl = $"{apiUrl}:{port}/";
-        Console.WriteLine($"matchmaking server is: {matchmakingServerAddress}");
-        Console.WriteLine($"I am is: {listenUrl}");
+        Logger.Log($"matchmaking server is: {matchmakingServerAddress}");
+        Logger.Log($"I am is: {listenUrl}");
         httpListener = new();
         httpListener.Prefixes.Add(listenUrl);
 
         _routes.Add("/place-player", async (HttpListenerContext context) =>
         {
-            Console.WriteLine("Asked to place player in game");
+            Logger.Log("Asked to place player in game");
             var body = await ReadBodyMatchmaker(context);
             if (body == null) return;
             var gameDetails = await HandlePlacePlayer(body);
@@ -67,13 +67,13 @@ public class Server
 
     public async Task Listen()
     {
-        Console.WriteLine("Listening on " + port);
+        Logger.Log("Listening on " + port);
 
         try
         {
             var context = await httpListener.GetContextAsync();
 
-            Console.WriteLine("Got one");
+            Logger.Log("Got one");
 
             context.Response.Headers.Add("Access-Control-Allow-Origin", matchmakingServerAddress);
             context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
@@ -100,7 +100,7 @@ public class Server
         }
         catch (Exception e)
         {
-            Console.WriteLine("Failed to accept connection: " + e.Message);
+            Logger.Log("Failed to accept connection: " + e.Message);
         }
 
         await Listen();
@@ -109,10 +109,10 @@ public class Server
 
     public async Task<ResponseDetails<GameAvailableOnPort>> HandlePlacePlayer(Oneof_MatchmakerToHostServer request)
     {
-        Console.WriteLine($"Asked to place player {request.PlacePlayerInGame.PlayerId} in a game.");
+        Logger.Log($"Asked to place player {request.PlacePlayerInGame.PlayerId} in a game.");
 
         GameInstanceDetails details = GetGameForPlayer(request.PlacePlayerInGame);
-        Console.WriteLine($"Giving them {details.Id} on port {details.Port}");
+        Logger.Log($"Giving them {details.Id} on port {details.Port}");
         return new ResponseDetails<GameAvailableOnPort>
         {
             Body = new GameAvailableOnPort()
@@ -151,7 +151,7 @@ public class Server
         }
         catch
         {
-            Console.WriteLine("Could not parse body into expected format");
+            Logger.Log("Could not parse body into expected format");
             context.Response.StatusCode = 400;
             context.Response.Close();
             return default;
@@ -183,7 +183,7 @@ public class Server
 
     private void StartGameInstance()
     {
-        Console.WriteLine("Starting up game instance");
+        Logger.Log("Starting up game instance");
         var settings = new GameSettings
         {
             GenerationMode = GenerationMode.Word,
@@ -236,6 +236,6 @@ public class Server
             throw new Exception($"Unable to connect with matchmaking server. {response}");
         }
 
-        Console.WriteLine("Registered with matchmaking server");
+        Logger.Log("Registered with matchmaking server");
     }
 }
