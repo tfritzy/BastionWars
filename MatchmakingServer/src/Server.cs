@@ -20,27 +20,19 @@ public class Server
 
     public Server(HttpClient client)
     {
-        string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
-        string envFile = environment == "Production" ? ".env.production" : ".env";
-        Env.Load(envFile);
-
-        string rawAllowlist = Environment.GetEnvironmentVariable("ALLOWLISTED_HOST_IPS")
-            ?? throw new Exception("Missing ALLOWLISTED_HOST_IPS in env file");
+        EnvHelpers.Init();
+        string rawAllowlist = EnvHelpers.Get("ALLOWLISTED_HOST_IPS");
         hostIpAllowlist = new HashSet<string>(rawAllowlist.Split(","));
         httpClient = client;
     }
 
     public async Task SetupAndListen()
     {
-        string url = Environment.GetEnvironmentVariable("HOSTED_ADDRESS")
-            ?? throw new Exception("Missing HOSTED_ADDRESS in env file");
-
+        string port = EnvHelpers.Get("PORT");
+        string apiUrl = EnvHelpers.Get("API_URL");
+        string url = $"{apiUrl}:{port}/";
         HttpListener httpListener = new();
-
-        if (String.IsNullOrEmpty(url))
-        {
-            throw new Exception("HOSTED_ADDRESS environment variable not set.");
-        }
+        Console.WriteLine($"I am is: {url}");
 
         httpListener.Prefixes.Add(url);
         httpListener.Start();
@@ -83,7 +75,8 @@ public class Server
         {
             var context = await httpListener.GetContextAsync();
 
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:7250");
+            string clientUrl = EnvHelpers.Get("CLIENT_URL");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", clientUrl);
             context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
 
             if (context.Request.HttpMethod == "OPTIONS")

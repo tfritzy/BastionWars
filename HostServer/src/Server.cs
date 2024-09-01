@@ -23,20 +23,19 @@ public class Server
 
     public Server(HttpClient client)
     {
-        string environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Development";
-        string envFile = environment == "Production" ? ".env.production" : ".env";
-        Env.Load(envFile);
-
-        matchmakingServerAddress = Environment.GetEnvironmentVariable("MATCHMAKING_SERVER_ADDRESS")
-            ?? throw new Exception("MATCHMAKING_SERVER_ADDRESS environment variable not set.");
-        port = Environment.GetEnvironmentVariable("PORT")
-            ?? throw new Exception("Missing PORT in env file");
-
+        EnvHelpers.Init();
         httpClient = client;
         availablePorts = GetInitialPorts();
 
+        string apiUrl = EnvHelpers.Get("API_URL");
+        string mmPort = EnvHelpers.Get("MATCHMAKING_SERVER_PORT");
+        port = EnvHelpers.Get("PORT");
+        matchmakingServerAddress = $"{apiUrl}:{mmPort}";
+        string listenUrl = $"{apiUrl}:{port}/";
+        Console.WriteLine($"matchmaking server is: {matchmakingServerAddress}");
+        Console.WriteLine($"I am is: {listenUrl}");
         httpListener = new();
-        httpListener.Prefixes.Add($"http://localhost:{port}/");
+        httpListener.Prefixes.Add(listenUrl);
 
         _routes.Add("/place-player", async (HttpListenerContext context) =>
         {
@@ -76,7 +75,7 @@ public class Server
 
             Console.WriteLine("Got one");
 
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:7249");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", matchmakingServerAddress);
             context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
 
             if (context.Request.HttpMethod == "OPTIONS")
