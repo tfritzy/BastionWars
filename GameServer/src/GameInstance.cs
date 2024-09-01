@@ -1,8 +1,12 @@
+using System.Diagnostics;
 using System.Net;
 using System.Net.WebSockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using DotNetEnv;
+using Google.Protobuf;
 using Helpers;
+using KeepLordWarriors;
 using Schema;
 
 namespace GameServer;
@@ -12,29 +16,70 @@ public class GameInstance
     public string Id { get; private set; }
     public Schema.GameSettings GameSettings { get; private set; }
     private string url;
+    private HttpListener httpListener;
+    private Game game;
+    private Dictionary<string, WebSocketContext> connections = new();
+    const int ChunkSize = 4096;
 
     public GameInstance(string id, string port, GameSettings gameSettings)
     {
+        EnvHelpers.Init();
         Id = id;
         GameSettings = gameSettings;
-        EnvHelpers.Init();
+        game = new Game(gameSettings);
         url = $"http://[::1]:{port}/";
+        httpListener = new();
     }
 
-    public void StartGame()
+    public async void StartGame()
     {
         StartAcceptingConnections();
-        Logger.Log($"Starting game {Id} on {url}");
-        while (true) ;
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        double lastTime = 0;
+        while (true)
+        {
+            game.Update(stopwatch.ElapsedMilliseconds / 1000.0 - lastTime);
+            lastTime = stopwatch.Elapsed.TotalSeconds;
+            await DrainOutbox();
+        }
     }
 
-    public async void StartAcceptingConnections()
+    private async Task DrainOutbox()
     {
-        HttpListener httpListener = new();
+        foreach (Oneof_GameServerToPlayer msg in game.Outbox)
+        {
+            if (connections.TryGetValue(msg.RecipientId, out WebSocketContext? context))
+            {
+                byte[] messageBytes = msg.ToByteArray();
+                for (int i = 0; i < messageBytes.Length; i += ChunkSize)
+                {
+                    int remainingBytes = Math.Min(ChunkSize, messageBytes.Length - i);
+                    bool isLastChunk = (i + remainingBytes) >= messageBytes.Length;
+
+                    await context.WebSocket.SendAsync(
+                        new ArraySegment<byte>(messageBytes, i, remainingBytes),
+                        WebSocketMessageType.Binary,
+                        isLastChunk,
+                        CancellationToken.None);
+                }
+            }
+        }
+
+        game.Outbox.Clear();
+    }
+
+    private void StartAcceptingConnections()
+    {
         httpListener.Prefixes.Add(url);
         httpListener.Start();
+        _ = Task.Run(() => Listen());
         Logger.Log("GameServer instance listening on " + url);
+    }
 
+    public async Task Listen()
+    {
         try
         {
             while (true)
@@ -55,8 +100,7 @@ public class GameInstance
         catch (Exception e)
         {
             Logger.Log("Failed to accept connection: " + e.Message);
-
-            _ = Task.Run(() => StartAcceptingConnections());
+            await Listen();
         }
     }
 

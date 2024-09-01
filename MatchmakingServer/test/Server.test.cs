@@ -73,11 +73,14 @@ namespace MatchmakingServer.Tests
         [TestMethod]
         public async Task HandleSearch_PlacesPlayerInConnectedHost()
         {
-            GameFoundForPlayer found = new()
+            Oneof_HostServerToMatchmaker found = new Oneof_HostServerToMatchmaker()
             {
-                PlayerId = "plyr_001",
-                Address = "[::1]:6001",
-                GameId = "game_001"
+                GameAvailableOnPort = new()
+                {
+                    PlayerId = "plyr_001",
+                    Port = "6001",
+                    GameId = "game_001"
+                }
             };
             var handler = new Mock<HttpMessageHandler>();
             handler.SetupAnyRequest()
@@ -90,25 +93,28 @@ namespace MatchmakingServer.Tests
             var response = await server.HandleSearchForGame(BuildSearchBody());
             Assert.AreEqual(200, response.StatusCode);
             Assert.AreEqual("plyr_001", response.Body!.PlayerId);
-            Assert.AreEqual("[::1]:6001", response.Body!.Address);
+            Assert.AreEqual("ws://[::1]:6001", response.Body!.Address);
             Assert.AreEqual("game_001", response.Body!.GameId);
         }
 
         [TestMethod]
         public async Task HandleSearch_CleansUpDeadHost()
         {
-            GameFoundForPlayer found = new()
+            Oneof_HostServerToMatchmaker found = new Oneof_HostServerToMatchmaker()
             {
-                PlayerId = "plyr_001",
-                Address = "127.0.0.1:6001",
-                GameId = "game_001"
+                GameAvailableOnPort = new()
+                {
+                    PlayerId = "plyr_001",
+                    Port = "8250",
+                    GameId = "game_001"
+                }
             };
             var handler = new Mock<HttpMessageHandler>();
             handler
                 .SetupRequest(HttpMethod.Post, "http://[::1]:7250/place-player")
                 .ReturnsResponse(HttpStatusCode.BadGateway);
             handler
-                .SetupRequest(HttpMethod.Post, "http://127.0.0.1:7250/place-player")
+                .SetupRequest(HttpMethod.Post, "http://[::1]:8250/place-player")
                 .ReturnsResponse(
                     HttpStatusCode.OK,
                     found.ToByteArray(),
@@ -116,13 +122,13 @@ namespace MatchmakingServer.Tests
             var httpClient = handler.CreateClient();
             var server = new Server(httpClient);
             server.HandleRegisterHost("::1", new Register { Port = "7250" });
-            server.HandleRegisterHost("127.0.0.1", new Register { Port = "7250" });
+            server.HandleRegisterHost("::1", new Register { Port = "8250" });
 
             Assert.AreEqual(2, server.ConnectedHosts.Count);
             var response = await server.HandleSearchForGame(BuildSearchBody());
             Assert.AreEqual(200, response.StatusCode);
             Assert.AreEqual("plyr_001", response.Body!.PlayerId);
-            Assert.AreEqual("127.0.0.1:6001", response.Body!.Address);
+            Assert.AreEqual("ws://[::1]:8250", response.Body!.Address);
             Assert.AreEqual("game_001", response.Body!.GameId);
             Assert.AreEqual(1, server.ConnectedHosts.Count);
         }
