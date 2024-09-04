@@ -194,14 +194,23 @@ public class GameInstance
 
     private async Task HandleMsgFromPlayer(WebSocket webSocket, MemoryStream ms)
     {
-        Oneof_HostServerToGameServer request = Oneof_HostServerToGameServer.Parser.ParseFrom(ms);
-        Logger.Log("A host said something: " + request.ToString());
-
-        switch (request.MsgCase)
+        try
         {
-            default:
-                Logger.Log("GameServer got invalid message type from player: " + request.MsgCase);
-                break;
+            Oneof_PlayerToGameServer request = Oneof_PlayerToGameServer.Parser.ParseFrom(ms);
+            switch (request.MsgCase)
+            {
+                case (Oneof_PlayerToGameServer.MsgOneofCase.IssueDeploymentOrder):
+                    var order = request.IssueDeploymentOrder;
+                    game.AttackBastion(order.SourceKeep, order.TargetKeep);
+                    break;
+                default:
+                    Logger.Log("GameServer got invalid message type from player: " + request.MsgCase);
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.Log("Was unable to parse message from player. " + e);
         }
     }
 }

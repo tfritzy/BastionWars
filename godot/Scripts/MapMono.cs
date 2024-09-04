@@ -9,7 +9,7 @@ public partial class MapMono : GridMap
 {
     private Map Map;
     public Dictionary<Vector2Int, Typeable> Words = new();
-    public Dictionary<ulong, KeepMono> KeepMonos = new();
+    public Dictionary<uint, KeepMono> KeepMonos = new();
     private Dictionary<Vector2Int, MeshInstance3D> lands = new();
     private Dictionary<int, Material> playerMaterials = new();
 
@@ -102,7 +102,7 @@ public partial class MapMono : GridMap
     {
         foreach (var pos in Map.KeepLands.Keys)
         {
-            ulong owner = Map.KeepLands[pos];
+            uint owner = Map.KeepLands[pos];
             if (Map.Keeps.ContainsKey(owner))
             {
                 Keep keep = Map.Keeps[owner];
@@ -112,11 +112,11 @@ public partial class MapMono : GridMap
         }
     }
 
-    private void OnKeepCaptured(ulong keepId)
+    private void OnKeepCaptured(uint keepId)
     {
         foreach (var pos in Map.KeepLands.Keys)
         {
-            ulong owner = Map.KeepLands[pos];
+            uint owner = Map.KeepLands[pos];
             if (owner == keepId)
             {
                 var color = GetColor(Map.Keeps[keepId].Alliance);

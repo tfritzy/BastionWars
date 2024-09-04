@@ -6,14 +6,14 @@ namespace KeepLordWarriors;
 public class Soldier : Entity
 {
     public SoldierType Type { get; private set; }
-    public readonly ulong TargetBastionId;
-    public readonly ulong SourceBastionId;
+    public readonly uint TargetBastionId;
+    public readonly uint SourceBastionId;
     public int PathProgress { get; private set; }
 
     public const float Radius = 0.5f;
     public const float BaseMovementSpeed = 1.0f;
 
-    public Soldier(Map map, int alliance, SoldierType type, ulong source, ulong target) : base(map, alliance)
+    public Soldier(Map map, int alliance, SoldierType type, uint source, uint target) : base(map, alliance)
     {
         Type = type;
         SourceBastionId = source;

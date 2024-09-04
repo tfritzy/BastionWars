@@ -5,11 +5,11 @@ namespace Navigation;
 
 public static class Ownership
 {
-    public static Dictionary<Vector2Int, ulong> Calculate(int width, int height, Dictionary<ulong, Vector2Int> bastionLocations)
+    public static Dictionary<Vector2Int, uint> Calculate(int width, int height, Dictionary<uint, Vector2Int> bastionLocations)
     {
-        Dictionary<Vector2Int, ulong> ownership = new();
-        Dictionary<ulong, Queue<Vector2Int>> queue = new();
-        foreach (ulong id in bastionLocations.Keys)
+        Dictionary<Vector2Int, uint> ownership = new();
+        Dictionary<uint, Queue<Vector2Int>> queue = new();
+        foreach (uint id in bastionLocations.Keys)
         {
             queue[id] = new(new Vector2Int[] { bastionLocations[id] });
             ownership[bastionLocations[id]] = id;
@@ -19,7 +19,7 @@ public static class Ownership
         do
         {
             allEmpty = true;
-            foreach (ulong id in queue.Keys)
+            foreach (uint id in queue.Keys)
             {
                 Queue<Vector2Int> newItems = new();
                 while (queue[id].Count > 0)

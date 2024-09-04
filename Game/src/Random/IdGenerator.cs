@@ -2,9 +2,9 @@ namespace KeepLordWarriors;
 
 public static class IdGenerator
 {
-    static ulong nextId = 1;
+    static uint nextId = 1;
 
-    public static ulong NextId()
+    public static uint NextId()
     {
         return nextId++;
     }

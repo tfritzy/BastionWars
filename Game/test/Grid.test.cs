@@ -32,7 +32,7 @@ public class GridTest
 
         collisions = grid.GetCollisions(new Vector2(0f, 19f), 2f);
         Assert.AreEqual(3, collisions.Count);
-        CollectionAssert.AreEquivalent(new ulong[] { e1.Id, e3.Id, e4.Id }, collisions.ToArray());
+        CollectionAssert.AreEquivalent(new uint[] { e1.Id, e3.Id, e4.Id }, collisions.ToArray());
     }
 
     [TestMethod]

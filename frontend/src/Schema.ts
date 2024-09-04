@@ -704,10 +704,10 @@ function _encodeOneof_MatchmakerToHostServer(
   message: Oneof_MatchmakerToHostServer,
   bb: ByteBuffer
 ): void {
-  // optional PlacePlayerInGame place_player_in_game = 1;
+  // optional PlacePlayerInGame place_player_in_game = 2;
   let $place_player_in_game = message.place_player_in_game;
   if ($place_player_in_game !== undefined) {
-    writeVarint32(bb, 10);
+    writeVarint32(bb, 18);
     let nested = popByteBuffer();
     _encodePlacePlayerInGame($place_player_in_game, nested);
     writeVarint32(bb, nested.limit);
@@ -715,10 +715,10 @@ function _encodeOneof_MatchmakerToHostServer(
     pushByteBuffer(nested);
   }
 
-  // optional Registered registered = 2;
+  // optional Registered registered = 3;
   let $registered = message.registered;
   if ($registered !== undefined) {
-    writeVarint32(bb, 18);
+    writeVarint32(bb, 26);
     let nested = popByteBuffer();
     _encodeRegistered($registered, nested);
     writeVarint32(bb, nested.limit);
@@ -745,16 +745,16 @@ function _decodeOneof_MatchmakerToHostServer(
       case 0:
         break end_of_message;
 
-      // optional PlacePlayerInGame place_player_in_game = 1;
-      case 1: {
+      // optional PlacePlayerInGame place_player_in_game = 2;
+      case 2: {
         let limit = pushTemporaryLength(bb);
         message.place_player_in_game = _decodePlacePlayerInGame(bb);
         bb.limit = limit;
         break;
       }
 
-      // optional Registered registered = 2;
-      case 2: {
+      // optional Registered registered = 3;
+      case 3: {
         let limit = pushTemporaryLength(bb);
         message.registered = _decodeRegistered(bb);
         bb.limit = limit;
@@ -833,7 +833,7 @@ function _decodeOneof_HostServerToGameServer(
 
 export interface Oneof_PlayerToGameServer {
   sender_id?: string;
-  hi?: Hi;
+  issue_deployment_order?: IssueDeploymentOrder;
 }
 
 export function encodeOneof_PlayerToGameServer(
@@ -855,12 +855,12 @@ function _encodeOneof_PlayerToGameServer(
     writeString(bb, $sender_id);
   }
 
-  // optional Hi hi = 2;
-  let $hi = message.hi;
-  if ($hi !== undefined) {
+  // optional IssueDeploymentOrder issue_deployment_order = 2;
+  let $issue_deployment_order = message.issue_deployment_order;
+  if ($issue_deployment_order !== undefined) {
     writeVarint32(bb, 18);
     let nested = popByteBuffer();
-    _encodeHi($hi, nested);
+    _encodeIssueDeploymentOrder($issue_deployment_order, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -891,10 +891,10 @@ function _decodeOneof_PlayerToGameServer(
         break;
       }
 
-      // optional Hi hi = 2;
+      // optional IssueDeploymentOrder issue_deployment_order = 2;
       case 2: {
         let limit = pushTemporaryLength(bb);
-        message.hi = _decodeHi(bb);
+        message.issue_deployment_order = _decodeIssueDeploymentOrder(bb);
         bb.limit = limit;
         break;
       }
@@ -1080,7 +1080,7 @@ function _decodeChunk(bb: ByteBuffer): Chunk {
 
 export interface Packet {
   chunks?: Chunk[];
-  id?: Long;
+  id?: number;
   type?: PacketType;
   sent_ms?: number;
 }
@@ -1105,11 +1105,11 @@ function _encodePacket(message: Packet, bb: ByteBuffer): void {
     }
   }
 
-  // optional uint64 id = 2;
+  // optional uint32 id = 2;
   let $id = message.id;
   if ($id !== undefined) {
     writeVarint32(bb, 16);
-    writeVarint64(bb, $id);
+    writeVarint32(bb, $id);
   }
 
   // optional PacketType type = 3;
@@ -1150,9 +1150,9 @@ function _decodePacket(bb: ByteBuffer): Packet {
         break;
       }
 
-      // optional uint64 id = 2;
+      // optional uint32 id = 2;
       case 2: {
-        message.id = readVarint64(bb, /* unsigned */ true);
+        message.id = readVarint32(bb) >>> 0;
         break;
       }
 
@@ -1363,7 +1363,7 @@ function _decodeAllSoldierPositions(bb: ByteBuffer): AllSoldierPositions {
 }
 
 export interface SoldierPosition {
-  id?: Long;
+  id?: number;
   pos?: V2;
   velocity?: V2;
 }
@@ -1378,11 +1378,11 @@ function _encodeSoldierPosition(
   message: SoldierPosition,
   bb: ByteBuffer
 ): void {
-  // optional uint64 id = 1;
+  // optional uint32 id = 1;
   let $id = message.id;
   if ($id !== undefined) {
     writeVarint32(bb, 8);
-    writeVarint64(bb, $id);
+    writeVarint32(bb, $id);
   }
 
   // optional V2 pos = 2;
@@ -1422,9 +1422,9 @@ function _decodeSoldierPosition(bb: ByteBuffer): SoldierPosition {
       case 0:
         break end_of_message;
 
-      // optional uint64 id = 1;
+      // optional uint32 id = 1;
       case 1: {
-        message.id = readVarint64(bb, /* unsigned */ true);
+        message.id = readVarint32(bb) >>> 0;
         break;
       }
 
@@ -1453,7 +1453,7 @@ function _decodeSoldierPosition(bb: ByteBuffer): SoldierPosition {
 }
 
 export interface KeepState {
-  id?: Long;
+  id?: number;
   pos?: V2;
   warrior_count?: number;
   archer_count?: number;
@@ -1468,11 +1468,11 @@ export function encodeKeepState(message: KeepState): Uint8Array {
 }
 
 function _encodeKeepState(message: KeepState, bb: ByteBuffer): void {
-  // optional uint64 id = 1;
+  // optional uint32 id = 1;
   let $id = message.id;
   if ($id !== undefined) {
     writeVarint32(bb, 8);
-    writeVarint64(bb, $id);
+    writeVarint32(bb, $id);
   }
 
   // optional V2 pos = 2;
@@ -1529,9 +1529,9 @@ function _decodeKeepState(bb: ByteBuffer): KeepState {
       case 0:
         break end_of_message;
 
-      // optional uint64 id = 1;
+      // optional uint32 id = 1;
       case 1: {
-        message.id = readVarint64(bb, /* unsigned */ true);
+        message.id = readVarint32(bb) >>> 0;
         break;
       }
 
@@ -1688,31 +1688,46 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
   return message;
 }
 
-export interface Hi {
-  hi?: string;
+export interface IssueDeploymentOrder {
+  source_keep?: number;
+  target_keep?: number;
 }
 
-export function encodeHi(message: Hi): Uint8Array {
+export function encodeIssueDeploymentOrder(
+  message: IssueDeploymentOrder
+): Uint8Array {
   let bb = popByteBuffer();
-  _encodeHi(message, bb);
+  _encodeIssueDeploymentOrder(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeHi(message: Hi, bb: ByteBuffer): void {
-  // optional string hi = 1;
-  let $hi = message.hi;
-  if ($hi !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $hi);
+function _encodeIssueDeploymentOrder(
+  message: IssueDeploymentOrder,
+  bb: ByteBuffer
+): void {
+  // optional uint32 source_keep = 1;
+  let $source_keep = message.source_keep;
+  if ($source_keep !== undefined) {
+    writeVarint32(bb, 8);
+    writeVarint32(bb, $source_keep);
+  }
+
+  // optional uint32 target_keep = 2;
+  let $target_keep = message.target_keep;
+  if ($target_keep !== undefined) {
+    writeVarint32(bb, 16);
+    writeVarint32(bb, $target_keep);
   }
 }
 
-export function decodeHi(binary: Uint8Array): Hi {
-  return _decodeHi(wrapByteBuffer(binary));
+export function decodeIssueDeploymentOrder(
+  binary: Uint8Array
+): IssueDeploymentOrder {
+  return _decodeIssueDeploymentOrder(wrapByteBuffer(binary));
 }
 
-function _decodeHi(bb: ByteBuffer): Hi {
-  let message: Hi = {} as any;
+function _decodeIssueDeploymentOrder(bb: ByteBuffer): IssueDeploymentOrder {
+  let message: IssueDeploymentOrder = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -1721,9 +1736,15 @@ function _decodeHi(bb: ByteBuffer): Hi {
       case 0:
         break end_of_message;
 
-      // optional string hi = 1;
+      // optional uint32 source_keep = 1;
       case 1: {
-        message.hi = readString(bb, readVarint32(bb));
+        message.source_keep = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional uint32 target_keep = 2;
+      case 2: {
+        message.target_keep = readVarint32(bb) >>> 0;
         break;
       }
 

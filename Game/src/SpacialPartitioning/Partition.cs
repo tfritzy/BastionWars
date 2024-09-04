@@ -4,7 +4,7 @@ namespace SpacialPartitioning;
 
 public class Partition
 {
-    readonly Dictionary<ulong, Entity> entities;
+    readonly Dictionary<uint, Entity> entities;
     readonly Vector2 bottomLeft;
 
     public Partition(Vector2 bottomLeft)
@@ -13,7 +13,7 @@ public class Partition
         entities = new();
     }
 
-    public Entity GetEntity(ulong id)
+    public Entity GetEntity(uint id)
     {
         return entities[id];
     }
@@ -23,14 +23,14 @@ public class Partition
         entities.Add(entity.Id, entity);
     }
 
-    public void RemoveEntity(ulong id)
+    public void RemoveEntity(uint id)
     {
         entities.Remove(id);
     }
 
-    public HashSet<ulong> GetCollisions(Vector2 point, float radius)
+    public HashSet<uint> GetCollisions(Vector2 point, float radius)
     {
-        HashSet<ulong> collisions = new();
+        HashSet<uint> collisions = new();
         foreach (Entity entity in entities.Values)
         {
             if (Vector2.DistanceSquared(point, entity.Position) <= Math.Pow(entity.Radius + radius, 2))
@@ -42,7 +42,7 @@ public class Partition
         return collisions;
     }
 
-    public void UpdateEntityPosition(ulong id, Vector2 newPosition)
+    public void UpdateEntityPosition(uint id, Vector2 newPosition)
     {
         entities[id].Position = newPosition;
     }

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public partial class GameMono : Node
 {
 	public Game Game;
-	private Dictionary<ulong, SoldierMono> soldiers = new();
+	private Dictionary<uint, SoldierMono> soldiers = new();
 	private MapMono mapMono;
-	private ulong? selectedKeepId;
+	private uint? selectedKeepId;
 	private Label instructionLabel;
 
 	public override void _Ready()

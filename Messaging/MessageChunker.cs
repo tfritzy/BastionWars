@@ -10,7 +10,7 @@ namespace Schema
         public const int ChunkSize = 512;
         private static byte[] buffer = new byte[ChunkSize];
 
-        public static List<Schema.Packet> Chunk(List<Oneof_GameServerToPlayer> updates, ulong currentVersion)
+        public static List<Schema.Packet> Chunk(List<Oneof_GameServerToPlayer> updates, uint currentVersion)
         {
             List<Schema.Packet> packets = new List<Schema.Packet>();
             Schema.Packet currentPacket = new Schema.Packet();

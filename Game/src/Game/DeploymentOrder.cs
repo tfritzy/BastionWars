@@ -2,7 +2,7 @@ namespace KeepLordWarriors;
 
 public class DeploymentOrder
 {
-    public ulong TargetId;
+    public uint TargetId;
     public int WarriorCount;
     public int ArcherCount;
     public double WaveCooldown;

@@ -11,11 +11,11 @@ public class Map
     public RenderTType[,] RenderTiles { get; private set; } = new RenderTType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
-    public Dictionary<ulong, Keep> Keeps { get; private set; } = new();
+    public Dictionary<uint, Keep> Keeps { get; private set; } = new();
     public List<Soldier> Soldiers { get; private set; } = new();
-    public Dictionary<Vector2Int, ulong> KeepLands { get; private set; } = new();
+    public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = new();
     public Dictionary<Vector2Int, Word?> Words { get; private set; } = new();
-    private Dictionary<ulong, Dictionary<ulong, List<Vector2Int>>> bastionPaths = new();
+    private Dictionary<uint, Dictionary<uint, List<Vector2Int>>> bastionPaths = new();
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -40,7 +40,7 @@ public class Map
         }
     }
 
-    public List<Vector2Int>? GetPathBetweenBastions(ulong startId, ulong endId)
+    public List<Vector2Int>? GetPathBetweenBastions(uint startId, uint endId)
     {
         if (!bastionPaths.ContainsKey(startId) || !bastionPaths[startId].ContainsKey(endId))
         {
@@ -50,7 +50,7 @@ public class Map
         return bastionPaths[startId][endId];
     }
 
-    public Vector2? GetNextPathPoint(ulong originId, ulong targetId, int progress)
+    public Vector2? GetNextPathPoint(uint originId, uint targetId, int progress)
     {
         List<Vector2Int>? path = GetPathBetweenBastions(originId, targetId);
         if (path == null || progress + 1 >= path.Count)
@@ -94,7 +94,7 @@ public class Map
 
     private void CalculateBastionOwnership()
     {
-        Dictionary<ulong, Vector2Int> locations = new();
+        Dictionary<uint, Vector2Int> locations = new();
         foreach (Keep bastion in Keeps.Values)
         {
             Vector2Int? location = Grid.GetEntityGridPos(bastion.Id);
@@ -158,7 +158,7 @@ public class Map
         ));
     }
 
-    public void RemoveSoldier(ulong id)
+    public void RemoveSoldier(uint id)
     {
         var removed = Soldiers.RemoveAll((s) => s.Id == id);
         Grid.RemoveEntity(id);

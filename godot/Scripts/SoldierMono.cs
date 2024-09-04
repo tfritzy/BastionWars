@@ -4,9 +4,9 @@ using KeepLordWarriors;
 public partial class SoldierMono : MeshInstance3D
 {
     private Game game;
-    private ulong id;
+    private uint id;
 
-    public SoldierMono(Game game, ulong id)
+    public SoldierMono(Game game, uint id)
     {
         this.game = game;
         this.id = id;

@@ -40,34 +40,36 @@ namespace Schema {
             "VG9NYXRjaG1ha2VyEj0KFmdhbWVfYXZhaWxhYmxlX29uX3BvcnQYASABKAsy",
             "Gy5TY2hlbWEuR2FtZUF2YWlsYWJsZU9uUG9ydEgAEiQKCHJlZ2lzdGVyGAIg",
             "ASgLMhAuU2NoZW1hLlJlZ2lzdGVySABCBQoDbXNnIooBChxPbmVvZl9NYXRj",
-            "aG1ha2VyVG9Ib3N0U2VydmVyEjkKFHBsYWNlX3BsYXllcl9pbl9nYW1lGAEg",
+            "aG1ha2VyVG9Ib3N0U2VydmVyEjkKFHBsYWNlX3BsYXllcl9pbl9nYW1lGAIg",
             "ASgLMhkuU2NoZW1hLlBsYWNlUGxheWVySW5HYW1lSAASKAoKcmVnaXN0ZXJl",
-            "ZBgCIAEoCzISLlNjaGVtYS5SZWdpc3RlcmVkSABCBQoDbXNnIksKHE9uZW9m",
+            "ZBgDIAEoCzISLlNjaGVtYS5SZWdpc3RlcmVkSABCBQoDbXNnIksKHE9uZW9m",
             "X0hvc3RTZXJ2ZXJUb0dhbWVTZXJ2ZXISJAoIcmVnaXN0ZXIYASABKAsyEC5T",
-            "Y2hlbWEuUmVnaXN0ZXJIAEIFCgNtc2ciTgoYT25lb2ZfUGxheWVyVG9HYW1l",
-            "U2VydmVyEhEKCXNlbmRlcl9pZBgBIAEoCRIYCgJoaRgCIAEoCzIKLlNjaGVt",
-            "YS5IaUgAQgUKA21zZyKkAQoYT25lb2ZfR2FtZVNlcnZlclRvUGxheWVyEhQK",
-            "DHJlY2lwaWVudF9pZBgBIAEoCRItCg1pbml0aWFsX3N0YXRlGAIgASgLMhQu",
-            "U2NoZW1hLkluaXRpYWxTdGF0ZUgAEjwKFWFsbF9zb2xkaWVyX3Bvc2l0aW9u",
-            "cxgDIAEoCzIbLlNjaGVtYS5BbGxTb2xkaWVyUG9zaXRpb25zSABCBQoDbXNn",
-            "IjYKBUNodW5rEg0KBWluZGV4GAEgASgFEhAKCG1heEluZGV4GAIgASgFEgwK",
-            "BGRhdGEYAyABKAwiZgoGUGFja2V0Eh0KBmNodW5rcxgBIAMoCzINLlNjaGVt",
-            "YS5DaHVuaxIKCgJpZBgCIAEoBBIgCgR0eXBlGAMgASgOMhIuU2NoZW1hLlBh",
-            "Y2tldFR5cGUSDwoHc2VudF9tcxgEIAEoBSIaCgJWMhIJCgF4GAEgASgCEgkK",
-            "AXkYAiABKAIiHQoFVjJJbnQSCQoBeBgBIAEoBRIJCgF5GAIgASgFIkkKE0Fs",
-            "bFNvbGRpZXJQb3NpdGlvbnMSMgoRc29sZGllcl9wb3NpdGlvbnMYASADKAsy",
-            "Fy5TY2hlbWEuU29sZGllclBvc2l0aW9uIlQKD1NvbGRpZXJQb3NpdGlvbhIK",
-            "CgJpZBgBIAEoBBIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjISHAoIdmVsb2Np",
-            "dHkYAyABKAsyCi5TY2hlbWEuVjIifQoJS2VlcFN0YXRlEgoKAmlkGAEgASgE",
-            "EhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIVCg13YXJyaW9yX2NvdW50GAMg",
-            "ASgFEhQKDGFyY2hlcl9jb3VudBgEIAEoBRIMCgRuYW1lGAUgASgJEhAKCGFs",
-            "bGlhbmNlGAYgASgFIngKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIR",
-            "LlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1hcF9o",
-            "ZWlnaHQYAyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5cGUi",
-            "EAoCSGkSCgoCaGkYASABKAkqKgoOR2VuZXJhdGlvbk1vZGUSDgoKQXV0b0Fj",
-            "Y3J1ZRAAEggKBFdvcmQQASonCgpQYWNrZXRUeXBlEgoKBlVQREFURRAAEg0K",
-            "CUhFQVJUQkVBVBABKjYKCFRpbGVUeXBlEgsKB0ludmFsaWQQABIICgRMYW5k",
-            "EAESCQoFV2F0ZXIQAhIICgRUcmVlEANiBnByb3RvMw=="));
+            "Y2hlbWEuUmVnaXN0ZXJIAEIFCgNtc2cidAoYT25lb2ZfUGxheWVyVG9HYW1l",
+            "U2VydmVyEhEKCXNlbmRlcl9pZBgBIAEoCRI+ChZpc3N1ZV9kZXBsb3ltZW50",
+            "X29yZGVyGAIgASgLMhwuU2NoZW1hLklzc3VlRGVwbG95bWVudE9yZGVySABC",
+            "BQoDbXNnIqQBChhPbmVvZl9HYW1lU2VydmVyVG9QbGF5ZXISFAoMcmVjaXBp",
+            "ZW50X2lkGAEgASgJEi0KDWluaXRpYWxfc3RhdGUYAiABKAsyFC5TY2hlbWEu",
+            "SW5pdGlhbFN0YXRlSAASPAoVYWxsX3NvbGRpZXJfcG9zaXRpb25zGAMgASgL",
+            "MhsuU2NoZW1hLkFsbFNvbGRpZXJQb3NpdGlvbnNIAEIFCgNtc2ciNgoFQ2h1",
+            "bmsSDQoFaW5kZXgYASABKAUSEAoIbWF4SW5kZXgYAiABKAUSDAoEZGF0YRgD",
+            "IAEoDCJmCgZQYWNrZXQSHQoGY2h1bmtzGAEgAygLMg0uU2NoZW1hLkNodW5r",
+            "EgoKAmlkGAIgASgNEiAKBHR5cGUYAyABKA4yEi5TY2hlbWEuUGFja2V0VHlw",
+            "ZRIPCgdzZW50X21zGAQgASgFIhoKAlYyEgkKAXgYASABKAISCQoBeRgCIAEo",
+            "AiIdCgVWMkludBIJCgF4GAEgASgFEgkKAXkYAiABKAUiSQoTQWxsU29sZGll",
+            "clBvc2l0aW9ucxIyChFzb2xkaWVyX3Bvc2l0aW9ucxgBIAMoCzIXLlNjaGVt",
+            "YS5Tb2xkaWVyUG9zaXRpb24iVAoPU29sZGllclBvc2l0aW9uEgoKAmlkGAEg",
+            "ASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIcCgh2ZWxvY2l0eRgDIAEo",
+            "CzIKLlNjaGVtYS5WMiJ9CglLZWVwU3RhdGUSCgoCaWQYASABKA0SFwoDcG9z",
+            "GAIgASgLMgouU2NoZW1hLlYyEhUKDXdhcnJpb3JfY291bnQYAyABKAUSFAoM",
+            "YXJjaGVyX2NvdW50GAQgASgFEgwKBG5hbWUYBSABKAkSEAoIYWxsaWFuY2UY",
+            "BiABKAUieAoMSW5pdGlhbFN0YXRlEiAKBWtlZXBzGAEgAygLMhEuU2NoZW1h",
+            "LktlZXBTdGF0ZRIRCgltYXBfd2lkdGgYAiABKAUSEgoKbWFwX2hlaWdodBgD",
+            "IAEoBRIfCgV0aWxlcxgEIAMoDjIQLlNjaGVtYS5UaWxlVHlwZSJAChRJc3N1",
+            "ZURlcGxveW1lbnRPcmRlchITCgtzb3VyY2Vfa2VlcBgBIAEoDRITCgt0YXJn",
+            "ZXRfa2VlcBgCIAEoDSoqCg5HZW5lcmF0aW9uTW9kZRIOCgpBdXRvQWNjcnVl",
+            "EAASCAoEV29yZBABKicKClBhY2tldFR5cGUSCgoGVVBEQVRFEAASDQoJSEVB",
+            "UlRCRUFUEAEqNgoIVGlsZVR5cGUSCwoHSW52YWxpZBAAEggKBExhbmQQARIJ",
+            "CgVXYXRlchACEggKBFRyZWUQA2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.PacketType), typeof(global::Schema.TileType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -83,7 +85,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToMatchmaker), global::Schema.Oneof_HostServerToMatchmaker.Parser, new[]{ "GameAvailableOnPort", "Register" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_MatchmakerToHostServer), global::Schema.Oneof_MatchmakerToHostServer.Parser, new[]{ "PlacePlayerInGame", "Registered" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToGameServer), global::Schema.Oneof_HostServerToGameServer.Parser, new[]{ "Register" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "Hi" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "IssueDeploymentOrder" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Chunk), global::Schema.Chunk.Parser, new[]{ "Index", "MaxIndex", "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Packet), global::Schema.Packet.Parser, new[]{ "Chunks", "Id", "Type", "SentMs" }, null, null, null, null),
@@ -93,7 +95,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SoldierPosition), global::Schema.SoldierPosition.Parser, new[]{ "Id", "Pos", "Velocity" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Hi), global::Schema.Hi.Parser, new[]{ "Hi_" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep" }, null, null, null, null)
           }));
     }
     #endregion
@@ -2467,7 +2469,7 @@ namespace Schema {
     }
 
     /// <summary>Field number for the "place_player_in_game" field.</summary>
-    public const int PlacePlayerInGameFieldNumber = 1;
+    public const int PlacePlayerInGameFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Schema.PlacePlayerInGame PlacePlayerInGame {
@@ -2479,7 +2481,7 @@ namespace Schema {
     }
 
     /// <summary>Field number for the "registered" field.</summary>
-    public const int RegisteredFieldNumber = 2;
+    public const int RegisteredFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Schema.Registered Registered {
@@ -2494,8 +2496,8 @@ namespace Schema {
     /// <summary>Enum of possible cases for the "msg" oneof.</summary>
     public enum MsgOneofCase {
       None = 0,
-      PlacePlayerInGame = 1,
-      Registered = 2,
+      PlacePlayerInGame = 2,
+      Registered = 3,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2558,11 +2560,11 @@ namespace Schema {
       output.WriteRawMessage(this);
     #else
       if (msgCase_ == MsgOneofCase.PlacePlayerInGame) {
-        output.WriteRawTag(10);
+        output.WriteRawTag(18);
         output.WriteMessage(PlacePlayerInGame);
       }
       if (msgCase_ == MsgOneofCase.Registered) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(Registered);
       }
       if (_unknownFields != null) {
@@ -2576,11 +2578,11 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (msgCase_ == MsgOneofCase.PlacePlayerInGame) {
-        output.WriteRawTag(10);
+        output.WriteRawTag(18);
         output.WriteMessage(PlacePlayerInGame);
       }
       if (msgCase_ == MsgOneofCase.Registered) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(Registered);
       }
       if (_unknownFields != null) {
@@ -2641,7 +2643,7 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
+          case 18: {
             global::Schema.PlacePlayerInGame subBuilder = new global::Schema.PlacePlayerInGame();
             if (msgCase_ == MsgOneofCase.PlacePlayerInGame) {
               subBuilder.MergeFrom(PlacePlayerInGame);
@@ -2650,7 +2652,7 @@ namespace Schema {
             PlacePlayerInGame = subBuilder;
             break;
           }
-          case 18: {
+          case 26: {
             global::Schema.Registered subBuilder = new global::Schema.Registered();
             if (msgCase_ == MsgOneofCase.Registered) {
               subBuilder.MergeFrom(Registered);
@@ -2674,7 +2676,7 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
+          case 18: {
             global::Schema.PlacePlayerInGame subBuilder = new global::Schema.PlacePlayerInGame();
             if (msgCase_ == MsgOneofCase.PlacePlayerInGame) {
               subBuilder.MergeFrom(PlacePlayerInGame);
@@ -2683,7 +2685,7 @@ namespace Schema {
             PlacePlayerInGame = subBuilder;
             break;
           }
-          case 18: {
+          case 26: {
             global::Schema.Registered subBuilder = new global::Schema.Registered();
             if (msgCase_ == MsgOneofCase.Registered) {
               subBuilder.MergeFrom(Registered);
@@ -2967,8 +2969,8 @@ namespace Schema {
     public Oneof_PlayerToGameServer(Oneof_PlayerToGameServer other) : this() {
       senderId_ = other.senderId_;
       switch (other.MsgCase) {
-        case MsgOneofCase.Hi:
-          Hi = other.Hi.Clone();
+        case MsgOneofCase.IssueDeploymentOrder:
+          IssueDeploymentOrder = other.IssueDeploymentOrder.Clone();
           break;
       }
 
@@ -2993,15 +2995,15 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "hi" field.</summary>
-    public const int HiFieldNumber = 2;
+    /// <summary>Field number for the "issue_deployment_order" field.</summary>
+    public const int IssueDeploymentOrderFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.Hi Hi {
-      get { return msgCase_ == MsgOneofCase.Hi ? (global::Schema.Hi) msg_ : null; }
+    public global::Schema.IssueDeploymentOrder IssueDeploymentOrder {
+      get { return msgCase_ == MsgOneofCase.IssueDeploymentOrder ? (global::Schema.IssueDeploymentOrder) msg_ : null; }
       set {
         msg_ = value;
-        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Hi;
+        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.IssueDeploymentOrder;
       }
     }
 
@@ -3009,7 +3011,7 @@ namespace Schema {
     /// <summary>Enum of possible cases for the "msg" oneof.</summary>
     public enum MsgOneofCase {
       None = 0,
-      Hi = 2,
+      IssueDeploymentOrder = 2,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3041,7 +3043,7 @@ namespace Schema {
         return true;
       }
       if (SenderId != other.SenderId) return false;
-      if (!object.Equals(Hi, other.Hi)) return false;
+      if (!object.Equals(IssueDeploymentOrder, other.IssueDeploymentOrder)) return false;
       if (MsgCase != other.MsgCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -3051,7 +3053,7 @@ namespace Schema {
     public override int GetHashCode() {
       int hash = 1;
       if (SenderId.Length != 0) hash ^= SenderId.GetHashCode();
-      if (msgCase_ == MsgOneofCase.Hi) hash ^= Hi.GetHashCode();
+      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) hash ^= IssueDeploymentOrder.GetHashCode();
       hash ^= (int) msgCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -3075,9 +3077,9 @@ namespace Schema {
         output.WriteRawTag(10);
         output.WriteString(SenderId);
       }
-      if (msgCase_ == MsgOneofCase.Hi) {
+      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
         output.WriteRawTag(18);
-        output.WriteMessage(Hi);
+        output.WriteMessage(IssueDeploymentOrder);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3093,9 +3095,9 @@ namespace Schema {
         output.WriteRawTag(10);
         output.WriteString(SenderId);
       }
-      if (msgCase_ == MsgOneofCase.Hi) {
+      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
         output.WriteRawTag(18);
-        output.WriteMessage(Hi);
+        output.WriteMessage(IssueDeploymentOrder);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -3110,8 +3112,8 @@ namespace Schema {
       if (SenderId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SenderId);
       }
-      if (msgCase_ == MsgOneofCase.Hi) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Hi);
+      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(IssueDeploymentOrder);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3129,11 +3131,11 @@ namespace Schema {
         SenderId = other.SenderId;
       }
       switch (other.MsgCase) {
-        case MsgOneofCase.Hi:
-          if (Hi == null) {
-            Hi = new global::Schema.Hi();
+        case MsgOneofCase.IssueDeploymentOrder:
+          if (IssueDeploymentOrder == null) {
+            IssueDeploymentOrder = new global::Schema.IssueDeploymentOrder();
           }
-          Hi.MergeFrom(other.Hi);
+          IssueDeploymentOrder.MergeFrom(other.IssueDeploymentOrder);
           break;
       }
 
@@ -3157,12 +3159,12 @@ namespace Schema {
             break;
           }
           case 18: {
-            global::Schema.Hi subBuilder = new global::Schema.Hi();
-            if (msgCase_ == MsgOneofCase.Hi) {
-              subBuilder.MergeFrom(Hi);
+            global::Schema.IssueDeploymentOrder subBuilder = new global::Schema.IssueDeploymentOrder();
+            if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+              subBuilder.MergeFrom(IssueDeploymentOrder);
             }
             input.ReadMessage(subBuilder);
-            Hi = subBuilder;
+            IssueDeploymentOrder = subBuilder;
             break;
           }
         }
@@ -3185,12 +3187,12 @@ namespace Schema {
             break;
           }
           case 18: {
-            global::Schema.Hi subBuilder = new global::Schema.Hi();
-            if (msgCase_ == MsgOneofCase.Hi) {
-              subBuilder.MergeFrom(Hi);
+            global::Schema.IssueDeploymentOrder subBuilder = new global::Schema.IssueDeploymentOrder();
+            if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+              subBuilder.MergeFrom(IssueDeploymentOrder);
             }
             input.ReadMessage(subBuilder);
-            Hi = subBuilder;
+            IssueDeploymentOrder = subBuilder;
             break;
           }
         }
@@ -3845,10 +3847,10 @@ namespace Schema {
 
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 2;
-    private ulong id_;
+    private uint id_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong Id {
+    public uint Id {
       get { return id_; }
       set {
         id_ = value;
@@ -3906,7 +3908,7 @@ namespace Schema {
     public override int GetHashCode() {
       int hash = 1;
       hash ^= chunks_.GetHashCode();
-      if (Id != 0UL) hash ^= Id.GetHashCode();
+      if (Id != 0) hash ^= Id.GetHashCode();
       if (Type != global::Schema.PacketType.Update) hash ^= Type.GetHashCode();
       if (SentMs != 0) hash ^= SentMs.GetHashCode();
       if (_unknownFields != null) {
@@ -3928,9 +3930,9 @@ namespace Schema {
       output.WriteRawMessage(this);
     #else
       chunks_.WriteTo(output, _repeated_chunks_codec);
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
       }
       if (Type != global::Schema.PacketType.Update) {
         output.WriteRawTag(24);
@@ -3951,9 +3953,9 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       chunks_.WriteTo(ref output, _repeated_chunks_codec);
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
       }
       if (Type != global::Schema.PacketType.Update) {
         output.WriteRawTag(24);
@@ -3974,8 +3976,8 @@ namespace Schema {
     public int CalculateSize() {
       int size = 0;
       size += chunks_.CalculateSize(_repeated_chunks_codec);
-      if (Id != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
       }
       if (Type != global::Schema.PacketType.Update) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
@@ -3996,7 +3998,7 @@ namespace Schema {
         return;
       }
       chunks_.Add(other.chunks_);
-      if (other.Id != 0UL) {
+      if (other.Id != 0) {
         Id = other.Id;
       }
       if (other.Type != global::Schema.PacketType.Update) {
@@ -4025,7 +4027,7 @@ namespace Schema {
             break;
           }
           case 16: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
             break;
           }
           case 24: {
@@ -4056,7 +4058,7 @@ namespace Schema {
             break;
           }
           case 16: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
             break;
           }
           case 24: {
@@ -4752,10 +4754,10 @@ namespace Schema {
 
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
-    private ulong id_;
+    private uint id_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong Id {
+    public uint Id {
       get { return id_; }
       set {
         id_ = value;
@@ -4811,7 +4813,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id != 0UL) hash ^= Id.GetHashCode();
+      if (Id != 0) hash ^= Id.GetHashCode();
       if (pos_ != null) hash ^= Pos.GetHashCode();
       if (velocity_ != null) hash ^= Velocity.GetHashCode();
       if (_unknownFields != null) {
@@ -4832,9 +4834,9 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
       }
       if (pos_ != null) {
         output.WriteRawTag(18);
@@ -4854,9 +4856,9 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
       }
       if (pos_ != null) {
         output.WriteRawTag(18);
@@ -4876,8 +4878,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Id != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
       }
       if (pos_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pos);
@@ -4897,7 +4899,7 @@ namespace Schema {
       if (other == null) {
         return;
       }
-      if (other.Id != 0UL) {
+      if (other.Id != 0) {
         Id = other.Id;
       }
       if (other.pos_ != null) {
@@ -4928,7 +4930,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -4961,7 +4963,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -5036,10 +5038,10 @@ namespace Schema {
 
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
-    private ulong id_;
+    private uint id_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong Id {
+    public uint Id {
       get { return id_; }
       set {
         id_ = value;
@@ -5134,7 +5136,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id != 0UL) hash ^= Id.GetHashCode();
+      if (Id != 0) hash ^= Id.GetHashCode();
       if (pos_ != null) hash ^= Pos.GetHashCode();
       if (WarriorCount != 0) hash ^= WarriorCount.GetHashCode();
       if (ArcherCount != 0) hash ^= ArcherCount.GetHashCode();
@@ -5158,9 +5160,9 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
       }
       if (pos_ != null) {
         output.WriteRawTag(18);
@@ -5192,9 +5194,9 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
       }
       if (pos_ != null) {
         output.WriteRawTag(18);
@@ -5226,8 +5228,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Id != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
       }
       if (pos_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pos);
@@ -5256,7 +5258,7 @@ namespace Schema {
       if (other == null) {
         return;
       }
-      if (other.Id != 0UL) {
+      if (other.Id != 0) {
         Id = other.Id;
       }
       if (other.pos_ != null) {
@@ -5293,7 +5295,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -5335,7 +5337,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -5648,16 +5650,16 @@ namespace Schema {
 
   }
 
-  public sealed partial class Hi : pb::IMessage<Hi>
+  public sealed partial class IssueDeploymentOrder : pb::IMessage<IssueDeploymentOrder>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Hi> _parser = new pb::MessageParser<Hi>(() => new Hi());
+    private static readonly pb::MessageParser<IssueDeploymentOrder> _parser = new pb::MessageParser<IssueDeploymentOrder>(() => new IssueDeploymentOrder());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Hi> Parser { get { return _parser; } }
+    public static pb::MessageParser<IssueDeploymentOrder> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -5673,7 +5675,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Hi() {
+    public IssueDeploymentOrder() {
       OnConstruction();
     }
 
@@ -5681,45 +5683,59 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Hi(Hi other) : this() {
-      hi_ = other.hi_;
+    public IssueDeploymentOrder(IssueDeploymentOrder other) : this() {
+      sourceKeep_ = other.sourceKeep_;
+      targetKeep_ = other.targetKeep_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Hi Clone() {
-      return new Hi(this);
+    public IssueDeploymentOrder Clone() {
+      return new IssueDeploymentOrder(this);
     }
 
-    /// <summary>Field number for the "hi" field.</summary>
-    public const int Hi_FieldNumber = 1;
-    private string hi_ = "";
+    /// <summary>Field number for the "source_keep" field.</summary>
+    public const int SourceKeepFieldNumber = 1;
+    private uint sourceKeep_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Hi_ {
-      get { return hi_; }
+    public uint SourceKeep {
+      get { return sourceKeep_; }
       set {
-        hi_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        sourceKeep_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "target_keep" field.</summary>
+    public const int TargetKeepFieldNumber = 2;
+    private uint targetKeep_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint TargetKeep {
+      get { return targetKeep_; }
+      set {
+        targetKeep_ = value;
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Hi);
+      return Equals(other as IssueDeploymentOrder);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Hi other) {
+    public bool Equals(IssueDeploymentOrder other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Hi_ != other.Hi_) return false;
+      if (SourceKeep != other.SourceKeep) return false;
+      if (TargetKeep != other.TargetKeep) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5727,7 +5743,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Hi_.Length != 0) hash ^= Hi_.GetHashCode();
+      if (SourceKeep != 0) hash ^= SourceKeep.GetHashCode();
+      if (TargetKeep != 0) hash ^= TargetKeep.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5746,9 +5763,13 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Hi_.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Hi_);
+      if (SourceKeep != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(SourceKeep);
+      }
+      if (TargetKeep != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(TargetKeep);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -5760,9 +5781,13 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Hi_.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Hi_);
+      if (SourceKeep != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(SourceKeep);
+      }
+      if (TargetKeep != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(TargetKeep);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -5774,8 +5799,11 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Hi_.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Hi_);
+      if (SourceKeep != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SourceKeep);
+      }
+      if (TargetKeep != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TargetKeep);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -5785,12 +5813,15 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Hi other) {
+    public void MergeFrom(IssueDeploymentOrder other) {
       if (other == null) {
         return;
       }
-      if (other.Hi_.Length != 0) {
-        Hi_ = other.Hi_;
+      if (other.SourceKeep != 0) {
+        SourceKeep = other.SourceKeep;
+      }
+      if (other.TargetKeep != 0) {
+        TargetKeep = other.TargetKeep;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5807,8 +5838,12 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Hi_ = input.ReadString();
+          case 8: {
+            SourceKeep = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            TargetKeep = input.ReadUInt32();
             break;
           }
         }
@@ -5826,8 +5861,12 @@ namespace Schema {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            Hi_ = input.ReadString();
+          case 8: {
+            SourceKeep = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            TargetKeep = input.ReadUInt32();
             break;
           }
         }

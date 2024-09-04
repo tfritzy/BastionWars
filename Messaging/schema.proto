@@ -87,7 +87,7 @@ message Oneof_HostServerToGameServer {
 message Oneof_PlayerToGameServer {
     string sender_id = 1;
     oneof msg {
-        Hi hi = 2;
+         IssueDeploymentOrder issue_deployment_order = 2;
     }
 }
 
@@ -112,7 +112,7 @@ enum PacketType {
 
 message Packet {
     repeated Chunk chunks = 1;
-    uint64 id = 2;
+    uint32 id = 2;
     PacketType type = 3;
     int32 sent_ms = 4;
 }
@@ -141,13 +141,13 @@ message AllSoldierPositions {
 }
 
 message SoldierPosition {
-    uint64 id = 1;
+    uint32 id = 1;
     V2 pos = 2;
     V2 velocity = 3;
 }
 
 message KeepState {
-    uint64 id = 1;
+    uint32 id = 1;
     V2 pos = 2;
     int32 warrior_count = 3;
     int32 archer_count = 4;
@@ -162,6 +162,7 @@ message InitialState {
     repeated TileType tiles = 4;
 }
 
-message Hi {
-    string hi = 1;
+message IssueDeploymentOrder {
+    uint32 source_keep = 1;
+    uint32 target_keep = 2;
 }

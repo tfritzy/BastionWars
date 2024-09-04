@@ -130,7 +130,7 @@ public class GameTests
             game.Update(Game.WordPlacementTime + .1f);
 
         Word firstWord = game.Map.Words.Values.First(w => w != null)!;
-        ulong ownerId = game.Map.KeepLands[firstWord.Position];
+        uint ownerId = game.Map.KeepLands[firstWord.Position];
         Keep keep = game.Map.Keeps[ownerId];
 
         for (int i = 0; i < firstWord.Text.Length; i++)

@@ -8,7 +8,7 @@ public class Keep : Entity
     public Map Map { get; private set; }
     public List<DeploymentOrder> DeploymentOrders { get; } = new();
     public string? Name { get; set; }
-    public delegate void CapturedEventHandler(ulong sender);
+    public delegate void CapturedEventHandler(uint sender);
     public event CapturedEventHandler? OnCaptured;
 
     public const float Radius = 2f;
@@ -128,7 +128,7 @@ public class Keep : Entity
         }
     }
 
-    public void SetDeploymentOrder(ulong target, SoldierType? type = null, float percent = 1f)
+    public void SetDeploymentOrder(uint target, SoldierType? type = null, float percent = 1f)
     {
         var deploymentOrder = new DeploymentOrder
         {

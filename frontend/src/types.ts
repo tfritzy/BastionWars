@@ -1,4 +1,5 @@
 import type { KeepState, V2 } from "./Schema";
+import { Typeable } from "./typeable";
 
 type RecursiveNonNullable<T> = T extends (infer U)[]
   ? RecursiveNonNullable<U>[]

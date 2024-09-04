@@ -75,7 +75,7 @@ public class Game
         }
     }
 
-    private Dictionary<ulong, double> bastionProduceCooldowns = new();
+    private Dictionary<uint, double> bastionProduceCooldowns = new();
     private void BastionAutoAccrue(double deltaTime)
     {
         if (GenerationMode != GenerationMode.AutoAccrue)
@@ -147,7 +147,7 @@ public class Game
         }
     }
 
-    public void AttackBastion(ulong source, ulong target, SoldierType? type = null, float percent = 1f)
+    public void AttackBastion(uint source, uint target, SoldierType? type = null, float percent = 1f)
     {
         if (!Map.Keeps.ContainsKey(source) || !Map.Keeps.ContainsKey(target))
         {
@@ -178,7 +178,7 @@ public class Game
                 continue;
             }
 
-            ulong landOwner = Map.KeepLands[word.Position];
+            uint landOwner = Map.KeepLands[word.Position];
             if (Map.Keeps[landOwner].Alliance != alliance)
             {
                 continue;
@@ -189,7 +189,7 @@ public class Game
             if (word.TypedIndex == word.Text.Length)
             {
                 Map.Words[word.Position] = null;
-                if (Map.KeepLands.TryGetValue(word.Position, out ulong ownerId))
+                if (Map.KeepLands.TryGetValue(word.Position, out uint ownerId))
                 {
                     Keep? bastion = Map.Keeps[ownerId];
                     bastion?.SetCount(warriors: bastion.GetCount(SoldierType.Warrior) + 1);

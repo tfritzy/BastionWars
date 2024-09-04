@@ -97,12 +97,12 @@ public class MapTests
             0 0 0 0 0 0 0 0 0 0 
             0 0 0 0 0 0 0 0 0 0";
         KeepLordWarriors.Map map = new(rawMap);
-        ulong b0 = map.KeepAt(0).Id;
-        ulong b1 = map.KeepAt(1).Id;
-        ulong b2 = map.KeepAt(2).Id;
+        uint b0 = map.KeepAt(0).Id;
+        uint b1 = map.KeepAt(1).Id;
+        uint b2 = map.KeepAt(2).Id;
 
         StringBuilder actualOwnership = new();
-        Dictionary<ulong, string> lookup = new() {
+        Dictionary<uint, string> lookup = new() {
             {b0, "0"}, {b1, "1"}, {b2, "2"},
         };
 

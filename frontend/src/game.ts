@@ -1,6 +1,10 @@
 import { Connection } from "./connection.ts";
 import { WORLD_TO_CANVAS } from "./constants.ts";
-import type { GameFoundForPlayer, Oneof_GameServerToPlayer } from "./Schema.ts";
+import type {
+  GameFoundForPlayer,
+  Long,
+  Oneof_GameServerToPlayer,
+} from "./Schema.ts";
 import { Typeable } from "./typeable.ts";
 import { initialGameState, parseKeep, type GameState } from "./types.ts";
 
@@ -10,6 +14,8 @@ export class Game {
   private buttons: Array<Typeable>;
   private connection: Connection | undefined;
   private gameState: GameState = initialGameState;
+  private keepLabels: Map<number, Typeable> = new Map();
+  private selectedKeep: number | null = null;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.canvas = canvas;
@@ -36,11 +42,11 @@ export class Game {
       button.draw(x, y, deltaTime);
     });
 
-    this.drawKeeps();
+    this.drawKeeps(deltaTime);
     this.ctx.restore();
   }
 
-  drawKeeps() {
+  drawKeeps(deltaTime: number) {
     this.ctx.save();
     this.ctx.strokeStyle = "black";
     this.ctx.lineWidth = 2;
@@ -59,6 +65,11 @@ export class Game {
       this.ctx.beginPath();
       this.ctx.arc(x, y, innerRadius, 0, 2 * Math.PI);
       this.ctx.stroke();
+
+      if (!this.keepLabels.has(keep.id)) {
+      }
+
+      this.keepLabels.get(keep.id)?.draw(x, y, deltaTime);
     });
 
     this.ctx.restore();
@@ -68,11 +79,37 @@ export class Game {
     this.connection = new Connection(details.address!, this.onMessage);
   }
 
+  handleTypeKeepName = (id: number) => {
+    if (this.selectedKeep == null) {
+      this.selectedKeep = id;
+    } else {
+      this.connection?.sendMessage({
+        sender_id: "Something I guess",
+        issue_deployment_order: {
+          source_keep: this.selectedKeep,
+          target_keep: id,
+        },
+      });
+    }
+  };
+
   onMessage = (message: Oneof_GameServerToPlayer) => {
     if (message.initial_state) {
       message.initial_state.keeps?.forEach((k) => {
         var keep = parseKeep(k);
-        if (keep != null) this.gameState.keeps.push(keep);
+        if (keep != null) {
+          this.gameState.keeps.push(keep);
+          const id = keep.id;
+          this.keepLabels.set(
+            keep.id,
+            new Typeable(
+              keep.name,
+              () => this.handleTypeKeepName(id),
+              this.canvas,
+              this.ctx
+            )
+          );
+        }
       });
       console.log(
         "Handled initial state. Keeps are this now",

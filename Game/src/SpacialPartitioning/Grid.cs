@@ -8,7 +8,7 @@ public class Grid
     public const int PartitionSize = 1;
 
     readonly Partition[,] partitions;
-    readonly Dictionary<ulong, Vector2Int> entityPartitionLookup;
+    readonly Dictionary<uint, Vector2Int> entityPartitionLookup;
 
     public Grid(int sizeX, int sizeY)
     {
@@ -37,14 +37,14 @@ public class Grid
         entityPartitionLookup.Add(entity.Id, new Vector2Int(x, y));
     }
 
-    public void RemoveEntity(ulong id)
+    public void RemoveEntity(uint id)
     {
         Vector2Int index = entityPartitionLookup[id];
         partitions[index.X, index.Y].RemoveEntity(id);
         entityPartitionLookup.Remove(id);
     }
 
-    public void MoveEntity(ulong id, Vector2 newPosition)
+    public void MoveEntity(uint id, Vector2 newPosition)
     {
         Vector2Int newPartition = new(
             (int)(newPosition.X / PartitionSize),
@@ -76,14 +76,14 @@ public class Grid
         }
     }
 
-    public List<ulong> GetCollisions(Vector2 point, float radius)
+    public List<uint> GetCollisions(Vector2 point, float radius)
     {
         int xPartMin = Math.Max((int)((point.X - radius) / PartitionSize - 1), 0);
         int xPartMax = Math.Min((int)((point.X + radius) / PartitionSize) + 1, partitions.GetLength(0) - 1);
         int yPartMin = Math.Max((int)((point.Y - radius) / PartitionSize) - 1, 0);
         int yPartMax = Math.Min((int)((point.Y + radius) / PartitionSize) + 1, partitions.GetLength(1) - 1);
 
-        List<ulong> collisions = new();
+        List<uint> collisions = new();
         for (int x = xPartMin; x <= xPartMax; x++)
         {
             for (int y = yPartMin; y <= yPartMax; y++)
@@ -95,12 +95,12 @@ public class Grid
         return collisions;
     }
 
-    public bool ContainsEntity(ulong id)
+    public bool ContainsEntity(uint id)
     {
         return entityPartitionLookup.ContainsKey(id);
     }
 
-    public Vector2 GetEntityPosition(ulong id)
+    public Vector2 GetEntityPosition(uint id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
         {
@@ -110,7 +110,7 @@ public class Grid
         return GetPartition(id).GetEntity(id).Position;
     }
 
-    public Schema.V2 GetEntitySchemaPosition(ulong id)
+    public Schema.V2 GetEntitySchemaPosition(uint id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
         {
@@ -126,7 +126,7 @@ public class Grid
         };
     }
 
-    public Vector2Int? GetEntityGridPos(ulong id)
+    public Vector2Int? GetEntityGridPos(uint id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
         {
@@ -136,7 +136,7 @@ public class Grid
         return Vector2Int.From(GetPartition(id).GetEntity(id).Position);
     }
 
-    private Partition GetPartition(ulong id)
+    private Partition GetPartition(uint id)
     {
         if (!entityPartitionLookup.ContainsKey(id))
         {
