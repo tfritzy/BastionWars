@@ -38,8 +38,9 @@ public class GameInstance
         double lastTime = 0;
         while (true)
         {
-            game.Update(stopwatch.ElapsedMilliseconds / 1000.0 - lastTime);
-            lastTime = stopwatch.Elapsed.TotalSeconds;
+            double time = stopwatch.ElapsedMilliseconds / 1000.0;
+            game.Update(time - lastTime);
+            lastTime = time;
             await DrainPendingMessages();
         }
     }
@@ -52,6 +53,7 @@ public class GameInstance
             {
                 foreach (Oneof_GameServerToPlayer msg in player.MessageQueue)
                 {
+                    Logger.Log($"Sending a message to player {msg.RecipientId}");
                     byte[] messageBytes = msg.ToByteArray();
                     for (int i = 0; i < messageBytes.Length; i += ChunkSize)
                     {
@@ -65,12 +67,10 @@ public class GameInstance
                             CancellationToken.None);
                     }
                 }
+
+                player.MessageQueue.Clear();
             }
-
-            player.MessageQueue.Clear();
         }
-
-        game.Outbox.Clear();
     }
 
     private void StartAcceptingConnections()
@@ -111,7 +111,7 @@ public class GameInstance
     {
         WebSocketContext? webSocketContext = null;
         string? playerId = context.Request.QueryString["playerId"];
-        string? authToken = context.Request.QueryString["token"];
+        string? authToken = context.Request.QueryString["authToken"];
 
         if (string.IsNullOrEmpty(playerId) || string.IsNullOrEmpty(authToken))
         {
@@ -125,6 +125,7 @@ public class GameInstance
         {
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
             connections.Add(playerId, webSocketContext);
+            game.JoinGame(new Player("TODO: Player name", playerId));
             Logger.Log($"Host WebSocket connection established at {context.Request.Url}");
         }
         catch (Exception e)

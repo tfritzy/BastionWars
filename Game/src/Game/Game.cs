@@ -45,6 +45,7 @@ public class Game
     {
         foreach (Oneof_GameServerToPlayer update in Outbox)
         {
+            Console.WriteLine($"Adding message to player {update.RecipientId} in packetize");
             Players[update.RecipientId].MessageQueue.Add(update);
         }
 
@@ -68,7 +69,10 @@ public class Game
             });
         }
 
-        AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
+        if (allSoldierPositions.SoldierPositions.Count > 0)
+        {
+            AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
+        }
     }
 
     private Dictionary<ulong, double> bastionProduceCooldowns = new();
@@ -218,6 +222,7 @@ public class Game
     {
         if (recipient == null)
         {
+            Console.WriteLine("Enquing message for everyone");
             foreach (Player player in Players.Values)
             {
                 var u = update.Clone();
@@ -227,6 +232,7 @@ public class Game
         }
         else
         {
+            Console.WriteLine($"Enquing message for {recipient}");
             update.RecipientId = recipient;
             Outbox.Add(update);
         }
