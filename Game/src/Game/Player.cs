@@ -6,9 +6,7 @@ public class Player
 {
     public string Name { get; private set; }
     public string Id { get; private set; }
-    public List<Oneof_GameServerToPlayer> HoldingArea { get; } = new();
-    public List<Packet> PendingPackets { get; } = new();
-    public ulong HighestPacketId { get; private set; } = 0;
+    public List<Oneof_GameServerToPlayer> MessageQueue { get; } = [];
 
     public Player(string name, string id)
     {
@@ -16,13 +14,11 @@ public class Player
         Id = id;
     }
 
-    public void EnqueuePackets(List<Packet> packets)
+    public void EnqueuePackets(List<Oneof_GameServerToPlayer> messages)
     {
-        foreach (Packet packet in packets)
+        foreach (Oneof_GameServerToPlayer msg in messages)
         {
-            PendingPackets.Add(packet);
+            MessageQueue.Add(msg);
         }
-
-        HighestPacketId = packets.Last().Id;
     }
 }

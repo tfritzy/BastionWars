@@ -45,14 +45,7 @@ public class Game
     {
         foreach (Oneof_GameServerToPlayer update in Outbox)
         {
-            Players[update.RecipientId].HoldingArea.Add(update);
-        }
-
-        foreach (Player player in Players.Values)
-        {
-            var packets = MessageChunker.Chunk(player.HoldingArea, player.HighestPacketId);
-            player.EnqueuePackets(packets);
-            player.HoldingArea.Clear();
+            Players[update.RecipientId].MessageQueue.Add(update);
         }
 
         Outbox.Clear();

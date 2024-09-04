@@ -1,9 +1,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.WebSockets;
-using System.Runtime.CompilerServices;
 using System.Text;
-using DotNetEnv;
 using Google.Protobuf;
 using Helpers;
 using KeepLordWarriors;
@@ -18,7 +16,7 @@ public class GameInstance
     private string url;
     private HttpListener httpListener;
     private Game game;
-    private Dictionary<string, WebSocketContext> connections = new();
+    private readonly Dictionary<string, WebSocketContext> connections = [];
     const int ChunkSize = 4096;
 
     public GameInstance(string id, string port, GameSettings gameSettings)
@@ -42,29 +40,34 @@ public class GameInstance
         {
             game.Update(stopwatch.ElapsedMilliseconds / 1000.0 - lastTime);
             lastTime = stopwatch.Elapsed.TotalSeconds;
-            await DrainOutbox();
+            await DrainPendingMessages();
         }
     }
 
-    private async Task DrainOutbox()
+    private async Task DrainPendingMessages()
     {
-        foreach (Oneof_GameServerToPlayer msg in game.Outbox)
+        foreach (Player player in game.Players.Values)
         {
-            if (connections.TryGetValue(msg.RecipientId, out WebSocketContext? context))
+            if (connections.TryGetValue(player.Id, out WebSocketContext? context))
             {
-                byte[] messageBytes = msg.ToByteArray();
-                for (int i = 0; i < messageBytes.Length; i += ChunkSize)
+                foreach (Oneof_GameServerToPlayer msg in player.MessageQueue)
                 {
-                    int remainingBytes = Math.Min(ChunkSize, messageBytes.Length - i);
-                    bool isLastChunk = (i + remainingBytes) >= messageBytes.Length;
+                    byte[] messageBytes = msg.ToByteArray();
+                    for (int i = 0; i < messageBytes.Length; i += ChunkSize)
+                    {
+                        int remainingBytes = Math.Min(ChunkSize, messageBytes.Length - i);
+                        bool isLastChunk = (i + remainingBytes) >= messageBytes.Length;
 
-                    await context.WebSocket.SendAsync(
-                        new ArraySegment<byte>(messageBytes, i, remainingBytes),
-                        WebSocketMessageType.Binary,
-                        isLastChunk,
-                        CancellationToken.None);
+                        await context.WebSocket.SendAsync(
+                            new ArraySegment<byte>(messageBytes, i, remainingBytes),
+                            WebSocketMessageType.Binary,
+                            isLastChunk,
+                            CancellationToken.None);
+                    }
                 }
             }
+
+            player.MessageQueue.Clear();
         }
 
         game.Outbox.Clear();
@@ -107,10 +110,21 @@ public class GameInstance
     private async Task AddConnection(HttpListenerContext context)
     {
         WebSocketContext? webSocketContext = null;
+        string? playerId = context.Request.QueryString["playerId"];
+        string? authToken = context.Request.QueryString["token"];
+
+        if (string.IsNullOrEmpty(playerId) || string.IsNullOrEmpty(authToken))
+        {
+            context.Response.StatusCode = 400;
+            context.Response.Close();
+            Logger.Log("Player connected without auth token or player id");
+            return;
+        }
 
         try
         {
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
+            connections.Add(playerId, webSocketContext);
             Logger.Log($"Host WebSocket connection established at {context.Request.Url}");
         }
         catch (Exception e)

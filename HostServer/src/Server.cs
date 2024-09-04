@@ -187,7 +187,7 @@ public class Server
         var settings = new GameSettings
         {
             GenerationMode = GenerationMode.Word,
-            Map = ""
+            Map = Maps.Map
         };
         string gameId = IdGenerator.GenerateGameId();
         string port = availablePorts.First().ToString();

@@ -96,25 +96,26 @@ public class GameTests
         TH.AddPlayer(game);
         TH.AddPlayer(game);
         game.Update(Game.NetworkTickTime + .1f);
-        var positionUpdate = TH.GetMessageSentToPlayerOfType(
-            game,
-            game.Players.Values.First().Id,
-            Oneof_GameServerToPlayer.MsgOneofCase.AllSoldierPositions)!.AllSoldierPositions;
+        var positionUpdate = game
+            .Players.Values.First().MessageQueue
+            .Where((m) => m.AllSoldierPositions != null)
+            .First()
+            .AllSoldierPositions;
         Assert.AreEqual(0, positionUpdate.SoldierPositions.Count);
-        Soldier soldier =
-            new Soldier(
-                map: game.Map,
-                alliance: 0,
-                type: SoldierType.Warrior,
-                source: game.Map.KeepAt(0).Id,
-                target: game.Map.KeepAt(1).Id);
+        Soldier soldier = new(
+            map: game.Map,
+            alliance: 0,
+            type: SoldierType.Warrior,
+            source: game.Map.KeepAt(0).Id,
+            target: game.Map.KeepAt(1).Id);
         game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.KeepAt(0).Id));
         game.Update(Game.NetworkTickTime + .1f);
         Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
-        positionUpdate = TH.GetMessageSentToPlayerOfType(
-            game,
-            game.Players.Values.First().Id,
-            Oneof_GameServerToPlayer.MsgOneofCase.AllSoldierPositions)!.AllSoldierPositions;
+        positionUpdate = game
+            .Players.Values.First().MessageQueue
+            .Where((m) => m.AllSoldierPositions != null)
+            .First()
+            .AllSoldierPositions;
         Assert.AreEqual(1, positionUpdate.SoldierPositions.Count);
         Assert.AreEqual(soldier.Id, positionUpdate.SoldierPositions[0].Id);
         Assert.AreEqual(newPos.X, positionUpdate.SoldierPositions[0].Pos.X);

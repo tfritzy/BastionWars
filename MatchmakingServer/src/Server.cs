@@ -33,8 +33,6 @@ public class Server
         string apiUrl = EnvHelpers.Get("API_URL");
         string url = $"{apiUrl}:{port}/";
         HttpListener httpListener = new();
-        Logger.Log($"I am is: {url}");
-
         httpListener.Prefixes.Add(url);
         httpListener.Start();
         Logger.Log("Listening on " + url);

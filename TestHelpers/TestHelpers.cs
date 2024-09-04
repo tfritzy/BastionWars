@@ -52,25 +52,4 @@ public static class TH
     {
         return game.Outbox.Where((u) => u.MsgCase == type).ToList();
     }
-
-    public static Oneof_GameServerToPlayer? GetMessageSentToPlayerOfType(
-        Game game,
-        string playerId,
-        Oneof_GameServerToPlayer.MsgOneofCase type)
-    {
-        Player player = game.Players[playerId];
-        var packets = player.PendingPackets;
-
-        Oneof_GameServerToPlayer? unchunked = null;
-        do
-        {
-            unchunked = MessageChunker.ExtractFullUpdate(ref packets);
-            if (unchunked?.MsgCase == type)
-            {
-                return unchunked;
-            }
-        } while (unchunked != null);
-
-        return null;
-    }
 }
