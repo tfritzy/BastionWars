@@ -28,55 +28,56 @@ namespace Schema {
             "ZXJhdGlvbl9tb2RlGAEgASgOMhYuU2NoZW1hLkdlbmVyYXRpb25Nb2RlEgsK",
             "A21hcBgCIAEoCSIfCg1TZWFyY2hGb3JHYW1lEg4KBnJhbmtlZBgBIAEoCCJH",
             "ChNHYW1lQXZhaWxhYmxlT25Qb3J0Eg8KB2dhbWVfaWQYASABKAkSEQoJcGxh",
-            "eWVyX2lkGAIgASgJEgwKBHBvcnQYAyABKAkiSQoSR2FtZUZvdW5kRm9yUGxh",
-            "eWVyEg8KB2dhbWVfaWQYASABKAkSEQoJcGxheWVyX2lkGAIgASgJEg8KB2Fk",
-            "ZHJlc3MYAyABKAkiJgoRUGxhY2VQbGF5ZXJJbkdhbWUSEQoJcGxheWVyX2lk",
-            "GAEgASgJIhoKClJlZ2lzdGVyZWQSDAoEcG9ydBgBIAEoCSIYCghSZWdpc3Rl",
-            "chIMCgRwb3J0GAEgASgJImYKGE9uZW9mX1BsYXllclRvTWF0Y2htYWtlchIR",
-            "CglwbGF5ZXJfaWQYASABKAkSMAoPc2VhcmNoX2Zvcl9nYW1lGAIgASgLMhUu",
-            "U2NoZW1hLlNlYXJjaEZvckdhbWVIAEIFCgNtc2ciUwoYT25lb2ZfTWF0Y2hN",
-            "YWtlclRvUGxheWVyEjAKCmZvdW5kX2dhbWUYASABKAsyGi5TY2hlbWEuR2Ft",
-            "ZUZvdW5kRm9yUGxheWVySABCBQoDbXNnIooBChxPbmVvZl9Ib3N0U2VydmVy",
-            "VG9NYXRjaG1ha2VyEj0KFmdhbWVfYXZhaWxhYmxlX29uX3BvcnQYASABKAsy",
-            "Gy5TY2hlbWEuR2FtZUF2YWlsYWJsZU9uUG9ydEgAEiQKCHJlZ2lzdGVyGAIg",
-            "ASgLMhAuU2NoZW1hLlJlZ2lzdGVySABCBQoDbXNnIooBChxPbmVvZl9NYXRj",
-            "aG1ha2VyVG9Ib3N0U2VydmVyEjkKFHBsYWNlX3BsYXllcl9pbl9nYW1lGAIg",
-            "ASgLMhkuU2NoZW1hLlBsYWNlUGxheWVySW5HYW1lSAASKAoKcmVnaXN0ZXJl",
-            "ZBgDIAEoCzISLlNjaGVtYS5SZWdpc3RlcmVkSABCBQoDbXNnIksKHE9uZW9m",
-            "X0hvc3RTZXJ2ZXJUb0dhbWVTZXJ2ZXISJAoIcmVnaXN0ZXIYASABKAsyEC5T",
-            "Y2hlbWEuUmVnaXN0ZXJIAEIFCgNtc2cidAoYT25lb2ZfUGxheWVyVG9HYW1l",
-            "U2VydmVyEhEKCXNlbmRlcl9pZBgBIAEoCRI+ChZpc3N1ZV9kZXBsb3ltZW50",
-            "X29yZGVyGAIgASgLMhwuU2NoZW1hLklzc3VlRGVwbG95bWVudE9yZGVySABC",
-            "BQoDbXNnIqQBChhPbmVvZl9HYW1lU2VydmVyVG9QbGF5ZXISFAoMcmVjaXBp",
-            "ZW50X2lkGAEgASgJEi0KDWluaXRpYWxfc3RhdGUYAiABKAsyFC5TY2hlbWEu",
-            "SW5pdGlhbFN0YXRlSAASPAoVYWxsX3NvbGRpZXJfcG9zaXRpb25zGAMgASgL",
-            "MhsuU2NoZW1hLkFsbFNvbGRpZXJQb3NpdGlvbnNIAEIFCgNtc2ciNgoFQ2h1",
-            "bmsSDQoFaW5kZXgYASABKAUSEAoIbWF4SW5kZXgYAiABKAUSDAoEZGF0YRgD",
-            "IAEoDCJmCgZQYWNrZXQSHQoGY2h1bmtzGAEgAygLMg0uU2NoZW1hLkNodW5r",
-            "EgoKAmlkGAIgASgNEiAKBHR5cGUYAyABKA4yEi5TY2hlbWEuUGFja2V0VHlw",
-            "ZRIPCgdzZW50X21zGAQgASgFIhoKAlYyEgkKAXgYASABKAISCQoBeRgCIAEo",
-            "AiIdCgVWMkludBIJCgF4GAEgASgFEgkKAXkYAiABKAUiSQoTQWxsU29sZGll",
-            "clBvc2l0aW9ucxIyChFzb2xkaWVyX3Bvc2l0aW9ucxgBIAMoCzIXLlNjaGVt",
-            "YS5Tb2xkaWVyUG9zaXRpb24iVAoPU29sZGllclBvc2l0aW9uEgoKAmlkGAEg",
-            "ASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIcCgh2ZWxvY2l0eRgDIAEo",
-            "CzIKLlNjaGVtYS5WMiJ9CglLZWVwU3RhdGUSCgoCaWQYASABKA0SFwoDcG9z",
-            "GAIgASgLMgouU2NoZW1hLlYyEhUKDXdhcnJpb3JfY291bnQYAyABKAUSFAoM",
-            "YXJjaGVyX2NvdW50GAQgASgFEgwKBG5hbWUYBSABKAkSEAoIYWxsaWFuY2UY",
-            "BiABKAUieAoMSW5pdGlhbFN0YXRlEiAKBWtlZXBzGAEgAygLMhEuU2NoZW1h",
-            "LktlZXBTdGF0ZRIRCgltYXBfd2lkdGgYAiABKAUSEgoKbWFwX2hlaWdodBgD",
-            "IAEoBRIfCgV0aWxlcxgEIAMoDjIQLlNjaGVtYS5UaWxlVHlwZSJAChRJc3N1",
-            "ZURlcGxveW1lbnRPcmRlchITCgtzb3VyY2Vfa2VlcBgBIAEoDRITCgt0YXJn",
-            "ZXRfa2VlcBgCIAEoDSoqCg5HZW5lcmF0aW9uTW9kZRIOCgpBdXRvQWNjcnVl",
-            "EAASCAoEV29yZBABKicKClBhY2tldFR5cGUSCgoGVVBEQVRFEAASDQoJSEVB",
-            "UlRCRUFUEAEqNgoIVGlsZVR5cGUSCwoHSW52YWxpZBAAEggKBExhbmQQARIJ",
-            "CgVXYXRlchACEggKBFRyZWUQA2IGcHJvdG8z"));
+            "eWVyX2lkGAIgASgJEgwKBHBvcnQYAyABKAkiXQoSR2FtZUZvdW5kRm9yUGxh",
+            "eWVyEg8KB2dhbWVfaWQYASABKAkSEQoJcGxheWVyX2lkGAIgASgJEhIKCmF1",
+            "dGhfdG9rZW4YAyABKAkSDwoHYWRkcmVzcxgEIAEoCSImChFQbGFjZVBsYXll",
+            "ckluR2FtZRIRCglwbGF5ZXJfaWQYASABKAkiGgoKUmVnaXN0ZXJlZBIMCgRw",
+            "b3J0GAEgASgJIhgKCFJlZ2lzdGVyEgwKBHBvcnQYASABKAkiZgoYT25lb2Zf",
+            "UGxheWVyVG9NYXRjaG1ha2VyEhEKCXBsYXllcl9pZBgBIAEoCRIwCg9zZWFy",
+            "Y2hfZm9yX2dhbWUYAiABKAsyFS5TY2hlbWEuU2VhcmNoRm9yR2FtZUgAQgUK",
+            "A21zZyJTChhPbmVvZl9NYXRjaE1ha2VyVG9QbGF5ZXISMAoKZm91bmRfZ2Ft",
+            "ZRgBIAEoCzIaLlNjaGVtYS5HYW1lRm91bmRGb3JQbGF5ZXJIAEIFCgNtc2ci",
+            "igEKHE9uZW9mX0hvc3RTZXJ2ZXJUb01hdGNobWFrZXISPQoWZ2FtZV9hdmFp",
+            "bGFibGVfb25fcG9ydBgBIAEoCzIbLlNjaGVtYS5HYW1lQXZhaWxhYmxlT25Q",
+            "b3J0SAASJAoIcmVnaXN0ZXIYAiABKAsyEC5TY2hlbWEuUmVnaXN0ZXJIAEIF",
+            "CgNtc2ciigEKHE9uZW9mX01hdGNobWFrZXJUb0hvc3RTZXJ2ZXISOQoUcGxh",
+            "Y2VfcGxheWVyX2luX2dhbWUYAiABKAsyGS5TY2hlbWEuUGxhY2VQbGF5ZXJJ",
+            "bkdhbWVIABIoCgpyZWdpc3RlcmVkGAMgASgLMhIuU2NoZW1hLlJlZ2lzdGVy",
+            "ZWRIAEIFCgNtc2ciSwocT25lb2ZfSG9zdFNlcnZlclRvR2FtZVNlcnZlchIk",
+            "CghyZWdpc3RlchgBIAEoCzIQLlNjaGVtYS5SZWdpc3RlckgAQgUKA21zZyKI",
+            "AQoYT25lb2ZfUGxheWVyVG9HYW1lU2VydmVyEhEKCXNlbmRlcl9pZBgBIAEo",
+            "CRISCgphdXRoX3Rva2VuGAIgASgJEj4KFmlzc3VlX2RlcGxveW1lbnRfb3Jk",
+            "ZXIYAyABKAsyHC5TY2hlbWEuSXNzdWVEZXBsb3ltZW50T3JkZXJIAEIFCgNt",
+            "c2cipAEKGE9uZW9mX0dhbWVTZXJ2ZXJUb1BsYXllchIUCgxyZWNpcGllbnRf",
+            "aWQYASABKAkSLQoNaW5pdGlhbF9zdGF0ZRgCIAEoCzIULlNjaGVtYS5Jbml0",
+            "aWFsU3RhdGVIABI8ChVhbGxfc29sZGllcl9wb3NpdGlvbnMYAyABKAsyGy5T",
+            "Y2hlbWEuQWxsU29sZGllclBvc2l0aW9uc0gAQgUKA21zZyI2CgVDaHVuaxIN",
+            "CgVpbmRleBgBIAEoBRIQCghtYXhJbmRleBgCIAEoBRIMCgRkYXRhGAMgASgM",
+            "ImYKBlBhY2tldBIdCgZjaHVua3MYASADKAsyDS5TY2hlbWEuQ2h1bmsSCgoC",
+            "aWQYAiABKA0SIAoEdHlwZRgDIAEoDjISLlNjaGVtYS5QYWNrZXRUeXBlEg8K",
+            "B3NlbnRfbXMYBCABKAUiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgCIh0K",
+            "BVYySW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSJJChNBbGxTb2xkaWVyUG9z",
+            "aXRpb25zEjIKEXNvbGRpZXJfcG9zaXRpb25zGAEgAygLMhcuU2NoZW1hLlNv",
+            "bGRpZXJQb3NpdGlvbiJUCg9Tb2xkaWVyUG9zaXRpb24SCgoCaWQYASABKA0S",
+            "FwoDcG9zGAIgASgLMgouU2NoZW1hLlYyEhwKCHZlbG9jaXR5GAMgASgLMgou",
+            "U2NoZW1hLlYyIn0KCUtlZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiAB",
+            "KAsyCi5TY2hlbWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNo",
+            "ZXJfY291bnQYBCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEo",
+            "BSJ4CgxJbml0aWFsU3RhdGUSIAoFa2VlcHMYASADKAsyES5TY2hlbWEuS2Vl",
+            "cFN0YXRlEhEKCW1hcF93aWR0aBgCIAEoBRISCgptYXBfaGVpZ2h0GAMgASgF",
+            "Eh8KBXRpbGVzGAQgAygOMhAuU2NoZW1hLlRpbGVUeXBlIkAKFElzc3VlRGVw",
+            "bG95bWVudE9yZGVyEhMKC3NvdXJjZV9rZWVwGAEgASgNEhMKC3RhcmdldF9r",
+            "ZWVwGAIgASgNKioKDkdlbmVyYXRpb25Nb2RlEg4KCkF1dG9BY2NydWUQABII",
+            "CgRXb3JkEAEqJwoKUGFja2V0VHlwZRIKCgZVUERBVEUQABINCglIRUFSVEJF",
+            "QVQQASo2CghUaWxlVHlwZRILCgdJbnZhbGlkEAASCAoETGFuZBABEgkKBVdh",
+            "dGVyEAISCAoEVHJlZRADYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.PacketType), typeof(global::Schema.TileType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameSettings), global::Schema.GameSettings.Parser, new[]{ "GenerationMode", "Map" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SearchForGame), global::Schema.SearchForGame.Parser, new[]{ "Ranked" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameAvailableOnPort), global::Schema.GameAvailableOnPort.Parser, new[]{ "GameId", "PlayerId", "Port" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameFoundForPlayer), global::Schema.GameFoundForPlayer.Parser, new[]{ "GameId", "PlayerId", "Address" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameFoundForPlayer), global::Schema.GameFoundForPlayer.Parser, new[]{ "GameId", "PlayerId", "AuthToken", "Address" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.PlacePlayerInGame), global::Schema.PlacePlayerInGame.Parser, new[]{ "PlayerId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Registered), global::Schema.Registered.Parser, new[]{ "Port" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Register), global::Schema.Register.Parser, new[]{ "Port" }, null, null, null, null),
@@ -85,7 +86,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToMatchmaker), global::Schema.Oneof_HostServerToMatchmaker.Parser, new[]{ "GameAvailableOnPort", "Register" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_MatchmakerToHostServer), global::Schema.Oneof_MatchmakerToHostServer.Parser, new[]{ "PlacePlayerInGame", "Registered" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToGameServer), global::Schema.Oneof_HostServerToGameServer.Parser, new[]{ "Register" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "IssueDeploymentOrder" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Chunk), global::Schema.Chunk.Parser, new[]{ "Index", "MaxIndex", "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Packet), global::Schema.Packet.Parser, new[]{ "Chunks", "Id", "Type", "SentMs" }, null, null, null, null),
@@ -836,6 +837,7 @@ namespace Schema {
     public GameFoundForPlayer(GameFoundForPlayer other) : this() {
       gameId_ = other.gameId_;
       playerId_ = other.playerId_;
+      authToken_ = other.authToken_;
       address_ = other.address_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -870,8 +872,20 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "auth_token" field.</summary>
+    public const int AuthTokenFieldNumber = 3;
+    private string authToken_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string AuthToken {
+      get { return authToken_; }
+      set {
+        authToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "address" field.</summary>
-    public const int AddressFieldNumber = 3;
+    public const int AddressFieldNumber = 4;
     private string address_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -899,6 +913,7 @@ namespace Schema {
       }
       if (GameId != other.GameId) return false;
       if (PlayerId != other.PlayerId) return false;
+      if (AuthToken != other.AuthToken) return false;
       if (Address != other.Address) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -909,6 +924,7 @@ namespace Schema {
       int hash = 1;
       if (GameId.Length != 0) hash ^= GameId.GetHashCode();
       if (PlayerId.Length != 0) hash ^= PlayerId.GetHashCode();
+      if (AuthToken.Length != 0) hash ^= AuthToken.GetHashCode();
       if (Address.Length != 0) hash ^= Address.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -936,8 +952,12 @@ namespace Schema {
         output.WriteRawTag(18);
         output.WriteString(PlayerId);
       }
-      if (Address.Length != 0) {
+      if (AuthToken.Length != 0) {
         output.WriteRawTag(26);
+        output.WriteString(AuthToken);
+      }
+      if (Address.Length != 0) {
+        output.WriteRawTag(34);
         output.WriteString(Address);
       }
       if (_unknownFields != null) {
@@ -958,8 +978,12 @@ namespace Schema {
         output.WriteRawTag(18);
         output.WriteString(PlayerId);
       }
-      if (Address.Length != 0) {
+      if (AuthToken.Length != 0) {
         output.WriteRawTag(26);
+        output.WriteString(AuthToken);
+      }
+      if (Address.Length != 0) {
+        output.WriteRawTag(34);
         output.WriteString(Address);
       }
       if (_unknownFields != null) {
@@ -977,6 +1001,9 @@ namespace Schema {
       }
       if (PlayerId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerId);
+      }
+      if (AuthToken.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(AuthToken);
       }
       if (Address.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Address);
@@ -998,6 +1025,9 @@ namespace Schema {
       }
       if (other.PlayerId.Length != 0) {
         PlayerId = other.PlayerId;
+      }
+      if (other.AuthToken.Length != 0) {
+        AuthToken = other.AuthToken;
       }
       if (other.Address.Length != 0) {
         Address = other.Address;
@@ -1026,6 +1056,10 @@ namespace Schema {
             break;
           }
           case 26: {
+            AuthToken = input.ReadString();
+            break;
+          }
+          case 34: {
             Address = input.ReadString();
             break;
           }
@@ -1053,6 +1087,10 @@ namespace Schema {
             break;
           }
           case 26: {
+            AuthToken = input.ReadString();
+            break;
+          }
+          case 34: {
             Address = input.ReadString();
             break;
           }
@@ -2968,6 +3006,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public Oneof_PlayerToGameServer(Oneof_PlayerToGameServer other) : this() {
       senderId_ = other.senderId_;
+      authToken_ = other.authToken_;
       switch (other.MsgCase) {
         case MsgOneofCase.IssueDeploymentOrder:
           IssueDeploymentOrder = other.IssueDeploymentOrder.Clone();
@@ -2995,8 +3034,20 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "auth_token" field.</summary>
+    public const int AuthTokenFieldNumber = 2;
+    private string authToken_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string AuthToken {
+      get { return authToken_; }
+      set {
+        authToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "issue_deployment_order" field.</summary>
-    public const int IssueDeploymentOrderFieldNumber = 2;
+    public const int IssueDeploymentOrderFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Schema.IssueDeploymentOrder IssueDeploymentOrder {
@@ -3011,7 +3062,7 @@ namespace Schema {
     /// <summary>Enum of possible cases for the "msg" oneof.</summary>
     public enum MsgOneofCase {
       None = 0,
-      IssueDeploymentOrder = 2,
+      IssueDeploymentOrder = 3,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3043,6 +3094,7 @@ namespace Schema {
         return true;
       }
       if (SenderId != other.SenderId) return false;
+      if (AuthToken != other.AuthToken) return false;
       if (!object.Equals(IssueDeploymentOrder, other.IssueDeploymentOrder)) return false;
       if (MsgCase != other.MsgCase) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -3053,6 +3105,7 @@ namespace Schema {
     public override int GetHashCode() {
       int hash = 1;
       if (SenderId.Length != 0) hash ^= SenderId.GetHashCode();
+      if (AuthToken.Length != 0) hash ^= AuthToken.GetHashCode();
       if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) hash ^= IssueDeploymentOrder.GetHashCode();
       hash ^= (int) msgCase_;
       if (_unknownFields != null) {
@@ -3077,8 +3130,12 @@ namespace Schema {
         output.WriteRawTag(10);
         output.WriteString(SenderId);
       }
-      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+      if (AuthToken.Length != 0) {
         output.WriteRawTag(18);
+        output.WriteString(AuthToken);
+      }
+      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+        output.WriteRawTag(26);
         output.WriteMessage(IssueDeploymentOrder);
       }
       if (_unknownFields != null) {
@@ -3095,8 +3152,12 @@ namespace Schema {
         output.WriteRawTag(10);
         output.WriteString(SenderId);
       }
-      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+      if (AuthToken.Length != 0) {
         output.WriteRawTag(18);
+        output.WriteString(AuthToken);
+      }
+      if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
+        output.WriteRawTag(26);
         output.WriteMessage(IssueDeploymentOrder);
       }
       if (_unknownFields != null) {
@@ -3111,6 +3172,9 @@ namespace Schema {
       int size = 0;
       if (SenderId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SenderId);
+      }
+      if (AuthToken.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(AuthToken);
       }
       if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(IssueDeploymentOrder);
@@ -3129,6 +3193,9 @@ namespace Schema {
       }
       if (other.SenderId.Length != 0) {
         SenderId = other.SenderId;
+      }
+      if (other.AuthToken.Length != 0) {
+        AuthToken = other.AuthToken;
       }
       switch (other.MsgCase) {
         case MsgOneofCase.IssueDeploymentOrder:
@@ -3159,6 +3226,10 @@ namespace Schema {
             break;
           }
           case 18: {
+            AuthToken = input.ReadString();
+            break;
+          }
+          case 26: {
             global::Schema.IssueDeploymentOrder subBuilder = new global::Schema.IssueDeploymentOrder();
             if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
               subBuilder.MergeFrom(IssueDeploymentOrder);
@@ -3187,6 +3258,10 @@ namespace Schema {
             break;
           }
           case 18: {
+            AuthToken = input.ReadString();
+            break;
+          }
+          case 26: {
             global::Schema.IssueDeploymentOrder subBuilder = new global::Schema.IssueDeploymentOrder();
             if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
               subBuilder.MergeFrom(IssueDeploymentOrder);

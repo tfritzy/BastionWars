@@ -215,7 +215,8 @@ public class Server
             {
                 Address = address,
                 GameId = hstm.GameAvailableOnPort.GameId,
-                PlayerId = hstm.GameAvailableOnPort.PlayerId
+                PlayerId = hstm.GameAvailableOnPort.PlayerId,
+                AuthToken = IdGenerator.GenerateAuthToken(),
             },
             StatusCode = 200,
         };

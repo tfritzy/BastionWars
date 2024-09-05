@@ -41,6 +41,20 @@ public class Game
         }
     }
 
+    public void HandleCommand(Oneof_PlayerToGameServer msg)
+    {
+        switch (msg.MsgCase)
+        {
+            case (Oneof_PlayerToGameServer.MsgOneofCase.IssueDeploymentOrder):
+                var order = msg.IssueDeploymentOrder;
+                AttackBastion(order.SourceKeep, order.TargetKeep);
+                break;
+            default:
+                Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
+                break;
+        }
+    }
+
     private void Packetize()
     {
         foreach (Oneof_GameServerToPlayer update in Outbox)

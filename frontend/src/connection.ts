@@ -9,13 +9,21 @@ import {
 export class Connection {
   private socket: WebSocket;
   private onMessage: (message: Oneof_GameServerToPlayer) => void;
+  private playerId: string;
+  private authToken: string;
 
   constructor(
     address: string,
+    playerId: string,
+    token: string,
     onMessage: (message: Oneof_GameServerToPlayer) => void
   ) {
     console.log("Attempting to open a connection", address);
-    this.socket = new WebSocket(address);
+    this.socket = new WebSocket(
+      `${address}?playerId=${playerId}&authToken=${token}`
+    );
+    this.playerId = playerId;
+    this.authToken = token;
     this.onMessage = onMessage;
 
     this.socket.onopen = this.handleOpen.bind(this);
@@ -55,6 +63,8 @@ export class Connection {
 
   sendMessage(message: Oneof_PlayerToGameServer) {
     console.log("Sending message", message);
+    message.sender_id = this.playerId;
+    message.auth_token = this.authToken;
     this.socket.send(encodeOneof_PlayerToGameServer(message));
   }
 }

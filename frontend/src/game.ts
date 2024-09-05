@@ -76,7 +76,12 @@ export class Game {
   }
 
   connectToGameServer(details: GameFoundForPlayer) {
-    this.connection = new Connection(details.address!, this.onMessage);
+    this.connection = new Connection(
+      details.address!,
+      details.player_id!,
+      details.auth_token!,
+      this.onMessage
+    );
   }
 
   handleTypeKeepName = (id: number) => {

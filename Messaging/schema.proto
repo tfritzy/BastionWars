@@ -28,7 +28,8 @@ message GameFoundForPlayer
 {
     string game_id = 1;
     string player_id = 2;
-    string address = 3;
+    string auth_token = 3;
+    string address = 4;
 }
 
 message PlacePlayerInGame
@@ -86,8 +87,9 @@ message Oneof_HostServerToGameServer {
 
 message Oneof_PlayerToGameServer {
     string sender_id = 1;
+    string auth_token = 2;
     oneof msg {
-         IssueDeploymentOrder issue_deployment_order = 2;
+         IssueDeploymentOrder issue_deployment_order = 3;
     }
 }
 

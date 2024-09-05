@@ -197,20 +197,11 @@ public class GameInstance
         try
         {
             Oneof_PlayerToGameServer request = Oneof_PlayerToGameServer.Parser.ParseFrom(ms);
-            switch (request.MsgCase)
-            {
-                case (Oneof_PlayerToGameServer.MsgOneofCase.IssueDeploymentOrder):
-                    var order = request.IssueDeploymentOrder;
-                    game.AttackBastion(order.SourceKeep, order.TargetKeep);
-                    break;
-                default:
-                    Logger.Log("GameServer got invalid message type from player: " + request.MsgCase);
-                    break;
-            }
+            game.HandleCommand(request);
         }
         catch (Exception e)
         {
-            Logger.Log("Was unable to parse message from player. " + e);
+            Logger.Log("Was unable to parse or handle message from player. " + e);
         }
     }
 }
