@@ -1,4 +1,5 @@
 using System.Numerics;
+using Schema;
 using SpacialPartitioning;
 
 namespace KeepLordWarriors;

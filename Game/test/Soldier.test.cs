@@ -1,5 +1,6 @@
 using System.Numerics;
 using KeepLordWarriors;
+using Schema;
 using TestHelpers;
 
 namespace Tests;

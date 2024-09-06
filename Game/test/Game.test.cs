@@ -185,4 +185,30 @@ public class GameTests
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }
     }
+
+    [TestMethod]
+    public void Game_HandleMessage_AttackingDeploysSoldiers()
+    {
+        Game game = new(TH.GetGameSettings());
+        Map map = game.Map;
+
+        map.KeepAt(0).Capture(1);
+        map.KeepAt(1).Capture(2);
+        map.KeepAt(0).SetCount(archers: 2, warriors: 0);
+        game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
+
+        Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
+        Assert.AreEqual(2, map.Soldiers.Count);
+
+        foreach (var soldier in map.Soldiers)
+        {
+            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceBastionId);
+            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetBastionId);
+            Assert.AreEqual(SoldierType.Archer, soldier.Type);
+            Assert.AreEqual(1, soldier.Alliance);
+            Assert.AreEqual(0, soldier.PathProgress);
+            Vector2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
+            Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
+        }
+    }
 }

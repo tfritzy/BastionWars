@@ -13,21 +13,6 @@ export const decodeGenerationMode: { [key: number]: GenerationMode } = {
   1: GenerationMode.Word,
 };
 
-export const enum PacketType {
-  UPDATE = "UPDATE",
-  HEARTBEAT = "HEARTBEAT",
-}
-
-export const encodePacketType: { [key: string]: number } = {
-  UPDATE: 0,
-  HEARTBEAT: 1,
-};
-
-export const decodePacketType: { [key: number]: PacketType } = {
-  0: PacketType.UPDATE,
-  1: PacketType.HEARTBEAT,
-};
-
 export const enum TileType {
   Invalid = "Invalid",
   Land = "Land",
@@ -47,6 +32,24 @@ export const decodeTileType: { [key: number]: TileType } = {
   1: TileType.Land,
   2: TileType.Water,
   3: TileType.Tree,
+};
+
+export const enum SoldierType {
+  InvalidSoldier = "InvalidSoldier",
+  Warrior = "Warrior",
+  Archer = "Archer",
+}
+
+export const encodeSoldierType: { [key: string]: number } = {
+  InvalidSoldier: 0,
+  Warrior: 1,
+  Archer: 2,
+};
+
+export const decodeSoldierType: { [key: number]: SoldierType } = {
+  0: SoldierType.InvalidSoldier,
+  1: SoldierType.Warrior,
+  2: SoldierType.Archer,
 };
 
 export interface GameSettings {
@@ -949,179 +952,6 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
   return message;
 }
 
-export interface Chunk {
-  index?: number;
-  maxIndex?: number;
-  data?: Uint8Array;
-}
-
-export function encodeChunk(message: Chunk): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeChunk(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeChunk(message: Chunk, bb: ByteBuffer): void {
-  // optional int32 index = 1;
-  let $index = message.index;
-  if ($index !== undefined) {
-    writeVarint32(bb, 8);
-    writeVarint64(bb, intToLong($index));
-  }
-
-  // optional int32 maxIndex = 2;
-  let $maxIndex = message.maxIndex;
-  if ($maxIndex !== undefined) {
-    writeVarint32(bb, 16);
-    writeVarint64(bb, intToLong($maxIndex));
-  }
-
-  // optional bytes data = 3;
-  let $data = message.data;
-  if ($data !== undefined) {
-    writeVarint32(bb, 26);
-    writeVarint32(bb, $data.length), writeBytes(bb, $data);
-  }
-}
-
-export function decodeChunk(binary: Uint8Array): Chunk {
-  return _decodeChunk(wrapByteBuffer(binary));
-}
-
-function _decodeChunk(bb: ByteBuffer): Chunk {
-  let message: Chunk = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // optional int32 index = 1;
-      case 1: {
-        message.index = readVarint32(bb);
-        break;
-      }
-
-      // optional int32 maxIndex = 2;
-      case 2: {
-        message.maxIndex = readVarint32(bb);
-        break;
-      }
-
-      // optional bytes data = 3;
-      case 3: {
-        message.data = readBytes(bb, readVarint32(bb));
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
-export interface Packet {
-  chunks?: Chunk[];
-  id?: number;
-  type?: PacketType;
-  sent_ms?: number;
-}
-
-export function encodePacket(message: Packet): Uint8Array {
-  let bb = popByteBuffer();
-  _encodePacket(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodePacket(message: Packet, bb: ByteBuffer): void {
-  // repeated Chunk chunks = 1;
-  let array$chunks = message.chunks;
-  if (array$chunks !== undefined) {
-    for (let value of array$chunks) {
-      writeVarint32(bb, 10);
-      let nested = popByteBuffer();
-      _encodeChunk(value, nested);
-      writeVarint32(bb, nested.limit);
-      writeByteBuffer(bb, nested);
-      pushByteBuffer(nested);
-    }
-  }
-
-  // optional uint32 id = 2;
-  let $id = message.id;
-  if ($id !== undefined) {
-    writeVarint32(bb, 16);
-    writeVarint32(bb, $id);
-  }
-
-  // optional PacketType type = 3;
-  let $type = message.type;
-  if ($type !== undefined) {
-    writeVarint32(bb, 24);
-    writeVarint32(bb, encodePacketType[$type]);
-  }
-
-  // optional int32 sent_ms = 4;
-  let $sent_ms = message.sent_ms;
-  if ($sent_ms !== undefined) {
-    writeVarint32(bb, 32);
-    writeVarint64(bb, intToLong($sent_ms));
-  }
-}
-
-export function decodePacket(binary: Uint8Array): Packet {
-  return _decodePacket(wrapByteBuffer(binary));
-}
-
-function _decodePacket(bb: ByteBuffer): Packet {
-  let message: Packet = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // repeated Chunk chunks = 1;
-      case 1: {
-        let limit = pushTemporaryLength(bb);
-        let values = message.chunks || (message.chunks = []);
-        values.push(_decodeChunk(bb));
-        bb.limit = limit;
-        break;
-      }
-
-      // optional uint32 id = 2;
-      case 2: {
-        message.id = readVarint32(bb) >>> 0;
-        break;
-      }
-
-      // optional PacketType type = 3;
-      case 3: {
-        message.type = decodePacketType[readVarint32(bb)];
-        break;
-      }
-
-      // optional int32 sent_ms = 4;
-      case 4: {
-        message.sent_ms = readVarint32(bb);
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
 export interface V2 {
   x?: number;
   y?: number;
@@ -1626,6 +1456,8 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
 export interface IssueDeploymentOrder {
   source_keep?: number;
   target_keep?: number;
+  soldier_type?: SoldierType;
+  percent?: number;
 }
 
 export function encodeIssueDeploymentOrder(message: IssueDeploymentOrder): Uint8Array {
@@ -1647,6 +1479,20 @@ function _encodeIssueDeploymentOrder(message: IssueDeploymentOrder, bb: ByteBuff
   if ($target_keep !== undefined) {
     writeVarint32(bb, 16);
     writeVarint32(bb, $target_keep);
+  }
+
+  // optional SoldierType soldier_type = 3;
+  let $soldier_type = message.soldier_type;
+  if ($soldier_type !== undefined) {
+    writeVarint32(bb, 24);
+    writeVarint32(bb, encodeSoldierType[$soldier_type]);
+  }
+
+  // optional float percent = 4;
+  let $percent = message.percent;
+  if ($percent !== undefined) {
+    writeVarint32(bb, 37);
+    writeFloat(bb, $percent);
   }
 }
 
@@ -1673,6 +1519,18 @@ function _decodeIssueDeploymentOrder(bb: ByteBuffer): IssueDeploymentOrder {
       // optional uint32 target_keep = 2;
       case 2: {
         message.target_keep = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional SoldierType soldier_type = 3;
+      case 3: {
+        message.soldier_type = decodeSoldierType[readVarint32(bb)];
+        break;
+      }
+
+      // optional float percent = 4;
+      case 4: {
+        message.percent = readFloat(bb);
         break;
       }
 

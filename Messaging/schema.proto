@@ -101,24 +101,6 @@ message Oneof_GameServerToPlayer {
     }
 }
 
-message Chunk {
-    int32 index = 1;
-    int32 maxIndex = 2;
-    bytes data = 3;
-}
-
-enum PacketType {
-    UPDATE = 0;
-    HEARTBEAT = 1;
-}
-
-message Packet {
-    repeated Chunk chunks = 1;
-    uint32 id = 2;
-    PacketType type = 3;
-    int32 sent_ms = 4;
-}
-
 enum TileType
 {
     Invalid = 0;
@@ -126,7 +108,6 @@ enum TileType
     Water = 2;
     Tree = 3;
 }
-
 
 message V2 {
     float x = 1;
@@ -136,6 +117,12 @@ message V2 {
 message V2Int {
     int32 x = 1;
     int32 y = 2;
+}
+
+enum SoldierType {
+    InvalidSoldier = 0;
+    Warrior = 1;
+    Archer = 2;
 }
 
 message AllSoldierPositions {
@@ -167,4 +154,6 @@ message InitialState {
 message IssueDeploymentOrder {
     uint32 source_keep = 1;
     uint32 target_keep = 2;
+    SoldierType soldier_type = 3;
+    float percent = 4;
 }

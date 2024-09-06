@@ -1,4 +1,5 @@
 using KeepLordWarriors;
+using Schema;
 using TestHelpers;
 
 namespace Tests;

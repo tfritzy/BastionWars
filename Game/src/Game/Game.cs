@@ -47,7 +47,7 @@ public class Game
         {
             case (Oneof_PlayerToGameServer.MsgOneofCase.IssueDeploymentOrder):
                 var order = msg.IssueDeploymentOrder;
-                AttackBastion(order.SourceKeep, order.TargetKeep);
+                AttackBastion(order.SourceKeep, order.TargetKeep, order.SoldierType, order.Percent);
                 break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);

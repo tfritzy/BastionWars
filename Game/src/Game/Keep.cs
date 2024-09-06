@@ -1,3 +1,5 @@
+using Schema;
+
 namespace KeepLordWarriors;
 
 public class Keep : Entity
