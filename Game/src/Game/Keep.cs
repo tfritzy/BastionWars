@@ -72,8 +72,9 @@ public class Keep : Entity
 
     public void Update(double deltaTime)
     {
-        foreach (var order in DeploymentOrders)
+        for (int i = 0; i < DeploymentOrders.Count; i++)
         {
+            var order = DeploymentOrders[i];
             if (order.WaveCooldown > 0)
             {
                 order.WaveCooldown -= deltaTime;

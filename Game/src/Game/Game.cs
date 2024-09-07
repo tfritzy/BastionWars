@@ -178,6 +178,11 @@ public class Game
         AddMessageToOutbox(new Oneof_GameServerToPlayer { InitialState = GetInitialState() }, player.Id);
     }
 
+    public void DisconnectPlayer(string playerId)
+    {
+        Players.Remove(playerId);
+    }
+
     public void HandleKeystroke(char key, int alliance)
     {
         if (GenerationMode != GenerationMode.Word)

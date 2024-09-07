@@ -42,10 +42,12 @@ public static class TH
         game.Outbox.Clear();
     }
 
-    public static void AddPlayer(Game game)
+    public static Player AddPlayer(Game game)
     {
         int playerCount = game.Players.Count;
-        game.JoinGame(new Player(name: $"test{playerCount}", id: playerCount.ToString()));
+        var player = new Player(name: $"test{playerCount}", id: playerCount.ToString());
+        game.JoinGame(player);
+        return player;
     }
 
     public static List<Oneof_GameServerToPlayer> GetMessagesOfType(Game game, Oneof_GameServerToPlayer.MsgOneofCase type)

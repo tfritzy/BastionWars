@@ -137,11 +137,11 @@ public class GameInstance
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
+        _ = Task.Run(() => ListenLoop(webSocket, playerId, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
     }
 
 
-    private async void ListenLoop(WebSocket webSocket, Action<MemoryStream> handleRequest)
+    private async void ListenLoop(WebSocket webSocket, string playerId, Action<MemoryStream> handleRequest)
     {
         try
         {
@@ -174,6 +174,8 @@ public class GameInstance
                 else if (receiveResult.MessageType == WebSocketMessageType.Close)
                 {
                     Logger.Log("WebSocket connection closed by client.");
+                    connections.Remove(playerId);
+                    game.DisconnectPlayer(playerId);
                     await webSocket.CloseAsync(
                         WebSocketCloseStatus.NormalClosure,
                         string.Empty,
@@ -188,7 +190,7 @@ public class GameInstance
         catch (Exception e)
         {
             Logger.Log("Exception in listen loop: " + e.Message);
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
+            _ = Task.Run(() => ListenLoop(webSocket, playerId, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
         }
     }
 

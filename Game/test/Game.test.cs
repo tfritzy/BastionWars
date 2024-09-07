@@ -63,6 +63,19 @@ public class GameTests
         }
     }
 
+
+    [TestMethod]
+    public void Game_DisconnectPlayer()
+    {
+        Game game = new(TH.GetGameSettings());
+        int initialPlayers = game.Players.Count;
+        var player = TH.AddPlayer(game);
+        Assert.AreEqual(initialPlayers + 1, game.Players.Count);
+        game.DisconnectPlayer(player.Id);
+        Assert.AreEqual(initialPlayers, game.Players.Count);
+    }
+
+
     [TestMethod]
     public void Game_DoesntAccrueIfWordMode()
     {
