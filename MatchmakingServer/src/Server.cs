@@ -207,7 +207,7 @@ public class Server
 
         Logger.Log("TODO: use a host object instead of string splitting");
         string hostIp = host.Split("]:")[0] + "]";
-        string address = $"ws://{hostIp}:{hstm.GameAvailableOnPort.Port}?playerId={request.PlayerId}&authToken=tkn_001";
+        string address = $"ws://{hostIp}:{hstm.GameAvailableOnPort.Port}";
         Logger.Log($"Telling {request.PlayerId} to join {address}");
         return new ResponseDetails<GameFoundForPlayer>
         {

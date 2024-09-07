@@ -1075,7 +1075,7 @@ function _decodeV2Int(bb: ByteBuffer): V2Int {
 }
 
 export interface AllSoldierPositions {
-  soldier_positions?: SoldierPosition[];
+  soldier_positions?: SoldierState[];
 }
 
 export function encodeAllSoldierPositions(message: AllSoldierPositions): Uint8Array {
@@ -1085,13 +1085,13 @@ export function encodeAllSoldierPositions(message: AllSoldierPositions): Uint8Ar
 }
 
 function _encodeAllSoldierPositions(message: AllSoldierPositions, bb: ByteBuffer): void {
-  // repeated SoldierPosition soldier_positions = 1;
+  // repeated SoldierState soldier_positions = 1;
   let array$soldier_positions = message.soldier_positions;
   if (array$soldier_positions !== undefined) {
     for (let value of array$soldier_positions) {
       writeVarint32(bb, 10);
       let nested = popByteBuffer();
-      _encodeSoldierPosition(value, nested);
+      _encodeSoldierState(value, nested);
       writeVarint32(bb, nested.limit);
       writeByteBuffer(bb, nested);
       pushByteBuffer(nested);
@@ -1113,11 +1113,11 @@ function _decodeAllSoldierPositions(bb: ByteBuffer): AllSoldierPositions {
       case 0:
         break end_of_message;
 
-      // repeated SoldierPosition soldier_positions = 1;
+      // repeated SoldierState soldier_positions = 1;
       case 1: {
         let limit = pushTemporaryLength(bb);
         let values = message.soldier_positions || (message.soldier_positions = []);
-        values.push(_decodeSoldierPosition(bb));
+        values.push(_decodeSoldierState(bb));
         bb.limit = limit;
         break;
       }
@@ -1130,19 +1130,19 @@ function _decodeAllSoldierPositions(bb: ByteBuffer): AllSoldierPositions {
   return message;
 }
 
-export interface SoldierPosition {
+export interface SoldierState {
   id?: number;
   pos?: V2;
   velocity?: V2;
 }
 
-export function encodeSoldierPosition(message: SoldierPosition): Uint8Array {
+export function encodeSoldierState(message: SoldierState): Uint8Array {
   let bb = popByteBuffer();
-  _encodeSoldierPosition(message, bb);
+  _encodeSoldierState(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeSoldierPosition(message: SoldierPosition, bb: ByteBuffer): void {
+function _encodeSoldierState(message: SoldierState, bb: ByteBuffer): void {
   // optional uint32 id = 1;
   let $id = message.id;
   if ($id !== undefined) {
@@ -1173,12 +1173,12 @@ function _encodeSoldierPosition(message: SoldierPosition, bb: ByteBuffer): void 
   }
 }
 
-export function decodeSoldierPosition(binary: Uint8Array): SoldierPosition {
-  return _decodeSoldierPosition(wrapByteBuffer(binary));
+export function decodeSoldierState(binary: Uint8Array): SoldierState {
+  return _decodeSoldierState(wrapByteBuffer(binary));
 }
 
-function _decodeSoldierPosition(bb: ByteBuffer): SoldierPosition {
-  let message: SoldierPosition = {} as any;
+function _decodeSoldierState(bb: ByteBuffer): SoldierState {
+  let message: SoldierState = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);

@@ -126,10 +126,10 @@ enum SoldierType {
 }
 
 message AllSoldierPositions {
-    repeated SoldierPosition soldier_positions = 1;
+    repeated SoldierState soldier_positions = 1;
 }
 
-message SoldierPosition {
+message SoldierState {
     uint32 id = 1;
     V2 pos = 2;
     V2 velocity = 3;
@@ -154,6 +154,6 @@ message InitialState {
 message IssueDeploymentOrder {
     uint32 source_keep = 1;
     uint32 target_keep = 2;
-    SoldierType soldier_type = 3;
-    float percent = 4;
+    optional SoldierType soldier_type = 3;
+    optional float percent = 4;
 }

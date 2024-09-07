@@ -27,10 +27,13 @@ public class BastionTests
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         foreach (var type in Enum.GetValues<SoldierType>())
         {
+            if (type == SoldierType.InvalidSoldier)
+                continue;
+
             Keep bastion = new(map, type);
-            Assert.AreEqual(5, bastion.GetCount(type));
+            Assert.AreEqual(Keep.StartTroopCount, bastion.GetCount(type));
             bastion.Accrue();
-            Assert.AreEqual(6, bastion.GetCount(type));
+            Assert.AreEqual(Keep.StartTroopCount + 1, bastion.GetCount(type));
         }
     }
 

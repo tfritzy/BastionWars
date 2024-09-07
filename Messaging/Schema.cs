@@ -53,22 +53,23 @@ namespace Schema {
             "aWFsU3RhdGVIABI8ChVhbGxfc29sZGllcl9wb3NpdGlvbnMYAyABKAsyGy5T",
             "Y2hlbWEuQWxsU29sZGllclBvc2l0aW9uc0gAQgUKA21zZyIaCgJWMhIJCgF4",
             "GAEgASgCEgkKAXkYAiABKAIiHQoFVjJJbnQSCQoBeBgBIAEoBRIJCgF5GAIg",
-            "ASgFIkkKE0FsbFNvbGRpZXJQb3NpdGlvbnMSMgoRc29sZGllcl9wb3NpdGlv",
-            "bnMYASADKAsyFy5TY2hlbWEuU29sZGllclBvc2l0aW9uIlQKD1NvbGRpZXJQ",
-            "b3NpdGlvbhIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjIS",
-            "HAoIdmVsb2NpdHkYAyABKAsyCi5TY2hlbWEuVjIifQoJS2VlcFN0YXRlEgoK",
-            "AmlkGAEgASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIVCg13YXJyaW9y",
-            "X2NvdW50GAMgASgFEhQKDGFyY2hlcl9jb3VudBgEIAEoBRIMCgRuYW1lGAUg",
-            "ASgJEhAKCGFsbGlhbmNlGAYgASgFIngKDEluaXRpYWxTdGF0ZRIgCgVrZWVw",
-            "cxgBIAMoCzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgF",
-            "EhIKCm1hcF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEu",
-            "VGlsZVR5cGUifAoUSXNzdWVEZXBsb3ltZW50T3JkZXISEwoLc291cmNlX2tl",
-            "ZXAYASABKA0SEwoLdGFyZ2V0X2tlZXAYAiABKA0SKQoMc29sZGllcl90eXBl",
-            "GAMgASgOMhMuU2NoZW1hLlNvbGRpZXJUeXBlEg8KB3BlcmNlbnQYBCABKAIq",
-            "KgoOR2VuZXJhdGlvbk1vZGUSDgoKQXV0b0FjY3J1ZRAAEggKBFdvcmQQASo2",
-            "CghUaWxlVHlwZRILCgdJbnZhbGlkEAASCAoETGFuZBABEgkKBVdhdGVyEAIS",
-            "CAoEVHJlZRADKjoKC1NvbGRpZXJUeXBlEhIKDkludmFsaWRTb2xkaWVyEAAS",
-            "CwoHV2FycmlvchABEgoKBkFyY2hlchACYgZwcm90bzM="));
+            "ASgFIkYKE0FsbFNvbGRpZXJQb3NpdGlvbnMSLwoRc29sZGllcl9wb3NpdGlv",
+            "bnMYASADKAsyFC5TY2hlbWEuU29sZGllclN0YXRlIlEKDFNvbGRpZXJTdGF0",
+            "ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjISHAoIdmVs",
+            "b2NpdHkYAyABKAsyCi5TY2hlbWEuVjIifQoJS2VlcFN0YXRlEgoKAmlkGAEg",
+            "ASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIVCg13YXJyaW9yX2NvdW50",
+            "GAMgASgFEhQKDGFyY2hlcl9jb3VudBgEIAEoBRIMCgRuYW1lGAUgASgJEhAK",
+            "CGFsbGlhbmNlGAYgASgFIngKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMo",
+            "CzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1h",
+            "cF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5",
+            "cGUiowEKFElzc3VlRGVwbG95bWVudE9yZGVyEhMKC3NvdXJjZV9rZWVwGAEg",
+            "ASgNEhMKC3RhcmdldF9rZWVwGAIgASgNEi4KDHNvbGRpZXJfdHlwZRgDIAEo",
+            "DjITLlNjaGVtYS5Tb2xkaWVyVHlwZUgAiAEBEhQKB3BlcmNlbnQYBCABKAJI",
+            "AYgBAUIPCg1fc29sZGllcl90eXBlQgoKCF9wZXJjZW50KioKDkdlbmVyYXRp",
+            "b25Nb2RlEg4KCkF1dG9BY2NydWUQABIICgRXb3JkEAEqNgoIVGlsZVR5cGUS",
+            "CwoHSW52YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQAyo6",
+            "CgtTb2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAAEgsKB1dhcnJpb3IQ",
+            "ARIKCgZBcmNoZXIQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -89,10 +90,10 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2), global::Schema.V2.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2Int), global::Schema.V2Int.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllSoldierPositions), global::Schema.AllSoldierPositions.Parser, new[]{ "SoldierPositions" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SoldierPosition), global::Schema.SoldierPosition.Parser, new[]{ "Id", "Pos", "Velocity" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SoldierState), global::Schema.SoldierState.Parser, new[]{ "Id", "Pos", "Velocity" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null)
           }));
     }
     #endregion
@@ -4094,12 +4095,12 @@ namespace Schema {
 
     /// <summary>Field number for the "soldier_positions" field.</summary>
     public const int SoldierPositionsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Schema.SoldierPosition> _repeated_soldierPositions_codec
-        = pb::FieldCodec.ForMessage(10, global::Schema.SoldierPosition.Parser);
-    private readonly pbc::RepeatedField<global::Schema.SoldierPosition> soldierPositions_ = new pbc::RepeatedField<global::Schema.SoldierPosition>();
+    private static readonly pb::FieldCodec<global::Schema.SoldierState> _repeated_soldierPositions_codec
+        = pb::FieldCodec.ForMessage(10, global::Schema.SoldierState.Parser);
+    private readonly pbc::RepeatedField<global::Schema.SoldierState> soldierPositions_ = new pbc::RepeatedField<global::Schema.SoldierState>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Schema.SoldierPosition> SoldierPositions {
+    public pbc::RepeatedField<global::Schema.SoldierState> SoldierPositions {
       get { return soldierPositions_; }
     }
 
@@ -4226,16 +4227,16 @@ namespace Schema {
 
   }
 
-  public sealed partial class SoldierPosition : pb::IMessage<SoldierPosition>
+  public sealed partial class SoldierState : pb::IMessage<SoldierState>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<SoldierPosition> _parser = new pb::MessageParser<SoldierPosition>(() => new SoldierPosition());
+    private static readonly pb::MessageParser<SoldierState> _parser = new pb::MessageParser<SoldierState>(() => new SoldierState());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<SoldierPosition> Parser { get { return _parser; } }
+    public static pb::MessageParser<SoldierState> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -4251,7 +4252,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public SoldierPosition() {
+    public SoldierState() {
       OnConstruction();
     }
 
@@ -4259,7 +4260,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public SoldierPosition(SoldierPosition other) : this() {
+    public SoldierState(SoldierState other) : this() {
       id_ = other.id_;
       pos_ = other.pos_ != null ? other.pos_.Clone() : null;
       velocity_ = other.velocity_ != null ? other.velocity_.Clone() : null;
@@ -4268,8 +4269,8 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public SoldierPosition Clone() {
-      return new SoldierPosition(this);
+    public SoldierState Clone() {
+      return new SoldierState(this);
     }
 
     /// <summary>Field number for the "id" field.</summary>
@@ -4311,12 +4312,12 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as SoldierPosition);
+      return Equals(other as SoldierState);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(SoldierPosition other) {
+    public bool Equals(SoldierState other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -4415,7 +4416,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(SoldierPosition other) {
+    public void MergeFrom(SoldierState other) {
       if (other == null) {
         return;
       }
@@ -5177,6 +5178,7 @@ namespace Schema {
   {
     private static readonly pb::MessageParser<IssueDeploymentOrder> _parser = new pb::MessageParser<IssueDeploymentOrder>(() => new IssueDeploymentOrder());
     private pb::UnknownFieldSet _unknownFields;
+    private int _hasBits0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<IssueDeploymentOrder> Parser { get { return _parser; } }
@@ -5204,6 +5206,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public IssueDeploymentOrder(IssueDeploymentOrder other) : this() {
+      _hasBits0 = other._hasBits0;
       sourceKeep_ = other.sourceKeep_;
       targetKeep_ = other.targetKeep_;
       soldierType_ = other.soldierType_;
@@ -5243,14 +5246,27 @@ namespace Schema {
 
     /// <summary>Field number for the "soldier_type" field.</summary>
     public const int SoldierTypeFieldNumber = 3;
-    private global::Schema.SoldierType soldierType_ = global::Schema.SoldierType.InvalidSoldier;
+    private global::Schema.SoldierType soldierType_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Schema.SoldierType SoldierType {
-      get { return soldierType_; }
+      get { if ((_hasBits0 & 1) != 0) { return soldierType_; } else { return global::Schema.SoldierType.InvalidSoldier; } }
       set {
+        _hasBits0 |= 1;
         soldierType_ = value;
       }
+    }
+    /// <summary>Gets whether the "soldier_type" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasSoldierType {
+      get { return (_hasBits0 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "soldier_type" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearSoldierType() {
+      _hasBits0 &= ~1;
     }
 
     /// <summary>Field number for the "percent" field.</summary>
@@ -5259,10 +5275,23 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float Percent {
-      get { return percent_; }
+      get { if ((_hasBits0 & 2) != 0) { return percent_; } else { return 0F; } }
       set {
+        _hasBits0 |= 2;
         percent_ = value;
       }
+    }
+    /// <summary>Gets whether the "percent" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasPercent {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "percent" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearPercent() {
+      _hasBits0 &= ~2;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5293,8 +5322,8 @@ namespace Schema {
       int hash = 1;
       if (SourceKeep != 0) hash ^= SourceKeep.GetHashCode();
       if (TargetKeep != 0) hash ^= TargetKeep.GetHashCode();
-      if (SoldierType != global::Schema.SoldierType.InvalidSoldier) hash ^= SoldierType.GetHashCode();
-      if (Percent != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Percent);
+      if (HasSoldierType) hash ^= SoldierType.GetHashCode();
+      if (HasPercent) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Percent);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5321,11 +5350,11 @@ namespace Schema {
         output.WriteRawTag(16);
         output.WriteUInt32(TargetKeep);
       }
-      if (SoldierType != global::Schema.SoldierType.InvalidSoldier) {
+      if (HasSoldierType) {
         output.WriteRawTag(24);
         output.WriteEnum((int) SoldierType);
       }
-      if (Percent != 0F) {
+      if (HasPercent) {
         output.WriteRawTag(37);
         output.WriteFloat(Percent);
       }
@@ -5347,11 +5376,11 @@ namespace Schema {
         output.WriteRawTag(16);
         output.WriteUInt32(TargetKeep);
       }
-      if (SoldierType != global::Schema.SoldierType.InvalidSoldier) {
+      if (HasSoldierType) {
         output.WriteRawTag(24);
         output.WriteEnum((int) SoldierType);
       }
-      if (Percent != 0F) {
+      if (HasPercent) {
         output.WriteRawTag(37);
         output.WriteFloat(Percent);
       }
@@ -5371,10 +5400,10 @@ namespace Schema {
       if (TargetKeep != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TargetKeep);
       }
-      if (SoldierType != global::Schema.SoldierType.InvalidSoldier) {
+      if (HasSoldierType) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) SoldierType);
       }
-      if (Percent != 0F) {
+      if (HasPercent) {
         size += 1 + 4;
       }
       if (_unknownFields != null) {
@@ -5395,10 +5424,10 @@ namespace Schema {
       if (other.TargetKeep != 0) {
         TargetKeep = other.TargetKeep;
       }
-      if (other.SoldierType != global::Schema.SoldierType.InvalidSoldier) {
+      if (other.HasSoldierType) {
         SoldierType = other.SoldierType;
       }
-      if (other.Percent != 0F) {
+      if (other.HasPercent) {
         Percent = other.Percent;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);

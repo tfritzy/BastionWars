@@ -13,12 +13,4 @@ public class Player
         Name = name;
         Id = id;
     }
-
-    public void EnqueuePackets(List<Oneof_GameServerToPlayer> messages)
-    {
-        foreach (Oneof_GameServerToPlayer msg in messages)
-        {
-            MessageQueue.Add(msg);
-        }
-    }
 }
