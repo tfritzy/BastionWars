@@ -96,12 +96,11 @@ public class GameTests
         TH.AddPlayer(game);
         TH.AddPlayer(game);
         game.Update(Game.NetworkTickTime + .1f);
-        var positionUpdate = game
+        var positionUpdates = game
             .Players.Values.First().MessageQueue
             .Where((m) => m.AllSoldierPositions != null)
-            .First()
-            .AllSoldierPositions;
-        Assert.AreEqual(0, positionUpdate.SoldierPositions.Count);
+            .ToList();
+        Assert.AreEqual(0, positionUpdates.Count);
         Soldier soldier = new(
             map: game.Map,
             alliance: 0,
@@ -111,7 +110,7 @@ public class GameTests
         game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.KeepAt(0).Id));
         game.Update(Game.NetworkTickTime + .1f);
         Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
-        positionUpdate = game
+        var positionUpdate = game
             .Players.Values.First().MessageQueue
             .Where((m) => m.AllSoldierPositions != null)
             .First()
@@ -191,14 +190,22 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings());
         Map map = game.Map;
-
         map.KeepAt(0).Capture(1);
         map.KeepAt(1).Capture(2);
-        map.KeepAt(0).SetCount(archers: 2, warriors: 0);
-        game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
+        map.KeepAt(0).SetCount(archers: 10, warriors: 5);
+        game.HandleCommand(new Oneof_PlayerToGameServer()
+        {
+            IssueDeploymentOrder = new IssueDeploymentOrder()
+            {
+                SourceKeep = map.KeepAt(0).Id,
+                TargetKeep = map.KeepAt(1).Id,
+                Percent = .5f,
+                SoldierType = SoldierType.Archer
+            }
+        });
 
-        Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
-        Assert.AreEqual(2, map.Soldiers.Count);
+        Assert.AreEqual(5, map.KeepAt(0).ArcherCount);
+        Assert.AreEqual(5, map.Soldiers.Count);
 
         foreach (var soldier in map.Soldiers)
         {

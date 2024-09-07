@@ -137,7 +137,7 @@ public class GameInstance
         }
 
         WebSocket webSocket = webSocketContext.WebSocket;
-        _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
+        _ = Task.Run(() => ListenLoop(webSocket, (ms) => HandleMsgFromPlayer(ms)));
     }
 
 
@@ -188,11 +188,11 @@ public class GameInstance
         catch (Exception e)
         {
             Logger.Log("Exception in listen loop: " + e.Message);
-            _ = Task.Run(() => ListenLoop(webSocket, async (ms) => await HandleMsgFromPlayer(webSocket, ms)));
+            _ = Task.Run(() => ListenLoop(webSocket, (ms) => HandleMsgFromPlayer(ms)));
         }
     }
 
-    private async Task HandleMsgFromPlayer(WebSocket webSocket, MemoryStream ms)
+    private void HandleMsgFromPlayer(MemoryStream ms)
     {
         try
         {

@@ -37,7 +37,7 @@ public class Game
         {
             NetworkTick();
             lastNetworkTick = 0f;
-            Packetize();
+            ShipMessages();
         }
     }
 
@@ -45,9 +45,11 @@ public class Game
     {
         switch (msg.MsgCase)
         {
-            case (Oneof_PlayerToGameServer.MsgOneofCase.IssueDeploymentOrder):
+            case Oneof_PlayerToGameServer.MsgOneofCase.IssueDeploymentOrder:
                 var order = msg.IssueDeploymentOrder;
-                AttackBastion(order.SourceKeep, order.TargetKeep, order.SoldierType, order.Percent);
+                SoldierType? soldierType = order.HasSoldierType ? order.SoldierType : null;
+                float percent = order.HasPercent ? order.Percent : 1f;
+                AttackBastion(order.SourceKeep, order.TargetKeep, soldierType, percent);
                 break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
@@ -55,7 +57,7 @@ public class Game
         }
     }
 
-    private void Packetize()
+    private void ShipMessages()
     {
         foreach (Oneof_GameServerToPlayer update in Outbox)
         {
@@ -76,7 +78,7 @@ public class Game
         AllSoldierPositions allSoldierPositions = new();
         foreach (Soldier soldier in Map.Soldiers)
         {
-            allSoldierPositions.SoldierPositions.Add(new SoldierPosition
+            allSoldierPositions.SoldierPositions.Add(new SoldierState
             {
                 Id = soldier.Id,
                 Pos = Map.Grid.GetEntitySchemaPosition(soldier.Id),
