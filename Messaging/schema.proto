@@ -98,6 +98,7 @@ message Oneof_GameServerToPlayer {
     oneof msg {
         InitialState initial_state = 2;
         AllSoldierPositions all_soldier_positions = 3;
+        AllKeepUpdates keep_updates = 4;
     }
 }
 
@@ -142,6 +143,17 @@ message KeepState {
     int32 archer_count = 4;
     string name = 5;
     int32 alliance = 6;
+}
+
+message KeepUpdate {
+    uint32 id = 1;
+    int32 warrior_count = 2;
+    int32 archer_count = 3;
+    int32 alliance = 4;
+}
+
+message AllKeepUpdates {
+    repeated KeepUpdate keep_updates = 1;
 }
 
 message InitialState {

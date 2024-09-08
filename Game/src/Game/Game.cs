@@ -71,6 +71,7 @@ public class Game
     private void NetworkTick()
     {
         SendSoldierPositions();
+        SendKeepUpdates();
     }
 
     private void SendSoldierPositions()
@@ -87,6 +88,29 @@ public class Game
 
         AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
     }
+
+    private void SendKeepUpdates()
+    {
+        AllKeepUpdates allKeepUpdates = new();
+        foreach (Keep keep in Map.Keeps.Values)
+        {
+            if (keep.OccupancyChanged)
+            {
+                allKeepUpdates.KeepUpdates.Add(new KeepUpdate
+                {
+                    Id = keep.Id,
+                    Alliance = keep.Alliance,
+                    ArcherCount = keep.ArcherCount,
+                    WarriorCount = keep.WarriorCount
+                });
+                keep.AckOccupancyChanged();
+            }
+        }
+
+        if (allKeepUpdates.KeepUpdates.Count > 0)
+            AddMessageToOutbox(new Oneof_GameServerToPlayer { KeepUpdates = allKeepUpdates });
+    }
+
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
     private void BastionAutoAccrue(double deltaTime)

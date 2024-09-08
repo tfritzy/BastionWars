@@ -1,4 +1,5 @@
 using System.Numerics;
+using Castle.Components.DictionaryAdapter;
 using Schema;
 using TestHelpers;
 using Tests;
@@ -247,5 +248,39 @@ public class GameTests
             Vector2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }
+    }
+
+
+    [TestMethod]
+    public void Game_SendsKeepOccupancyChanges()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        Map map = game.Map;
+        TH.AddPlayer(game);
+
+        game.Update(1f);
+
+        var keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        Assert.AreEqual(0, keepUpdates.Count);
+        game.Map.KeepAt(0).SetCount(archers: 4, warriors: 1);
+        game.Map.KeepAt(1).SetCount(warriors: 6, archers: 3);
+        keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        Assert.AreEqual(0, keepUpdates.Count);
+        game.Update(1f);
+        keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        Assert.AreEqual(1, keepUpdates.Count);
+        Assert.AreEqual(2, keepUpdates.First().KeepUpdates.Count);
+
+        var firstKeepUpdate = keepUpdates.First().KeepUpdates.First(u => u.Id == game.Map.KeepAt(0).Id);
+        var secondKeepUpdate = keepUpdates.First().KeepUpdates.First(u => u.Id == game.Map.KeepAt(1).Id);
+        Assert.AreEqual(4, firstKeepUpdate.ArcherCount);
+        Assert.AreEqual(1, firstKeepUpdate.WarriorCount);
+        Assert.AreEqual(6, secondKeepUpdate.WarriorCount);
+        Assert.AreEqual(3, secondKeepUpdate.ArcherCount);
+
+        // doesn't double send message
+        game.Update(1f);
+        keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        Assert.AreEqual(1, keepUpdates.Count);
     }
 }

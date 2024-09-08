@@ -54,4 +54,12 @@ public static class TH
     {
         return game.Outbox.Where((u) => u.MsgCase == type).ToList();
     }
+
+    public static List<AllKeepUpdates> GetKeepUpdateMessages(Player player)
+    {
+        return player.MessageQueue
+            .Select(m => m.KeepUpdates != null ? m.KeepUpdates : null)
+            .Where(m => m != null)
+            .ToList()!;
+    }
 }

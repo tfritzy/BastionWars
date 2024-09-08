@@ -48,28 +48,32 @@ namespace Schema {
             "AQoYT25lb2ZfUGxheWVyVG9HYW1lU2VydmVyEhEKCXNlbmRlcl9pZBgBIAEo",
             "CRISCgphdXRoX3Rva2VuGAIgASgJEj4KFmlzc3VlX2RlcGxveW1lbnRfb3Jk",
             "ZXIYAyABKAsyHC5TY2hlbWEuSXNzdWVEZXBsb3ltZW50T3JkZXJIAEIFCgNt",
-            "c2cipAEKGE9uZW9mX0dhbWVTZXJ2ZXJUb1BsYXllchIUCgxyZWNpcGllbnRf",
+            "c2ci1AEKGE9uZW9mX0dhbWVTZXJ2ZXJUb1BsYXllchIUCgxyZWNpcGllbnRf",
             "aWQYASABKAkSLQoNaW5pdGlhbF9zdGF0ZRgCIAEoCzIULlNjaGVtYS5Jbml0",
             "aWFsU3RhdGVIABI8ChVhbGxfc29sZGllcl9wb3NpdGlvbnMYAyABKAsyGy5T",
-            "Y2hlbWEuQWxsU29sZGllclBvc2l0aW9uc0gAQgUKA21zZyIaCgJWMhIJCgF4",
-            "GAEgASgCEgkKAXkYAiABKAIiHQoFVjJJbnQSCQoBeBgBIAEoBRIJCgF5GAIg",
-            "ASgFIkYKE0FsbFNvbGRpZXJQb3NpdGlvbnMSLwoRc29sZGllcl9wb3NpdGlv",
-            "bnMYASADKAsyFC5TY2hlbWEuU29sZGllclN0YXRlIlEKDFNvbGRpZXJTdGF0",
-            "ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjISHAoIdmVs",
-            "b2NpdHkYAyABKAsyCi5TY2hlbWEuVjIifQoJS2VlcFN0YXRlEgoKAmlkGAEg",
-            "ASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIVCg13YXJyaW9yX2NvdW50",
-            "GAMgASgFEhQKDGFyY2hlcl9jb3VudBgEIAEoBRIMCgRuYW1lGAUgASgJEhAK",
-            "CGFsbGlhbmNlGAYgASgFIngKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMo",
-            "CzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1h",
-            "cF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5",
-            "cGUiowEKFElzc3VlRGVwbG95bWVudE9yZGVyEhMKC3NvdXJjZV9rZWVwGAEg",
-            "ASgNEhMKC3RhcmdldF9rZWVwGAIgASgNEi4KDHNvbGRpZXJfdHlwZRgDIAEo",
-            "DjITLlNjaGVtYS5Tb2xkaWVyVHlwZUgAiAEBEhQKB3BlcmNlbnQYBCABKAJI",
-            "AYgBAUIPCg1fc29sZGllcl90eXBlQgoKCF9wZXJjZW50KioKDkdlbmVyYXRp",
-            "b25Nb2RlEg4KCkF1dG9BY2NydWUQABIICgRXb3JkEAEqNgoIVGlsZVR5cGUS",
-            "CwoHSW52YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQAyo6",
-            "CgtTb2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAAEgsKB1dhcnJpb3IQ",
-            "ARIKCgZBcmNoZXIQAmIGcHJvdG8z"));
+            "Y2hlbWEuQWxsU29sZGllclBvc2l0aW9uc0gAEi4KDGtlZXBfdXBkYXRlcxgE",
+            "IAEoCzIWLlNjaGVtYS5BbGxLZWVwVXBkYXRlc0gAQgUKA21zZyIaCgJWMhIJ",
+            "CgF4GAEgASgCEgkKAXkYAiABKAIiHQoFVjJJbnQSCQoBeBgBIAEoBRIJCgF5",
+            "GAIgASgFIkYKE0FsbFNvbGRpZXJQb3NpdGlvbnMSLwoRc29sZGllcl9wb3Np",
+            "dGlvbnMYASADKAsyFC5TY2hlbWEuU29sZGllclN0YXRlIlEKDFNvbGRpZXJT",
+            "dGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjISHAoI",
+            "dmVsb2NpdHkYAyABKAsyCi5TY2hlbWEuVjIifQoJS2VlcFN0YXRlEgoKAmlk",
+            "GAEgASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIVCg13YXJyaW9yX2Nv",
+            "dW50GAMgASgFEhQKDGFyY2hlcl9jb3VudBgEIAEoBRIMCgRuYW1lGAUgASgJ",
+            "EhAKCGFsbGlhbmNlGAYgASgFIlcKCktlZXBVcGRhdGUSCgoCaWQYASABKA0S",
+            "FQoNd2Fycmlvcl9jb3VudBgCIAEoBRIUCgxhcmNoZXJfY291bnQYAyABKAUS",
+            "EAoIYWxsaWFuY2UYBCABKAUiOgoOQWxsS2VlcFVwZGF0ZXMSKAoMa2VlcF91",
+            "cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUieAoMSW5pdGlhbFN0",
+            "YXRlEiAKBWtlZXBzGAEgAygLMhEuU2NoZW1hLktlZXBTdGF0ZRIRCgltYXBf",
+            "d2lkdGgYAiABKAUSEgoKbWFwX2hlaWdodBgDIAEoBRIfCgV0aWxlcxgEIAMo",
+            "DjIQLlNjaGVtYS5UaWxlVHlwZSKjAQoUSXNzdWVEZXBsb3ltZW50T3JkZXIS",
+            "EwoLc291cmNlX2tlZXAYASABKA0SEwoLdGFyZ2V0X2tlZXAYAiABKA0SLgoM",
+            "c29sZGllcl90eXBlGAMgASgOMhMuU2NoZW1hLlNvbGRpZXJUeXBlSACIAQES",
+            "FAoHcGVyY2VudBgEIAEoAkgBiAEBQg8KDV9zb2xkaWVyX3R5cGVCCgoIX3Bl",
+            "cmNlbnQqKgoOR2VuZXJhdGlvbk1vZGUSDgoKQXV0b0FjY3J1ZRAAEggKBFdv",
+            "cmQQASo2CghUaWxlVHlwZRILCgdJbnZhbGlkEAASCAoETGFuZBABEgkKBVdh",
+            "dGVyEAISCAoEVHJlZRADKjoKC1NvbGRpZXJUeXBlEhIKDkludmFsaWRTb2xk",
+            "aWVyEAASCwoHV2FycmlvchABEgoKBkFyY2hlchACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -86,12 +90,14 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_MatchmakerToHostServer), global::Schema.Oneof_MatchmakerToHostServer.Parser, new[]{ "PlacePlayerInGame", "Registered" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToGameServer), global::Schema.Oneof_HostServerToGameServer.Parser, new[]{ "Register" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions", "KeepUpdates" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2), global::Schema.V2.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2Int), global::Schema.V2Int.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllSoldierPositions), global::Schema.AllSoldierPositions.Parser, new[]{ "SoldierPositions" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SoldierState), global::Schema.SoldierState.Parser, new[]{ "Id", "Pos", "Velocity" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepUpdate), global::Schema.KeepUpdate.Parser, new[]{ "Id", "WarriorCount", "ArcherCount", "Alliance" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllKeepUpdates), global::Schema.AllKeepUpdates.Parser, new[]{ "KeepUpdates" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null)
           }));
@@ -3317,6 +3323,9 @@ namespace Schema {
         case MsgOneofCase.AllSoldierPositions:
           AllSoldierPositions = other.AllSoldierPositions.Clone();
           break;
+        case MsgOneofCase.KeepUpdates:
+          KeepUpdates = other.KeepUpdates.Clone();
+          break;
       }
 
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -3364,12 +3373,25 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "keep_updates" field.</summary>
+    public const int KeepUpdatesFieldNumber = 4;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.AllKeepUpdates KeepUpdates {
+      get { return msgCase_ == MsgOneofCase.KeepUpdates ? (global::Schema.AllKeepUpdates) msg_ : null; }
+      set {
+        msg_ = value;
+        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.KeepUpdates;
+      }
+    }
+
     private object msg_;
     /// <summary>Enum of possible cases for the "msg" oneof.</summary>
     public enum MsgOneofCase {
       None = 0,
       InitialState = 2,
       AllSoldierPositions = 3,
+      KeepUpdates = 4,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3403,6 +3425,7 @@ namespace Schema {
       if (RecipientId != other.RecipientId) return false;
       if (!object.Equals(InitialState, other.InitialState)) return false;
       if (!object.Equals(AllSoldierPositions, other.AllSoldierPositions)) return false;
+      if (!object.Equals(KeepUpdates, other.KeepUpdates)) return false;
       if (MsgCase != other.MsgCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -3414,6 +3437,7 @@ namespace Schema {
       if (RecipientId.Length != 0) hash ^= RecipientId.GetHashCode();
       if (msgCase_ == MsgOneofCase.InitialState) hash ^= InitialState.GetHashCode();
       if (msgCase_ == MsgOneofCase.AllSoldierPositions) hash ^= AllSoldierPositions.GetHashCode();
+      if (msgCase_ == MsgOneofCase.KeepUpdates) hash ^= KeepUpdates.GetHashCode();
       hash ^= (int) msgCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -3445,6 +3469,10 @@ namespace Schema {
         output.WriteRawTag(26);
         output.WriteMessage(AllSoldierPositions);
       }
+      if (msgCase_ == MsgOneofCase.KeepUpdates) {
+        output.WriteRawTag(34);
+        output.WriteMessage(KeepUpdates);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -3467,6 +3495,10 @@ namespace Schema {
         output.WriteRawTag(26);
         output.WriteMessage(AllSoldierPositions);
       }
+      if (msgCase_ == MsgOneofCase.KeepUpdates) {
+        output.WriteRawTag(34);
+        output.WriteMessage(KeepUpdates);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3485,6 +3517,9 @@ namespace Schema {
       }
       if (msgCase_ == MsgOneofCase.AllSoldierPositions) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(AllSoldierPositions);
+      }
+      if (msgCase_ == MsgOneofCase.KeepUpdates) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(KeepUpdates);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3513,6 +3548,12 @@ namespace Schema {
             AllSoldierPositions = new global::Schema.AllSoldierPositions();
           }
           AllSoldierPositions.MergeFrom(other.AllSoldierPositions);
+          break;
+        case MsgOneofCase.KeepUpdates:
+          if (KeepUpdates == null) {
+            KeepUpdates = new global::Schema.AllKeepUpdates();
+          }
+          KeepUpdates.MergeFrom(other.KeepUpdates);
           break;
       }
 
@@ -3553,6 +3594,15 @@ namespace Schema {
             AllSoldierPositions = subBuilder;
             break;
           }
+          case 34: {
+            global::Schema.AllKeepUpdates subBuilder = new global::Schema.AllKeepUpdates();
+            if (msgCase_ == MsgOneofCase.KeepUpdates) {
+              subBuilder.MergeFrom(KeepUpdates);
+            }
+            input.ReadMessage(subBuilder);
+            KeepUpdates = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -3588,6 +3638,15 @@ namespace Schema {
             }
             input.ReadMessage(subBuilder);
             AllSoldierPositions = subBuilder;
+            break;
+          }
+          case 34: {
+            global::Schema.AllKeepUpdates subBuilder = new global::Schema.AllKeepUpdates();
+            if (msgCase_ == MsgOneofCase.KeepUpdates) {
+              subBuilder.MergeFrom(KeepUpdates);
+            }
+            input.ReadMessage(subBuilder);
+            KeepUpdates = subBuilder;
             break;
           }
         }
@@ -4891,6 +4950,484 @@ namespace Schema {
 
   }
 
+  public sealed partial class KeepUpdate : pb::IMessage<KeepUpdate>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<KeepUpdate> _parser = new pb::MessageParser<KeepUpdate>(() => new KeepUpdate());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<KeepUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[19]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public KeepUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public KeepUpdate(KeepUpdate other) : this() {
+      id_ = other.id_;
+      warriorCount_ = other.warriorCount_;
+      archerCount_ = other.archerCount_;
+      alliance_ = other.alliance_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public KeepUpdate Clone() {
+      return new KeepUpdate(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private uint id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "warrior_count" field.</summary>
+    public const int WarriorCountFieldNumber = 2;
+    private int warriorCount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int WarriorCount {
+      get { return warriorCount_; }
+      set {
+        warriorCount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "archer_count" field.</summary>
+    public const int ArcherCountFieldNumber = 3;
+    private int archerCount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ArcherCount {
+      get { return archerCount_; }
+      set {
+        archerCount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "alliance" field.</summary>
+    public const int AllianceFieldNumber = 4;
+    private int alliance_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Alliance {
+      get { return alliance_; }
+      set {
+        alliance_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as KeepUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(KeepUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (WarriorCount != other.WarriorCount) return false;
+      if (ArcherCount != other.ArcherCount) return false;
+      if (Alliance != other.Alliance) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id != 0) hash ^= Id.GetHashCode();
+      if (WarriorCount != 0) hash ^= WarriorCount.GetHashCode();
+      if (ArcherCount != 0) hash ^= ArcherCount.GetHashCode();
+      if (Alliance != 0) hash ^= Alliance.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Id);
+      }
+      if (WarriorCount != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(WarriorCount);
+      }
+      if (ArcherCount != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ArcherCount);
+      }
+      if (Alliance != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Alliance);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Id);
+      }
+      if (WarriorCount != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(WarriorCount);
+      }
+      if (ArcherCount != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ArcherCount);
+      }
+      if (Alliance != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Alliance);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
+      }
+      if (WarriorCount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(WarriorCount);
+      }
+      if (ArcherCount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ArcherCount);
+      }
+      if (Alliance != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Alliance);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(KeepUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id != 0) {
+        Id = other.Id;
+      }
+      if (other.WarriorCount != 0) {
+        WarriorCount = other.WarriorCount;
+      }
+      if (other.ArcherCount != 0) {
+        ArcherCount = other.ArcherCount;
+      }
+      if (other.Alliance != 0) {
+        Alliance = other.Alliance;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Id = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            WarriorCount = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            ArcherCount = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            Alliance = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Id = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            WarriorCount = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            ArcherCount = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            Alliance = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class AllKeepUpdates : pb::IMessage<AllKeepUpdates>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<AllKeepUpdates> _parser = new pb::MessageParser<AllKeepUpdates>(() => new AllKeepUpdates());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<AllKeepUpdates> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[20]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AllKeepUpdates() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AllKeepUpdates(AllKeepUpdates other) : this() {
+      keepUpdates_ = other.keepUpdates_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AllKeepUpdates Clone() {
+      return new AllKeepUpdates(this);
+    }
+
+    /// <summary>Field number for the "keep_updates" field.</summary>
+    public const int KeepUpdatesFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Schema.KeepUpdate> _repeated_keepUpdates_codec
+        = pb::FieldCodec.ForMessage(10, global::Schema.KeepUpdate.Parser);
+    private readonly pbc::RepeatedField<global::Schema.KeepUpdate> keepUpdates_ = new pbc::RepeatedField<global::Schema.KeepUpdate>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Schema.KeepUpdate> KeepUpdates {
+      get { return keepUpdates_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as AllKeepUpdates);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(AllKeepUpdates other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!keepUpdates_.Equals(other.keepUpdates_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= keepUpdates_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      keepUpdates_.WriteTo(output, _repeated_keepUpdates_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      keepUpdates_.WriteTo(ref output, _repeated_keepUpdates_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += keepUpdates_.CalculateSize(_repeated_keepUpdates_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(AllKeepUpdates other) {
+      if (other == null) {
+        return;
+      }
+      keepUpdates_.Add(other.keepUpdates_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            keepUpdates_.AddEntriesFrom(input, _repeated_keepUpdates_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            keepUpdates_.AddEntriesFrom(ref input, _repeated_keepUpdates_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class InitialState : pb::IMessage<InitialState>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4905,7 +5442,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5186,7 +5723,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

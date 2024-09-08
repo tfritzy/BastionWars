@@ -12,13 +12,14 @@ public class Keep : Entity
     public string? Name { get; set; }
     public delegate void CapturedEventHandler(uint sender);
     public event CapturedEventHandler? OnCaptured;
+    public bool OccupancyChanged { get; private set; }
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .25f;
     public const int MaxTroopsPerWave = 6;
     public const int StartTroopCount = 5;
 
-    /// Overkill damage during a breach is stored here and applied to the next wave
+    // Overkill damage during a breach is stored here and applied to the next wave
     private float powerOverflow;
 
     public Keep(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
@@ -26,6 +27,7 @@ public class Keep : Entity
         SoldierType = soldierType;
         Map = map;
         SetCount(soldierType, StartTroopCount);
+        OccupancyChanged = false;
     }
 
     public int GetCount(SoldierType type)
@@ -40,8 +42,8 @@ public class Keep : Entity
 
     public void SetCount(int? archers = null, int? warriors = null)
     {
-        ArcherCount = archers ?? ArcherCount;
-        WarriorCount = warriors ?? WarriorCount;
+        if (archers != null) SetCount(SoldierType.Archer, archers.Value);
+        if (warriors != null) SetCount(SoldierType.Warrior, warriors.Value);
     }
 
     public void SetCount(SoldierType type, int count)
@@ -55,19 +57,18 @@ public class Keep : Entity
                 WarriorCount = count;
                 break;
         }
+
+        OccupancyChanged = true;
     }
 
     public void Accrue()
     {
-        switch (SoldierType)
-        {
-            case SoldierType.Archer:
-                ArcherCount++;
-                break;
-            case SoldierType.Warrior:
-                WarriorCount++;
-                break;
-        }
+        IncrementSoldierCount(SoldierType, 1);
+    }
+
+    private void IncrementSoldierCount(SoldierType type, int amount = 1)
+    {
+        SetCount(type, GetCount(type) + 1);
     }
 
     public void Update(double deltaTime)
@@ -100,7 +101,7 @@ public class Keep : Entity
                 int waveCap = MaxTroopsPerWave;
 
                 int toDeploy = Min(WarriorCount, waveCap, order.WarriorCount);
-                WarriorCount -= toDeploy;
+                SetCount(SoldierType.Warrior, WarriorCount - toDeploy);
                 order.WarriorCount -= toDeploy;
                 waveCap -= toDeploy;
 
@@ -112,7 +113,7 @@ public class Keep : Entity
                 }
 
                 toDeploy = Min(ArcherCount, waveCap, order.ArcherCount);
-                ArcherCount -= toDeploy;
+                SetCount(SoldierType.Archer, ArcherCount - toDeploy);
                 order.ArcherCount -= toDeploy;
 
                 for (int j = 0; j < toDeploy; j++)
@@ -207,22 +208,14 @@ public class Keep : Entity
         }
     }
 
-    private void IncrementSoldierCount(SoldierType type, int amount = 1)
-    {
-        switch (type)
-        {
-            case SoldierType.Archer:
-                ArcherCount += amount;
-                break;
-            case SoldierType.Warrior:
-                WarriorCount += amount;
-                break;
-        }
-    }
-
     public void Capture(int alliance)
     {
         Alliance = alliance;
         OnCaptured?.Invoke(Id);
+    }
+
+    public void AckOccupancyChanged()
+    {
+        OccupancyChanged = false;
     }
 }
