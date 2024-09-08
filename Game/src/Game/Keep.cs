@@ -68,7 +68,7 @@ public class Keep : Entity
 
     private void IncrementSoldierCount(SoldierType type, int amount = 1)
     {
-        SetCount(type, GetCount(type) + 1);
+        SetCount(type, GetCount(type) + amount);
     }
 
     public void Update(double deltaTime)

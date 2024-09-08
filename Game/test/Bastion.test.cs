@@ -46,31 +46,37 @@ public class BastionTests
 
         bastion.SetCount(warriors: 0, archers: 30);
         bastion.SetDeploymentOrder(2u);
+        bastion.Update(.0001f);
         Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Archer));
 
         bastion.SetCount(archers: 30);
         bastion.SetDeploymentOrder(2u, type: SoldierType.Warrior);
+        bastion.Update(.0001f);
         bastion.Update(Keep.DeploymentRefractoryPeriod);
         Assert.AreEqual(30, bastion.GetCount(SoldierType.Archer));
 
         bastion.SetCount(warriors: 30);
         bastion.SetDeploymentOrder(2u, type: SoldierType.Warrior);
+        bastion.Update(.0001f);
         Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Warrior));
 
         bastion.SetCount(warriors: 30, archers: 30);
         bastion.SetDeploymentOrder(2u, percent: 1f);
+        bastion.Update(.0001f);
         bastion.Update(Keep.DeploymentRefractoryPeriod);
         Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Warrior));
         Assert.AreEqual(30, bastion.GetCount(SoldierType.Archer));
 
         bastion.SetCount(warriors: 4, archers: 10);
         bastion.SetDeploymentOrder(2u, percent: 1f);
+        bastion.Update(.0001f);
         bastion.Update(Keep.DeploymentRefractoryPeriod);
         Assert.AreEqual(0, bastion.GetCount(SoldierType.Warrior));
         Assert.AreEqual(8, bastion.GetCount(SoldierType.Archer));
 
         bastion.SetCount(warriors: 4, archers: 10);
         bastion.SetDeploymentOrder(2u, percent: .5f);
+        bastion.Update(.0001f);
         bastion.Update(Keep.DeploymentRefractoryPeriod);
         Assert.AreEqual(2, bastion.GetCount(SoldierType.Warrior));
         Assert.AreEqual(6, bastion.GetCount(SoldierType.Archer));
@@ -83,6 +89,7 @@ public class BastionTests
         Keep bastion = map.KeepAt(1);
         bastion.SetCount(warriors: 30, archers: 0);
         bastion.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
+        bastion.Update(.0001f);
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
         bastion.Update(Keep.DeploymentRefractoryPeriod - .1f);
         Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
@@ -100,9 +107,11 @@ public class BastionTests
         bastion.SetCount(warriors: 15, archers: 30);
 
         bastion.SetDeploymentOrder(map.KeepAt(0).Id, SoldierType.Warrior, 1f);
+        bastion.Update(.0001f);
         bastion.Update(Keep.DeploymentRefractoryPeriod / 2);
 
         bastion.SetDeploymentOrder(map.KeepAt(1).Id, SoldierType.Archer, 1f);
+        bastion.Update(.0001f);
         Assert.AreEqual(15 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Warrior));
         Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Archer));
 

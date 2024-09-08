@@ -184,6 +184,7 @@ public class GameTests
         map.KeepAt(0).SetCount(archers: 2, warriors: 0);
         map.KeepAt(1).SetCount(archers: 2, warriors: 0);
         game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
+        game.Update(.0001f);
 
         Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(2, map.Soldiers.Count);
