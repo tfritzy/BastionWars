@@ -69,15 +69,21 @@ public class GridTest
     }
 
     [TestMethod]
-    public void Grid_InvalidMoves()
+    public void Grid_MovingEntity_OutOfBounds()
     {
-        Grid grid = new(30, 30);
+        Grid grid = new(20, 30);
         var e1 = TH.AddNewEntity(grid, 0f, 20f, 1f);
 
-        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(0f, 31f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(31f, 0f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(-5f, 0f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id, new Vector2(0f, -5f)));
-        Assert.ThrowsException<ArgumentException>(() => grid.MoveEntity(e1.Id + 1, new Vector2(3, 3)));
+        grid.MoveEntity(e1.Id, new Vector2(-1, 1));
+        Assert.AreEqual(new Vector2(0, 1), grid.GetEntityPosition(e1.Id));
+
+        grid.MoveEntity(e1.Id, new Vector2(21, 1));
+        Assert.AreEqual(new Vector2(20, 1), grid.GetEntityPosition(e1.Id));
+
+        grid.MoveEntity(e1.Id, new Vector2(1, -1));
+        Assert.AreEqual(new Vector2(1, 0), grid.GetEntityPosition(e1.Id));
+
+        grid.MoveEntity(e1.Id, new Vector2(1, 31));
+        Assert.AreEqual(new Vector2(1, 30), grid.GetEntityPosition(e1.Id));
     }
 }

@@ -28,19 +28,18 @@ export class Typeable {
 
   draw(x: number, y: number, deltaTime: number): void {
     this.ctx.save();
-    this.ctx.font = "30px Arial";
     this.ctx.textAlign = "start";
 
-    const baseX = x + Math.random() * this.shakeMagnitude;
+    const width = this.ctx.measureText(this.text).width;
+    const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
     const baseY = y + Math.random() * this.shakeMagnitude;
 
-    this.ctx.fillStyle = "#4a4b5b";
-    this.ctx.fillText(this.text.substring(0, this.progress), baseX, baseY);
-
+    const completedPart = this.text.substring(0, this.progress);
+    this.ctx.fillText(completedPart, baseX, baseY);
     this.ctx.fillStyle = "#4a4b5b55";
     this.ctx.fillText(
       this.text.substring(this.progress),
-      baseX + this.ctx.measureText(this.text.substring(0, this.progress)).width,
+      baseX + this.ctx.measureText(completedPart).width,
       baseY
     );
 

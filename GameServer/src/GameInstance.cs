@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.WebSockets;
+using System.Security.Cryptography;
 using System.Text;
 using Google.Protobuf;
 using Helpers;
@@ -47,28 +48,30 @@ public class GameInstance
 
     private async Task DrainPendingMessages()
     {
-        foreach (Player player in game.Players.Values)
+        for (int p = 0; p < game.PlayerIds.Count; p++)
         {
-            if (connections.TryGetValue(player.Id, out WebSocketContext? context))
+            if (game.Players.TryGetValue(game.PlayerIds[p], out Player? player))
             {
-                foreach (Oneof_GameServerToPlayer msg in player.MessageQueue)
+                if (connections.TryGetValue(player.Id, out WebSocketContext? context))
                 {
-                    Logger.Log($"Sending a message to player {msg.RecipientId}");
-                    byte[] messageBytes = msg.ToByteArray();
-                    for (int i = 0; i < messageBytes.Length; i += ChunkSize)
+                    foreach (Oneof_GameServerToPlayer msg in player.MessageQueue)
                     {
-                        int remainingBytes = Math.Min(ChunkSize, messageBytes.Length - i);
-                        bool isLastChunk = (i + remainingBytes) >= messageBytes.Length;
+                        byte[] messageBytes = msg.ToByteArray();
+                        for (int i = 0; i < messageBytes.Length; i += ChunkSize)
+                        {
+                            int remainingBytes = Math.Min(ChunkSize, messageBytes.Length - i);
+                            bool isLastChunk = (i + remainingBytes) >= messageBytes.Length;
 
-                        await context.WebSocket.SendAsync(
-                            new ArraySegment<byte>(messageBytes, i, remainingBytes),
-                            WebSocketMessageType.Binary,
-                            isLastChunk,
-                            CancellationToken.None);
+                            await context.WebSocket.SendAsync(
+                                new ArraySegment<byte>(messageBytes, i, remainingBytes),
+                                WebSocketMessageType.Binary,
+                                isLastChunk,
+                                CancellationToken.None);
+                        }
                     }
-                }
 
-                player.MessageQueue.Clear();
+                    player.MessageQueue.Clear();
+                }
             }
         }
     }

@@ -44,7 +44,7 @@ public class SoldierTests
         map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
 
         Assert.AreEqual(2, keep1.Alliance);
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 200; i++)
         {
             map.Update(.1f);
         }

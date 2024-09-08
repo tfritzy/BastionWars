@@ -109,11 +109,12 @@ public class GameTests
         TH.AddPlayer(game);
         TH.AddPlayer(game);
         game.Update(Game.NetworkTickTime + .1f);
-        var positionUpdates = game
+        var positionUpdate = game
             .Players.Values.First().MessageQueue
             .Where((m) => m.AllSoldierPositions != null)
-            .ToList();
-        Assert.AreEqual(0, positionUpdates.Count);
+            .First()
+            .AllSoldierPositions;
+        Assert.AreEqual(0, positionUpdate.SoldierPositions.Count);
         Soldier soldier = new(
             map: game.Map,
             alliance: 0,
@@ -123,7 +124,7 @@ public class GameTests
         game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.KeepAt(0).Id));
         game.Update(Game.NetworkTickTime + .1f);
         Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
-        var positionUpdate = game
+        positionUpdate = game
             .Players.Values.First().MessageQueue
             .Where((m) => m.AllSoldierPositions != null)
             .First()
@@ -171,20 +172,21 @@ public class GameTests
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }
 
-
     [TestMethod]
     public void Map_AttackingDeploysSoldiers()
     {
-        Game game = new(TH.GetGameSettings());
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         Map map = game.Map;
 
         map.KeepAt(0).Capture(1);
-        map.KeepAt(1).Capture(2);
+        map.KeepAt(1).Capture(1);
         map.KeepAt(0).SetCount(archers: 2, warriors: 0);
+        map.KeepAt(1).SetCount(archers: 2, warriors: 0);
         game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
 
         Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(2, map.Soldiers.Count);
+        Assert.AreEqual(0, map.KeepAt(0).DeploymentOrders.Count);
 
         foreach (var soldier in map.Soldiers)
         {
@@ -196,6 +198,20 @@ public class GameTests
             Vector2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }
+
+        for (int i = 0; i < 100; i++)
+        {
+            game.Update(.1f);
+        }
+
+        Assert.AreEqual(0, map.Soldiers.Count);
+
+        game.AttackBastion(map.KeepAt(1).Id, map.KeepAt(0).Id);
+        for (int i = 0; i < 100; i++)
+            game.Update(.1f);
+        Assert.AreEqual(4, map.KeepAt(0).ArcherCount);
+        Assert.AreEqual(0, map.KeepAt(1).ArcherCount);
+
     }
 
     [TestMethod]
@@ -216,6 +232,7 @@ public class GameTests
                 SoldierType = SoldierType.Archer
             }
         });
+        game.Update(.01);
 
         Assert.AreEqual(5, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(5, map.Soldiers.Count);

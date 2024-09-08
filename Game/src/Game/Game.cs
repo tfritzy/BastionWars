@@ -9,6 +9,7 @@ public class Game
     public GenerationMode GenerationMode { get; private set; }
     public List<Oneof_GameServerToPlayer> Outbox { get; private set; } = new();
     public Dictionary<string, Player> Players { get; private set; } = new();
+    public List<string> PlayerIds { get; private set; } = new();
 
     private double lastNetworkTick = 0f;
     private double lastWordPlacement = 0f;
@@ -61,7 +62,6 @@ public class Game
     {
         foreach (Oneof_GameServerToPlayer update in Outbox)
         {
-            Console.WriteLine($"Adding message to player {update.RecipientId} in packetize");
             Players[update.RecipientId].MessageQueue.Add(update);
         }
 
@@ -85,10 +85,7 @@ public class Game
             });
         }
 
-        if (allSoldierPositions.SoldierPositions.Count > 0)
-        {
-            AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
-        }
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
     }
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
@@ -177,12 +174,14 @@ public class Game
     public void JoinGame(Player player)
     {
         Players[player.Id] = player;
+        PlayerIds.Add(player.Id);
         AddMessageToOutbox(new Oneof_GameServerToPlayer { InitialState = GetInitialState() }, player.Id);
     }
 
     public void DisconnectPlayer(string playerId)
     {
         Players.Remove(playerId);
+        PlayerIds.Remove(playerId);
     }
 
     public void HandleKeystroke(char key, int alliance)
@@ -243,7 +242,6 @@ public class Game
     {
         if (recipient == null)
         {
-            Console.WriteLine("Enquing message for everyone");
             foreach (Player player in Players.Values)
             {
                 var u = update.Clone();
@@ -253,7 +251,6 @@ public class Game
         }
         else
         {
-            Console.WriteLine($"Enquing message for {recipient}");
             update.RecipientId = recipient;
             Outbox.Add(update);
         }

@@ -29,9 +29,9 @@ public class Map
 
     public void Update(double deltaTime)
     {
-        foreach (Keep bastion in Keeps.Values)
+        foreach (Keep keep in Keeps.Values)
         {
-            bastion.Update(deltaTime);
+            keep.Update(deltaTime);
         }
 
         for (int i = 0; i < Soldiers.Count; i++)

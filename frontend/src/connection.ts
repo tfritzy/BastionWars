@@ -38,15 +38,12 @@ export class Connection {
   }
 
   private handleMessage(event: MessageEvent): void {
-    console.log("Message received:", event.data);
-
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.result instanceof ArrayBuffer) {
         const buffer = new Uint8Array(reader.result);
         const update = decodeOneof_GameServerToPlayer(buffer);
 
-        console.log("Parsed update", update);
         this.onMessage(update);
       }
     };

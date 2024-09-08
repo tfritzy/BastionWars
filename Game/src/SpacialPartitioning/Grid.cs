@@ -6,6 +6,8 @@ public class Grid
 {
     public int EntityCount => entityPartitionLookup.Count;
     public const int PartitionSize = 1;
+    public int MaxX => partitions.GetLength(0) * PartitionSize;
+    public int MaxY => partitions.GetLength(1) * PartitionSize;
 
     readonly Partition[,] partitions;
     readonly Dictionary<uint, Vector2Int> entityPartitionLookup;
@@ -55,10 +57,28 @@ public class Grid
             throw new ArgumentException("Entity not found");
         }
 
-        if (newPartition.X < 0 || newPartition.X >= partitions.GetLength(0) ||
-            newPartition.Y < 0 || newPartition.Y >= partitions.GetLength(1))
+        if (newPartition.X < 0)
         {
-            throw new ArgumentException("Entity out of bounds");
+            newPartition.X = 0;
+            newPosition.X = 0;
+        }
+
+        if (newPartition.X >= partitions.GetLength(0))
+        {
+            newPartition.X = partitions.GetLength(0) - 1;
+            newPosition.X = MaxX;
+        }
+
+        if (newPartition.Y < 0)
+        {
+            newPartition.Y = 0;
+            newPosition.Y = 0;
+        }
+
+        if (newPartition.Y >= partitions.GetLength(1))
+        {
+            newPartition.Y = partitions.GetLength(1) - 1;
+            newPosition.Y = MaxY;
         }
 
         if (entityPartitionLookup[id] == newPartition)

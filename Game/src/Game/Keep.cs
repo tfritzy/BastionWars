@@ -124,6 +124,7 @@ public class Keep : Entity
 
                 if (order.ArcherCount == 0 && order.WarriorCount == 0)
                 {
+                    Logger.Log($"Removing deployment order from keep {Id} at index {i} when count is {DeploymentOrders.Count}");
                     DeploymentOrders.RemoveAt(i);
                     i--;
                 }
@@ -150,8 +151,6 @@ public class Keep : Entity
         {
             DeploymentOrders.Add(deploymentOrder);
         }
-
-        DeployTroops();
     }
 
     private static int Min(params int[] values)
