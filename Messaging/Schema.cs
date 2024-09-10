@@ -63,20 +63,26 @@ namespace Schema {
             "EhAKCGFsbGlhbmNlGAYgASgFIlcKCktlZXBVcGRhdGUSCgoCaWQYASABKA0S",
             "FQoNd2Fycmlvcl9jb3VudBgCIAEoBRIUCgxhcmNoZXJfY291bnQYAyABKAUS",
             "EAoIYWxsaWFuY2UYBCABKAUiOgoOQWxsS2VlcFVwZGF0ZXMSKAoMa2VlcF91",
-            "cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUieAoMSW5pdGlhbFN0",
-            "YXRlEiAKBWtlZXBzGAEgAygLMhEuU2NoZW1hLktlZXBTdGF0ZRIRCgltYXBf",
-            "d2lkdGgYAiABKAUSEgoKbWFwX2hlaWdodBgDIAEoBRIfCgV0aWxlcxgEIAMo",
-            "DjIQLlNjaGVtYS5UaWxlVHlwZSKjAQoUSXNzdWVEZXBsb3ltZW50T3JkZXIS",
-            "EwoLc291cmNlX2tlZXAYASABKA0SEwoLdGFyZ2V0X2tlZXAYAiABKA0SLgoM",
-            "c29sZGllcl90eXBlGAMgASgOMhMuU2NoZW1hLlNvbGRpZXJUeXBlSACIAQES",
-            "FAoHcGVyY2VudBgEIAEoAkgBiAEBQg8KDV9zb2xkaWVyX3R5cGVCCgoIX3Bl",
-            "cmNlbnQqKgoOR2VuZXJhdGlvbk1vZGUSDgoKQXV0b0FjY3J1ZRAAEggKBFdv",
-            "cmQQASo2CghUaWxlVHlwZRILCgdJbnZhbGlkEAASCAoETGFuZBABEgkKBVdh",
-            "dGVyEAISCAoEVHJlZRADKjoKC1NvbGRpZXJUeXBlEhIKDkludmFsaWRTb2xk",
-            "aWVyEAASCwoHV2FycmlvchABEgoKBkFyY2hlchACYgZwcm90bzM="));
+            "cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUipgEKDEluaXRpYWxT",
+            "dGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFw",
+            "X3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCAD",
+            "KA4yEC5TY2hlbWEuVGlsZVR5cGUSLAoMcmVuZGVyX3RpbGVzGAUgAygOMhYu",
+            "U2NoZW1hLlJlbmRlclRpbGVUeXBlIqMBChRJc3N1ZURlcGxveW1lbnRPcmRl",
+            "chITCgtzb3VyY2Vfa2VlcBgBIAEoDRITCgt0YXJnZXRfa2VlcBgCIAEoDRIu",
+            "Cgxzb2xkaWVyX3R5cGUYAyABKA4yEy5TY2hlbWEuU29sZGllclR5cGVIAIgB",
+            "ARIUCgdwZXJjZW50GAQgASgCSAGIAQFCDwoNX3NvbGRpZXJfdHlwZUIKCghf",
+            "cGVyY2VudCoqCg5HZW5lcmF0aW9uTW9kZRIOCgpBdXRvQWNjcnVlEAASCAoE",
+            "V29yZBABKjYKCFRpbGVUeXBlEgsKB0ludmFsaWQQABIICgRMYW5kEAESCQoF",
+            "V2F0ZXIQAhIICgRUcmVlEAMq1QEKDlJlbmRlclRpbGVUeXBlEg0KCUZ1bGxX",
+            "YXRlchAAEgoKBkxfMTAwMBABEgoKBkxfMDEwMBACEgoKBkxfMTEwMBADEgoK",
+            "BkxfMDAxMBAEEgoKBkxfMTAxMBAFEgoKBkxfMDExMBAGEgoKBkxfMTExMBAH",
+            "EgoKBkxfMDAwMRAIEgoKBkxfMTAwMRAJEgoKBkxfMDEwMRAKEgoKBkxfMTEw",
+            "MRALEgoKBkxfMDAxMRAMEgoKBkxfMTAxMRANEgoKBkxfMDExMRAOEgwKCEZ1",
+            "bGxMYW5kEA8qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQABIL",
+            "CgdXYXJyaW9yEAESCgoGQXJjaGVyEAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderTileType), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameSettings), global::Schema.GameSettings.Parser, new[]{ "GenerationMode", "Map" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SearchForGame), global::Schema.SearchForGame.Parser, new[]{ "Ranked" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameAvailableOnPort), global::Schema.GameAvailableOnPort.Parser, new[]{ "GameId", "PlayerId", "Port" }, null, null, null, null),
@@ -98,7 +104,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepUpdate), global::Schema.KeepUpdate.Parser, new[]{ "Id", "WarriorCount", "ArcherCount", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllKeepUpdates), global::Schema.AllKeepUpdates.Parser, new[]{ "KeepUpdates" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null)
           }));
     }
@@ -116,6 +122,25 @@ namespace Schema {
     [pbr::OriginalName("Land")] Land = 1,
     [pbr::OriginalName("Water")] Water = 2,
     [pbr::OriginalName("Tree")] Tree = 3,
+  }
+
+  public enum RenderTileType {
+    [pbr::OriginalName("FullWater")] FullWater = 0,
+    [pbr::OriginalName("L_1000")] L1000 = 1,
+    [pbr::OriginalName("L_0100")] L0100 = 2,
+    [pbr::OriginalName("L_1100")] L1100 = 3,
+    [pbr::OriginalName("L_0010")] L0010 = 4,
+    [pbr::OriginalName("L_1010")] L1010 = 5,
+    [pbr::OriginalName("L_0110")] L0110 = 6,
+    [pbr::OriginalName("L_1110")] L1110 = 7,
+    [pbr::OriginalName("L_0001")] L0001 = 8,
+    [pbr::OriginalName("L_1001")] L1001 = 9,
+    [pbr::OriginalName("L_0101")] L0101 = 10,
+    [pbr::OriginalName("L_1101")] L1101 = 11,
+    [pbr::OriginalName("L_0011")] L0011 = 12,
+    [pbr::OriginalName("L_1011")] L1011 = 13,
+    [pbr::OriginalName("L_0111")] L0111 = 14,
+    [pbr::OriginalName("FullLand")] FullLand = 15,
   }
 
   public enum SoldierType {
@@ -5466,6 +5491,7 @@ namespace Schema {
       mapWidth_ = other.mapWidth_;
       mapHeight_ = other.mapHeight_;
       tiles_ = other.tiles_.Clone();
+      renderTiles_ = other.renderTiles_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5521,6 +5547,17 @@ namespace Schema {
       get { return tiles_; }
     }
 
+    /// <summary>Field number for the "render_tiles" field.</summary>
+    public const int RenderTilesFieldNumber = 5;
+    private static readonly pb::FieldCodec<global::Schema.RenderTileType> _repeated_renderTiles_codec
+        = pb::FieldCodec.ForEnum(42, x => (int) x, x => (global::Schema.RenderTileType) x);
+    private readonly pbc::RepeatedField<global::Schema.RenderTileType> renderTiles_ = new pbc::RepeatedField<global::Schema.RenderTileType>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Schema.RenderTileType> RenderTiles {
+      get { return renderTiles_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5540,6 +5577,7 @@ namespace Schema {
       if (MapWidth != other.MapWidth) return false;
       if (MapHeight != other.MapHeight) return false;
       if(!tiles_.Equals(other.tiles_)) return false;
+      if(!renderTiles_.Equals(other.renderTiles_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5551,6 +5589,7 @@ namespace Schema {
       if (MapWidth != 0) hash ^= MapWidth.GetHashCode();
       if (MapHeight != 0) hash ^= MapHeight.GetHashCode();
       hash ^= tiles_.GetHashCode();
+      hash ^= renderTiles_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5579,6 +5618,7 @@ namespace Schema {
         output.WriteInt32(MapHeight);
       }
       tiles_.WriteTo(output, _repeated_tiles_codec);
+      renderTiles_.WriteTo(output, _repeated_renderTiles_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5599,6 +5639,7 @@ namespace Schema {
         output.WriteInt32(MapHeight);
       }
       tiles_.WriteTo(ref output, _repeated_tiles_codec);
+      renderTiles_.WriteTo(ref output, _repeated_renderTiles_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5617,6 +5658,7 @@ namespace Schema {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(MapHeight);
       }
       size += tiles_.CalculateSize(_repeated_tiles_codec);
+      size += renderTiles_.CalculateSize(_repeated_renderTiles_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -5637,6 +5679,7 @@ namespace Schema {
         MapHeight = other.MapHeight;
       }
       tiles_.Add(other.tiles_);
+      renderTiles_.Add(other.renderTiles_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -5669,6 +5712,11 @@ namespace Schema {
             tiles_.AddEntriesFrom(input, _repeated_tiles_codec);
             break;
           }
+          case 42:
+          case 40: {
+            renderTiles_.AddEntriesFrom(input, _repeated_renderTiles_codec);
+            break;
+          }
         }
       }
     #endif
@@ -5699,6 +5747,11 @@ namespace Schema {
           case 34:
           case 32: {
             tiles_.AddEntriesFrom(ref input, _repeated_tiles_codec);
+            break;
+          }
+          case 42:
+          case 40: {
+            renderTiles_.AddEntriesFrom(ref input, _repeated_renderTiles_codec);
             break;
           }
         }

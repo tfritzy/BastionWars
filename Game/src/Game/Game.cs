@@ -250,6 +250,7 @@ public class Game
             MapHeight = Map.Height,
         };
         state.Tiles.AddRange(Map.Tiles.Cast<TileType>().ToArray());
+        state.RenderTiles.AddRange(Map.RenderTiles.Cast<RenderTileType>().ToArray());
         state.Keeps.AddRange(Map.Keeps.Values.Select(k => new Schema.KeepState()
         {
             Id = k.Id,

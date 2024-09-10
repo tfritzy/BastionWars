@@ -251,7 +251,6 @@ public class GameTests
         }
     }
 
-
     [TestMethod]
     public void Game_SendsKeepOccupancyChanges()
     {

@@ -8,7 +8,7 @@ namespace KeepLordWarriors;
 public class Map
 {
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
-    public RenderTType[,] RenderTiles { get; private set; } = new RenderTType[0, 0];
+    public RenderTileType[,] RenderTiles { get; private set; } = new RenderTileType[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
     public Dictionary<uint, Keep> Keeps { get; private set; } = new();
@@ -245,7 +245,7 @@ public class Map
 
     private void ParseRenderTiles()
     {
-        RenderTiles = new RenderTType[Width + 1, Height + 1];
+        RenderTiles = new RenderTileType[Width + 1, Height + 1];
 
         for (int x = -1; x < Width; x++)
         {
@@ -271,7 +271,7 @@ public class Map
         return Tiles[x, y];
     }
 
-    private RenderTType GetRenderTileCase(
+    private RenderTileType GetRenderTileCase(
         TileType tl,
         TileType tr,
         TileType bl,
@@ -299,6 +299,6 @@ public class Map
             tileCase |= 8;
         }
 
-        return (RenderTType)tileCase;
+        return (RenderTileType)tileCase;
     }
 }

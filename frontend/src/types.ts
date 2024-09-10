@@ -1,4 +1,10 @@
-import type { KeepState, SoldierState, V2 } from "./Schema";
+import type {
+  KeepState,
+  RenderTileType,
+  SoldierState,
+  TileType,
+  V2,
+} from "./Schema";
 import { Typeable } from "./typeable";
 
 type Vector2 = {
@@ -12,6 +18,7 @@ export type Keep = {
   warrior_count: number;
   archer_count: number;
 };
+
 export type Soldier = {
   id: number;
   pos: Vector2;
@@ -21,11 +28,19 @@ export type Soldier = {
 export const initialGameState: GameState = {
   keeps: [],
   soldiers: new Map(),
+  renderTiles: [],
+  tiles: [],
+  mapWidth: 0,
+  mapHeight: 0,
 };
 
 export type GameState = {
   keeps: Keep[];
   soldiers: Map<number, Soldier>;
+  renderTiles: RenderTileType[];
+  tiles: TileType[];
+  mapWidth: number;
+  mapHeight: number;
 };
 
 export const parseKeep: (keep: KeepState | undefined) => Keep | null = (

@@ -34,6 +34,63 @@ export const decodeTileType: { [key: number]: TileType } = {
   3: TileType.Tree,
 };
 
+export const enum RenderTileType {
+  FullWater = "FullWater",
+  L_1000 = "L_1000",
+  L_0100 = "L_0100",
+  L_1100 = "L_1100",
+  L_0010 = "L_0010",
+  L_1010 = "L_1010",
+  L_0110 = "L_0110",
+  L_1110 = "L_1110",
+  L_0001 = "L_0001",
+  L_1001 = "L_1001",
+  L_0101 = "L_0101",
+  L_1101 = "L_1101",
+  L_0011 = "L_0011",
+  L_1011 = "L_1011",
+  L_0111 = "L_0111",
+  FullLand = "FullLand",
+}
+
+export const encodeRenderTileType: { [key: string]: number } = {
+  FullWater: 0,
+  L_1000: 1,
+  L_0100: 2,
+  L_1100: 3,
+  L_0010: 4,
+  L_1010: 5,
+  L_0110: 6,
+  L_1110: 7,
+  L_0001: 8,
+  L_1001: 9,
+  L_0101: 10,
+  L_1101: 11,
+  L_0011: 12,
+  L_1011: 13,
+  L_0111: 14,
+  FullLand: 15,
+};
+
+export const decodeRenderTileType: { [key: number]: RenderTileType } = {
+  0: RenderTileType.FullWater,
+  1: RenderTileType.L_1000,
+  2: RenderTileType.L_0100,
+  3: RenderTileType.L_1100,
+  4: RenderTileType.L_0010,
+  5: RenderTileType.L_1010,
+  6: RenderTileType.L_0110,
+  7: RenderTileType.L_1110,
+  8: RenderTileType.L_0001,
+  9: RenderTileType.L_1001,
+  10: RenderTileType.L_0101,
+  11: RenderTileType.L_1101,
+  12: RenderTileType.L_0011,
+  13: RenderTileType.L_1011,
+  14: RenderTileType.L_0111,
+  15: RenderTileType.FullLand,
+};
+
 export const enum SoldierType {
   InvalidSoldier = "InvalidSoldier",
   Warrior = "Warrior",
@@ -166,13 +223,18 @@ export interface GameAvailableOnPort {
   port?: string;
 }
 
-export function encodeGameAvailableOnPort(message: GameAvailableOnPort): Uint8Array {
+export function encodeGameAvailableOnPort(
+  message: GameAvailableOnPort
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeGameAvailableOnPort(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeGameAvailableOnPort(message: GameAvailableOnPort, bb: ByteBuffer): void {
+function _encodeGameAvailableOnPort(
+  message: GameAvailableOnPort,
+  bb: ByteBuffer
+): void {
   // optional string game_id = 1;
   let $game_id = message.game_id;
   if ($game_id !== undefined) {
@@ -195,7 +257,9 @@ function _encodeGameAvailableOnPort(message: GameAvailableOnPort, bb: ByteBuffer
   }
 }
 
-export function decodeGameAvailableOnPort(binary: Uint8Array): GameAvailableOnPort {
+export function decodeGameAvailableOnPort(
+  binary: Uint8Array
+): GameAvailableOnPort {
   return _decodeGameAvailableOnPort(wrapByteBuffer(binary));
 }
 
@@ -242,13 +306,18 @@ export interface GameFoundForPlayer {
   address?: string;
 }
 
-export function encodeGameFoundForPlayer(message: GameFoundForPlayer): Uint8Array {
+export function encodeGameFoundForPlayer(
+  message: GameFoundForPlayer
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeGameFoundForPlayer(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeGameFoundForPlayer(message: GameFoundForPlayer, bb: ByteBuffer): void {
+function _encodeGameFoundForPlayer(
+  message: GameFoundForPlayer,
+  bb: ByteBuffer
+): void {
   // optional string game_id = 1;
   let $game_id = message.game_id;
   if ($game_id !== undefined) {
@@ -278,7 +347,9 @@ function _encodeGameFoundForPlayer(message: GameFoundForPlayer, bb: ByteBuffer):
   }
 }
 
-export function decodeGameFoundForPlayer(binary: Uint8Array): GameFoundForPlayer {
+export function decodeGameFoundForPlayer(
+  binary: Uint8Array
+): GameFoundForPlayer {
   return _decodeGameFoundForPlayer(wrapByteBuffer(binary));
 }
 
@@ -328,13 +399,18 @@ export interface PlacePlayerInGame {
   player_id?: string;
 }
 
-export function encodePlacePlayerInGame(message: PlacePlayerInGame): Uint8Array {
+export function encodePlacePlayerInGame(
+  message: PlacePlayerInGame
+): Uint8Array {
   let bb = popByteBuffer();
   _encodePlacePlayerInGame(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodePlacePlayerInGame(message: PlacePlayerInGame, bb: ByteBuffer): void {
+function _encodePlacePlayerInGame(
+  message: PlacePlayerInGame,
+  bb: ByteBuffer
+): void {
   // optional string player_id = 1;
   let $player_id = message.player_id;
   if ($player_id !== undefined) {
@@ -470,13 +546,18 @@ export interface Oneof_PlayerToMatchmaker {
   search_for_game?: SearchForGame;
 }
 
-export function encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker): Uint8Array {
+export function encodeOneof_PlayerToMatchmaker(
+  message: Oneof_PlayerToMatchmaker
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_PlayerToMatchmaker(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker, bb: ByteBuffer): void {
+function _encodeOneof_PlayerToMatchmaker(
+  message: Oneof_PlayerToMatchmaker,
+  bb: ByteBuffer
+): void {
   // optional string player_id = 1;
   let $player_id = message.player_id;
   if ($player_id !== undefined) {
@@ -496,11 +577,15 @@ function _encodeOneof_PlayerToMatchmaker(message: Oneof_PlayerToMatchmaker, bb: 
   }
 }
 
-export function decodeOneof_PlayerToMatchmaker(binary: Uint8Array): Oneof_PlayerToMatchmaker {
+export function decodeOneof_PlayerToMatchmaker(
+  binary: Uint8Array
+): Oneof_PlayerToMatchmaker {
   return _decodeOneof_PlayerToMatchmaker(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_PlayerToMatchmaker(bb: ByteBuffer): Oneof_PlayerToMatchmaker {
+function _decodeOneof_PlayerToMatchmaker(
+  bb: ByteBuffer
+): Oneof_PlayerToMatchmaker {
   let message: Oneof_PlayerToMatchmaker = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -536,13 +621,18 @@ export interface Oneof_MatchMakerToPlayer {
   found_game?: GameFoundForPlayer;
 }
 
-export function encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer): Uint8Array {
+export function encodeOneof_MatchMakerToPlayer(
+  message: Oneof_MatchMakerToPlayer
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_MatchMakerToPlayer(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer, bb: ByteBuffer): void {
+function _encodeOneof_MatchMakerToPlayer(
+  message: Oneof_MatchMakerToPlayer,
+  bb: ByteBuffer
+): void {
   // optional GameFoundForPlayer found_game = 1;
   let $found_game = message.found_game;
   if ($found_game !== undefined) {
@@ -555,11 +645,15 @@ function _encodeOneof_MatchMakerToPlayer(message: Oneof_MatchMakerToPlayer, bb: 
   }
 }
 
-export function decodeOneof_MatchMakerToPlayer(binary: Uint8Array): Oneof_MatchMakerToPlayer {
+export function decodeOneof_MatchMakerToPlayer(
+  binary: Uint8Array
+): Oneof_MatchMakerToPlayer {
   return _decodeOneof_MatchMakerToPlayer(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_MatchMakerToPlayer(bb: ByteBuffer): Oneof_MatchMakerToPlayer {
+function _decodeOneof_MatchMakerToPlayer(
+  bb: ByteBuffer
+): Oneof_MatchMakerToPlayer {
   let message: Oneof_MatchMakerToPlayer = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -590,13 +684,18 @@ export interface Oneof_HostServerToMatchmaker {
   register?: Register;
 }
 
-export function encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker): Uint8Array {
+export function encodeOneof_HostServerToMatchmaker(
+  message: Oneof_HostServerToMatchmaker
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_HostServerToMatchmaker(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmaker, bb: ByteBuffer): void {
+function _encodeOneof_HostServerToMatchmaker(
+  message: Oneof_HostServerToMatchmaker,
+  bb: ByteBuffer
+): void {
   // optional GameAvailableOnPort game_available_on_port = 1;
   let $game_available_on_port = message.game_available_on_port;
   if ($game_available_on_port !== undefined) {
@@ -620,11 +719,15 @@ function _encodeOneof_HostServerToMatchmaker(message: Oneof_HostServerToMatchmak
   }
 }
 
-export function decodeOneof_HostServerToMatchmaker(binary: Uint8Array): Oneof_HostServerToMatchmaker {
+export function decodeOneof_HostServerToMatchmaker(
+  binary: Uint8Array
+): Oneof_HostServerToMatchmaker {
   return _decodeOneof_HostServerToMatchmaker(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_HostServerToMatchmaker(bb: ByteBuffer): Oneof_HostServerToMatchmaker {
+function _decodeOneof_HostServerToMatchmaker(
+  bb: ByteBuffer
+): Oneof_HostServerToMatchmaker {
   let message: Oneof_HostServerToMatchmaker = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -663,13 +766,18 @@ export interface Oneof_MatchmakerToHostServer {
   registered?: Registered;
 }
 
-export function encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServer): Uint8Array {
+export function encodeOneof_MatchmakerToHostServer(
+  message: Oneof_MatchmakerToHostServer
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_MatchmakerToHostServer(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServer, bb: ByteBuffer): void {
+function _encodeOneof_MatchmakerToHostServer(
+  message: Oneof_MatchmakerToHostServer,
+  bb: ByteBuffer
+): void {
   // optional PlacePlayerInGame place_player_in_game = 2;
   let $place_player_in_game = message.place_player_in_game;
   if ($place_player_in_game !== undefined) {
@@ -693,11 +801,15 @@ function _encodeOneof_MatchmakerToHostServer(message: Oneof_MatchmakerToHostServ
   }
 }
 
-export function decodeOneof_MatchmakerToHostServer(binary: Uint8Array): Oneof_MatchmakerToHostServer {
+export function decodeOneof_MatchmakerToHostServer(
+  binary: Uint8Array
+): Oneof_MatchmakerToHostServer {
   return _decodeOneof_MatchmakerToHostServer(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_MatchmakerToHostServer(bb: ByteBuffer): Oneof_MatchmakerToHostServer {
+function _decodeOneof_MatchmakerToHostServer(
+  bb: ByteBuffer
+): Oneof_MatchmakerToHostServer {
   let message: Oneof_MatchmakerToHostServer = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -735,13 +847,18 @@ export interface Oneof_HostServerToGameServer {
   register?: Register;
 }
 
-export function encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServer): Uint8Array {
+export function encodeOneof_HostServerToGameServer(
+  message: Oneof_HostServerToGameServer
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_HostServerToGameServer(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServer, bb: ByteBuffer): void {
+function _encodeOneof_HostServerToGameServer(
+  message: Oneof_HostServerToGameServer,
+  bb: ByteBuffer
+): void {
   // optional Register register = 1;
   let $register = message.register;
   if ($register !== undefined) {
@@ -754,11 +871,15 @@ function _encodeOneof_HostServerToGameServer(message: Oneof_HostServerToGameServ
   }
 }
 
-export function decodeOneof_HostServerToGameServer(binary: Uint8Array): Oneof_HostServerToGameServer {
+export function decodeOneof_HostServerToGameServer(
+  binary: Uint8Array
+): Oneof_HostServerToGameServer {
   return _decodeOneof_HostServerToGameServer(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_HostServerToGameServer(bb: ByteBuffer): Oneof_HostServerToGameServer {
+function _decodeOneof_HostServerToGameServer(
+  bb: ByteBuffer
+): Oneof_HostServerToGameServer {
   let message: Oneof_HostServerToGameServer = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -790,13 +911,18 @@ export interface Oneof_PlayerToGameServer {
   issue_deployment_order?: IssueDeploymentOrder;
 }
 
-export function encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer): Uint8Array {
+export function encodeOneof_PlayerToGameServer(
+  message: Oneof_PlayerToGameServer
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_PlayerToGameServer(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer, bb: ByteBuffer): void {
+function _encodeOneof_PlayerToGameServer(
+  message: Oneof_PlayerToGameServer,
+  bb: ByteBuffer
+): void {
   // optional string sender_id = 1;
   let $sender_id = message.sender_id;
   if ($sender_id !== undefined) {
@@ -823,11 +949,15 @@ function _encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer, bb: 
   }
 }
 
-export function decodeOneof_PlayerToGameServer(binary: Uint8Array): Oneof_PlayerToGameServer {
+export function decodeOneof_PlayerToGameServer(
+  binary: Uint8Array
+): Oneof_PlayerToGameServer {
   return _decodeOneof_PlayerToGameServer(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_PlayerToGameServer(bb: ByteBuffer): Oneof_PlayerToGameServer {
+function _decodeOneof_PlayerToGameServer(
+  bb: ByteBuffer
+): Oneof_PlayerToGameServer {
   let message: Oneof_PlayerToGameServer = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -872,13 +1002,18 @@ export interface Oneof_GameServerToPlayer {
   keep_updates?: AllKeepUpdates;
 }
 
-export function encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer): Uint8Array {
+export function encodeOneof_GameServerToPlayer(
+  message: Oneof_GameServerToPlayer
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeOneof_GameServerToPlayer(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: ByteBuffer): void {
+function _encodeOneof_GameServerToPlayer(
+  message: Oneof_GameServerToPlayer,
+  bb: ByteBuffer
+): void {
   // optional string recipient_id = 1;
   let $recipient_id = message.recipient_id;
   if ($recipient_id !== undefined) {
@@ -920,11 +1055,15 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
   }
 }
 
-export function decodeOneof_GameServerToPlayer(binary: Uint8Array): Oneof_GameServerToPlayer {
+export function decodeOneof_GameServerToPlayer(
+  binary: Uint8Array
+): Oneof_GameServerToPlayer {
   return _decodeOneof_GameServerToPlayer(wrapByteBuffer(binary));
 }
 
-function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlayer {
+function _decodeOneof_GameServerToPlayer(
+  bb: ByteBuffer
+): Oneof_GameServerToPlayer {
   let message: Oneof_GameServerToPlayer = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
@@ -1098,13 +1237,18 @@ export interface AllSoldierPositions {
   soldier_positions?: SoldierState[];
 }
 
-export function encodeAllSoldierPositions(message: AllSoldierPositions): Uint8Array {
+export function encodeAllSoldierPositions(
+  message: AllSoldierPositions
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeAllSoldierPositions(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeAllSoldierPositions(message: AllSoldierPositions, bb: ByteBuffer): void {
+function _encodeAllSoldierPositions(
+  message: AllSoldierPositions,
+  bb: ByteBuffer
+): void {
   // repeated SoldierState soldier_positions = 1;
   let array$soldier_positions = message.soldier_positions;
   if (array$soldier_positions !== undefined) {
@@ -1119,7 +1263,9 @@ function _encodeAllSoldierPositions(message: AllSoldierPositions, bb: ByteBuffer
   }
 }
 
-export function decodeAllSoldierPositions(binary: Uint8Array): AllSoldierPositions {
+export function decodeAllSoldierPositions(
+  binary: Uint8Array
+): AllSoldierPositions {
   return _decodeAllSoldierPositions(wrapByteBuffer(binary));
 }
 
@@ -1136,7 +1282,8 @@ function _decodeAllSoldierPositions(bb: ByteBuffer): AllSoldierPositions {
       // repeated SoldierState soldier_positions = 1;
       case 1: {
         let limit = pushTemporaryLength(bb);
-        let values = message.soldier_positions || (message.soldier_positions = []);
+        let values =
+          message.soldier_positions || (message.soldier_positions = []);
         values.push(_decodeSoldierState(bb));
         bb.limit = limit;
         break;
@@ -1510,6 +1657,7 @@ export interface InitialState {
   map_width?: number;
   map_height?: number;
   tiles?: TileType[];
+  render_tiles?: RenderTileType[];
 }
 
 export function encodeInitialState(message: InitialState): Uint8Array {
@@ -1554,6 +1702,19 @@ function _encodeInitialState(message: InitialState, bb: ByteBuffer): void {
       writeVarint32(packed, encodeTileType[value]);
     }
     writeVarint32(bb, 34);
+    writeVarint32(bb, packed.offset);
+    writeByteBuffer(bb, packed);
+    pushByteBuffer(packed);
+  }
+
+  // repeated RenderTileType render_tiles = 5;
+  let array$render_tiles = message.render_tiles;
+  if (array$render_tiles !== undefined) {
+    let packed = popByteBuffer();
+    for (let value of array$render_tiles) {
+      writeVarint32(packed, encodeRenderTileType[value]);
+    }
+    writeVarint32(bb, 42);
     writeVarint32(bb, packed.offset);
     writeByteBuffer(bb, packed);
     pushByteBuffer(packed);
@@ -1610,6 +1771,21 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
         break;
       }
 
+      // repeated RenderTileType render_tiles = 5;
+      case 5: {
+        let values = message.render_tiles || (message.render_tiles = []);
+        if ((tag & 7) === 2) {
+          let outerLimit = pushTemporaryLength(bb);
+          while (!isAtEnd(bb)) {
+            values.push(decodeRenderTileType[readVarint32(bb)]);
+          }
+          bb.limit = outerLimit;
+        } else {
+          values.push(decodeRenderTileType[readVarint32(bb)]);
+        }
+        break;
+      }
+
       default:
         skipUnknownField(bb, tag & 7);
     }
@@ -1625,13 +1801,18 @@ export interface IssueDeploymentOrder {
   percent?: number;
 }
 
-export function encodeIssueDeploymentOrder(message: IssueDeploymentOrder): Uint8Array {
+export function encodeIssueDeploymentOrder(
+  message: IssueDeploymentOrder
+): Uint8Array {
   let bb = popByteBuffer();
   _encodeIssueDeploymentOrder(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeIssueDeploymentOrder(message: IssueDeploymentOrder, bb: ByteBuffer): void {
+function _encodeIssueDeploymentOrder(
+  message: IssueDeploymentOrder,
+  bb: ByteBuffer
+): void {
   // optional uint32 source_keep = 1;
   let $source_keep = message.source_keep;
   if ($source_keep !== undefined) {
@@ -1661,7 +1842,9 @@ function _encodeIssueDeploymentOrder(message: IssueDeploymentOrder, bb: ByteBuff
   }
 }
 
-export function decodeIssueDeploymentOrder(binary: Uint8Array): IssueDeploymentOrder {
+export function decodeIssueDeploymentOrder(
+  binary: Uint8Array
+): IssueDeploymentOrder {
   return _decodeIssueDeploymentOrder(wrapByteBuffer(binary));
 }
 
@@ -1728,11 +1911,20 @@ function pushTemporaryLength(bb: ByteBuffer): number {
 
 function skipUnknownField(bb: ByteBuffer, type: number): void {
   switch (type) {
-    case 0: while (readByte(bb) & 0x80) { } break;
-    case 2: skip(bb, readVarint32(bb)); break;
-    case 5: skip(bb, 4); break;
-    case 1: skip(bb, 8); break;
-    default: throw new Error("Unimplemented type: " + type);
+    case 0:
+      while (readByte(bb) & 0x80) {}
+      break;
+    case 2:
+      skip(bb, readVarint32(bb));
+      break;
+    case 5:
+      skip(bb, 4);
+      break;
+    case 1:
+      skip(bb, 8);
+      break;
+    default:
+      throw new Error("Unimplemented type: " + type);
   }
 }
 
@@ -1748,10 +1940,11 @@ function longToString(value: Long): string {
   let low = value.low;
   let high = value.high;
   return String.fromCharCode(
-    low & 0xFFFF,
+    low & 0xffff,
     low >>> 16,
-    high & 0xFFFF,
-    high >>> 16);
+    high & 0xffff,
+    high >>> 16
+  );
 }
 
 // The code below was modified from https://github.com/protobufjs/bytebuffer.js
@@ -1797,7 +1990,7 @@ function toUint8Array(bb: ByteBuffer): Uint8Array {
 
 function skip(bb: ByteBuffer, offset: number): void {
   if (bb.offset + offset > bb.limit) {
-    throw new Error('Skip past limit');
+    throw new Error("Skip past limit");
   }
   bb.offset += offset;
 }
@@ -1826,7 +2019,7 @@ function grow(bb: ByteBuffer, count: number): number {
 function advance(bb: ByteBuffer, count: number): number {
   let offset = bb.offset;
   if (offset + count > bb.limit) {
-    throw new Error('Read past limit');
+    throw new Error("Read past limit");
   }
   bb.offset += count;
   return offset;
@@ -1847,11 +2040,15 @@ function readString(bb: ByteBuffer, count: number): string {
   let offset = advance(bb, count);
   let fromCharCode = String.fromCharCode;
   let bytes = bb.bytes;
-  let invalid = '\uFFFD';
-  let text = '';
+  let invalid = "\uFFFD";
+  let text = "";
 
   for (let i = 0; i < count; i++) {
-    let c1 = bytes[i + offset], c2: number, c3: number, c4: number, c: number;
+    let c1 = bytes[i + offset],
+      c2: number,
+      c3: number,
+      c4: number,
+      c: number;
 
     // 1 byte
     if ((c1 & 0x80) === 0) {
@@ -1859,13 +2056,13 @@ function readString(bb: ByteBuffer, count: number): string {
     }
 
     // 2 bytes
-    else if ((c1 & 0xE0) === 0xC0) {
+    else if ((c1 & 0xe0) === 0xc0) {
       if (i + 1 >= count) text += invalid;
       else {
         c2 = bytes[i + offset + 1];
-        if ((c2 & 0xC0) !== 0x80) text += invalid;
+        if ((c2 & 0xc0) !== 0x80) text += invalid;
         else {
-          c = ((c1 & 0x1F) << 6) | (c2 & 0x3F);
+          c = ((c1 & 0x1f) << 6) | (c2 & 0x3f);
           if (c < 0x80) text += invalid;
           else {
             text += fromCharCode(c);
@@ -1876,15 +2073,15 @@ function readString(bb: ByteBuffer, count: number): string {
     }
 
     // 3 bytes
-    else if ((c1 & 0xF0) == 0xE0) {
+    else if ((c1 & 0xf0) == 0xe0) {
       if (i + 2 >= count) text += invalid;
       else {
         c2 = bytes[i + offset + 1];
         c3 = bytes[i + offset + 2];
-        if (((c2 | (c3 << 8)) & 0xC0C0) !== 0x8080) text += invalid;
+        if (((c2 | (c3 << 8)) & 0xc0c0) !== 0x8080) text += invalid;
         else {
-          c = ((c1 & 0x0F) << 12) | ((c2 & 0x3F) << 6) | (c3 & 0x3F);
-          if (c < 0x0800 || (c >= 0xD800 && c <= 0xDFFF)) text += invalid;
+          c = ((c1 & 0x0f) << 12) | ((c2 & 0x3f) << 6) | (c3 & 0x3f);
+          if (c < 0x0800 || (c >= 0xd800 && c <= 0xdfff)) text += invalid;
           else {
             text += fromCharCode(c);
             i += 2;
@@ -1894,26 +2091,29 @@ function readString(bb: ByteBuffer, count: number): string {
     }
 
     // 4 bytes
-    else if ((c1 & 0xF8) == 0xF0) {
+    else if ((c1 & 0xf8) == 0xf0) {
       if (i + 3 >= count) text += invalid;
       else {
         c2 = bytes[i + offset + 1];
         c3 = bytes[i + offset + 2];
         c4 = bytes[i + offset + 3];
-        if (((c2 | (c3 << 8) | (c4 << 16)) & 0xC0C0C0) !== 0x808080) text += invalid;
+        if (((c2 | (c3 << 8) | (c4 << 16)) & 0xc0c0c0) !== 0x808080)
+          text += invalid;
         else {
-          c = ((c1 & 0x07) << 0x12) | ((c2 & 0x3F) << 0x0C) | ((c3 & 0x3F) << 0x06) | (c4 & 0x3F);
-          if (c < 0x10000 || c > 0x10FFFF) text += invalid;
+          c =
+            ((c1 & 0x07) << 0x12) |
+            ((c2 & 0x3f) << 0x0c) |
+            ((c3 & 0x3f) << 0x06) |
+            (c4 & 0x3f);
+          if (c < 0x10000 || c > 0x10ffff) text += invalid;
           else {
             c -= 0x10000;
-            text += fromCharCode((c >> 10) + 0xD800, (c & 0x3FF) + 0xDC00);
+            text += fromCharCode((c >> 10) + 0xd800, (c & 0x3ff) + 0xdc00);
             i += 3;
           }
         }
       }
-    }
-
-    else text += invalid;
+    } else text += invalid;
   }
 
   return text;
@@ -1927,8 +2127,8 @@ function writeString(bb: ByteBuffer, text: string): void {
   // Write the byte count first
   for (let i = 0; i < n; i++) {
     let c = text.charCodeAt(i);
-    if (c >= 0xD800 && c <= 0xDBFF && i + 1 < n) {
-      c = (c << 10) + text.charCodeAt(++i) - 0x35FDC00;
+    if (c >= 0xd800 && c <= 0xdbff && i + 1 < n) {
+      c = (c << 10) + text.charCodeAt(++i) - 0x35fdc00;
     }
     byteCount += c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4;
   }
@@ -1940,24 +2140,24 @@ function writeString(bb: ByteBuffer, text: string): void {
   // Then write the bytes
   for (let i = 0; i < n; i++) {
     let c = text.charCodeAt(i);
-    if (c >= 0xD800 && c <= 0xDBFF && i + 1 < n) {
-      c = (c << 10) + text.charCodeAt(++i) - 0x35FDC00;
+    if (c >= 0xd800 && c <= 0xdbff && i + 1 < n) {
+      c = (c << 10) + text.charCodeAt(++i) - 0x35fdc00;
     }
     if (c < 0x80) {
       bytes[offset++] = c;
     } else {
       if (c < 0x800) {
-        bytes[offset++] = ((c >> 6) & 0x1F) | 0xC0;
+        bytes[offset++] = ((c >> 6) & 0x1f) | 0xc0;
       } else {
         if (c < 0x10000) {
-          bytes[offset++] = ((c >> 12) & 0x0F) | 0xE0;
+          bytes[offset++] = ((c >> 12) & 0x0f) | 0xe0;
         } else {
-          bytes[offset++] = ((c >> 18) & 0x07) | 0xF0;
-          bytes[offset++] = ((c >> 12) & 0x3F) | 0x80;
+          bytes[offset++] = ((c >> 18) & 0x07) | 0xf0;
+          bytes[offset++] = ((c >> 12) & 0x3f) | 0x80;
         }
-        bytes[offset++] = ((c >> 6) & 0x3F) | 0x80;
+        bytes[offset++] = ((c >> 6) & 0x3f) | 0x80;
       }
-      bytes[offset++] = (c & 0x3F) | 0x80;
+      bytes[offset++] = (c & 0x3f) | 0x80;
     }
   }
 }
@@ -2077,7 +2277,7 @@ function readVarint32(bb: ByteBuffer): number {
   let b: number;
   do {
     b = readByte(bb);
-    if (c < 32) value |= (b & 0x7F) << c;
+    if (c < 32) value |= (b & 0x7f) << c;
     c += 7;
   } while (b & 0x80);
   return value;
@@ -2098,18 +2298,35 @@ function readVarint64(bb: ByteBuffer, unsigned: boolean): Long {
   let part2 = 0;
   let b: number;
 
-  b = readByte(bb); part0 = (b & 0x7F); if (b & 0x80) {
-    b = readByte(bb); part0 |= (b & 0x7F) << 7; if (b & 0x80) {
-      b = readByte(bb); part0 |= (b & 0x7F) << 14; if (b & 0x80) {
-        b = readByte(bb); part0 |= (b & 0x7F) << 21; if (b & 0x80) {
-
-          b = readByte(bb); part1 = (b & 0x7F); if (b & 0x80) {
-            b = readByte(bb); part1 |= (b & 0x7F) << 7; if (b & 0x80) {
-              b = readByte(bb); part1 |= (b & 0x7F) << 14; if (b & 0x80) {
-                b = readByte(bb); part1 |= (b & 0x7F) << 21; if (b & 0x80) {
-
-                  b = readByte(bb); part2 = (b & 0x7F); if (b & 0x80) {
-                    b = readByte(bb); part2 |= (b & 0x7F) << 7;
+  b = readByte(bb);
+  part0 = b & 0x7f;
+  if (b & 0x80) {
+    b = readByte(bb);
+    part0 |= (b & 0x7f) << 7;
+    if (b & 0x80) {
+      b = readByte(bb);
+      part0 |= (b & 0x7f) << 14;
+      if (b & 0x80) {
+        b = readByte(bb);
+        part0 |= (b & 0x7f) << 21;
+        if (b & 0x80) {
+          b = readByte(bb);
+          part1 = b & 0x7f;
+          if (b & 0x80) {
+            b = readByte(bb);
+            part1 |= (b & 0x7f) << 7;
+            if (b & 0x80) {
+              b = readByte(bb);
+              part1 |= (b & 0x7f) << 14;
+              if (b & 0x80) {
+                b = readByte(bb);
+                part1 |= (b & 0x7f) << 21;
+                if (b & 0x80) {
+                  b = readByte(bb);
+                  part2 = b & 0x7f;
+                  if (b & 0x80) {
+                    b = readByte(bb);
+                    part2 |= (b & 0x7f) << 7;
                   }
                 }
               }
@@ -2134,30 +2351,56 @@ function writeVarint64(bb: ByteBuffer, value: Long): void {
 
   // ref: src/google/protobuf/io/coded_stream.cc
   let size =
-    part2 === 0 ?
-      part1 === 0 ?
-        part0 < 1 << 14 ?
-          part0 < 1 << 7 ? 1 : 2 :
-          part0 < 1 << 21 ? 3 : 4 :
-        part1 < 1 << 14 ?
-          part1 < 1 << 7 ? 5 : 6 :
-          part1 < 1 << 21 ? 7 : 8 :
-      part2 < 1 << 7 ? 9 : 10;
+    part2 === 0
+      ? part1 === 0
+        ? part0 < 1 << 14
+          ? part0 < 1 << 7
+            ? 1
+            : 2
+          : part0 < 1 << 21
+          ? 3
+          : 4
+        : part1 < 1 << 14
+        ? part1 < 1 << 7
+          ? 5
+          : 6
+        : part1 < 1 << 21
+        ? 7
+        : 8
+      : part2 < 1 << 7
+      ? 9
+      : 10;
 
   let offset = grow(bb, size);
   let bytes = bb.bytes;
 
   switch (size) {
-    case 10: bytes[offset + 9] = (part2 >>> 7) & 0x01;
-    case 9: bytes[offset + 8] = size !== 9 ? part2 | 0x80 : part2 & 0x7F;
-    case 8: bytes[offset + 7] = size !== 8 ? (part1 >>> 21) | 0x80 : (part1 >>> 21) & 0x7F;
-    case 7: bytes[offset + 6] = size !== 7 ? (part1 >>> 14) | 0x80 : (part1 >>> 14) & 0x7F;
-    case 6: bytes[offset + 5] = size !== 6 ? (part1 >>> 7) | 0x80 : (part1 >>> 7) & 0x7F;
-    case 5: bytes[offset + 4] = size !== 5 ? part1 | 0x80 : part1 & 0x7F;
-    case 4: bytes[offset + 3] = size !== 4 ? (part0 >>> 21) | 0x80 : (part0 >>> 21) & 0x7F;
-    case 3: bytes[offset + 2] = size !== 3 ? (part0 >>> 14) | 0x80 : (part0 >>> 14) & 0x7F;
-    case 2: bytes[offset + 1] = size !== 2 ? (part0 >>> 7) | 0x80 : (part0 >>> 7) & 0x7F;
-    case 1: bytes[offset] = size !== 1 ? part0 | 0x80 : part0 & 0x7F;
+    case 10:
+      bytes[offset + 9] = (part2 >>> 7) & 0x01;
+    case 9:
+      bytes[offset + 8] = size !== 9 ? part2 | 0x80 : part2 & 0x7f;
+    case 8:
+      bytes[offset + 7] =
+        size !== 8 ? (part1 >>> 21) | 0x80 : (part1 >>> 21) & 0x7f;
+    case 7:
+      bytes[offset + 6] =
+        size !== 7 ? (part1 >>> 14) | 0x80 : (part1 >>> 14) & 0x7f;
+    case 6:
+      bytes[offset + 5] =
+        size !== 6 ? (part1 >>> 7) | 0x80 : (part1 >>> 7) & 0x7f;
+    case 5:
+      bytes[offset + 4] = size !== 5 ? part1 | 0x80 : part1 & 0x7f;
+    case 4:
+      bytes[offset + 3] =
+        size !== 4 ? (part0 >>> 21) | 0x80 : (part0 >>> 21) & 0x7f;
+    case 3:
+      bytes[offset + 2] =
+        size !== 3 ? (part0 >>> 14) | 0x80 : (part0 >>> 14) & 0x7f;
+    case 2:
+      bytes[offset + 1] =
+        size !== 2 ? (part0 >>> 7) | 0x80 : (part0 >>> 7) & 0x7f;
+    case 1:
+      bytes[offset] = size !== 1 ? part0 | 0x80 : part0 & 0x7f;
   }
 }
 

@@ -164,12 +164,12 @@ public class MapTests
     public void Map_RenderTiles()
     {
         KeepLordWarriors.Map map = new(TestMaps.ThreeByThree);
-        RenderTType[,] expected = new RenderTType[,]
+        RenderTileType[,] expected = new RenderTileType[,]
         {
-            {RenderTType.FullWater, RenderTType.FullWater, RenderTType.FullWater, RenderTType.FullWater},
-            {RenderTType.L_0001, RenderTType.L_0010, RenderTType.L_0001, RenderTType.L_0010},
-            {RenderTType.L_0101, RenderTType.L_1011, RenderTType.L_0110, RenderTType.L_1000},
-            {RenderTType.L_0100, RenderTType.L_1100, RenderTType.L_1000, RenderTType.FullWater},
+            {RenderTileType.FullWater, RenderTileType.FullWater, RenderTileType.FullWater, RenderTileType.FullWater},
+            {RenderTileType.L0001, RenderTileType.L0010, RenderTileType.L0001, RenderTileType.L0010},
+            {RenderTileType.L0101, RenderTileType.L1011, RenderTileType.L0110, RenderTileType.L1000},
+            {RenderTileType.L0100, RenderTileType.L1100, RenderTileType.L1000, RenderTileType.FullWater},
         };
 
         for (int x = 0; x < map.Width; x++)

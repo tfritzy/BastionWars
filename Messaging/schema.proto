@@ -110,6 +110,26 @@ enum TileType
     Tree = 3;
 }
 
+enum RenderTileType
+{
+    FullWater = 0;
+    L_1000 = 1;
+    L_0100 = 2;
+    L_1100 = 3;
+    L_0010 = 4;
+    L_1010 = 5;
+    L_0110 = 6;
+    L_1110 = 7;
+    L_0001 = 8;
+    L_1001 = 9;
+    L_0101 = 10;
+    L_1101 = 11;
+    L_0011 = 12;
+    L_1011 = 13;
+    L_0111 = 14;
+    FullLand = 15;
+}
+
 message V2 {
     float x = 1;
     float y = 2;
@@ -161,6 +181,7 @@ message InitialState {
     int32 map_width = 2;
     int32 map_height = 3;
     repeated TileType tiles = 4;
+    repeated RenderTileType render_tiles = 5;
 }
 
 message IssueDeploymentOrder {

@@ -1,5 +1,6 @@
 using Godot;
 using KeepLordWarriors;
+using Schema;
 using SpacialPartitioning;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ public partial class MapMono : GridMap
         {
             for (int y = 0; y < Map.RenderTiles.GetLength(1); y++)
             {
-                RenderTType type = Map.RenderTiles[x, y];
+                RenderTileType type = Map.RenderTiles[x, y];
                 MeshInstance3D meshInst = new MeshInstance3D();
                 meshInst.Mesh = MeshLibrary.GetItemMesh((int)type);
                 meshInst.Position = ToGlobal(MapToLocal(new Vector3I(x, 0, y)));
