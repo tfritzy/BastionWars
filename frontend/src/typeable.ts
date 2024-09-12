@@ -35,8 +35,9 @@ export class Typeable {
     const baseY = y + Math.random() * this.shakeMagnitude;
 
     const completedPart = this.text.substring(0, this.progress);
+    this.ctx.fillStyle = "#4a4b5b";
     this.ctx.fillText(completedPart, baseX, baseY);
-    this.ctx.fillStyle = "#4a4b5b55";
+    this.ctx.fillStyle = "#4a4b5b88";
     this.ctx.fillText(
       this.text.substring(this.progress),
       baseX + this.ctx.measureText(completedPart).width,

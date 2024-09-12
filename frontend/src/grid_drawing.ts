@@ -1,4 +1,3 @@
-import { WORLD_TO_CANVAS } from "./constants.ts";
 import { RenderTileType } from "./Schema.ts";
 
 export function drawLandTile(
@@ -11,6 +10,9 @@ export function drawLandTile(
 ) {
   const corners = interpretTileType(tileType);
   const landCount = corners.filter(Boolean).length;
+
+  ctx.lineWidth = 1;
+  ctx.fillStyle = "black";
 
   switch (landCount) {
     case 0:
@@ -26,12 +28,14 @@ export function drawLandTile(
         drawTwoOppositeLandCorners(ctx, x, y, size, radius, corners);
       }
       break;
-    // case 3:
-    //   this.drawThreeLandCorners(x, y, size, radius, corners);
-    //   break;
-    // case 4:
-    //   ctx.rect(x, y, size, size);
-    //   break;
+    case 3:
+      drawThreeLandCorners(ctx, x, y, size, radius, corners);
+      break;
+    case 4:
+      // ctx.beginPath();
+      // ctx.rect(x, y, size, size);
+      // ctx.stroke();
+      break;
   }
 }
 
@@ -51,31 +55,30 @@ export function drawOneLandCorner(
     case 0: // Top-left corner
       ctx.moveTo(x, y + halfSize);
       ctx.quadraticCurveTo(x + halfSize, y + halfSize, x + halfSize, y);
-      ctx.lineTo(x, y);
-      ctx.lineTo(x, y + size);
+      // ctx.lineTo(x, y);
+      // ctx.lineTo(x, y + halfSize);
       break;
     case 1: // Top-right corner
       ctx.moveTo(x + halfSize, y);
       ctx.quadraticCurveTo(x + halfSize, y + halfSize, x + size, y + halfSize);
-      ctx.lineTo(x + size, y);
-      ctx.lineTo(x, y);
+      // ctx.lineTo(x + size, y);
+      // ctx.lineTo(x + halfSize, y);
       break;
     case 2: // Bottom-left corner
       ctx.moveTo(x + halfSize, y + size);
       ctx.quadraticCurveTo(x + halfSize, y + halfSize, x, y + halfSize);
-      ctx.lineTo(x, y + size);
-      ctx.lineTo(x + size, y + size);
+      // ctx.lineTo(x, y + size);
+      // ctx.lineTo(x + halfSize, y + size);
       break;
     case 3: // Bottom-right corner
       ctx.moveTo(x + size, y + halfSize);
       ctx.quadraticCurveTo(x + halfSize, y + halfSize, x + halfSize, y + size);
-      ctx.lineTo(x + size, y + size);
-      ctx.lineTo(x + size, y);
+      // ctx.lineTo(x + size, y + size);
+      // ctx.lineTo(x + size, y + halfSize);
       break;
   }
 
-  ctx.closePath();
-  ctx.fill();
+  ctx.stroke();
 }
 
 export function drawTwoAdjacentLandCorners(
@@ -90,20 +93,23 @@ export function drawTwoAdjacentLandCorners(
 
   if (corners[0] && corners[1]) {
     // Top half
-    ctx.rect(x, y, size, halfSize);
+    ctx.moveTo(x, y + halfSize);
+    ctx.lineTo(x + size, y + halfSize);
   } else if (corners[1] && corners[3]) {
     // Right half
-    ctx.rect(x + halfSize, y, halfSize, size);
+    ctx.moveTo(x + halfSize, y);
+    ctx.lineTo(x + halfSize, y + size);
   } else if (corners[2] && corners[3]) {
     // Bottom half
-    ctx.rect(x, y + halfSize, size, halfSize);
+    ctx.moveTo(x, y + halfSize);
+    ctx.lineTo(x + size, y + halfSize);
   } else if (corners[0] && corners[2]) {
     // Left half
-    ctx.rect(x, y, halfSize, size);
+    ctx.moveTo(x + halfSize, y);
+    ctx.lineTo(x + halfSize, y + size);
   }
 
-  ctx.closePath();
-  ctx.fill();
+  ctx.stroke();
 }
 
 export function drawTwoOppositeLandCorners(
@@ -114,23 +120,48 @@ export function drawTwoOppositeLandCorners(
   radius: number,
   corners: boolean[]
 ) {
+  const halfSize = size / 2;
+  ctx.beginPath();
+
   corners.forEach((isLand, i) => {
     if (isLand) {
-      const [cx, cy] = getCornerCoordinates(x, y, size, i);
-      ctx.moveTo(cx, cy);
-      ctx.arcTo(
-        cx,
-        cy,
-        cx + (i === 1 || i === 2 ? -radius : radius),
-        cy + (i === 2 || i === 3 ? -radius : radius),
-        radius
-      );
-      ctx.lineTo(
-        cx + (i === 1 || i === 2 ? -size : size) / 2,
-        cy + (i === 2 || i === 3 ? -size : size) / 2
-      );
+      switch (i) {
+        case 0:
+          ctx.moveTo(x + halfSize, y);
+          ctx.quadraticCurveTo(
+            x + halfSize,
+            y + halfSize,
+            x + size,
+            y + halfSize
+          );
+          break;
+        case 1:
+          ctx.moveTo(x + size, y + halfSize);
+          ctx.quadraticCurveTo(
+            x + halfSize,
+            y + halfSize,
+            x + halfSize,
+            y + size
+          );
+          break;
+        case 2:
+          ctx.moveTo(x, y + halfSize);
+          ctx.quadraticCurveTo(x + halfSize, y + halfSize, x + halfSize, y);
+          break;
+        case 3:
+          ctx.moveTo(x, y + halfSize);
+          ctx.quadraticCurveTo(
+            x + halfSize,
+            y + halfSize,
+            x + halfSize,
+            y + size
+          );
+          break;
+      }
     }
   });
+
+  ctx.stroke();
 }
 
 export function drawThreeLandCorners(
@@ -141,24 +172,43 @@ export function drawThreeLandCorners(
   radius: number,
   corners: boolean[]
 ) {
-  return;
+  const halfSize = size / 2;
   const waterCorner = corners.indexOf(false);
   const [cx, cy] = getCornerCoordinates(x, y, size, waterCorner);
-
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(cx + (waterCorner === 1 || waterCorner === 2 ? -size : size), cy);
-  ctx.lineTo(
-    cx + (waterCorner === 1 || waterCorner === 2 ? -size : size),
-    cy + (waterCorner === 2 || waterCorner === 3 ? -size : size)
-  );
-  ctx.lineTo(cx, cy + (waterCorner === 2 || waterCorner === 3 ? -size : size));
-  ctx.arcTo(
-    cx,
-    cy,
-    cx + (waterCorner === 1 || waterCorner === 2 ? -radius : radius),
-    cy + (waterCorner === 2 || waterCorner === 3 ? -radius : radius),
-    radius
-  );
+  ctx.beginPath();
+  switch (waterCorner) {
+    case 0:
+      ctx.moveTo(x + halfSize, y);
+      ctx.quadraticCurveTo(x + halfSize, y + halfSize, x, y + halfSize);
+      // ctx.lineTo(x, y + size);
+      // ctx.lineTo(x + size, y + size);
+      // ctx.lineTo(x + size, y);
+      break;
+    case 1:
+      ctx.moveTo(cx, cy + halfSize);
+      ctx.quadraticCurveTo(cx - halfSize, cy + halfSize, cx - halfSize, cy);
+      // ctx.lineTo(cx - size, cy);
+      // ctx.lineTo(cx - size, cy + size);
+      // ctx.lineTo(cx, cy + size);
+      break;
+    case 2:
+      ctx.moveTo(x, y + halfSize);
+      ctx.quadraticCurveTo(x + halfSize, y + halfSize, x + halfSize, y + size);
+      // ctx.lineTo(x + size, y + size);
+      // ctx.lineTo(x + size, y);
+      // ctx.lineTo(x, y);
+      // ctx.lineTo(x, y + halfSize);
+      break;
+    case 3:
+      ctx.moveTo(x + size, y + halfSize);
+      ctx.quadraticCurveTo(x + halfSize, y + halfSize, x + halfSize, y + size);
+      // ctx.lineTo(x, y + size);
+      // ctx.lineTo(x, y);
+      // ctx.lineTo(x + size, y);
+      // ctx.lineTo(x + size, y + halfSize);
+      break;
+  }
+  ctx.stroke();
 }
 
 export function getCornerCoordinates(

@@ -7,6 +7,6 @@ export const Constants = {
 export const WORLD_TO_CANVAS = 50;
 
 export const soldierColors: { [key: string]: string } = {
-  [SoldierType.Archer]: "#86efac",
-  [SoldierType.Warrior]: "#fb7185",
+  [SoldierType.Archer]: "#86efacaa",
+  [SoldierType.Warrior]: "#fb7185aa",
 };

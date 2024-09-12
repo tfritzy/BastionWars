@@ -68,7 +68,7 @@ export class MainMenu {
     };
 
     const request: Oneof_PlayerToMatchmaker = {
-      player_id: "plyr_001",
+      player_id: "plyr_" + Math.floor(Math.random() * 1000),
       search_for_game: searchForGame,
     };
 

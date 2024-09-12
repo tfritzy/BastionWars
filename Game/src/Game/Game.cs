@@ -249,8 +249,8 @@ public class Game
             MapWidth = Map.Width,
             MapHeight = Map.Height,
         };
-        state.Tiles.AddRange(Map.Tiles.Cast<TileType>().ToArray());
-        state.RenderTiles.AddRange(Map.RenderTiles.Cast<RenderTileType>().ToArray());
+        state.Tiles.AddRange(GridToList<TileType>(Map.Tiles));
+        state.RenderTiles.AddRange(GridToList<RenderTileType>(Map.RenderTiles));
         state.Keeps.AddRange(Map.Keeps.Values.Select(k => new Schema.KeepState()
         {
             Id = k.Id,
@@ -261,6 +261,22 @@ public class Game
             ArcherCount = k.GetCount(SoldierType.Archer),
         }));
         return state;
+    }
+
+    private static List<T> GridToList<T>(T[,] grid)
+    {
+        List<T> list = new();
+
+
+        for (int y = 0; y < grid.GetLength(1); y++)
+        {
+            for (int x = 0; x < grid.GetLength(0); x++)
+            {
+                list.Add(grid[x, y]);
+            }
+        }
+
+        return list;
     }
 
     private void AddMessageToOutbox(Oneof_GameServerToPlayer update, string? recipient = null)

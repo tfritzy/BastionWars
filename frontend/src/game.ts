@@ -1,6 +1,7 @@
 import { Connection } from "./connection.ts";
 import { soldierColors, WORLD_TO_CANVAS } from "./constants.ts";
 import { drawLandTile } from "./grid_drawing.ts";
+import { drawKeep } from "./rendering.ts";
 import {
   RenderTileType,
   SoldierType,
@@ -38,7 +39,7 @@ export class Game {
     this.ctx.save();
 
     this.drawLandAndWater();
-    // this.drawKeeps(deltaTime);
+    this.drawKeeps(deltaTime);
     this.drawSoldiers();
 
     this.ctx.restore();
@@ -46,36 +47,12 @@ export class Game {
 
   drawKeeps(deltaTime: number) {
     this.ctx.save();
-    this.ctx.strokeStyle = "black";
-    this.ctx.lineWidth = 2;
-
-    const radius = 30;
-    const innerRadius = radius * 0.8;
-    const pieRadius = innerRadius * 0.8;
 
     this.gameState.keeps.forEach((keep) => {
       const x = keep.pos.x * WORLD_TO_CANVAS;
       const y = keep.pos.y * WORLD_TO_CANVAS;
-
-      this.ctx.beginPath();
-      this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
-      this.ctx.stroke();
-
-      this.ctx.beginPath();
-      this.ctx.arc(x, y, innerRadius, 0, 2 * Math.PI);
-      this.ctx.stroke();
-
-      this.drawPieChart(x, y, pieRadius, keep);
-
-      this.ctx.save();
-      this.ctx.textAlign = "center";
-      this.ctx.font = "10px";
-      this.ctx.fillStyle = "#4a4b5b";
-      const totalCount = (keep.archer_count + keep.warrior_count).toString();
-      this.ctx.fillText(totalCount, x, y + 7);
-      this.ctx.restore();
-
-      this.keepLabels.get(keep.id)?.draw(x, y - 30, deltaTime);
+      drawKeep(this.ctx, keep, deltaTime);
+      this.keepLabels.get(keep.id)?.draw(x, y - 25, deltaTime);
     });
 
     this.ctx.restore();
@@ -85,18 +62,14 @@ export class Game {
     this.ctx.save();
 
     const tileSize = WORLD_TO_CANVAS;
-    const cornerRadius = tileSize / 4;
-
-    // // Draw water background
-    // this.ctx.fillStyle = "#4169E1"; // Water color
-    // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // Draw land tiles
-    this.ctx.fillStyle = "#8B4513"; // Land color
+    const cornerRadius = tileSize / 8;
 
     this.gameState.renderTiles.forEach((tileType, index) => {
-      const y = (index % this.gameState.mapWidth) * tileSize;
-      const x = Math.floor(index / this.gameState.mapWidth) * tileSize;
+      const x =
+        (index % (this.gameState.mapWidth + 1)) * tileSize - tileSize / 2;
+      const y =
+        Math.floor(index / (this.gameState.mapWidth + 1)) * tileSize -
+        tileSize / 2;
 
       drawLandTile(this.ctx, x, y, tileSize, cornerRadius, tileType);
     });
@@ -104,44 +77,8 @@ export class Game {
     this.ctx.restore();
   }
 
-  drawPieChart(x: number, y: number, radius: number, keep: Keep) {
-    let angle = 0;
-    const totalSoldiers = keep.archer_count + keep.warrior_count;
-    let slice = (keep.warrior_count / totalSoldiers) * 2 * Math.PI;
-    this.drawArc(
-      x,
-      y,
-      radius,
-      angle,
-      slice,
-      soldierColors[SoldierType.Warrior]
-    );
-    angle += slice;
-    slice = (keep.archer_count / totalSoldiers) * 2 * Math.PI;
-    this.drawArc(x, y, radius, angle, slice, soldierColors[SoldierType.Archer]);
-  }
-
-  drawArc(
-    x: number,
-    y: number,
-    radius: number,
-    startAngle: number,
-    sliceAngle: number,
-    color: string
-  ) {
-    this.ctx.beginPath();
-    this.ctx.moveTo(x, y);
-    this.ctx.arc(x, y, radius, startAngle, startAngle + sliceAngle);
-    this.ctx.closePath();
-
-    this.ctx.fillStyle = color;
-    this.ctx.fill();
-  }
-
   drawSoldiers() {
     this.ctx.save();
-    this.ctx.strokeStyle = "black";
-    this.ctx.lineWidth = 2;
 
     const radius = 4;
     this.gameState.soldiers.forEach((keep) => {
