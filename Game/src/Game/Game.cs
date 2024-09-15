@@ -250,7 +250,7 @@ public class Game
             MapHeight = Map.Height,
         };
         state.Tiles.AddRange(GridToList<TileType>(Map.Tiles));
-        state.RenderTiles.AddRange(GridToList<RenderTileType>(Map.RenderTiles));
+        state.RenderTiles.AddRange(GridToList<RenderTile>(Map.RenderTiles));
         state.Keeps.AddRange(Map.Keeps.Values.Select(k => new Schema.KeepState()
         {
             Id = k.Id,
@@ -266,7 +266,6 @@ public class Game
     private static List<T> GridToList<T>(T[,] grid)
     {
         List<T> list = new();
-
 
         for (int y = 0; y < grid.GetLength(1); y++)
         {

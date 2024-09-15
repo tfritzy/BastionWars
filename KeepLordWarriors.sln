@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameServer", "GameServer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\src\GameServer.csproj", "{613888ED-94D6-4D50-95E1-27E6E71DD3BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godot", "godot\Godot.csproj", "{FFEC9CC6-0B13-48E8-B625-DD597E4945D0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HostServer", "HostServer", "{2A8CCABA-7307-4BB6-AC0B-829090542F59}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostServer", "HostServer\src\HostServer.csproj", "{6B6A2E6A-076A-48C0-BAA1-E5C1E3CEDAA8}"

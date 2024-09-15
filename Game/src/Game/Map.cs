@@ -8,7 +8,7 @@ namespace KeepLordWarriors;
 public class Map
 {
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
-    public RenderTileType[,] RenderTiles { get; private set; } = new RenderTileType[0, 0];
+    public RenderTile[,] RenderTiles { get; private set; } = new RenderTile[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
     public Dictionary<uint, Keep> Keeps { get; private set; } = new();
@@ -22,9 +22,10 @@ public class Map
     public Map(string rawMap)
     {
         ParseMap(rawMap);
-        CalculateBastionPathing();
-        CalculateBastionOwnership();
+        CalculateKeepPathing();
+        CalculateKeepOwnership();
         CalculateValidWordPositions();
+        ParseRenderTiles();
     }
 
     public void Update(double deltaTime)
@@ -61,7 +62,7 @@ public class Map
         return new Vector2(path[progress + 1].X + .5f, path[progress + 1].Y + .5f);
     }
 
-    private void CalculateBastionPathing()
+    private void CalculateKeepPathing()
     {
         foreach (Keep bastion in Keeps.Values)
         {
@@ -92,7 +93,7 @@ public class Map
         }
     }
 
-    private void CalculateBastionOwnership()
+    private void CalculateKeepOwnership()
     {
         Dictionary<uint, Vector2Int> locations = new();
         foreach (Keep bastion in Keeps.Values)
@@ -205,7 +206,10 @@ public class Map
                     case 'A':
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Navigation.Constants.BLOCKED;
-                        var archerKeep = new Keep(this, SoldierType.Archer, alliance: ownership[y][x] - '0');
+                        var archerKeep = new Keep(
+                            this,
+                            SoldierType.Archer,
+                            alliance: Math.Max(ownership[y][x] - '0', 0));
                         Keeps.Add(archerKeep.Id, archerKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
@@ -216,7 +220,10 @@ public class Map
                     case 'W':
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Navigation.Constants.BLOCKED;
-                        var warriorKeep = new Keep(this, SoldierType.Warrior, alliance: ownership[y][x] - '0');
+                        var warriorKeep = new Keep(
+                            this,
+                            SoldierType.Warrior,
+                            alliance: Math.Max(ownership[y][x] - '0', 0));
                         Keeps.Add(warriorKeep.Id, warriorKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x, y),
@@ -239,26 +246,129 @@ public class Map
                 }
             }
         }
-
-        ParseRenderTiles();
     }
 
     private void ParseRenderTiles()
     {
-        RenderTiles = new RenderTileType[Width + 1, Height + 1];
+        RenderTiles = new RenderTile[Width + 1, Height + 1];
 
         for (int x = -1; x < Width; x++)
         {
             for (int y = -1; y < Height; y++)
             {
-                RenderTiles[x + 1, y + 1] = GetRenderTileCase(
-                    tl: GetMaybeOOBTile(x, y),
-                    tr: GetMaybeOOBTile(x + 1, y),
-                    bl: GetMaybeOOBTile(x + 1, y + 1),
-                    br: GetMaybeOOBTile(x, y + 1)
-                );
+                var renderTile = new RenderTile()
+                {
+                    TileCase = GetRenderTileCase(
+                        tl: GetMaybeOOBTile(x, y),
+                        tr: GetMaybeOOBTile(x + 1, y),
+                        bl: GetMaybeOOBTile(x + 1, y + 1),
+                        br: GetMaybeOOBTile(x, y + 1)
+                    ),
+                };
+                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y));
+                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y));
+                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y + 1));
+                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y + 1));
+                if (AllAreOwnedBySameKeep(renderTile.CornerAlliance))
+                {
+                    int owner = renderTile.CornerAlliance[0];
+                    renderTile.CornerAlliance.Clear();
+                    renderTile.CornerAlliance.Add(owner);
+                }
+                renderTile.AllianceCase = GetAllianceCase(renderTile);
+
+                RenderTiles[x + 1, y + 1] = renderTile;
             }
         }
+    }
+
+    private RenderAllianceCase GetAllianceCase(RenderTile renderTile)
+    {
+        Dictionary<int, List<int>> cornerOwnership = parseCornerOwnershipMap(renderTile);
+
+        if (renderTile.TileCase == Constants.TileCase.FULL_LAND)
+        {
+            if (cornerOwnership.Keys.Count == 1)
+            {
+                return RenderAllianceCase.FullLandOneOwner;
+            }
+            else if (cornerOwnership.Keys.Count >= 3)
+            {
+                return RenderAllianceCase.FullLandIndividualCorners;
+            }
+            else
+            {
+                if (renderTile.CornerAlliance[0] == renderTile.CornerAlliance[2])
+                {
+                    return RenderAllianceCase.FullLandIndividualCorners;
+                }
+                else
+                {
+                    return RenderAllianceCase.FullLandSplitDownMiddle;
+                }
+            }
+        }
+        else if (Constants.TileCase.THREE_CORNERS.Contains(renderTile.TileCase))
+        {
+            switch (cornerOwnership.Keys.Count)
+            {
+                case 3:
+                    return RenderAllianceCase.ThreeCornersThreeOwners;
+                case 2:
+                    return RenderAllianceCase.ThreeCornersTwoOwners;
+                default:
+                    return RenderAllianceCase.ThreeCornersOneOwner;
+            }
+        }
+        else if (Constants.TileCase.TWO_LAND_ADJACENT.Contains(renderTile.TileCase))
+        {
+            switch (cornerOwnership.Keys.Count)
+            {
+                case 2:
+                    return RenderAllianceCase.TwoAdjacentTwoOwners;
+                default:
+                    return RenderAllianceCase.TwoAdjacentOneOwner;
+            }
+        }
+        else if (Constants.TileCase.TWO_LAND_OPPOSITE.Contains(renderTile.TileCase))
+        {
+            switch (cornerOwnership.Keys.Count)
+            {
+                case 2:
+                    return RenderAllianceCase.TwoOppositeTwoOwners;
+                default:
+                    return RenderAllianceCase.TwoOppositeOneOwner;
+            }
+        }
+        else if (Constants.TileCase.SINGLE_LAND_CORNERS.Contains(renderTile.TileCase))
+        {
+            return RenderAllianceCase.SingleCornerOneOwner;
+        }
+        else if (renderTile.TileCase == Constants.TileCase.FULL_WATER)
+        {
+            return RenderAllianceCase.FullWaterNoOnwer;
+        }
+        else
+        {
+            throw new Exception("Unknown tile case");
+        }
+    }
+
+    private static Dictionary<int, List<int>> parseCornerOwnershipMap(RenderTile renderTile)
+    {
+        Dictionary<int, List<int>> cornerOwnership = new();
+        for (int i = 0; i < renderTile.CornerAlliance.Count; i++)
+        {
+            int alliance = renderTile.CornerAlliance[i];
+            if (!cornerOwnership.ContainsKey(alliance))
+            {
+                cornerOwnership[alliance] = new List<int>();
+            }
+
+            cornerOwnership[alliance].Add(i);
+        }
+
+        return cornerOwnership;
     }
 
     private TileType GetMaybeOOBTile(int x, int y)
@@ -271,34 +381,61 @@ public class Map
         return Tiles[x, y];
     }
 
-    private RenderTileType GetRenderTileCase(
+    private int GetMaybeOOBTileOwnership(int x, int y)
+    {
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
+        {
+            return 0;
+        }
+
+        Vector2Int pos = new Vector2Int(x, y);
+        if (!KeepLands.ContainsKey(pos))
+        {
+            return 0;
+        }
+
+        if (Tiles[x, y] == TileType.Water)
+        {
+            return 0;
+        }
+
+        uint keepId = KeepLands[pos];
+        return Keeps[keepId].Alliance;
+    }
+
+    private bool AllAreOwnedBySameKeep(IEnumerable<int> ownership)
+    {
+        return ownership.All(o => o == ownership.First());
+    }
+
+    private uint GetRenderTileCase(
         TileType tl,
         TileType tr,
         TileType bl,
         TileType br
     )
     {
-        int tileCase = 0;
+        uint tileCase = 0;
         if (tl != TileType.Water)
-        {
-            tileCase |= 1;
-        }
-
-        if (tr != TileType.Water)
-        {
-            tileCase |= 2;
-        }
-
-        if (br != TileType.Water)
-        {
-            tileCase |= 4;
-        }
-
-        if (bl != TileType.Water)
         {
             tileCase |= 8;
         }
 
-        return (RenderTileType)tileCase;
+        if (tr != TileType.Water)
+        {
+            tileCase |= 4;
+        }
+
+        if (br != TileType.Water)
+        {
+            tileCase |= 2;
+        }
+
+        if (bl != TileType.Water)
+        {
+            tileCase |= 1;
+        }
+
+        return tileCase;
     }
 }

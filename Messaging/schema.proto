@@ -110,25 +110,33 @@ enum TileType
     Tree = 3;
 }
 
-enum RenderTileType
-{
-    FullWater = 0;
-    L_1000 = 1;
-    L_0100 = 2;
-    L_1100 = 3;
-    L_0010 = 4;
-    L_1010 = 5;
-    L_0110 = 6;
-    L_1110 = 7;
-    L_0001 = 8;
-    L_1001 = 9;
-    L_0101 = 10;
-    L_1101 = 11;
-    L_0011 = 12;
-    L_1011 = 13;
-    L_0111 = 14;
-    FullLand = 15;
+enum RenderAllianceCase {
+    FullLand_SingleRoundedCorner = 0;
+    FullLand_SplitDownMiddle = 1;
+    FullLand_IndividualCorners = 2;
+    FullLand_OneOwner = 3;
+
+    ThreeCorners_OneOwner = 4;
+    ThreeCorners_TwoOwners = 5;
+    ThreeCorners_ThreeOwners = 6;
+
+    TwoAdjacent_TwoOwners = 7;
+    TwoAdjacent_OneOwner = 8;
+
+    TwoOpposite_TwoOwners = 9;
+    TwoOpposite_OneOwner = 10;
+    
+    SingleCorner_OneOwner = 11;
+
+    FullWater_NoOnwer = 12;
 }
+
+message RenderTile {
+    uint32 tile_case = 1;
+    repeated int32 corner_alliance = 2;
+    RenderAllianceCase alliance_case = 3;
+}
+
 
 message V2 {
     float x = 1;
@@ -181,7 +189,7 @@ message InitialState {
     int32 map_width = 2;
     int32 map_height = 3;
     repeated TileType tiles = 4;
-    repeated RenderTileType render_tiles = 5;
+    repeated RenderTile render_tiles = 5;
 }
 
 message IssueDeploymentOrder {

@@ -52,37 +52,43 @@ namespace Schema {
             "aWQYASABKAkSLQoNaW5pdGlhbF9zdGF0ZRgCIAEoCzIULlNjaGVtYS5Jbml0",
             "aWFsU3RhdGVIABI8ChVhbGxfc29sZGllcl9wb3NpdGlvbnMYAyABKAsyGy5T",
             "Y2hlbWEuQWxsU29sZGllclBvc2l0aW9uc0gAEi4KDGtlZXBfdXBkYXRlcxgE",
-            "IAEoCzIWLlNjaGVtYS5BbGxLZWVwVXBkYXRlc0gAQgUKA21zZyIaCgJWMhIJ",
-            "CgF4GAEgASgCEgkKAXkYAiABKAIiHQoFVjJJbnQSCQoBeBgBIAEoBRIJCgF5",
-            "GAIgASgFIkYKE0FsbFNvbGRpZXJQb3NpdGlvbnMSLwoRc29sZGllcl9wb3Np",
-            "dGlvbnMYASADKAsyFC5TY2hlbWEuU29sZGllclN0YXRlIlEKDFNvbGRpZXJT",
-            "dGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjISHAoI",
-            "dmVsb2NpdHkYAyABKAsyCi5TY2hlbWEuVjIifQoJS2VlcFN0YXRlEgoKAmlk",
-            "GAEgASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIVCg13YXJyaW9yX2Nv",
-            "dW50GAMgASgFEhQKDGFyY2hlcl9jb3VudBgEIAEoBRIMCgRuYW1lGAUgASgJ",
-            "EhAKCGFsbGlhbmNlGAYgASgFIlcKCktlZXBVcGRhdGUSCgoCaWQYASABKA0S",
-            "FQoNd2Fycmlvcl9jb3VudBgCIAEoBRIUCgxhcmNoZXJfY291bnQYAyABKAUS",
-            "EAoIYWxsaWFuY2UYBCABKAUiOgoOQWxsS2VlcFVwZGF0ZXMSKAoMa2VlcF91",
-            "cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUipgEKDEluaXRpYWxT",
-            "dGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFw",
-            "X3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCAD",
-            "KA4yEC5TY2hlbWEuVGlsZVR5cGUSLAoMcmVuZGVyX3RpbGVzGAUgAygOMhYu",
-            "U2NoZW1hLlJlbmRlclRpbGVUeXBlIqMBChRJc3N1ZURlcGxveW1lbnRPcmRl",
-            "chITCgtzb3VyY2Vfa2VlcBgBIAEoDRITCgt0YXJnZXRfa2VlcBgCIAEoDRIu",
-            "Cgxzb2xkaWVyX3R5cGUYAyABKA4yEy5TY2hlbWEuU29sZGllclR5cGVIAIgB",
-            "ARIUCgdwZXJjZW50GAQgASgCSAGIAQFCDwoNX3NvbGRpZXJfdHlwZUIKCghf",
-            "cGVyY2VudCoqCg5HZW5lcmF0aW9uTW9kZRIOCgpBdXRvQWNjcnVlEAASCAoE",
-            "V29yZBABKjYKCFRpbGVUeXBlEgsKB0ludmFsaWQQABIICgRMYW5kEAESCQoF",
-            "V2F0ZXIQAhIICgRUcmVlEAMq1QEKDlJlbmRlclRpbGVUeXBlEg0KCUZ1bGxX",
-            "YXRlchAAEgoKBkxfMTAwMBABEgoKBkxfMDEwMBACEgoKBkxfMTEwMBADEgoK",
-            "BkxfMDAxMBAEEgoKBkxfMTAxMBAFEgoKBkxfMDExMBAGEgoKBkxfMTExMBAH",
-            "EgoKBkxfMDAwMRAIEgoKBkxfMTAwMRAJEgoKBkxfMDEwMRAKEgoKBkxfMTEw",
-            "MRALEgoKBkxfMDAxMRAMEgoKBkxfMTAxMRANEgoKBkxfMDExMRAOEgwKCEZ1",
-            "bGxMYW5kEA8qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQABIL",
-            "CgdXYXJyaW9yEAESCgoGQXJjaGVyEAJiBnByb3RvMw=="));
+            "IAEoCzIWLlNjaGVtYS5BbGxLZWVwVXBkYXRlc0gAQgUKA21zZyJrCgpSZW5k",
+            "ZXJUaWxlEhEKCXRpbGVfY2FzZRgBIAEoDRIXCg9jb3JuZXJfYWxsaWFuY2UY",
+            "AiADKAUSMQoNYWxsaWFuY2VfY2FzZRgDIAEoDjIaLlNjaGVtYS5SZW5kZXJB",
+            "bGxpYW5jZUNhc2UiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgCIh0KBVYy",
+            "SW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSJGChNBbGxTb2xkaWVyUG9zaXRp",
+            "b25zEi8KEXNvbGRpZXJfcG9zaXRpb25zGAEgAygLMhQuU2NoZW1hLlNvbGRp",
+            "ZXJTdGF0ZSJRCgxTb2xkaWVyU3RhdGUSCgoCaWQYASABKA0SFwoDcG9zGAIg",
+            "ASgLMgouU2NoZW1hLlYyEhwKCHZlbG9jaXR5GAMgASgLMgouU2NoZW1hLlYy",
+            "In0KCUtlZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hl",
+            "bWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNoZXJfY291bnQY",
+            "BCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEoBSJXCgpLZWVw",
+            "VXBkYXRlEgoKAmlkGAEgASgNEhUKDXdhcnJpb3JfY291bnQYAiABKAUSFAoM",
+            "YXJjaGVyX2NvdW50GAMgASgFEhAKCGFsbGlhbmNlGAQgASgFIjoKDkFsbEtl",
+            "ZXBVcGRhdGVzEigKDGtlZXBfdXBkYXRlcxgBIAMoCzISLlNjaGVtYS5LZWVw",
+            "VXBkYXRlIqIBCgxJbml0aWFsU3RhdGUSIAoFa2VlcHMYASADKAsyES5TY2hl",
+            "bWEuS2VlcFN0YXRlEhEKCW1hcF93aWR0aBgCIAEoBRISCgptYXBfaGVpZ2h0",
+            "GAMgASgFEh8KBXRpbGVzGAQgAygOMhAuU2NoZW1hLlRpbGVUeXBlEigKDHJl",
+            "bmRlcl90aWxlcxgFIAMoCzISLlNjaGVtYS5SZW5kZXJUaWxlIqMBChRJc3N1",
+            "ZURlcGxveW1lbnRPcmRlchITCgtzb3VyY2Vfa2VlcBgBIAEoDRITCgt0YXJn",
+            "ZXRfa2VlcBgCIAEoDRIuCgxzb2xkaWVyX3R5cGUYAyABKA4yEy5TY2hlbWEu",
+            "U29sZGllclR5cGVIAIgBARIUCgdwZXJjZW50GAQgASgCSAGIAQFCDwoNX3Nv",
+            "bGRpZXJfdHlwZUIKCghfcGVyY2VudCoqCg5HZW5lcmF0aW9uTW9kZRIOCgpB",
+            "dXRvQWNjcnVlEAASCAoEV29yZBABKjYKCFRpbGVUeXBlEgsKB0ludmFsaWQQ",
+            "ABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEAMq/AIKElJlbmRlckFs",
+            "bGlhbmNlQ2FzZRIgChxGdWxsTGFuZF9TaW5nbGVSb3VuZGVkQ29ybmVyEAAS",
+            "HAoYRnVsbExhbmRfU3BsaXREb3duTWlkZGxlEAESHgoaRnVsbExhbmRfSW5k",
+            "aXZpZHVhbENvcm5lcnMQAhIVChFGdWxsTGFuZF9PbmVPd25lchADEhkKFVRo",
+            "cmVlQ29ybmVyc19PbmVPd25lchAEEhoKFlRocmVlQ29ybmVyc19Ud29Pd25l",
+            "cnMQBRIcChhUaHJlZUNvcm5lcnNfVGhyZWVPd25lcnMQBhIZChVUd29BZGph",
+            "Y2VudF9Ud29Pd25lcnMQBxIYChRUd29BZGphY2VudF9PbmVPd25lchAIEhkK",
+            "FVR3b09wcG9zaXRlX1R3b093bmVycxAJEhgKFFR3b09wcG9zaXRlX09uZU93",
+            "bmVyEAoSGQoVU2luZ2xlQ29ybmVyX09uZU93bmVyEAsSFQoRRnVsbFdhdGVy",
+            "X05vT253ZXIQDCo6CgtTb2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAA",
+            "EgsKB1dhcnJpb3IQARIKCgZBcmNoZXIQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderTileType), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameSettings), global::Schema.GameSettings.Parser, new[]{ "GenerationMode", "Map" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SearchForGame), global::Schema.SearchForGame.Parser, new[]{ "Ranked" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameAvailableOnPort), global::Schema.GameAvailableOnPort.Parser, new[]{ "GameId", "PlayerId", "Port" }, null, null, null, null),
@@ -97,6 +103,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToGameServer), global::Schema.Oneof_HostServerToGameServer.Parser, new[]{ "Register" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions", "KeepUpdates" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTile), global::Schema.RenderTile.Parser, new[]{ "TileCase", "CornerAlliance", "AllianceCase" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2), global::Schema.V2.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2Int), global::Schema.V2Int.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllSoldierPositions), global::Schema.AllSoldierPositions.Parser, new[]{ "SoldierPositions" }, null, null, null, null),
@@ -124,23 +131,20 @@ namespace Schema {
     [pbr::OriginalName("Tree")] Tree = 3,
   }
 
-  public enum RenderTileType {
-    [pbr::OriginalName("FullWater")] FullWater = 0,
-    [pbr::OriginalName("L_1000")] L1000 = 1,
-    [pbr::OriginalName("L_0100")] L0100 = 2,
-    [pbr::OriginalName("L_1100")] L1100 = 3,
-    [pbr::OriginalName("L_0010")] L0010 = 4,
-    [pbr::OriginalName("L_1010")] L1010 = 5,
-    [pbr::OriginalName("L_0110")] L0110 = 6,
-    [pbr::OriginalName("L_1110")] L1110 = 7,
-    [pbr::OriginalName("L_0001")] L0001 = 8,
-    [pbr::OriginalName("L_1001")] L1001 = 9,
-    [pbr::OriginalName("L_0101")] L0101 = 10,
-    [pbr::OriginalName("L_1101")] L1101 = 11,
-    [pbr::OriginalName("L_0011")] L0011 = 12,
-    [pbr::OriginalName("L_1011")] L1011 = 13,
-    [pbr::OriginalName("L_0111")] L0111 = 14,
-    [pbr::OriginalName("FullLand")] FullLand = 15,
+  public enum RenderAllianceCase {
+    [pbr::OriginalName("FullLand_SingleRoundedCorner")] FullLandSingleRoundedCorner = 0,
+    [pbr::OriginalName("FullLand_SplitDownMiddle")] FullLandSplitDownMiddle = 1,
+    [pbr::OriginalName("FullLand_IndividualCorners")] FullLandIndividualCorners = 2,
+    [pbr::OriginalName("FullLand_OneOwner")] FullLandOneOwner = 3,
+    [pbr::OriginalName("ThreeCorners_OneOwner")] ThreeCornersOneOwner = 4,
+    [pbr::OriginalName("ThreeCorners_TwoOwners")] ThreeCornersTwoOwners = 5,
+    [pbr::OriginalName("ThreeCorners_ThreeOwners")] ThreeCornersThreeOwners = 6,
+    [pbr::OriginalName("TwoAdjacent_TwoOwners")] TwoAdjacentTwoOwners = 7,
+    [pbr::OriginalName("TwoAdjacent_OneOwner")] TwoAdjacentOneOwner = 8,
+    [pbr::OriginalName("TwoOpposite_TwoOwners")] TwoOppositeTwoOwners = 9,
+    [pbr::OriginalName("TwoOpposite_OneOwner")] TwoOppositeOneOwner = 10,
+    [pbr::OriginalName("SingleCorner_OneOwner")] SingleCornerOneOwner = 11,
+    [pbr::OriginalName("FullWater_NoOnwer")] FullWaterNoOnwer = 12,
   }
 
   public enum SoldierType {
@@ -3681,6 +3685,260 @@ namespace Schema {
 
   }
 
+  public sealed partial class RenderTile : pb::IMessage<RenderTile>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<RenderTile> _parser = new pb::MessageParser<RenderTile>(() => new RenderTile());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<RenderTile> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTile() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTile(RenderTile other) : this() {
+      tileCase_ = other.tileCase_;
+      cornerAlliance_ = other.cornerAlliance_.Clone();
+      allianceCase_ = other.allianceCase_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTile Clone() {
+      return new RenderTile(this);
+    }
+
+    /// <summary>Field number for the "tile_case" field.</summary>
+    public const int TileCaseFieldNumber = 1;
+    private uint tileCase_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint TileCase {
+      get { return tileCase_; }
+      set {
+        tileCase_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "corner_alliance" field.</summary>
+    public const int CornerAllianceFieldNumber = 2;
+    private static readonly pb::FieldCodec<int> _repeated_cornerAlliance_codec
+        = pb::FieldCodec.ForInt32(18);
+    private readonly pbc::RepeatedField<int> cornerAlliance_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<int> CornerAlliance {
+      get { return cornerAlliance_; }
+    }
+
+    /// <summary>Field number for the "alliance_case" field.</summary>
+    public const int AllianceCaseFieldNumber = 3;
+    private global::Schema.RenderAllianceCase allianceCase_ = global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.RenderAllianceCase AllianceCase {
+      get { return allianceCase_; }
+      set {
+        allianceCase_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as RenderTile);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(RenderTile other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (TileCase != other.TileCase) return false;
+      if(!cornerAlliance_.Equals(other.cornerAlliance_)) return false;
+      if (AllianceCase != other.AllianceCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (TileCase != 0) hash ^= TileCase.GetHashCode();
+      hash ^= cornerAlliance_.GetHashCode();
+      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) hash ^= AllianceCase.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (TileCase != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(TileCase);
+      }
+      cornerAlliance_.WriteTo(output, _repeated_cornerAlliance_codec);
+      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) AllianceCase);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (TileCase != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(TileCase);
+      }
+      cornerAlliance_.WriteTo(ref output, _repeated_cornerAlliance_codec);
+      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) AllianceCase);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (TileCase != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TileCase);
+      }
+      size += cornerAlliance_.CalculateSize(_repeated_cornerAlliance_codec);
+      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AllianceCase);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(RenderTile other) {
+      if (other == null) {
+        return;
+      }
+      if (other.TileCase != 0) {
+        TileCase = other.TileCase;
+      }
+      cornerAlliance_.Add(other.cornerAlliance_);
+      if (other.AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+        AllianceCase = other.AllianceCase;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            TileCase = input.ReadUInt32();
+            break;
+          }
+          case 18:
+          case 16: {
+            cornerAlliance_.AddEntriesFrom(input, _repeated_cornerAlliance_codec);
+            break;
+          }
+          case 24: {
+            AllianceCase = (global::Schema.RenderAllianceCase) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            TileCase = input.ReadUInt32();
+            break;
+          }
+          case 18:
+          case 16: {
+            cornerAlliance_.AddEntriesFrom(ref input, _repeated_cornerAlliance_codec);
+            break;
+          }
+          case 24: {
+            AllianceCase = (global::Schema.RenderAllianceCase) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class V2 : pb::IMessage<V2>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3695,7 +3953,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3921,7 +4179,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4147,7 +4405,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4325,7 +4583,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4606,7 +4864,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4989,7 +5247,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5289,7 +5547,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5467,7 +5725,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[21]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5549,12 +5807,12 @@ namespace Schema {
 
     /// <summary>Field number for the "render_tiles" field.</summary>
     public const int RenderTilesFieldNumber = 5;
-    private static readonly pb::FieldCodec<global::Schema.RenderTileType> _repeated_renderTiles_codec
-        = pb::FieldCodec.ForEnum(42, x => (int) x, x => (global::Schema.RenderTileType) x);
-    private readonly pbc::RepeatedField<global::Schema.RenderTileType> renderTiles_ = new pbc::RepeatedField<global::Schema.RenderTileType>();
+    private static readonly pb::FieldCodec<global::Schema.RenderTile> _repeated_renderTiles_codec
+        = pb::FieldCodec.ForMessage(42, global::Schema.RenderTile.Parser);
+    private readonly pbc::RepeatedField<global::Schema.RenderTile> renderTiles_ = new pbc::RepeatedField<global::Schema.RenderTile>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Schema.RenderTileType> RenderTiles {
+    public pbc::RepeatedField<global::Schema.RenderTile> RenderTiles {
       get { return renderTiles_; }
     }
 
@@ -5712,8 +5970,7 @@ namespace Schema {
             tiles_.AddEntriesFrom(input, _repeated_tiles_codec);
             break;
           }
-          case 42:
-          case 40: {
+          case 42: {
             renderTiles_.AddEntriesFrom(input, _repeated_renderTiles_codec);
             break;
           }
@@ -5749,8 +6006,7 @@ namespace Schema {
             tiles_.AddEntriesFrom(ref input, _repeated_tiles_codec);
             break;
           }
-          case 42:
-          case 40: {
+          case 42: {
             renderTiles_.AddEntriesFrom(ref input, _repeated_renderTiles_codec);
             break;
           }
@@ -5776,7 +6032,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[22]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

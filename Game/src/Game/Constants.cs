@@ -56,4 +56,38 @@ public static class Constants
         "crom",
         "tully"
     };
+
+    public static class TileCase
+    {
+        /*
+            0000: Full water
+            0001: Single corner
+            0010: Single corner
+            0011: Two adjacent
+            0100: Single corner
+            0101: Two adjacent
+            0110: Two opposite corners
+            0111: Three corners
+            1000: Single corner
+            1001: Two opposite corners
+            1010: Two adjacent
+            1011: Three corners
+            1100: Two adjacent
+            1101: Three corners
+            1110: Three corners
+            1111: Full land
+        */
+
+        public static uint FULL_WATER = 0;
+        public static uint FULL_LAND = 15;
+        public static readonly HashSet<uint> SINGLE_LAND_CORNERS =
+            new HashSet<uint>([1, 2, 4, 8]);
+        public static readonly HashSet<uint> TWO_LAND_ADJACENT =
+            new HashSet<uint>([3, 5, 10, 12]);
+        public static readonly HashSet<uint> TWO_LAND_OPPOSITE =
+            new HashSet<uint>([6, 9]);
+        public static readonly HashSet<uint> THREE_CORNERS =
+            new HashSet<uint>([7, 11, 13, 14]);
+    }
+
 }

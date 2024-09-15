@@ -1,15 +1,12 @@
 import { Connection } from "./connection.ts";
-import { soldierColors, WORLD_TO_CANVAS } from "./constants.ts";
-import { drawLandTile } from "./grid_drawing.ts";
+import { WORLD_TO_CANVAS } from "./constants.ts";
+import { drawMap } from "./grid_drawing.ts";
 import { drawKeep } from "./rendering.ts";
 import {
-  RenderTileType,
-  SoldierType,
   type AllKeepUpdates,
   type AllSoldierPositions,
   type GameFoundForPlayer,
   type InitialState,
-  type KeepUpdate,
   type Oneof_GameServerToPlayer,
 } from "./Schema.ts";
 import { Typeable } from "./typeable.ts";
@@ -19,7 +16,6 @@ import {
   parseSoldier,
   updateSoldier,
   type GameState,
-  type Keep,
 } from "./types.ts";
 
 export class Game {
@@ -38,7 +34,7 @@ export class Game {
   draw(dpr: number, deltaTime: number): void {
     this.ctx.save();
 
-    this.drawLandAndWater();
+    drawMap(this.ctx, this.gameState);
     this.drawKeeps(deltaTime);
     this.drawSoldiers();
 
@@ -53,25 +49,6 @@ export class Game {
       const y = keep.pos.y * WORLD_TO_CANVAS;
       drawKeep(this.ctx, keep, deltaTime);
       this.keepLabels.get(keep.id)?.draw(x, y - 25, deltaTime);
-    });
-
-    this.ctx.restore();
-  }
-
-  drawLandAndWater() {
-    this.ctx.save();
-
-    const tileSize = WORLD_TO_CANVAS;
-    const cornerRadius = tileSize / 8;
-
-    this.gameState.renderTiles.forEach((tileType, index) => {
-      const x =
-        (index % (this.gameState.mapWidth + 1)) * tileSize - tileSize / 2;
-      const y =
-        Math.floor(index / (this.gameState.mapWidth + 1)) * tileSize -
-        tileSize / 2;
-
-      drawLandTile(this.ctx, x, y, tileSize, cornerRadius, tileType);
     });
 
     this.ctx.restore();

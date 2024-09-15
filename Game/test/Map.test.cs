@@ -164,13 +164,21 @@ public class MapTests
     public void Map_RenderTiles()
     {
         KeepLordWarriors.Map map = new(TestMaps.ThreeByThree);
-        RenderTileType[,] expected = new RenderTileType[,]
+        uint[,] expected = new uint[,]
         {
-            {RenderTileType.FullWater, RenderTileType.FullWater, RenderTileType.FullWater, RenderTileType.FullWater},
-            {RenderTileType.L0001, RenderTileType.L0010, RenderTileType.L0001, RenderTileType.L0010},
-            {RenderTileType.L0101, RenderTileType.L1011, RenderTileType.L0110, RenderTileType.L1000},
-            {RenderTileType.L0100, RenderTileType.L1100, RenderTileType.L1000, RenderTileType.FullWater},
+            {0, 0, 0, 0},
+            {1, 2, 1, 2},
+            {5, 11, 6, 8},
+            {4, 12, 8, 0},
         };
+
+        uint[][][] expectedOwnership =
+        [
+            [[0], [0], [0], [0]],
+            [[0, 0, 0, 1], [0, 0, 1, 0], [0, 0, 0, 2], [1, 0, 1, 2]],
+            [[0, 1, 0, 1], [1, 0, 1, 2], [0, 2, 2, 0], [0]],
+            [[0, 1, 0, 1], [0, 0, 0, 2], [0], [0]],
+        ];
 
         for (int x = 0; x < map.Width; x++)
         {
@@ -178,8 +186,12 @@ public class MapTests
             {
                 Assert.AreEqual(
                     expected[y, x],
-                    map.RenderTiles[x, y],
-                    $"Index ({x}, {y}) incorrect. Expected {expected[y, x]}, actual{map.RenderTiles[x, y]}");
+                    map.RenderTiles[x, y].TileCase,
+                    $"Index ({x}, {y}) incorrect. Expected {expected[y, x]}, actual{map.RenderTiles[x, y].TileCase}");
+                CollectionAssert.AreEqual(
+                    expectedOwnership[y][x],
+                    map.RenderTiles[x, y].CornerAlliance,
+                    $"Index ({x}, {y}) incorrect. Expected {string.Join(", ", expectedOwnership[y][x])}, actual {string.Join(", ", map.RenderTiles[x, y].CornerAlliance)}");
             }
         }
     }

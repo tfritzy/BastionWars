@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4r5u2rqm2kjm"]
-
-[ext_resource type="PackedScene" uid="uid://crvystt588pvb" path="res://Rendering/Models/stickperson.glb" id="1_iiwth"]
-
-[node name="stickperson" instance=ExtResource("1_iiwth")]
