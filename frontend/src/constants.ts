@@ -4,7 +4,7 @@ export const Constants = {
   MATCHMAKING_URL: "http://localhost:7249",
 };
 
-export const WORLD_TO_CANVAS = 50;
+export const WORLD_TO_CANVAS = 64;
 export const TILE_SIZE = WORLD_TO_CANVAS;
 export const HALF_T = TILE_SIZE / 2;
 export const QUARTER_T = TILE_SIZE / 4;
@@ -34,3 +34,5 @@ export const keepColors = [
 ];
 export const BOUNDARY_LINE_STYLE = "black";
 export const BOUNDARY_LINE_WIDTH = 1;
+export const KEEP_LINE_STYLE = "black";
+export const KEEP_LINE_WIDTH = 1;

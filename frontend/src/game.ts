@@ -1,5 +1,6 @@
 import { Connection } from "./connection.ts";
 import { WORLD_TO_CANVAS } from "./constants.ts";
+import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
 import { drawKeep } from "./rendering.ts";
 import {
@@ -25,33 +26,29 @@ export class Game {
   private gameState: GameState = initialGameState;
   private keepLabels: Map<number, Typeable> = new Map();
   private selectedKeep: number | null = null;
+  private drawing: Drawing;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.canvas = canvas;
     this.ctx = ctx;
+    this.drawing = new Drawing();
   }
 
   draw(dpr: number, deltaTime: number): void {
-    this.ctx.save();
-
-    drawMap(this.ctx, this.gameState);
+    drawMap(this.drawing, this.gameState);
     this.drawKeeps(deltaTime);
     this.drawSoldiers();
 
-    this.ctx.restore();
+    this.drawing.draw(this.ctx);
   }
 
   drawKeeps(deltaTime: number) {
-    this.ctx.save();
-
     this.gameState.keeps.forEach((keep) => {
       const x = keep.pos.x * WORLD_TO_CANVAS;
       const y = keep.pos.y * WORLD_TO_CANVAS;
-      drawKeep(this.ctx, keep, deltaTime);
+      drawKeep(this.drawing, keep, deltaTime);
       this.keepLabels.get(keep.id)?.draw(x, y - 25, deltaTime);
     });
-
-    this.ctx.restore();
   }
 
   drawSoldiers() {

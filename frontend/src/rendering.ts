@@ -1,5 +1,11 @@
-import { soldierColors, WORLD_TO_CANVAS } from "./constants";
+import {
+  KEEP_LINE_STYLE,
+  KEEP_LINE_WIDTH,
+  soldierColors,
+  WORLD_TO_CANVAS,
+} from "./constants";
 import type { CanvasControls } from "./controls";
+import type { Drawing } from "./drawing";
 import { SoldierType } from "./Schema";
 import type { Keep } from "./types";
 
@@ -49,34 +55,29 @@ export function drawGrid(
 const KEEP_RADIUS = 20;
 const KEEP_INNER_RADIUS = KEEP_RADIUS * 0.8;
 const PIE_RADIUS = KEEP_INNER_RADIUS;
-export function drawKeep(
-  ctx: CanvasRenderingContext2D,
-  keep: Keep,
-  deltaTime: number
-) {
-  ctx.save();
-  const x = keep.pos.x * WORLD_TO_CANVAS;
-  const y = keep.pos.y * WORLD_TO_CANVAS;
+export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
+  const x = Math.round(keep.pos.x * WORLD_TO_CANVAS);
+  const y = Math.round(keep.pos.y * WORLD_TO_CANVAS);
 
-  ctx.beginPath();
-  ctx.arc(x, y, KEEP_RADIUS, 0, 2 * Math.PI);
-  ctx.stroke();
+  drawing.drawStrokeable(KEEP_LINE_STYLE, KEEP_LINE_WIDTH, (ctx) => {
+    ctx.moveTo(x + KEEP_RADIUS, y);
+    ctx.arc(x, y, KEEP_RADIUS, 0, 2 * Math.PI);
+  });
+  drawing.drawStrokeable(KEEP_LINE_STYLE, KEEP_LINE_WIDTH, (ctx) => {
+    ctx.moveTo(x + KEEP_INNER_RADIUS, y);
+    ctx.arc(x, y, KEEP_INNER_RADIUS, 0, 2 * Math.PI);
+  });
 
-  ctx.beginPath();
-  ctx.arc(x, y, KEEP_INNER_RADIUS, 0, 2 * Math.PI);
-  ctx.stroke();
+  drawPieChart(drawing, x, y, PIE_RADIUS, keep);
 
-  drawPieChart(ctx, x, y, PIE_RADIUS, keep);
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#4a4b5b";
   const totalCount = (keep.archer_count + keep.warrior_count).toString();
-  ctx.fillText(totalCount, x, y + 4);
-  ctx.restore();
+  drawing.drawText("#4a4b5b", "center", (ctx) => {
+    ctx.fillText(totalCount, x, y + 4);
+  });
 }
 
 export function drawPieChart(
-  ctx: CanvasRenderingContext2D,
+  drawing: Drawing,
   x: number,
   y: number,
   radius: number,
@@ -85,14 +86,30 @@ export function drawPieChart(
   let angle = 0;
   const totalSoldiers = keep.archer_count + keep.warrior_count;
   let slice = (keep.warrior_count / totalSoldiers) * 2 * Math.PI;
-  drawArc(ctx, x, y, radius, angle, slice, soldierColors[SoldierType.Warrior]);
+  drawArc(
+    drawing,
+    x,
+    y,
+    radius,
+    angle,
+    slice,
+    soldierColors[SoldierType.Warrior]
+  );
   angle += slice;
   slice = (keep.archer_count / totalSoldiers) * 2 * Math.PI;
-  drawArc(ctx, x, y, radius, angle, slice, soldierColors[SoldierType.Archer]);
+  drawArc(
+    drawing,
+    x,
+    y,
+    radius,
+    angle,
+    slice,
+    soldierColors[SoldierType.Archer]
+  );
 }
 
 export function drawArc(
-  ctx: CanvasRenderingContext2D,
+  drawing: Drawing,
   x: number,
   y: number,
   radius: number,
@@ -100,11 +117,8 @@ export function drawArc(
   sliceAngle: number,
   color: string
 ) {
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.arc(x, y, radius, startAngle, startAngle + sliceAngle);
-  ctx.closePath();
-
-  ctx.fillStyle = color;
-  ctx.fill();
+  drawing.drawFillable(color, (ctx) => {
+    ctx.moveTo(x, y);
+    ctx.arc(x, y, radius, startAngle, startAngle + sliceAngle);
+  });
 }
