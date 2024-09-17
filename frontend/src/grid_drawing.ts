@@ -1,11 +1,42 @@
 import {
+  BOUNDARY_LINE_STYLE,
+  BOUNDARY_LINE_WIDTH,
+  HALF_T,
   keepColors,
   QUARTER_T,
   TILE_SIZE,
-  WORLD_TO_CANVAS,
 } from "./constants.ts";
 import { RenderAllianceCase, type RenderTile } from "./Schema.ts";
 import type { GameState } from "./types.ts";
+
+type RectParams = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+type LineParams = {
+  start_x: number;
+  start_y: number;
+  end_x: number;
+  end_y: number;
+};
+
+type ArcParams = {
+  p0_x: number;
+  p0_y: number;
+  p1_x: number;
+  p1_y: number;
+  cp_x: number;
+  cp_y: number;
+  p2_x: number;
+  p2_y: number;
+};
+
+const rect_queue = new Map<string, RectParams[]>();
+const line_queue = new Map<string, LineParams[]>();
+const arc_queue = new Map<string, ArcParams[]>();
 
 export function drawMap(ctx: CanvasRenderingContext2D, gameState: GameState) {
   ctx.save();
@@ -28,21 +59,18 @@ export function drawLandTile(
   y: number,
   tile: RenderTile
 ) {
-  ctx.lineWidth = 1;
-  ctx.fillStyle = "black";
-
   switch (tile.alliance_case) {
     case RenderAllianceCase.FullLand_IndividualCorners:
-      renderFullLandIndividualCorners(ctx, x, y, tile);
+      renderFullLandIndividualCorners(x, y, tile);
       break;
     case RenderAllianceCase.FullLand_OneOwner:
-      renderFullLandOneOwner(ctx, x, y, tile);
+      renderFullLandOneOwner(x, y, tile);
       break;
     case RenderAllianceCase.FullLand_SplitDownMiddle:
-      renderFullLandSplitDownMiddle();
+      renderFullLandSplitDownMiddle(x, y, tile);
       break;
     case RenderAllianceCase.FullLand_SingleRoundedCorner:
-      renderFullLandSingleRoundedCorner();
+      renderFullLandSingleRoundedCorner(x, y, tile);
       break;
 
     case RenderAllianceCase.ThreeCorners_OneOwner:
@@ -77,40 +105,119 @@ export function drawLandTile(
       renderFullWater();
       break;
     default:
+      console.log(tile);
       throw "Unknown RenderAllianceCase: " + tile.alliance_case;
   }
+
+  ctx.save();
+  for (const [fill, rects] of rect_queue) {
+    ctx.beginPath();
+    ctx.fillStyle = fill;
+    rects?.forEach((r) => {
+      ctx.rect(r.x, r.y, r.width, r.height);
+    });
+    ctx.fill();
+
+    // Clear list without garbage collecting.
+    rect_queue.get(fill)!.length = 0;
+  }
+  ctx.restore();
+
+  ctx.save();
+  ctx.lineWidth = BOUNDARY_LINE_WIDTH;
+  for (const [stroke, lines] of line_queue) {
+    ctx.beginPath();
+    ctx.strokeStyle = stroke;
+    lines?.forEach((l) => {
+      ctx.moveTo(l.start_x, l.start_y);
+      ctx.lineTo(l.end_x, l.end_y);
+    });
+    ctx.stroke();
+
+    // Clear list without garbage collecting.
+    line_queue.get(stroke)!.length = 0;
+  }
+  ctx.restore();
+
+  ctx.save();
+  ctx.lineWidth = BOUNDARY_LINE_WIDTH;
+  ctx.strokeStyle = BOUNDARY_LINE_STYLE;
+  for (const [fill, arcs] of arc_queue) {
+    ctx.fillStyle = fill;
+    ctx.beginPath();
+    arcs?.forEach((a) => {
+      ctx.moveTo(a.p0_x, a.p0_y);
+      ctx.lineTo(a.p1_x, a.p1_y);
+      ctx.quadraticCurveTo(a.cp_x, a.cp_y, a.p2_x, a.p2_y);
+    });
+    ctx.fill();
+
+    ctx.beginPath();
+    arcs?.forEach((a) => {
+      ctx.moveTo(a.p1_x, a.p1_y);
+      ctx.quadraticCurveTo(a.cp_x, a.cp_y, a.p2_x, a.p2_y);
+    });
+    ctx.stroke();
+
+    // Clear list without garbage collecting.
+    arc_queue.get(fill)!.length = 0;
+  }
+  ctx.restore();
 }
 
 function renderFullLandIndividualCorners(
-  ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
   tile: RenderTile
 ) {
   if (!tile.corner_alliance) return;
-  setColorForAlliance(ctx, tile.corner_alliance[0]);
-  ctx.rect(x, y, QUARTER_T, QUARTER_T);
-  setColorForAlliance(ctx, tile.corner_alliance[1]);
-  ctx.rect(x + QUARTER_T, y, QUARTER_T, QUARTER_T);
-  setColorForAlliance(ctx, tile.corner_alliance[2]);
-  ctx.rect(x, y + QUARTER_T, QUARTER_T, QUARTER_T);
-  setColorForAlliance(ctx, tile.corner_alliance[3]);
-  ctx.rect(x + QUARTER_T, y + QUARTER_T, QUARTER_T, QUARTER_T);
-  // ctx.fill();
+  drawRect(x, y, QUARTER_T, QUARTER_T, styleForCorner(tile, 0));
+  drawRect(x + QUARTER_T, y, QUARTER_T, QUARTER_T, styleForCorner(tile, 1));
+  drawRect(x, y + QUARTER_T, QUARTER_T, QUARTER_T, styleForCorner(tile, 2));
+  drawRect(
+    x + QUARTER_T,
+    y + QUARTER_T,
+    QUARTER_T,
+    QUARTER_T,
+    styleForCorner(tile, 3)
+  );
 }
-function renderFullLandOneOwner(
-  ctx: CanvasRenderingContext2D,
+function renderFullLandOneOwner(x: number, y: number, tile: RenderTile) {
+  if (!tile.corner_alliance) return;
+
+  drawRect(x, y, TILE_SIZE, TILE_SIZE, styleForCorner(tile, 0));
+}
+function renderFullLandSplitDownMiddle(x: number, y: number, tile: RenderTile) {
+  if (!tile.corner_alliance) return;
+  const isHorizontal = tile.corner_alliance[0] === tile.corner_alliance[1];
+  if (isHorizontal) {
+    drawRect(x, y, TILE_SIZE, HALF_T, styleForCorner(tile, 0));
+    drawRect(x, y + HALF_T, TILE_SIZE, HALF_T, styleForCorner(tile, 2));
+    drawLine(x, y + HALF_T, x + TILE_SIZE, y + HALF_T, BOUNDARY_LINE_STYLE);
+  } else {
+    drawRect(x, y, HALF_T, TILE_SIZE, styleForCorner(tile, 0));
+    drawRect(x + HALF_T, y, HALF_T, TILE_SIZE, styleForCorner(tile, 1));
+    drawLine(x + HALF_T, y, x + HALF_T, y + TILE_SIZE, BOUNDARY_LINE_STYLE);
+  }
+}
+function renderFullLandSingleRoundedCorner(
   x: number,
   y: number,
   tile: RenderTile
 ) {
-  if (!tile.corner_alliance) return;
-  setColorForAlliance(ctx, tile.corner_alliance[0]);
-  ctx.rect(x, y, TILE_SIZE, TILE_SIZE);
-  // ctx.fill();
+  console.log("renderFullLandSingleRoundedCorner", tile);
+  drawArc(
+    x,
+    y,
+    x + HALF_T,
+    y,
+    x + HALF_T,
+    y + HALF_T,
+    x,
+    y + HALF_T,
+    styleForCorner(tile, 0)
+  );
 }
-function renderFullLandSplitDownMiddle() {}
-function renderFullLandSingleRoundedCorner() {}
 
 function renderThreeCornersOneOwner() {}
 function renderThreeCornersTwoOwners() {}
@@ -125,12 +232,52 @@ function renderTwoOppositeTwoOwners() {}
 function renderSingleCornerOneOwner() {}
 function renderFullWater() {}
 
-function setColorForAlliance(ctx: CanvasRenderingContext2D, alliance: number) {
+function styleForCorner(tile: RenderTile, i: number) {
+  const alliance = tile.corner_alliance![i];
   if (alliance != 0) {
-    ctx.fillStyle = keepColors[alliance % keepColors.length];
+    return keepColors[alliance % keepColors.length];
   } else {
-    ctx.fillStyle = "";
+    return "";
   }
+}
+
+function drawRect(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  fill_style: string
+) {
+  if (!rect_queue.has(fill_style)) rect_queue.set(fill_style, []);
+  rect_queue.get(fill_style)!.push({ x, y, width, height });
+}
+
+function drawLine(
+  start_x: number,
+  start_y: number,
+  end_x: number,
+  end_y: number,
+  stroke_style: string
+) {
+  if (!line_queue.has(stroke_style)) line_queue.set(stroke_style, []);
+  line_queue.get(stroke_style)!.push({ start_x, start_y, end_x, end_y });
+}
+
+function drawArc(
+  p0_x: number,
+  p0_y: number,
+  p1_x: number,
+  p1_y: number,
+  cp_x: number,
+  cp_y: number,
+  p2_x: number,
+  p2_y: number,
+  fill_style: string
+) {
+  if (!arc_queue.has(fill_style)) arc_queue.set(fill_style, []);
+  arc_queue
+    .get(fill_style)!
+    .push({ p0_x, p0_y, p1_x, p1_y, cp_x, cp_y, p2_x, p2_y });
 }
 
 // export function drawOneLandCorner(

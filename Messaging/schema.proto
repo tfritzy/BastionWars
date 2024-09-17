@@ -111,24 +111,25 @@ enum TileType
 }
 
 enum RenderAllianceCase {
-    FullLand_SingleRoundedCorner = 0;
-    FullLand_SplitDownMiddle = 1;
-    FullLand_IndividualCorners = 2;
-    FullLand_OneOwner = 3;
+    InvalidRenderAlliance = 0;
+    FullLand_SingleRoundedCorner = 1;
+    FullLand_SplitDownMiddle = 2;
+    FullLand_IndividualCorners = 3;
+    FullLand_OneOwner = 4;
 
-    ThreeCorners_OneOwner = 4;
-    ThreeCorners_TwoOwners = 5;
-    ThreeCorners_ThreeOwners = 6;
+    ThreeCorners_OneOwner = 5;
+    ThreeCorners_TwoOwners = 6;
+    ThreeCorners_ThreeOwners = 7;
 
-    TwoAdjacent_TwoOwners = 7;
-    TwoAdjacent_OneOwner = 8;
+    TwoAdjacent_TwoOwners = 8;
+    TwoAdjacent_OneOwner = 9;
 
-    TwoOpposite_TwoOwners = 9;
-    TwoOpposite_OneOwner = 10;
+    TwoOpposite_TwoOwners = 10;
+    TwoOpposite_OneOwner = 11;
     
-    SingleCorner_OneOwner = 11;
+    SingleCorner_OneOwner = 12;
 
-    FullWater_NoOnwer = 12;
+    FullWater_NoOnwer = 13;
 }
 
 message RenderTile {

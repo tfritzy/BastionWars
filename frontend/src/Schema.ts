@@ -35,6 +35,7 @@ export const decodeTileType: { [key: number]: TileType } = {
 };
 
 export const enum RenderAllianceCase {
+  InvalidRenderAlliance = "InvalidRenderAlliance",
   FullLand_SingleRoundedCorner = "FullLand_SingleRoundedCorner",
   FullLand_SplitDownMiddle = "FullLand_SplitDownMiddle",
   FullLand_IndividualCorners = "FullLand_IndividualCorners",
@@ -51,35 +52,37 @@ export const enum RenderAllianceCase {
 }
 
 export const encodeRenderAllianceCase: { [key: string]: number } = {
-  FullLand_SingleRoundedCorner: 0,
-  FullLand_SplitDownMiddle: 1,
-  FullLand_IndividualCorners: 2,
-  FullLand_OneOwner: 3,
-  ThreeCorners_OneOwner: 4,
-  ThreeCorners_TwoOwners: 5,
-  ThreeCorners_ThreeOwners: 6,
-  TwoAdjacent_TwoOwners: 7,
-  TwoAdjacent_OneOwner: 8,
-  TwoOpposite_TwoOwners: 9,
-  TwoOpposite_OneOwner: 10,
-  SingleCorner_OneOwner: 11,
-  FullWater_NoOnwer: 12,
+  InvalidRenderAlliance: 0,
+  FullLand_SingleRoundedCorner: 1,
+  FullLand_SplitDownMiddle: 2,
+  FullLand_IndividualCorners: 3,
+  FullLand_OneOwner: 4,
+  ThreeCorners_OneOwner: 5,
+  ThreeCorners_TwoOwners: 6,
+  ThreeCorners_ThreeOwners: 7,
+  TwoAdjacent_TwoOwners: 8,
+  TwoAdjacent_OneOwner: 9,
+  TwoOpposite_TwoOwners: 10,
+  TwoOpposite_OneOwner: 11,
+  SingleCorner_OneOwner: 12,
+  FullWater_NoOnwer: 13,
 };
 
 export const decodeRenderAllianceCase: { [key: number]: RenderAllianceCase } = {
-  0: RenderAllianceCase.FullLand_SingleRoundedCorner,
-  1: RenderAllianceCase.FullLand_SplitDownMiddle,
-  2: RenderAllianceCase.FullLand_IndividualCorners,
-  3: RenderAllianceCase.FullLand_OneOwner,
-  4: RenderAllianceCase.ThreeCorners_OneOwner,
-  5: RenderAllianceCase.ThreeCorners_TwoOwners,
-  6: RenderAllianceCase.ThreeCorners_ThreeOwners,
-  7: RenderAllianceCase.TwoAdjacent_TwoOwners,
-  8: RenderAllianceCase.TwoAdjacent_OneOwner,
-  9: RenderAllianceCase.TwoOpposite_TwoOwners,
-  10: RenderAllianceCase.TwoOpposite_OneOwner,
-  11: RenderAllianceCase.SingleCorner_OneOwner,
-  12: RenderAllianceCase.FullWater_NoOnwer,
+  0: RenderAllianceCase.InvalidRenderAlliance,
+  1: RenderAllianceCase.FullLand_SingleRoundedCorner,
+  2: RenderAllianceCase.FullLand_SplitDownMiddle,
+  3: RenderAllianceCase.FullLand_IndividualCorners,
+  4: RenderAllianceCase.FullLand_OneOwner,
+  5: RenderAllianceCase.ThreeCorners_OneOwner,
+  6: RenderAllianceCase.ThreeCorners_TwoOwners,
+  7: RenderAllianceCase.ThreeCorners_ThreeOwners,
+  8: RenderAllianceCase.TwoAdjacent_TwoOwners,
+  9: RenderAllianceCase.TwoAdjacent_OneOwner,
+  10: RenderAllianceCase.TwoOpposite_TwoOwners,
+  11: RenderAllianceCase.TwoOpposite_OneOwner,
+  12: RenderAllianceCase.SingleCorner_OneOwner,
+  13: RenderAllianceCase.FullWater_NoOnwer,
 };
 
 export const enum SoldierType {

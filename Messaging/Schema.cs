@@ -75,17 +75,18 @@ namespace Schema {
             "U29sZGllclR5cGVIAIgBARIUCgdwZXJjZW50GAQgASgCSAGIAQFCDwoNX3Nv",
             "bGRpZXJfdHlwZUIKCghfcGVyY2VudCoqCg5HZW5lcmF0aW9uTW9kZRIOCgpB",
             "dXRvQWNjcnVlEAASCAoEV29yZBABKjYKCFRpbGVUeXBlEgsKB0ludmFsaWQQ",
-            "ABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEAMq/AIKElJlbmRlckFs",
-            "bGlhbmNlQ2FzZRIgChxGdWxsTGFuZF9TaW5nbGVSb3VuZGVkQ29ybmVyEAAS",
-            "HAoYRnVsbExhbmRfU3BsaXREb3duTWlkZGxlEAESHgoaRnVsbExhbmRfSW5k",
-            "aXZpZHVhbENvcm5lcnMQAhIVChFGdWxsTGFuZF9PbmVPd25lchADEhkKFVRo",
-            "cmVlQ29ybmVyc19PbmVPd25lchAEEhoKFlRocmVlQ29ybmVyc19Ud29Pd25l",
-            "cnMQBRIcChhUaHJlZUNvcm5lcnNfVGhyZWVPd25lcnMQBhIZChVUd29BZGph",
-            "Y2VudF9Ud29Pd25lcnMQBxIYChRUd29BZGphY2VudF9PbmVPd25lchAIEhkK",
-            "FVR3b09wcG9zaXRlX1R3b093bmVycxAJEhgKFFR3b09wcG9zaXRlX09uZU93",
-            "bmVyEAoSGQoVU2luZ2xlQ29ybmVyX09uZU93bmVyEAsSFQoRRnVsbFdhdGVy",
-            "X05vT253ZXIQDCo6CgtTb2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAA",
-            "EgsKB1dhcnJpb3IQARIKCgZBcmNoZXIQAmIGcHJvdG8z"));
+            "ABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEAMqlwMKElJlbmRlckFs",
+            "bGlhbmNlQ2FzZRIZChVJbnZhbGlkUmVuZGVyQWxsaWFuY2UQABIgChxGdWxs",
+            "TGFuZF9TaW5nbGVSb3VuZGVkQ29ybmVyEAESHAoYRnVsbExhbmRfU3BsaXRE",
+            "b3duTWlkZGxlEAISHgoaRnVsbExhbmRfSW5kaXZpZHVhbENvcm5lcnMQAxIV",
+            "ChFGdWxsTGFuZF9PbmVPd25lchAEEhkKFVRocmVlQ29ybmVyc19PbmVPd25l",
+            "chAFEhoKFlRocmVlQ29ybmVyc19Ud29Pd25lcnMQBhIcChhUaHJlZUNvcm5l",
+            "cnNfVGhyZWVPd25lcnMQBxIZChVUd29BZGphY2VudF9Ud29Pd25lcnMQCBIY",
+            "ChRUd29BZGphY2VudF9PbmVPd25lchAJEhkKFVR3b09wcG9zaXRlX1R3b093",
+            "bmVycxAKEhgKFFR3b09wcG9zaXRlX09uZU93bmVyEAsSGQoVU2luZ2xlQ29y",
+            "bmVyX09uZU93bmVyEAwSFQoRRnVsbFdhdGVyX05vT253ZXIQDSo6CgtTb2xk",
+            "aWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAAEgsKB1dhcnJpb3IQARIKCgZB",
+            "cmNoZXIQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -132,19 +133,20 @@ namespace Schema {
   }
 
   public enum RenderAllianceCase {
-    [pbr::OriginalName("FullLand_SingleRoundedCorner")] FullLandSingleRoundedCorner = 0,
-    [pbr::OriginalName("FullLand_SplitDownMiddle")] FullLandSplitDownMiddle = 1,
-    [pbr::OriginalName("FullLand_IndividualCorners")] FullLandIndividualCorners = 2,
-    [pbr::OriginalName("FullLand_OneOwner")] FullLandOneOwner = 3,
-    [pbr::OriginalName("ThreeCorners_OneOwner")] ThreeCornersOneOwner = 4,
-    [pbr::OriginalName("ThreeCorners_TwoOwners")] ThreeCornersTwoOwners = 5,
-    [pbr::OriginalName("ThreeCorners_ThreeOwners")] ThreeCornersThreeOwners = 6,
-    [pbr::OriginalName("TwoAdjacent_TwoOwners")] TwoAdjacentTwoOwners = 7,
-    [pbr::OriginalName("TwoAdjacent_OneOwner")] TwoAdjacentOneOwner = 8,
-    [pbr::OriginalName("TwoOpposite_TwoOwners")] TwoOppositeTwoOwners = 9,
-    [pbr::OriginalName("TwoOpposite_OneOwner")] TwoOppositeOneOwner = 10,
-    [pbr::OriginalName("SingleCorner_OneOwner")] SingleCornerOneOwner = 11,
-    [pbr::OriginalName("FullWater_NoOnwer")] FullWaterNoOnwer = 12,
+    [pbr::OriginalName("InvalidRenderAlliance")] InvalidRenderAlliance = 0,
+    [pbr::OriginalName("FullLand_SingleRoundedCorner")] FullLandSingleRoundedCorner = 1,
+    [pbr::OriginalName("FullLand_SplitDownMiddle")] FullLandSplitDownMiddle = 2,
+    [pbr::OriginalName("FullLand_IndividualCorners")] FullLandIndividualCorners = 3,
+    [pbr::OriginalName("FullLand_OneOwner")] FullLandOneOwner = 4,
+    [pbr::OriginalName("ThreeCorners_OneOwner")] ThreeCornersOneOwner = 5,
+    [pbr::OriginalName("ThreeCorners_TwoOwners")] ThreeCornersTwoOwners = 6,
+    [pbr::OriginalName("ThreeCorners_ThreeOwners")] ThreeCornersThreeOwners = 7,
+    [pbr::OriginalName("TwoAdjacent_TwoOwners")] TwoAdjacentTwoOwners = 8,
+    [pbr::OriginalName("TwoAdjacent_OneOwner")] TwoAdjacentOneOwner = 9,
+    [pbr::OriginalName("TwoOpposite_TwoOwners")] TwoOppositeTwoOwners = 10,
+    [pbr::OriginalName("TwoOpposite_OneOwner")] TwoOppositeOneOwner = 11,
+    [pbr::OriginalName("SingleCorner_OneOwner")] SingleCornerOneOwner = 12,
+    [pbr::OriginalName("FullWater_NoOnwer")] FullWaterNoOnwer = 13,
   }
 
   public enum SoldierType {
@@ -3756,7 +3758,7 @@ namespace Schema {
 
     /// <summary>Field number for the "alliance_case" field.</summary>
     public const int AllianceCaseFieldNumber = 3;
-    private global::Schema.RenderAllianceCase allianceCase_ = global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner;
+    private global::Schema.RenderAllianceCase allianceCase_ = global::Schema.RenderAllianceCase.InvalidRenderAlliance;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Schema.RenderAllianceCase AllianceCase {
@@ -3793,7 +3795,7 @@ namespace Schema {
       int hash = 1;
       if (TileCase != 0) hash ^= TileCase.GetHashCode();
       hash ^= cornerAlliance_.GetHashCode();
-      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) hash ^= AllianceCase.GetHashCode();
+      if (AllianceCase != global::Schema.RenderAllianceCase.InvalidRenderAlliance) hash ^= AllianceCase.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3817,7 +3819,7 @@ namespace Schema {
         output.WriteUInt32(TileCase);
       }
       cornerAlliance_.WriteTo(output, _repeated_cornerAlliance_codec);
-      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+      if (AllianceCase != global::Schema.RenderAllianceCase.InvalidRenderAlliance) {
         output.WriteRawTag(24);
         output.WriteEnum((int) AllianceCase);
       }
@@ -3836,7 +3838,7 @@ namespace Schema {
         output.WriteUInt32(TileCase);
       }
       cornerAlliance_.WriteTo(ref output, _repeated_cornerAlliance_codec);
-      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+      if (AllianceCase != global::Schema.RenderAllianceCase.InvalidRenderAlliance) {
         output.WriteRawTag(24);
         output.WriteEnum((int) AllianceCase);
       }
@@ -3854,7 +3856,7 @@ namespace Schema {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TileCase);
       }
       size += cornerAlliance_.CalculateSize(_repeated_cornerAlliance_codec);
-      if (AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+      if (AllianceCase != global::Schema.RenderAllianceCase.InvalidRenderAlliance) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AllianceCase);
       }
       if (_unknownFields != null) {
@@ -3873,7 +3875,7 @@ namespace Schema {
         TileCase = other.TileCase;
       }
       cornerAlliance_.Add(other.cornerAlliance_);
-      if (other.AllianceCase != global::Schema.RenderAllianceCase.FullLandSingleRoundedCorner) {
+      if (other.AllianceCase != global::Schema.RenderAllianceCase.InvalidRenderAlliance) {
         AllianceCase = other.AllianceCase;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);

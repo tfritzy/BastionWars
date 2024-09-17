@@ -32,3 +32,5 @@ export const keepColors = [
   "#fbcfe8",
   "#fecdd3",
 ];
+export const BOUNDARY_LINE_STYLE = "black";
+export const BOUNDARY_LINE_WIDTH = 1;

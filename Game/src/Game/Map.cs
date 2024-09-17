@@ -298,9 +298,13 @@ public class Map
             }
             else
             {
-                if (renderTile.CornerAlliance[0] == renderTile.CornerAlliance[2])
+                if (renderTile.CornerAlliance[0] == renderTile.CornerAlliance[3])
                 {
                     return RenderAllianceCase.FullLandIndividualCorners;
+                }
+                else if (cornerOwnership.Values.First().Count == 1)
+                {
+                    return RenderAllianceCase.FullLandSingleRoundedCorner;
                 }
                 else
                 {
