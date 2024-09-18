@@ -7,7 +7,7 @@ import type {
 } from "./Schema";
 import { Typeable } from "./typeable";
 
-type Vector2 = {
+export type Vector2 = {
   x: number;
   y: number;
 };

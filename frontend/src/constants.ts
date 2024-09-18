@@ -6,9 +6,11 @@ export const Constants = {
 
 export const WORLD_TO_CANVAS = 64;
 export const TILE_SIZE = WORLD_TO_CANVAS;
+export const FULL_T = TILE_SIZE;
 export const HALF_T = TILE_SIZE / 2;
 export const QUARTER_T = TILE_SIZE / 4;
 export const CORNER_RADIUS = TILE_SIZE / 4;
+export const THREE_Q_T = HALF_T + QUARTER_T;
 
 export const soldierColors: { [key: string]: string } = {
   [SoldierType.Archer]: "#86efacaa",
@@ -32,7 +34,9 @@ export const keepColors = [
   "#fbcfe8",
   "#fecdd3",
 ];
-export const BOUNDARY_LINE_STYLE = "black";
+export const BOUNDARY_LINE_STYLE = "#888888";
 export const BOUNDARY_LINE_WIDTH = 1;
 export const KEEP_LINE_STYLE = "black";
 export const KEEP_LINE_WIDTH = 1;
+export const LAND_LINE_STYLE = "black";
+export const LAND_LINE_WIDTH = 1;

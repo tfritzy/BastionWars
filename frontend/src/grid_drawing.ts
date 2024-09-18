@@ -4,10 +4,13 @@ import {
   HALF_T,
   keepColors,
   QUARTER_T,
-  TILE_SIZE as FULL_T,
+  LAND_LINE_STYLE,
+  LAND_LINE_WIDTH,
+  FULL_T,
 } from "./constants.ts";
 import type { Drawing } from "./drawing.ts";
 import { RenderAllianceCase, type RenderTile } from "./Schema.ts";
+import { draw_land_1011_ownership_1x22 } from "./tile_drawing.ts";
 import type { GameState } from "./types.ts";
 
 type RectParams = {
@@ -46,6 +49,50 @@ export function drawMap(drawing: Drawing, gameState: GameState) {
 
     drawLandTile(drawing, x, y, tile);
   });
+
+  renderThreeCornersTwoOwners(
+    drawing,
+    0 * FULL_T - FULL_T / 2,
+    13 * FULL_T - FULL_T / 2,
+    {
+      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+      corner_alliance: [2, 0, 1, 1],
+      tile_case: 7,
+    }
+  );
+
+  renderThreeCornersTwoOwners(
+    drawing,
+    1 * FULL_T - FULL_T / 2,
+    13 * FULL_T - FULL_T / 2,
+    {
+      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+      corner_alliance: [2, 0, 1, 1],
+      tile_case: 11,
+    }
+  );
+
+  renderThreeCornersTwoOwners(
+    drawing,
+    2 * FULL_T - FULL_T / 2,
+    13 * FULL_T - FULL_T / 2,
+    {
+      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+      corner_alliance: [2, 0, 1, 1],
+      tile_case: 13,
+    }
+  );
+
+  renderThreeCornersTwoOwners(
+    drawing,
+    3 * FULL_T - FULL_T / 2,
+    13 * FULL_T - FULL_T / 2,
+    {
+      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+      corner_alliance: [2, 0, 1, 1],
+      tile_case: 14,
+    }
+  );
 }
 
 export function drawLandTile(
@@ -72,7 +119,7 @@ export function drawLandTile(
       renderThreeCornersOneOwner(drawing, x, y, tile);
       break;
     case RenderAllianceCase.ThreeCorners_TwoOwners:
-      renderThreeCornersTwoOwners();
+      renderThreeCornersTwoOwners(drawing, x, y, tile);
       break;
     case RenderAllianceCase.ThreeCorners_ThreeOwners:
       renderThreeCornersThreeOwners();
@@ -260,14 +307,10 @@ function renderThreeCornersOneOwner(
         ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + HALF_T, y);
       });
 
-      drawing.drawStrokeable(
-        BOUNDARY_LINE_STYLE,
-        BOUNDARY_LINE_WIDTH,
-        (ctx) => {
-          ctx.moveTo(x, y + HALF_T);
-          ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + HALF_T, y);
-        }
-      );
+      drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+        ctx.moveTo(x, y + HALF_T);
+        ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + HALF_T, y);
+      });
       break;
     case 11: // empty corner top right
       drawing.drawFillable(styleForCorner(tile, 1), (ctx) => {
@@ -279,14 +322,10 @@ function renderThreeCornersOneOwner(
         ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + HALF_T, y);
       });
 
-      drawing.drawStrokeable(
-        BOUNDARY_LINE_STYLE,
-        BOUNDARY_LINE_WIDTH,
-        (ctx) => {
-          ctx.moveTo(x + HALF_T, y);
-          ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + FULL_T, y + HALF_T);
-        }
-      );
+      drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+        ctx.moveTo(x + HALF_T, y);
+        ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + FULL_T, y + HALF_T);
+      });
       break;
     case 13: // empty corner bottom left
       drawing.drawFillable(styleForCorner(tile, 1), (ctx) => {
@@ -298,14 +337,10 @@ function renderThreeCornersOneOwner(
         ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x, y + HALF_T);
       });
 
-      drawing.drawStrokeable(
-        BOUNDARY_LINE_STYLE,
-        BOUNDARY_LINE_WIDTH,
-        (ctx) => {
-          ctx.moveTo(x, y + HALF_T);
-          ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + HALF_T, y + FULL_T);
-        }
-      );
+      drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+        ctx.moveTo(x, y + HALF_T);
+        ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + HALF_T, y + FULL_T);
+      });
       break;
     case 14: // empty corner bottom right
       drawing.drawFillable(styleForCorner(tile, 1), (ctx) => {
@@ -317,20 +352,41 @@ function renderThreeCornersOneOwner(
         ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + FULL_T, y + HALF_T);
       });
 
-      drawing.drawStrokeable(
-        BOUNDARY_LINE_STYLE,
-        BOUNDARY_LINE_WIDTH,
-        (ctx) => {
-          ctx.moveTo(x + HALF_T, y + FULL_T);
-          ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + FULL_T, y + HALF_T);
-        }
-      );
+      drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+        ctx.moveTo(x + HALF_T, y + FULL_T);
+        ctx.quadraticCurveTo(x + HALF_T, y + HALF_T, x + FULL_T, y + HALF_T);
+      });
       break;
     default:
       throw tile.tile_case + " shouldn't be a three corners case 😕";
   }
 }
-function renderThreeCornersTwoOwners() {}
+function renderThreeCornersTwoOwners(
+  drawing: Drawing,
+  x: number,
+  y: number,
+  tile: RenderTile
+) {
+  if (!tile.corner_alliance) return;
+
+  switch (tile.tile_case) {
+    case 7: // empty corner top left
+      draw_land_1011_ownership_1x22(drawing, { x, y }, 3, "red", "green");
+      break;
+    case 11: // empty corner top right
+      // console.log("The case", tile);
+      draw_land_1011_ownership_1x22(drawing, { x, y }, 0, "red", "green");
+      break;
+    case 13: // empty corner bottom left
+      draw_land_1011_ownership_1x22(drawing, { x, y }, 2, "red", "green");
+      break;
+    case 14: // empty corner bottom right
+      draw_land_1011_ownership_1x22(drawing, { x, y }, 1, "red", "green");
+      break;
+    default:
+      throw tile.tile_case + " shouldn't be a three corners case 😕";
+  }
+}
 function renderThreeCornersThreeOwners() {}
 
 function renderTwoAdjacentOneOwner() {}
@@ -349,6 +405,26 @@ function styleForCorner(tile: RenderTile, i: number) {
   } else {
     return "";
   }
+}
+
+function getCenterOfCurve(
+  x0: number,
+  y0: number,
+  cpx: number,
+  cpy: number,
+  x1: number,
+  y1: number
+) {
+  const mx1 = (x0 + cpx) / 2;
+  const my1 = (y0 + cpy) / 2;
+
+  const mx2 = (cpx + x1) / 2;
+  const my2 = (cpy + y1) / 2;
+
+  const midX = (mx1 + mx2) / 2;
+  const midY = (my1 + my2) / 2;
+
+  return { x: midX, y: midY };
 }
 
 // function drawRect(
