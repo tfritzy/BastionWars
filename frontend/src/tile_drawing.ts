@@ -77,6 +77,72 @@ export function draw_land_1011_ownership_1x22(
   });
 }
 
+export function draw_land_1011_ownership_1x12(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner1_color: string,
+  owner2_color: string
+) {
+  const land_mid = rotate(
+    p,
+    getCenterOfCurve(
+      p.x + HALF_T,
+      p.y,
+      p.x + HALF_T,
+      p.y + HALF_T,
+      p.x + FULL_T,
+      p.y + HALF_T
+    ),
+    rotation
+  );
+
+  // Top left owner area
+  drawing.drawFillable(owner1_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = land_mid;
+    const cp0 = rotate(p, { x: p.x + HALF_T, y: p.y + QUARTER_T }, rotation);
+    const p3 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const cp1 = rotate(p, { x: p.x + HALF_T, y: p.y + HALF_T }, rotation);
+    const p4 = rotate(p, { x: p.x, y: p.y + FULL_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(cp0.x, cp0.y, p2.x, p2.y);
+    ctx.quadraticCurveTo(cp1.x, cp1.y, p3.x, p3.y);
+    ctx.lineTo(p4.x, p4.y);
+  });
+
+  // bondary between owned lands
+  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    ctx.moveTo(land_mid.x, land_mid.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p0.x, p0.y);
+  });
+
+  // bottom right owner area
+  drawing.drawFillable(owner2_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const p2 = land_mid;
+    const p3 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    const cp1 = rotate(p, { x: p.x + THREE_Q_T, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+    ctx.quadraticCurveTo(cp1.x, cp1.y, p3.x, p3.y);
+  });
+
+  // Curve of the land
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+}
+
 function getCenterOfCurve(
   x0: number,
   y0: number,

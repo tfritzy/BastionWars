@@ -10,7 +10,10 @@ import {
 } from "./constants.ts";
 import type { Drawing } from "./drawing.ts";
 import { RenderAllianceCase, type RenderTile } from "./Schema.ts";
-import { draw_land_1011_ownership_1x22 } from "./tile_drawing.ts";
+import {
+  draw_land_1011_ownership_1x12,
+  draw_land_1011_ownership_1x22,
+} from "./tile_drawing.ts";
 import type { GameState } from "./types.ts";
 
 type RectParams = {
@@ -50,49 +53,69 @@ export function drawMap(drawing: Drawing, gameState: GameState) {
     drawLandTile(drawing, x, y, tile);
   });
 
-  renderThreeCornersTwoOwners(
-    drawing,
-    0 * FULL_T - FULL_T / 2,
-    13 * FULL_T - FULL_T / 2,
-    {
-      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
-      corner_alliance: [2, 0, 1, 1],
-      tile_case: 7,
-    }
-  );
+  drawLandTile(drawing, -8 * FULL_T - FULL_T / 2, 11 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_OneOwner,
+    corner_alliance: [0, 2, 1, 1],
+    tile_case: 7,
+  });
+  drawLandTile(drawing, -8 * FULL_T - FULL_T / 2, 13 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [0, 2, 1, 1],
+    tile_case: 7,
+  });
+  drawLandTile(drawing, -8 * FULL_T - FULL_T / 2, 15 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [0, 2, 2, 1],
+    tile_case: 7,
+  });
 
-  renderThreeCornersTwoOwners(
-    drawing,
-    1 * FULL_T - FULL_T / 2,
-    13 * FULL_T - FULL_T / 2,
-    {
-      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
-      corner_alliance: [2, 0, 1, 1],
-      tile_case: 11,
-    }
-  );
+  drawLandTile(drawing, -6 * FULL_T - FULL_T / 2, 11 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_OneOwner,
+    corner_alliance: [1, 1, 1, 1],
+    tile_case: 11,
+  });
+  drawLandTile(drawing, -6 * FULL_T - FULL_T / 2, 13 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [2, 0, 1, 1],
+    tile_case: 11,
+  });
+  drawLandTile(drawing, -6 * FULL_T - FULL_T / 2, 15 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [2, 0, 1, 2],
+    tile_case: 11,
+  });
 
-  renderThreeCornersTwoOwners(
-    drawing,
-    2 * FULL_T - FULL_T / 2,
-    13 * FULL_T - FULL_T / 2,
-    {
-      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
-      corner_alliance: [2, 0, 1, 1],
-      tile_case: 13,
-    }
-  );
+  drawLandTile(drawing, -4 * FULL_T - FULL_T / 2, 11 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_OneOwner,
+    corner_alliance: [1, 1, 0, 2],
+    tile_case: 13,
+  });
+  drawLandTile(drawing, -4 * FULL_T - FULL_T / 2, 13 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [1, 1, 0, 2],
+    tile_case: 13,
+  });
+  drawLandTile(drawing, -4 * FULL_T - FULL_T / 2, 15 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [2, 1, 0, 2],
+    tile_case: 13,
+  });
 
-  renderThreeCornersTwoOwners(
-    drawing,
-    3 * FULL_T - FULL_T / 2,
-    13 * FULL_T - FULL_T / 2,
-    {
-      alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
-      corner_alliance: [2, 0, 1, 1],
-      tile_case: 14,
-    }
-  );
+  drawLandTile(drawing, -2 * FULL_T - FULL_T / 2, 11 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_OneOwner,
+    corner_alliance: [2, 1, 1, 0],
+    tile_case: 14,
+  });
+  drawLandTile(drawing, -2 * FULL_T - FULL_T / 2, 13 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [2, 1, 1, 0],
+    tile_case: 14,
+  });
+  drawLandTile(drawing, -2 * FULL_T - FULL_T / 2, 15 * FULL_T - FULL_T / 2, {
+    alliance_case: RenderAllianceCase.ThreeCorners_TwoOwners,
+    corner_alliance: [2, 2, 1, 0],
+    tile_case: 14,
+  });
 }
 
 export function drawLandTile(
@@ -371,17 +394,81 @@ function renderThreeCornersTwoOwners(
 
   switch (tile.tile_case) {
     case 7: // empty corner top left
-      draw_land_1011_ownership_1x22(drawing, { x, y }, 3, "red", "green");
+      if (tile.corner_alliance[1] !== tile.corner_alliance[2]) {
+        draw_land_1011_ownership_1x22(
+          drawing,
+          { x, y },
+          3,
+          styleForCorner(tile, 2),
+          styleForCorner(tile, 1)
+        );
+      } else {
+        draw_land_1011_ownership_1x12(
+          drawing,
+          { x, y },
+          3,
+          styleForCorner(tile, 2),
+          styleForCorner(tile, 1)
+        );
+      }
       break;
     case 11: // empty corner top right
-      // console.log("The case", tile);
-      draw_land_1011_ownership_1x22(drawing, { x, y }, 0, "red", "green");
+      if (tile.corner_alliance[0] !== tile.corner_alliance[2]) {
+        draw_land_1011_ownership_1x22(
+          drawing,
+          { x, y },
+          0,
+          styleForCorner(tile, 0),
+          styleForCorner(tile, 3)
+        );
+      } else {
+        draw_land_1011_ownership_1x12(
+          drawing,
+          { x, y },
+          0,
+          styleForCorner(tile, 0),
+          styleForCorner(tile, 3)
+        );
+      }
       break;
     case 13: // empty corner bottom left
-      draw_land_1011_ownership_1x22(drawing, { x, y }, 2, "red", "green");
+      if (tile.corner_alliance[0] !== tile.corner_alliance[3]) {
+        draw_land_1011_ownership_1x22(
+          drawing,
+          { x, y },
+          2,
+          styleForCorner(tile, 3),
+          styleForCorner(tile, 0)
+        );
+      } else {
+        draw_land_1011_ownership_1x12(
+          drawing,
+          { x, y },
+          2,
+          styleForCorner(tile, 3),
+          styleForCorner(tile, 0)
+        );
+      }
       break;
     case 14: // empty corner bottom right
-      draw_land_1011_ownership_1x22(drawing, { x, y }, 1, "red", "green");
+      if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
+        draw_land_1011_ownership_1x22(
+          drawing,
+          { x, y },
+          1,
+          styleForCorner(tile, 1),
+          styleForCorner(tile, 2)
+        );
+      } else {
+        draw_land_1011_ownership_1x12(
+          drawing,
+          { x, y },
+          1,
+          styleForCorner(tile, 1),
+          styleForCorner(tile, 2)
+        );
+      }
+
       break;
     default:
       throw tile.tile_case + " shouldn't be a three corners case 😕";
