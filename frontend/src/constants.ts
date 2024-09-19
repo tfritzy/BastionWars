@@ -19,15 +19,15 @@ export const soldierColors: { [key: string]: string } = {
 
 export const keepColors = [
   "#fecaca",
-  "#fed7aa",
-  "#fde68a",
+  "#bfdbfe",
   "#fef08a",
   "#d9f99d",
+  "#fde68a",
   "#bbf7d0",
   "#99f6e4",
   "#a5f3fc",
   "#bae6fd",
-  "#bfdbfe",
+  "#fed7aa",
   "#c7d2fe",
   "#e9d5ff",
   "#f5d0fe",
