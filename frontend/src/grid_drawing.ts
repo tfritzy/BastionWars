@@ -18,6 +18,7 @@ import {
   draw_land_1011_ownership_1x23,
   draw_land_1100_ownership_11xx,
   draw_land_1100_ownership_12xx,
+  draw_land_1111_ownership_1222,
 } from "./tile_drawing.ts";
 import type { GameState } from "./types.ts";
 
@@ -40,6 +41,10 @@ export function drawLandTile(
   y: number,
   tile: RenderTile
 ) {
+  drawing.drawStrokeable("black", 1, (ctx) => {
+    ctx.rect(x, y, FULL_T, FULL_T);
+  });
+
   switch (tile.alliance_case) {
     case RenderAllianceCase.FullLand_IndividualCorners:
       renderFullLandIndividualCorners(drawing, x, y, tile);
@@ -99,17 +104,45 @@ function renderFullLandIndividualCorners(
 ) {
   if (!tile.corner_alliance) return;
   drawing.drawFillable(styleForCorner(tile, 0), (ctx) =>
-    ctx.rect(x, y, QUARTER_T, QUARTER_T)
+    ctx.rect(x, y, HALF_T, HALF_T)
   );
   drawing.drawFillable(styleForCorner(tile, 1), (ctx) =>
-    ctx.rect(x + QUARTER_T, y, QUARTER_T, QUARTER_T)
+    ctx.rect(x + HALF_T, y, HALF_T, HALF_T)
   );
   drawing.drawFillable(styleForCorner(tile, 2), (ctx) =>
-    ctx.rect(x, y + QUARTER_T, QUARTER_T, QUARTER_T)
+    ctx.rect(x, y + HALF_T, HALF_T, HALF_T)
   );
   drawing.drawFillable(styleForCorner(tile, 3), (ctx) =>
-    ctx.rect(x + QUARTER_T, y + QUARTER_T, QUARTER_T, QUARTER_T)
+    ctx.rect(x + HALF_T, y + HALF_T, HALF_T, HALF_T)
   );
+
+  if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
+    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+      ctx.moveTo(x + HALF_T, y + HALF_T);
+      ctx.lineTo(x + HALF_T, y);
+    });
+  }
+
+  if (tile.corner_alliance[1] !== tile.corner_alliance[3]) {
+    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+      ctx.moveTo(x + HALF_T, y + HALF_T);
+      ctx.lineTo(x + FULL_T, y + HALF_T);
+    });
+  }
+
+  if (tile.corner_alliance[3] !== tile.corner_alliance[2]) {
+    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+      ctx.moveTo(x + HALF_T, y + HALF_T);
+      ctx.lineTo(x + HALF_T, y + FULL_T);
+    });
+  }
+
+  if (tile.corner_alliance[0] !== tile.corner_alliance[2]) {
+    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+      ctx.moveTo(x + HALF_T, y + HALF_T);
+      ctx.lineTo(x, y + HALF_T);
+    });
+  }
 }
 
 function renderFullLandOneOwner(
@@ -165,36 +198,56 @@ function renderFullLandSingleRoundedCorner(
 ) {
   if (!tile.corner_alliance) return;
 
-  switch (tile.tile_case) {
-    case 7: // empty corner top left
-      draw_land_0111_ownership_x111(
+  let firstCount = 1;
+  for (let i = 1; i < tile.corner_alliance.length; i++) {
+    if (tile.corner_alliance[i] === tile.corner_alliance[0]) {
+      firstCount += 1;
+    }
+  }
+
+  let oddCorner;
+  if (firstCount === 1) {
+    oddCorner = 0;
+  } else {
+    oddCorner = tile.corner_alliance.findIndex(
+      (a) => a !== tile.corner_alliance![0]
+    );
+  }
+
+  switch (oddCorner) {
+    case 0: // odd corner top left
+      draw_land_1111_ownership_1222(
         drawing,
         { x, y },
         0,
-        styleForCorner(tile, 4)
-      );
-      break;
-    case 11: // empty corner top right
-      draw_land_0111_ownership_x111(
-        drawing,
-        { x, y },
-        1,
-        styleForCorner(tile, 2)
-      );
-      break;
-    case 13: // empty corner bottom left
-      draw_land_0111_ownership_x111(
-        drawing,
-        { x, y },
-        3,
+        styleForCorner(tile, 0),
         styleForCorner(tile, 1)
       );
       break;
-    case 14: // empty corner bottom right
-      draw_land_0111_ownership_x111(
+    case 1: // odd corner top right
+      draw_land_1111_ownership_1222(
+        drawing,
+        { x, y },
+        1,
+        styleForCorner(tile, 1),
+        styleForCorner(tile, 2)
+      );
+      break;
+    case 2: // odd corner bottom left
+      draw_land_1111_ownership_1222(
+        drawing,
+        { x, y },
+        3,
+        styleForCorner(tile, 2),
+        styleForCorner(tile, 1)
+      );
+      break;
+    case 3: // odd corner bottom right
+      draw_land_1111_ownership_1222(
         drawing,
         { x, y },
         2,
+        styleForCorner(tile, 3),
         styleForCorner(tile, 1)
       );
       break;
@@ -217,7 +270,7 @@ function renderThreeCornersOneOwner(
         drawing,
         { x, y },
         0,
-        styleForCorner(tile, 4)
+        styleForCorner(tile, 3)
       );
       break;
     case 11: // empty corner top right

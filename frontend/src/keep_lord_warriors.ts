@@ -82,13 +82,6 @@ export class KeepLordWarriors {
     );
     this.ctx.translate(offsetX, offsetY);
 
-    drawGrid(
-      this.ctx,
-      this.controls,
-      this.canvas.width / this.dpr,
-      this.canvas.height / this.dpr
-    );
-
     if (this.state === "in_game") {
       this.game!.draw(this.dpr, deltaTime);
     } else {

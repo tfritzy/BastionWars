@@ -298,13 +298,13 @@ public class Map
             }
             else
             {
-                if (renderTile.CornerAlliance[0] == renderTile.CornerAlliance[3])
-                {
-                    return RenderAllianceCase.FullLandIndividualCorners;
-                }
-                else if (cornerOwnership.Values.First().Count == 1)
+                if (cornerOwnership.Values.First().Count == 1 || cornerOwnership.Values.First().Count == 3)
                 {
                     return RenderAllianceCase.FullLandSingleRoundedCorner;
+                }
+                else if (renderTile.CornerAlliance[0] == renderTile.CornerAlliance[3])
+                {
+                    return RenderAllianceCase.FullLandIndividualCorners;
                 }
                 else
                 {
@@ -316,9 +316,9 @@ public class Map
         {
             switch (cornerOwnership.Keys.Count)
             {
-                case 3:
+                case 4:
                     return RenderAllianceCase.ThreeCornersThreeOwners;
-                case 2:
+                case 3:
                     return RenderAllianceCase.ThreeCornersTwoOwners;
                 default:
                     return RenderAllianceCase.ThreeCornersOneOwner;
@@ -328,7 +328,7 @@ public class Map
         {
             switch (cornerOwnership.Keys.Count)
             {
-                case 2:
+                case 3:
                     return RenderAllianceCase.TwoAdjacentTwoOwners;
                 default:
                     return RenderAllianceCase.TwoAdjacentOneOwner;
@@ -338,7 +338,7 @@ public class Map
         {
             switch (cornerOwnership.Keys.Count)
             {
-                case 2:
+                case 3:
                     return RenderAllianceCase.TwoOppositeTwoOwners;
                 default:
                     return RenderAllianceCase.TwoOppositeOneOwner;
@@ -364,8 +364,6 @@ public class Map
         for (int i = 0; i < renderTile.CornerAlliance.Count; i++)
         {
             int alliance = renderTile.CornerAlliance[i];
-            if (alliance == 0)
-                continue;
 
             if (!cornerOwnership.ContainsKey(alliance))
             {
