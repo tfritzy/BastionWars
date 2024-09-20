@@ -11,6 +11,36 @@ import {
 import type { Drawing } from "./drawing";
 import type { Vector2 } from "./types";
 
+export function draw_land_1111_ownership_1222(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner1_color: string,
+  owner2_color: string
+) {
+  drawing.drawFillable(owner1_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p3 = rotate(p, { x: p.x, y: p.y + FULL_T }, rotation);
+    const p4 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p5 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.lineTo(p4.x, p4.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p5.x, p5.y);
+  });
+
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+}
+
 export function draw_land_0111_ownership_x111(
   drawing: Drawing,
   p: Vector2,
@@ -325,6 +355,151 @@ export function draw_land_1100_ownership_12xx(
     const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + HALF_T }, rotation);
     ctx.moveTo(p0.x, p0.y);
     ctx.lineTo(p1.x, p1.y);
+  });
+}
+
+export function draw_land_1001_ownership_1xx1(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner_color: string
+) {
+  drawing.drawFillable(owner_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    const p3 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p4 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const p5 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.lineTo(p4.x, p4.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p5.x, p5.y);
+  });
+
+  // Drawing land
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+}
+
+export function draw_land_1001_ownership_1xx2(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner1_color: string,
+  owner2_color: string
+) {
+  const land_top_mid = rotate(
+    p,
+    getCenterOfCurve(
+      p.x + HALF_T,
+      p.y,
+      p.x + HALF_T,
+      p.y + HALF_T,
+      p.x + FULL_T,
+      p.y + HALF_T
+    ),
+    rotation
+  );
+  const land_bottom_mid = rotate(
+    p,
+    getCenterOfCurve(
+      p.x,
+      p.y + HALF_T,
+      p.x + HALF_T,
+      p.y + HALF_T,
+      p.x + HALF_T,
+      p.y + FULL_T
+    ),
+    rotation
+  );
+
+  // Top left part
+  drawing.drawFillable(owner1_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = land_top_mid;
+    const cp2 = rotate(p, { x: p.x + HALF_T, y: p.y + QUARTER_T }, rotation);
+    const p3 = land_bottom_mid;
+    const p4 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const cp3 = rotate(p, { x: p.x + QUARTER_T, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(cp2.x, cp2.y, p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.quadraticCurveTo(cp3.x, cp3.y, p4.x, p4.y);
+  });
+
+  // bottom right part
+  drawing.drawFillable(owner2_color, (ctx) => {
+    const p0 = land_top_mid;
+    const cp1 = rotate(p, { x: p.x + THREE_Q_T, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p3 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const p4 = land_bottom_mid;
+    const cp4 = rotate(p, { x: p.x + HALF_T, y: p.y + THREE_Q_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(cp1.x, cp1.y, p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.quadraticCurveTo(cp4.x, cp4.y, p4.x, p4.y);
+  });
+
+  // Drawing land
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+}
+
+export function draw_land_1000_ownership_1xxx(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner_color: string
+) {
+  drawing.drawFillable(owner_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+  });
+
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
   });
 }
 

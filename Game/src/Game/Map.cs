@@ -364,6 +364,9 @@ public class Map
         for (int i = 0; i < renderTile.CornerAlliance.Count; i++)
         {
             int alliance = renderTile.CornerAlliance[i];
+            if (alliance == 0)
+                continue;
+
             if (!cornerOwnership.ContainsKey(alliance))
             {
                 cornerOwnership[alliance] = new List<int>();
@@ -404,6 +407,7 @@ public class Map
         }
 
         uint keepId = KeepLands[pos];
+        return (int)keepId;
         return Keeps[keepId].Alliance;
     }
 

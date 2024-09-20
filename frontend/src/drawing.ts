@@ -26,31 +26,6 @@ export class Drawing {
     });
   }
 
-  drawFilledArc(
-    p0_x: number,
-    p0_y: number,
-    p1_x: number,
-    p1_y: number,
-    cp_x: number,
-    cp_y: number,
-    p2_x: number,
-    p2_y: number,
-    fill: string,
-    stroke: string,
-    line_width: number
-  ) {
-    this.drawFillable(fill, (ctx) => {
-      ctx.moveTo(p0_x, p0_y);
-      ctx.lineTo(p1_x, p1_y);
-      ctx.quadraticCurveTo(cp_x, cp_y, p2_x, p2_y);
-    });
-
-    this.drawStrokeable(stroke, line_width, (ctx) => {
-      ctx.moveTo(p1_x, p1_y);
-      ctx.quadraticCurveTo(cp_x, cp_y, p2_x, p2_y);
-    });
-  }
-
   draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
     for (const [fill, seq] of this.fill_queue) {
