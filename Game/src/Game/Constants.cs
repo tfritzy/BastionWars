@@ -2,6 +2,9 @@ namespace KeepLordWarriors;
 
 public static class Constants
 {
+    public const int UNOWNED_ALLIANCE = 0;
+    public const int GIA_ALLIANCE = 1;
+
     public static readonly string[] KeepNames = new string[]
     {
         "carlow",

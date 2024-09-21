@@ -2,8 +2,6 @@ import {
   HALF_T,
   FULL_T,
   QUARTER_T,
-  BOUNDARY_LINE_STYLE,
-  BOUNDARY_LINE_WIDTH,
   LAND_LINE_STYLE,
   LAND_LINE_WIDTH,
   THREE_Q_T,
@@ -43,7 +41,7 @@ export function draw_land_1111_ownership_1222(
     ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p5.x, p5.y);
   });
 
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
     const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
     ctx.moveTo(p0.x, p0.y);
@@ -77,6 +75,153 @@ export function draw_land_0111_ownership_x111(
     const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
     ctx.moveTo(p0.x, p0.y);
     ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+}
+
+export function draw_land_0111_ownership_x121(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner1_color: string,
+  owner2_color: string
+) {
+  // Curve of the land
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+
+  // Adjacent owner corner
+  drawing.drawBoundary((ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+  drawing.drawFillable(owner1_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const p2 = rotate(p, { x: p.x, y: p.y + FULL_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+  });
+
+  // Remaining ownership land
+  drawing.drawFillable(owner2_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p2 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const p3 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p4 = rotate(p, { x: p.x + FULL_T, y: p.y }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.lineTo(p4.x, p4.y);
+  });
+}
+
+export function draw_land_0111_ownership_x211(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner1_color: string,
+  owner2_color: string
+) {
+  // Curve of the land
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+
+  // Adjacent owner corner
+  drawing.drawBoundary((ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+  drawing.drawFillable(owner1_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+  });
+
+  // Remaining ownership land
+  drawing.drawFillable(owner2_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    const p3 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p4 = rotate(p, { x: p.x, y: p.y + FULL_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.lineTo(p4.x, p4.y);
+  });
+}
+
+export function draw_land_1101_ownership_12x1(
+  drawing: Drawing,
+  p: Vector2,
+  rotation: number,
+  owner1_color: string,
+  owner2_color: string
+) {
+  // Curve of the land
+  drawing.drawStrokeable(LAND_LINE_STYLE, LAND_LINE_WIDTH, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+
+  // top right owner area
+  drawing.drawFillable(owner1_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x + FULL_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+  });
+  drawing.drawBoundary((ctx) => {
+    const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    ctx.moveTo(p0.x, p0.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p1.x, p1.y);
+  });
+
+  // Remaining area
+  drawing.drawFillable(owner2_color, (ctx) => {
+    const p0 = rotate(p, { x: p.x, y: p.y }, rotation);
+    const p1 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
+    const p2 = rotate(p, { x: p.x + FULL_T, y: p.y + HALF_T }, rotation);
+    const p3 = rotate(p, { x: p.x + FULL_T, y: p.y + FULL_T }, rotation);
+    const p4 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
+    const p5 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
+
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p2.x, p2.y);
+    ctx.lineTo(p3.x, p3.y);
+    ctx.lineTo(p4.x, p4.y);
+    ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p5.x, p5.y);
   });
 }
 
@@ -115,7 +260,7 @@ export function draw_land_1011_ownership_1x22(
   });
 
   // bondary between owned lands
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
     ctx.moveTo(land_mid.x, land_mid.y);
     ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p0.x, p0.y);
@@ -183,7 +328,7 @@ export function draw_land_1011_ownership_1x12(
   });
 
   // bondary between owned lands
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     const p0 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
     ctx.moveTo(land_mid.x, land_mid.y);
     ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p0.x, p0.y);
@@ -248,14 +393,14 @@ export function draw_land_1011_ownership_1x23(
   });
 
   // bondary between owned lands
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     const p0 = rotate(p, { x: p.x, y: p.y + HALF_T }, rotation);
     ctx.moveTo(land_mid.x, land_mid.y);
     ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p0.x, p0.y);
   });
 
   // bondary between owned lands
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     const p0 = rotate(p, { x: p.x + HALF_T, y: p.y + FULL_T }, rotation);
     ctx.moveTo(land_mid.x, land_mid.y);
     ctx.quadraticCurveTo(p.x + HALF_T, p.y + HALF_T, p0.x, p0.y);
@@ -360,7 +505,7 @@ export function draw_land_1100_ownership_12xx(
     ctx.lineTo(p1.x, p1.y);
   });
 
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     const p0 = rotate(p, { x: p.x + HALF_T, y: p.y }, rotation);
     const p1 = rotate(p, { x: p.x + HALF_T, y: p.y + HALF_T }, rotation);
     ctx.moveTo(p0.x, p0.y);
@@ -473,7 +618,7 @@ export function draw_land_1001_ownership_1xx2(
   });
 
   // bounds between
-  drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+  drawing.drawBoundary((ctx) => {
     ctx.moveTo(land_top_mid.x, land_top_mid.y);
     ctx.lineTo(land_bottom_mid.x, land_bottom_mid.y);
   });

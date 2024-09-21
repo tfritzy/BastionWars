@@ -1,3 +1,9 @@
+import {
+  BOUNDARY_LINE_DASH,
+  BOUNDARY_LINE_STYLE,
+  BOUNDARY_LINE_WIDTH,
+} from "./constants";
+
 type DrawFunction = (ctx: CanvasRenderingContext2D) => void;
 
 export class Drawing {
@@ -9,6 +15,16 @@ export class Drawing {
   drawFillable(style: string, steps: DrawFunction) {
     if (!this.fill_queue.has(style)) this.fill_queue.set(style, []);
     this.fill_queue.get(style)!.push(steps);
+  }
+
+  drawBoundary(steps: DrawFunction) {
+    if (!this.stroke_queue.has(BOUNDARY_LINE_STYLE))
+      this.stroke_queue.set(BOUNDARY_LINE_STYLE, []);
+    this.stroke_queue.get(BOUNDARY_LINE_STYLE)!.push((ctx) => {
+      ctx.lineWidth = BOUNDARY_LINE_WIDTH;
+      // ctx.setLineDash(BOUNDARY_LINE_DASH);
+      steps(ctx);
+    });
   }
 
   drawStrokeable(style: string, line_width: number, steps: DrawFunction) {

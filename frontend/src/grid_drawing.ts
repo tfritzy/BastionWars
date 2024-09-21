@@ -1,15 +1,10 @@
-import {
-  BOUNDARY_LINE_STYLE,
-  BOUNDARY_LINE_WIDTH,
-  HALF_T,
-  keepColors,
-  QUARTER_T,
-  FULL_T,
-} from "./constants.ts";
+import { HALF_T, keepColors, FULL_T } from "./constants.ts";
 import type { Drawing } from "./drawing.ts";
 import { RenderAllianceCase, type RenderTile } from "./Schema.ts";
 import {
   draw_land_0111_ownership_x111,
+  draw_land_0111_ownership_x121,
+  draw_land_0111_ownership_x211,
   draw_land_1000_ownership_1xxx,
   draw_land_1001_ownership_1xx1,
   draw_land_1001_ownership_1xx2,
@@ -18,6 +13,7 @@ import {
   draw_land_1011_ownership_1x23,
   draw_land_1100_ownership_11xx,
   draw_land_1100_ownership_12xx,
+  draw_land_1101_ownership_12x1,
   draw_land_1111_ownership_1222,
 } from "./tile_drawing.ts";
 import type { GameState } from "./types.ts";
@@ -41,9 +37,9 @@ export function drawLandTile(
   y: number,
   tile: RenderTile
 ) {
-  drawing.drawStrokeable("black", 1, (ctx) => {
-    ctx.rect(x, y, FULL_T, FULL_T);
-  });
+  // drawing.drawStrokeable("black", 1, (ctx) => {
+  //   ctx.rect(x, y, FULL_T, FULL_T);
+  // });
 
   switch (tile.alliance_case) {
     case RenderAllianceCase.FullLand_IndividualCorners:
@@ -117,28 +113,28 @@ function renderFullLandIndividualCorners(
   );
 
   if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
-    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    drawing.drawBoundary((ctx) => {
       ctx.moveTo(x + HALF_T, y + HALF_T);
       ctx.lineTo(x + HALF_T, y);
     });
   }
 
   if (tile.corner_alliance[1] !== tile.corner_alliance[3]) {
-    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    drawing.drawBoundary((ctx) => {
       ctx.moveTo(x + HALF_T, y + HALF_T);
       ctx.lineTo(x + FULL_T, y + HALF_T);
     });
   }
 
   if (tile.corner_alliance[3] !== tile.corner_alliance[2]) {
-    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    drawing.drawBoundary((ctx) => {
       ctx.moveTo(x + HALF_T, y + HALF_T);
       ctx.lineTo(x + HALF_T, y + FULL_T);
     });
   }
 
   if (tile.corner_alliance[0] !== tile.corner_alliance[2]) {
-    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    drawing.drawBoundary((ctx) => {
       ctx.moveTo(x + HALF_T, y + HALF_T);
       ctx.lineTo(x, y + HALF_T);
     });
@@ -173,7 +169,7 @@ function renderFullLandSplitDownMiddle(
     drawing.drawFillable(styleForCorner(tile, 2), (ctx) =>
       ctx.rect(x, y + HALF_T, FULL_T, HALF_T)
     );
-    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    drawing.drawBoundary((ctx) => {
       ctx.moveTo(x, y + HALF_T);
       ctx.lineTo(x + FULL_T, y + HALF_T);
     });
@@ -184,7 +180,7 @@ function renderFullLandSplitDownMiddle(
     drawing.drawFillable(styleForCorner(tile, 1), (ctx) =>
       ctx.rect(x + HALF_T, y, HALF_T, FULL_T)
     );
-    drawing.drawStrokeable(BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, (ctx) => {
+    drawing.drawBoundary((ctx) => {
       ctx.moveTo(x + HALF_T, y);
       ctx.lineTo(x + HALF_T, y + FULL_T);
     });
@@ -311,7 +307,40 @@ function renderThreeCornersTwoOwners(
 
   switch (tile.tile_case) {
     case 7: // empty corner top left
-      if (tile.corner_alliance[1] !== tile.corner_alliance[3]) {
+      if (
+        tile.corner_alliance[0] === 0 &&
+        tile.corner_alliance[1] === tile.corner_alliance[2]
+      ) {
+        draw_land_1101_ownership_12x1(
+          drawing,
+          { x, y },
+          1,
+          styleForCorner(tile, 3),
+          styleForCorner(tile, 1)
+        );
+      } else if (
+        tile.corner_alliance[0] === 0 &&
+        tile.corner_alliance[2] === tile.corner_alliance[3]
+      ) {
+        draw_land_0111_ownership_x211(
+          drawing,
+          { x, y },
+          0,
+          styleForCorner(tile, 1),
+          styleForCorner(tile, 2)
+        );
+      } else if (
+        tile.corner_alliance[0] === 0 &&
+        tile.corner_alliance[1] === tile.corner_alliance[3]
+      ) {
+        draw_land_0111_ownership_x121(
+          drawing,
+          { x, y },
+          0,
+          styleForCorner(tile, 2),
+          styleForCorner(tile, 1)
+        );
+      } else if (tile.corner_alliance[1] !== tile.corner_alliance[3]) {
         draw_land_1011_ownership_1x22(
           drawing,
           { x, y },
@@ -330,7 +359,40 @@ function renderThreeCornersTwoOwners(
       }
       break;
     case 11: // empty corner top right
-      if (tile.corner_alliance[0] !== tile.corner_alliance[2]) {
+      if (
+        tile.corner_alliance[1] === 0 &&
+        tile.corner_alliance[0] === tile.corner_alliance[3]
+      ) {
+        draw_land_1101_ownership_12x1(
+          drawing,
+          { x, y },
+          2,
+          styleForCorner(tile, 2),
+          styleForCorner(tile, 0)
+        );
+      } else if (
+        tile.corner_alliance[1] === 0 &&
+        tile.corner_alliance[0] === tile.corner_alliance[2]
+      ) {
+        draw_land_0111_ownership_x211(
+          drawing,
+          { x, y },
+          1,
+          styleForCorner(tile, 3),
+          styleForCorner(tile, 0)
+        );
+      } else if (
+        tile.corner_alliance[1] === 0 &&
+        tile.corner_alliance[2] === tile.corner_alliance[3]
+      ) {
+        draw_land_0111_ownership_x121(
+          drawing,
+          { x, y },
+          1,
+          styleForCorner(tile, 0),
+          styleForCorner(tile, 2)
+        );
+      } else if (tile.corner_alliance[0] !== tile.corner_alliance[2]) {
         draw_land_1011_ownership_1x22(
           drawing,
           { x, y },
@@ -349,7 +411,40 @@ function renderThreeCornersTwoOwners(
       }
       break;
     case 13: // empty corner bottom left
-      if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
+      if (
+        tile.corner_alliance[2] === 0 &&
+        tile.corner_alliance[0] === tile.corner_alliance[3]
+      ) {
+        draw_land_1101_ownership_12x1(
+          drawing,
+          { x, y },
+          0,
+          styleForCorner(tile, 1),
+          styleForCorner(tile, 0)
+        );
+      } else if (
+        tile.corner_alliance[2] === 0 &&
+        tile.corner_alliance[1] === tile.corner_alliance[3]
+      ) {
+        draw_land_0111_ownership_x211(
+          drawing,
+          { x, y },
+          3,
+          styleForCorner(tile, 0),
+          styleForCorner(tile, 1)
+        );
+      } else if (
+        tile.corner_alliance[2] === 0 &&
+        tile.corner_alliance[0] === tile.corner_alliance[1]
+      ) {
+        draw_land_0111_ownership_x121(
+          drawing,
+          { x, y },
+          3,
+          styleForCorner(tile, 3),
+          styleForCorner(tile, 1)
+        );
+      } else if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
         draw_land_1011_ownership_1x22(
           drawing,
           { x, y },
@@ -368,7 +463,40 @@ function renderThreeCornersTwoOwners(
       }
       break;
     case 14: // empty corner bottom right
-      if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
+      if (
+        tile.corner_alliance[3] === 0 &&
+        tile.corner_alliance[1] === tile.corner_alliance[2]
+      ) {
+        draw_land_1101_ownership_12x1(
+          drawing,
+          { x, y },
+          0,
+          styleForCorner(tile, 0),
+          styleForCorner(tile, 1)
+        );
+      } else if (
+        tile.corner_alliance[2] === 3 &&
+        tile.corner_alliance[0] === tile.corner_alliance[1]
+      ) {
+        draw_land_0111_ownership_x211(
+          drawing,
+          { x, y },
+          2,
+          styleForCorner(tile, 2),
+          styleForCorner(tile, 0)
+        );
+      } else if (
+        tile.corner_alliance[2] === 0 &&
+        tile.corner_alliance[0] === tile.corner_alliance[2]
+      ) {
+        draw_land_0111_ownership_x121(
+          drawing,
+          { x, y },
+          2,
+          styleForCorner(tile, 1),
+          styleForCorner(tile, 0)
+        );
+      } else if (tile.corner_alliance[0] !== tile.corner_alliance[1]) {
         draw_land_1011_ownership_1x22(
           drawing,
           { x, y },
@@ -650,9 +778,15 @@ function renderFullWater() {}
 
 function styleForCorner(tile: RenderTile, i: number) {
   const alliance = tile.corner_alliance![i];
-  if (alliance != 0) {
-    return keepColors[alliance % keepColors.length];
-  } else {
+
+  if (alliance == 0) {
     return "";
   }
+
+  // 10,000 because that's the cutoff for identifying "unowned" keeps.
+  // if (alliance >= 10_000 || alliance == 0) {
+  //   return "";
+  // }
+
+  return keepColors[alliance % keepColors.length];
 }

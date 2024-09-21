@@ -34,8 +34,9 @@ export const keepColors = [
   "#fbcfe8",
   "#fecdd3",
 ];
-export const BOUNDARY_LINE_STYLE = "#888888";
+export const BOUNDARY_LINE_STYLE = "#222222";
 export const BOUNDARY_LINE_WIDTH = 1;
+export const BOUNDARY_LINE_DASH = [4, 4];
 export const KEEP_LINE_STYLE = "black";
 export const KEEP_LINE_WIDTH = 1;
 export const LAND_LINE_STYLE = "black";
