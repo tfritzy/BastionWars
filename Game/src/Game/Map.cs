@@ -11,11 +11,12 @@ public class Map
     public RenderTile[,] RenderTiles { get; private set; } = new RenderTile[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
-    public Dictionary<uint, Keep> Keeps { get; private set; } = new();
-    public List<Soldier> Soldiers { get; private set; } = new();
-    public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = new();
-    public Dictionary<Vector2Int, Word?> Words { get; private set; } = new();
-    private Dictionary<uint, Dictionary<uint, List<Vector2Int>>> bastionPaths = new();
+    public Dictionary<uint, Keep> Keeps { get; private set; } = [];
+    public List<Soldier> Soldiers { get; private set; } = [];
+    public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = [];
+    public Dictionary<Vector2Int, Word?> Words { get; private set; } = [];
+    private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> bastionPaths = [];
+    public List<Projectile> Projectiles { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -262,12 +263,12 @@ public class Map
             value = 0;
         }
 
-        // A bit of a hack to have un-owned keeps all have different alliances, but be
-        // easily detectable as unowned.
-        if (value <= Constants.GIA_ALLIANCE)
-        {
-            return 10_000 + (int)id;
-        }
+        // // A bit of a hack to have un-owned keeps all have different alliances, but be
+        // // easily detectable as unowned.
+        // if (value <= Constants.GIA_ALLIANCE)
+        // {
+        //     return 10_000 + (int)id;
+        // }
 
         return value;
     }

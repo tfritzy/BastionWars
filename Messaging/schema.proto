@@ -138,7 +138,6 @@ message RenderTile {
     RenderAllianceCase alliance_case = 3;
 }
 
-
 message V2 {
     float x = 1;
     float y = 2;

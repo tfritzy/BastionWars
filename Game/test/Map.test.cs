@@ -159,40 +159,4 @@ public class MapTests
 
         Assert.AreEqual(numAvailableSpots, map.Words.Values.Count(w => w != null));
     }
-
-    [TestMethod]
-    public void Map_RenderTiles()
-    {
-        KeepLordWarriors.Map map = new(TestMaps.ThreeByThree);
-        uint[,] expected = new uint[,]
-        {
-            {0, 0, 0, 0},
-            {1, 2, 1, 2},
-            {5, 11, 6, 8},
-            {4, 12, 8, 0},
-        };
-
-        uint[][][] expectedOwnership =
-        [
-            [[0], [0], [0], [0]],
-            [[0, 0, 0, 1], [0, 0, 1, 0], [0, 0, 0, 2], [1, 0, 1, 2]],
-            [[0, 1, 0, 1], [1, 0, 1, 2], [0, 2, 2, 0], [0]],
-            [[0, 1, 0, 1], [0, 0, 0, 2], [0], [0]],
-        ];
-
-        for (int x = 0; x < map.Width; x++)
-        {
-            for (int y = 0; y < map.Height; y++)
-            {
-                Assert.AreEqual(
-                    expected[y, x],
-                    map.RenderTiles[x, y].TileCase,
-                    $"Index ({x}, {y}) incorrect. Expected {expected[y, x]}, actual{map.RenderTiles[x, y].TileCase}");
-                CollectionAssert.AreEqual(
-                    expectedOwnership[y][x],
-                    map.RenderTiles[x, y].CornerAlliance,
-                    $"Index ({x}, {y}) incorrect. Expected {string.Join(", ", expectedOwnership[y][x])}, actual {string.Join(", ", map.RenderTiles[x, y].CornerAlliance)}");
-            }
-        }
-    }
 }

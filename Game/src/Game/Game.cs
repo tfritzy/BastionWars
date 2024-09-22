@@ -7,9 +7,9 @@ public class Game
 {
     public Map Map { get; private set; }
     public GenerationMode GenerationMode { get; private set; }
-    public List<Oneof_GameServerToPlayer> Outbox { get; private set; } = new();
-    public Dictionary<string, Player> Players { get; private set; } = new();
-    public List<string> PlayerIds { get; private set; } = new();
+    public List<Oneof_GameServerToPlayer> Outbox { get; private set; } = [];
+    public Dictionary<string, Player> Players { get; private set; } = [];
+    public List<string> PlayerIds { get; private set; } = [];
 
     private double lastNetworkTick = 0f;
     private double lastWordPlacement = 0f;

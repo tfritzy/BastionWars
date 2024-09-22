@@ -128,7 +128,7 @@ public class GameTests
         positionUpdate = game
             .Players.Values.First().MessageQueue
             .Where((m) => m.AllSoldierPositions != null)
-            .First()
+            .Last()
             .AllSoldierPositions;
         Assert.AreEqual(1, positionUpdate.SoldierPositions.Count);
         Assert.AreEqual(soldier.Id, positionUpdate.SoldierPositions[0].Id);
