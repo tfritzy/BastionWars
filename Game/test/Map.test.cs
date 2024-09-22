@@ -11,41 +11,41 @@ namespace Tests;
 public class MapTests
 {
     [TestMethod]
-    public void Map_PlacesBastions()
+    public void Map_PlacesKeeps()
     {
         KeepLordWarriors.Map map = new(TestMaps.ThirtyByTwenty);
         Assert.IsTrue(map.Keeps.Count > 0);
 
-        foreach (var bastion in map.Keeps.Values)
+        foreach (var keep in map.Keeps.Values)
         {
-            Vector2 pos = map.Grid.GetEntityPosition(bastion.Id);
+            Vector2 pos = map.Grid.GetEntityPosition(keep.Id);
             Assert.IsTrue(map.Traversable[(int)pos.X, (int)pos.Y] == 0);
         }
     }
 
     [TestMethod]
-    public void Map_AllBastionsCanBeNavigatedBetween()
+    public void Map_AllKeepsCanBeNavigatedBetween()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        foreach (var bastion in map.Keeps.Values)
+        foreach (var keep in map.Keeps.Values)
         {
             foreach (var other in map.Keeps.Values)
             {
-                if (bastion == other)
+                if (keep == other)
                 {
                     continue;
                 }
 
-                List<Vector2Int>? path = map.GetPathBetweenBastions(bastion.Id, other.Id);
+                List<Vector2Int>? path = map.GetPathBetweenKeeps(keep.Id, other.Id);
                 Assert.IsTrue(path?.Count > 0);
-                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(bastion.Id)), path[0]);
+                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(keep.Id)), path[0]);
                 Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(other.Id)), path[^1]);
             }
         }
     }
 
     [TestMethod]
-    public void Map_ReadsBastionsCorrectly()
+    public void Map_ReadsKeepsCorrectly()
     {
         Map map = new(TestMaps.TenByFive);
         List<int> expectedAlliances = new() { 1, 0, 0, 0, 0, 2 };
@@ -77,7 +77,7 @@ public class MapTests
     }
 
     [TestMethod]
-    public void Map_CalculatesBastionLands()
+    public void Map_CalculatesKeepLands()
     {
         string rawMap = @"
             W . . . . . . . . .

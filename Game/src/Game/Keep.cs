@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Schema;
 
@@ -7,9 +8,10 @@ public class Keep : Entity
 {
     public int ArcherCount { get; private set; }
     public int WarriorCount { get; private set; }
+    public int MageCount { get; private set; }
     public SoldierType SoldierType { get; }
     public Map Map { get; private set; }
-    public List<DeploymentOrder> DeploymentOrders { get; } = new();
+    public List<DeploymentOrder> DeploymentOrders { get; } = [];
     public string? Name { get; set; }
     public delegate void CapturedEventHandler(uint sender);
     public event CapturedEventHandler? OnCaptured;
@@ -19,9 +21,13 @@ public class Keep : Entity
     public const float DeploymentRefractoryPeriod = .25f;
     public const int MaxTroopsPerWave = 6;
     public const int StartTroopCount = 5;
+    public const float TargetCheckTime = .2f;
 
     // Overkill damage during a breach is stored here and applied to the next wave
     private float powerOverflow;
+    private float targetCheckCooldown = TargetCheckTime;
+    private List<float> archerFireCooldowns = [];
+    private List<uint> archerTargets = [];
 
     public Keep(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
     {
@@ -29,6 +35,89 @@ public class Keep : Entity
         Map = map;
         SetCount(soldierType, StartTroopCount);
         OccupancyChanged = false;
+    }
+
+    public void Update()
+    {
+        FireUponIntruders();
+        DeployTroops();
+    }
+
+    private void FireUponIntruders()
+    {
+        if (ArcherCount > 0 || MageCount > 0)
+        {
+            targetCheckCooldown -= Time.deltaTime;
+            if (targetCheckCooldown <= 0)
+            {
+                targetCheckCooldown = TargetCheckTime;
+                List<uint> inRange = map.Grid.GetCollisions(Map.Grid.GetEntityPosition(Id), Constants.ArcherBaseRange);
+                for (int i = inRange.Count - 1; i >= 0; i--)
+                {
+                    if (!map.Soldiers.ContainsKey(inRange[i]))
+                        continue;
+
+                    if (map.Soldiers[inRange[i]].Alliance == Alliance)
+                    {
+                        inRange.RemoveAt(i);
+                    }
+                }
+                archerTargets = inRange;
+            }
+        }
+
+        if (archerTargets.Count > 0)
+        {
+            while (archerFireCooldowns.Count < ArcherCount)
+            {
+                float setupTime = Randy.ChaoticInRange(Constants.ArcherSetupMinTime, Constants.ArcherSetupMaxTime);
+                archerFireCooldowns.Add(setupTime);
+            }
+
+            while (archerFireCooldowns.Count > ArcherCount)
+            {
+                archerFireCooldowns.RemoveAt(archerFireCooldowns.Count - 1);
+            }
+
+            for (int i = 0; i < archerFireCooldowns.Count; i++)
+            {
+                archerFireCooldowns[i] -= Time.deltaTime;
+                if (archerFireCooldowns[i] <= 0)
+                {
+                    FireArrow();
+                    archerFireCooldowns[i] = Constants.ArcherBaseCooldown;
+                }
+            }
+        }
+    }
+
+    private void FireArrow()
+    {
+        if (archerTargets.Count == 0)
+            return;
+
+        uint target = Randy.ChaoticElement(archerTargets);
+
+        if (!map.Grid.ContainsEntity(target))
+            return;
+
+        Vector2 startPos2D = map.Grid.GetEntityPosition(Id);
+        Vector2 targetPos2D = map.Grid.GetEntityPosition(target);
+        Vector3 startPos = new Vector3(startPos2D.X, startPos2D.Y, Constants.KeepHeight);
+        Vector3 targetPos = new Vector3(targetPos2D.X, targetPos2D.Y, 0);
+        Vector3? velocity = Projectile.CalculateFireVector(startPos, targetPos);
+
+        if (velocity == null)
+        {
+            Logger.Log("ERROR - could not calculate a vector to shoot target. Skipping arrow");
+            return;
+        }
+
+        Projectile projectile = new Projectile(
+            startPos: startPos,
+            birthTime: Time.Now,
+            initialVelocity: velocity.Value
+        );
     }
 
     public int GetCount(SoldierType type)
@@ -72,25 +161,20 @@ public class Keep : Entity
         SetCount(type, GetCount(type) + amount);
     }
 
-    public void Update(double deltaTime)
-    {
-        for (int i = 0; i < DeploymentOrders.Count; i++)
-        {
-            var order = DeploymentOrders[i];
-            if (order.WaveCooldown > 0)
-            {
-                order.WaveCooldown -= deltaTime;
-            }
-        }
-
-        DeployTroops();
-    }
-
     private void DeployTroops()
     {
         if (DeploymentOrders.Count == 0)
         {
             return;
+        }
+
+        for (int i = 0; i < DeploymentOrders.Count; i++)
+        {
+            var order = DeploymentOrders[i];
+            if (order.WaveCooldown > 0)
+            {
+                order.WaveCooldown -= Time.deltaTime;
+            }
         }
 
         for (int i = 0; i < DeploymentOrders.Count; i++)

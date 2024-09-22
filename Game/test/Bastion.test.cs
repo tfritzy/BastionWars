@@ -5,24 +5,24 @@ using TestHelpers;
 namespace Tests;
 
 [TestClass]
-public class BastionTests
+public class KeepTests
 {
     [TestMethod]
-    public void Bastion_BasicStuff()
+    public void Keep_BasicStuff()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = new(map, SoldierType.Warrior);
-        Assert.AreEqual(0, bastion.ArcherCount);
-        Assert.AreEqual(5, bastion.WarriorCount);
-        Assert.AreEqual(SoldierType.Warrior, bastion.SoldierType);
-        Assert.AreNotEqual(0u, bastion.Id);
-        Keep bastion2 = new(map, SoldierType.Archer, 3);
-        Assert.AreEqual(bastion.Id + 1, bastion2.Id);
-        Assert.AreEqual(3, bastion2.Alliance);
+        Keep keep = new(map, SoldierType.Warrior);
+        Assert.AreEqual(0, keep.ArcherCount);
+        Assert.AreEqual(5, keep.WarriorCount);
+        Assert.AreEqual(SoldierType.Warrior, keep.SoldierType);
+        Assert.AreNotEqual(0u, keep.Id);
+        Keep keep2 = new(map, SoldierType.Archer, 3);
+        Assert.AreEqual(keep.Id + 1, keep2.Id);
+        Assert.AreEqual(3, keep2.Alliance);
     }
 
     [TestMethod]
-    public void Bastion_IncreasesPopulationAppropriately()
+    public void Keep_IncreasesPopulationAppropriately()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
         foreach (var type in Enum.GetValues<SoldierType>())
@@ -30,188 +30,188 @@ public class BastionTests
             if (type == SoldierType.InvalidSoldier)
                 continue;
 
-            Keep bastion = new(map, type);
-            Assert.AreEqual(Keep.StartTroopCount, bastion.GetCount(type));
-            bastion.Accrue();
-            Assert.AreEqual(Keep.StartTroopCount + 1, bastion.GetCount(type));
+            Keep keep = new(map, type);
+            Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(type));
+            keep.Accrue();
+            Assert.AreEqual(Keep.StartTroopCount + 1, keep.GetCount(type));
         }
     }
 
 
     [TestMethod]
-    public void Map_BastionAttackDeploysCorrectTroops()
+    public void Map_KeepAttackDeploysCorrectTroops()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = map.KeepAt(0);
+        Keep keep = map.KeepAt(0);
 
-        bastion.SetCount(warriors: 0, archers: 30);
-        bastion.SetDeploymentOrder(2u);
-        bastion.Update(.0001f);
-        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Archer));
+        keep.SetCount(warriors: 0, archers: 30);
+        keep.SetDeploymentOrder(2u);
+        TH.UpdateKeep(keep, .0001f);
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Archer));
 
-        bastion.SetCount(archers: 30);
-        bastion.SetDeploymentOrder(2u, type: SoldierType.Warrior);
-        bastion.Update(.0001f);
-        bastion.Update(Keep.DeploymentRefractoryPeriod);
-        Assert.AreEqual(30, bastion.GetCount(SoldierType.Archer));
+        keep.SetCount(archers: 30);
+        keep.SetDeploymentOrder(2u, type: SoldierType.Warrior);
+        TH.UpdateKeep(keep, .0001f);
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod);
+        Assert.AreEqual(30, keep.GetCount(SoldierType.Archer));
 
-        bastion.SetCount(warriors: 30);
-        bastion.SetDeploymentOrder(2u, type: SoldierType.Warrior);
-        bastion.Update(.0001f);
-        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Warrior));
+        keep.SetCount(warriors: 30);
+        keep.SetDeploymentOrder(2u, type: SoldierType.Warrior);
+        TH.UpdateKeep(keep, .0001f);
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Warrior));
 
-        bastion.SetCount(warriors: 30, archers: 30);
-        bastion.SetDeploymentOrder(2u, percent: 1f);
-        bastion.Update(.0001f);
-        bastion.Update(Keep.DeploymentRefractoryPeriod);
-        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(30, bastion.GetCount(SoldierType.Archer));
+        keep.SetCount(warriors: 30, archers: 30);
+        keep.SetDeploymentOrder(2u, percent: 1f);
+        TH.UpdateKeep(keep, .0001f);
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod);
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30, keep.GetCount(SoldierType.Archer));
 
-        bastion.SetCount(warriors: 4, archers: 10);
-        bastion.SetDeploymentOrder(2u, percent: 1f);
-        bastion.Update(.0001f);
-        bastion.Update(Keep.DeploymentRefractoryPeriod);
-        Assert.AreEqual(0, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(8, bastion.GetCount(SoldierType.Archer));
+        keep.SetCount(warriors: 4, archers: 10);
+        keep.SetDeploymentOrder(2u, percent: 1f);
+        TH.UpdateKeep(keep, .0001f);
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod);
+        Assert.AreEqual(0, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(8, keep.GetCount(SoldierType.Archer));
 
-        bastion.SetCount(warriors: 4, archers: 10);
-        bastion.SetDeploymentOrder(2u, percent: .5f);
-        bastion.Update(.0001f);
-        bastion.Update(Keep.DeploymentRefractoryPeriod);
-        Assert.AreEqual(2, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(6, bastion.GetCount(SoldierType.Archer));
+        keep.SetCount(warriors: 4, archers: 10);
+        keep.SetDeploymentOrder(2u, percent: .5f);
+        TH.UpdateKeep(keep, .0001f);
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod);
+        Assert.AreEqual(2, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(6, keep.GetCount(SoldierType.Archer));
     }
 
     [TestMethod]
-    public void Bastion_DeploysTroopsOverTime()
+    public void Keep_DeploysTroopsOverTime()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = map.KeepAt(1);
-        bastion.SetCount(warriors: 30, archers: 0);
-        bastion.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
-        bastion.Update(.0001f);
-        Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
-        bastion.Update(Keep.DeploymentRefractoryPeriod - .1f);
-        Assert.AreEqual(24, bastion.GetCount(SoldierType.Warrior));
-        bastion.Update(.11f);
-        Assert.AreEqual(18, bastion.GetCount(SoldierType.Warrior));
-        bastion.Update(10f);
-        Assert.AreEqual(15, bastion.GetCount(SoldierType.Warrior));
+        Keep keep = map.KeepAt(1);
+        keep.SetCount(warriors: 30, archers: 0);
+        keep.SetDeploymentOrder(0, SoldierType.Warrior, .5f);
+        TH.UpdateKeep(keep, .0001f);
+        Assert.AreEqual(24, keep.GetCount(SoldierType.Warrior));
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod - .1f);
+        Assert.AreEqual(24, keep.GetCount(SoldierType.Warrior));
+        TH.UpdateKeep(keep, .11f);
+        Assert.AreEqual(18, keep.GetCount(SoldierType.Warrior));
+        TH.UpdateKeep(keep, 10f);
+        Assert.AreEqual(15, keep.GetCount(SoldierType.Warrior));
     }
 
     [TestMethod]
-    public void Bastion_MultipleOrders()
+    public void Keep_MultipleOrders()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = map.KeepAt(2);
-        bastion.SetCount(warriors: 15, archers: 30);
+        Keep keep = map.KeepAt(2);
+        keep.SetCount(warriors: 15, archers: 30);
 
-        bastion.SetDeploymentOrder(map.KeepAt(0).Id, SoldierType.Warrior, 1f);
-        bastion.Update(.0001f);
-        bastion.Update(Keep.DeploymentRefractoryPeriod / 2);
+        keep.SetDeploymentOrder(map.KeepAt(0).Id, SoldierType.Warrior, 1f);
+        TH.UpdateKeep(keep, .0001f);
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod / 2);
 
-        bastion.SetDeploymentOrder(map.KeepAt(1).Id, SoldierType.Archer, 1f);
-        bastion.Update(.0001f);
-        Assert.AreEqual(15 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Archer));
+        keep.SetDeploymentOrder(map.KeepAt(1).Id, SoldierType.Archer, 1f);
+        TH.UpdateKeep(keep, .0001f);
+        Assert.AreEqual(15 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Archer));
 
-        bastion.Update(Keep.DeploymentRefractoryPeriod / 2 + .1f);
-        Assert.AreEqual(15 - Keep.MaxTroopsPerWave * 2, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, bastion.GetCount(SoldierType.Archer));
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod / 2 + .1f);
+        Assert.AreEqual(15 - Keep.MaxTroopsPerWave * 2, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Archer));
 
-        bastion.Update(Keep.DeploymentRefractoryPeriod / 2 + .1f);
-        Assert.AreEqual(15 - Keep.MaxTroopsPerWave * 2, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(30 - Keep.MaxTroopsPerWave * 2, bastion.GetCount(SoldierType.Archer));
+        TH.UpdateKeep(keep, Keep.DeploymentRefractoryPeriod / 2 + .1f);
+        Assert.AreEqual(15 - Keep.MaxTroopsPerWave * 2, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave * 2, keep.GetCount(SoldierType.Archer));
     }
 
     [TestMethod]
-    public void Bastion_Breach_GetsCaptured()
+    public void Keep_Breach_GetsCaptured()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = new(map, SoldierType.Warrior);
+        Keep keep = new(map, SoldierType.Warrior);
 
-        bastion.SetCount(warriors: 30);
-        int alliance = bastion.Alliance;
+        keep.SetCount(warriors: 30);
+        int alliance = keep.Alliance;
         for (int i = 0; i < 31; i++)
         {
-            bastion.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
+            keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
         }
-        Assert.AreEqual(1, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(0, bastion.GetCount(SoldierType.Archer));
-        Assert.AreEqual(alliance + 1, bastion.Alliance); // captured
+        Assert.AreEqual(1, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(0, keep.GetCount(SoldierType.Archer));
+        Assert.AreEqual(alliance + 1, keep.Alliance); // captured
     }
 
     [TestMethod]
-    public void Bastion_Breach_FightsSoldiersFirst()
+    public void Keep_Breach_FightsSoldiersFirst()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = new(map, SoldierType.Warrior);
+        Keep keep = new(map, SoldierType.Warrior);
 
-        bastion.SetCount(warriors: 10, archers: 30);
-        int alliance = bastion.Alliance;
+        keep.SetCount(warriors: 10, archers: 30);
+        int alliance = keep.Alliance;
         for (int i = 0; i < 6; i++)
         {
-            bastion.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
+            keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
         }
-        Assert.AreEqual(4, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(30, bastion.GetCount(SoldierType.Archer));
+        Assert.AreEqual(4, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30, keep.GetCount(SoldierType.Archer));
 
         for (int i = 0; i < 6; i++)
         {
-            bastion.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
+            keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
         }
-        Assert.AreEqual(0, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(22, bastion.GetCount(SoldierType.Archer));
+        Assert.AreEqual(0, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(22, keep.GetCount(SoldierType.Archer));
     }
 
     [TestMethod]
-    public void Bastion_Breach_SoldiersWreckArchers()
+    public void Keep_Breach_SoldiersWreckArchers()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = new(map, SoldierType.Warrior);
+        Keep keep = new(map, SoldierType.Warrior);
 
-        bastion.SetCount(archers: 30, warriors: 0);
-        int alliance = bastion.Alliance;
+        keep.SetCount(archers: 30, warriors: 0);
+        int alliance = keep.Alliance;
         for (int i = 0; i < 5; i++)
         {
-            bastion.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
+            keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, map));
         }
-        Assert.AreEqual(10, bastion.GetCount(SoldierType.Archer));
-        Assert.AreEqual(alliance, bastion.Alliance); // not captured
+        Assert.AreEqual(10, keep.GetCount(SoldierType.Archer));
+        Assert.AreEqual(alliance, keep.Alliance); // not captured
     }
 
     [TestMethod]
-    public void Bastion_Breach_ArchersNotVeryGoodAtIt()
+    public void Keep_Breach_ArchersNotVeryGoodAtIt()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = new(map, SoldierType.Warrior);
+        Keep keep = new(map, SoldierType.Warrior);
 
-        bastion.SetCount(warriors: 30);
-        int alliance = bastion.Alliance;
+        keep.SetCount(warriors: 30);
+        int alliance = keep.Alliance;
         for (int i = 0; i < 90; i++)
         {
-            bastion.Breach(TH.BuildEnemySoldier(SoldierType.Archer, alliance, map));
+            keep.Breach(TH.BuildEnemySoldier(SoldierType.Archer, alliance, map));
         }
-        Assert.AreEqual(8, bastion.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(alliance, bastion.Alliance); // not captured
+        Assert.AreEqual(8, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(alliance, keep.Alliance); // not captured
     }
 
     [TestMethod]
-    public void Bastion_Breach_PowerOverflowOnCapture()
+    public void Keep_Breach_PowerOverflowOnCapture()
     {
         KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        Keep bastion = new(map, SoldierType.Warrior);
-        int originalAlliance = bastion.Alliance;
+        Keep keep = new(map, SoldierType.Warrior);
+        int originalAlliance = keep.Alliance;
 
-        bastion.SetCount(archers: 2, warriors: 0);
-        bastion.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, originalAlliance, map));
-        Assert.AreEqual(originalAlliance + 1, bastion.Alliance); // captured
-        Assert.AreEqual(1, bastion.GetCount(SoldierType.Warrior)); // should have 2 power left
+        keep.SetCount(archers: 2, warriors: 0);
+        keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, originalAlliance, map));
+        Assert.AreEqual(originalAlliance + 1, keep.Alliance); // captured
+        Assert.AreEqual(1, keep.GetCount(SoldierType.Warrior)); // should have 2 power left
         for (int i = 0; i < 3; i++)
         {
-            bastion.Breach(TH.BuildAllySoldier(SoldierType.Archer, originalAlliance, map));
+            keep.Breach(TH.BuildAllySoldier(SoldierType.Archer, originalAlliance, map));
         }
-        Assert.AreEqual(originalAlliance, bastion.Alliance); // re-captured
-        Assert.AreEqual(1, bastion.GetCount(SoldierType.Archer));
+        Assert.AreEqual(originalAlliance, keep.Alliance); // re-captured
+        Assert.AreEqual(1, keep.GetCount(SoldierType.Archer));
     }
 }

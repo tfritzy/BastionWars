@@ -11,8 +11,8 @@ public class Game
     public Dictionary<string, Player> Players { get; private set; } = [];
     public List<string> PlayerIds { get; private set; } = [];
 
-    private double lastNetworkTick = 0f;
-    private double lastWordPlacement = 0f;
+    private float lastNetworkTick = 0f;
+    private float lastWordPlacement = 0f;
 
     public const float AutoAccrualTime = 1f;
     public const float NetworkTickTime = 1f / 20f;
@@ -27,13 +27,13 @@ public class Game
         PlaceInitialWords();
     }
 
-    public void Update(double deltaTime)
+    public void Update()
     {
-        BastionAutoAccrue(deltaTime);
-        Map.Update(deltaTime);
-        PlaceWord(deltaTime);
+        BastionAutoAccrue();
+        Map.Update();
+        PlaceWord();
 
-        lastNetworkTick += deltaTime;
+        lastNetworkTick += Time.deltaTime;
         if (lastNetworkTick >= NetworkTickTime)
         {
             NetworkTick();
@@ -50,7 +50,7 @@ public class Game
                 var order = msg.IssueDeploymentOrder;
                 SoldierType? soldierType = order.HasSoldierType ? order.SoldierType : null;
                 float percent = order.HasPercent ? order.Percent : 1f;
-                AttackBastion(order.SourceKeep, order.TargetKeep, soldierType, percent);
+                AttackKeep(order.SourceKeep, order.TargetKeep, soldierType, percent);
                 break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
@@ -77,7 +77,7 @@ public class Game
     private void SendSoldierPositions()
     {
         AllSoldierPositions allSoldierPositions = new();
-        foreach (Soldier soldier in Map.Soldiers)
+        foreach (Soldier soldier in Map.Soldiers.Values)
         {
             allSoldierPositions.SoldierPositions.Add(new SoldierState
             {
@@ -113,7 +113,7 @@ public class Game
 
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
-    private void BastionAutoAccrue(double deltaTime)
+    private void BastionAutoAccrue()
     {
         if (GenerationMode != GenerationMode.AutoAccrue)
         {
@@ -127,7 +127,7 @@ public class Game
                 bastionProduceCooldowns[bastion.Id] = AutoAccrualTime;
             }
 
-            bastionProduceCooldowns[bastion.Id] -= deltaTime;
+            bastionProduceCooldowns[bastion.Id] -= Time.deltaTime;
 
             if (bastionProduceCooldowns[bastion.Id] <= 0)
             {
@@ -169,14 +169,14 @@ public class Game
         }
     }
 
-    private void PlaceWord(double deltaTime)
+    private void PlaceWord()
     {
         if (GenerationMode != GenerationMode.Word)
         {
             return;
         }
 
-        lastWordPlacement += deltaTime;
+        lastWordPlacement += Time.deltaTime;
         if (lastWordPlacement >= WordPlacementTime)
         {
             Map.PlaceWord();
@@ -184,7 +184,7 @@ public class Game
         }
     }
 
-    public void AttackBastion(uint source, uint target, SoldierType? type = null, float percent = 1f)
+    public void AttackKeep(uint source, uint target, SoldierType? type = null, float percent = 1f)
     {
         if (!Map.Keeps.ContainsKey(source) || !Map.Keeps.ContainsKey(target))
         {

@@ -62,4 +62,22 @@ public static class TH
             .Where(m => m != null)
             .ToList()!;
     }
+
+    public static void UpdateGame(Game game, float deltaTime)
+    {
+        Time.Update(Time.Now + deltaTime);
+        game.Update();
+    }
+
+    public static void UpdateMap(Map map, float deltaTime)
+    {
+        Time.Update(Time.Now + deltaTime);
+        map.Update();
+    }
+
+    public static void UpdateKeep(Keep keep, float deltaTime)
+    {
+        Time.Update(Time.Now + deltaTime);
+        keep.Update();
+    }
 }

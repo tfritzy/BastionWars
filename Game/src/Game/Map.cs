@@ -12,10 +12,11 @@ public class Map
     public short[,] Traversable { get; private set; } = new short[0, 0];
     public Grid Grid { get; private set; } = new(0, 0);
     public Dictionary<uint, Keep> Keeps { get; private set; } = [];
-    public List<Soldier> Soldiers { get; private set; } = [];
+    public List<uint> SoldierIds { get; private set; } = [];
+    public Dictionary<uint, Soldier> Soldiers { get; private set; } = [];
     public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = [];
     public Dictionary<Vector2Int, Word?> Words { get; private set; } = [];
-    private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> bastionPaths = [];
+    private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
     public List<Projectile> Projectiles { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
@@ -29,32 +30,32 @@ public class Map
         ParseRenderTiles();
     }
 
-    public void Update(double deltaTime)
+    public void Update()
     {
         foreach (Keep keep in Keeps.Values)
         {
-            keep.Update(deltaTime);
+            keep.Update();
         }
 
-        for (int i = 0; i < Soldiers.Count; i++)
+        for (int i = 0; i < SoldierIds.Count; i++)
         {
-            Soldiers[i].Update(deltaTime);
+            Soldiers[SoldierIds[i]].Update();
         }
     }
 
-    public List<Vector2Int>? GetPathBetweenBastions(uint startId, uint endId)
+    public List<Vector2Int>? GetPathBetweenKeeps(uint startId, uint endId)
     {
-        if (!bastionPaths.ContainsKey(startId) || !bastionPaths[startId].ContainsKey(endId))
+        if (!keepPaths.ContainsKey(startId) || !keepPaths[startId].ContainsKey(endId))
         {
             return null;
         }
 
-        return bastionPaths[startId][endId];
+        return keepPaths[startId][endId];
     }
 
     public Vector2? GetNextPathPoint(uint originId, uint targetId, int progress)
     {
-        List<Vector2Int>? path = GetPathBetweenBastions(originId, targetId);
+        List<Vector2Int>? path = GetPathBetweenKeeps(originId, targetId);
         if (path == null || progress + 1 >= path.Count)
         {
             return null;
@@ -65,14 +66,14 @@ public class Map
 
     private void CalculateKeepPathing()
     {
-        foreach (Keep bastion in Keeps.Values)
+        foreach (Keep keep in Keeps.Values)
         {
-            ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(bastion.Id)), Traversable);
-            Vector2Int sourcePos = Vector2Int.From(Grid.GetEntityPosition(bastion.Id));
+            ushort[,] pathMap = NavGrid.GetPathMap(Vector2Int.From(Grid.GetEntityPosition(keep.Id)), Traversable);
+            Vector2Int sourcePos = Vector2Int.From(Grid.GetEntityPosition(keep.Id));
 
             foreach (Keep other in Keeps.Values)
             {
-                if (bastion.Id == other.Id)
+                if (keep.Id == other.Id)
                 {
                     continue;
                 }
@@ -84,12 +85,12 @@ public class Map
                     continue;
                 }
 
-                if (!bastionPaths.ContainsKey(bastion.Id))
+                if (!keepPaths.ContainsKey(keep.Id))
                 {
-                    bastionPaths.Add(bastion.Id, new());
+                    keepPaths.Add(keep.Id, new());
                 }
 
-                bastionPaths[bastion.Id].Add(other.Id, path);
+                keepPaths[keep.Id].Add(other.Id, path);
             }
         }
     }
@@ -97,12 +98,12 @@ public class Map
     private void CalculateKeepOwnership()
     {
         Dictionary<uint, Vector2Int> locations = new();
-        foreach (Keep bastion in Keeps.Values)
+        foreach (Keep keep in Keeps.Values)
         {
-            Vector2Int? location = Grid.GetEntityGridPos(bastion.Id);
+            Vector2Int? location = Grid.GetEntityGridPos(keep.Id);
             if (location != null)
             {
-                locations.Add(bastion.Id, location.Value);
+                locations.Add(keep.Id, location.Value);
             }
         }
 
@@ -147,12 +148,13 @@ public class Map
 
     public static string GetRandomWord()
     {
-        return Dictionary.MostCommon[Randy.Random.Next(0, Dictionary.MostCommon.Length)];
+        return Dictionary.MostCommon[Randy.WorldGen.Next(0, Dictionary.MostCommon.Length)];
     }
 
     public void AddSoldier(Soldier soldier, Vector2 pos)
     {
-        Soldiers.Add(soldier);
+        Soldiers.Add(soldier.Id, soldier);
+        SoldierIds.Add(soldier.Id);
         Grid.AddEntity(new SpacialPartitioning.Entity(
             pos,
             soldier.Id,
@@ -162,7 +164,8 @@ public class Map
 
     public void RemoveSoldier(uint id)
     {
-        var removed = Soldiers.RemoveAll((s) => s.Id == id);
+        Soldiers.Remove(id);
+        SoldierIds.RemoveAll((sid) => sid == id);
         Grid.RemoveEntity(id);
     }
 

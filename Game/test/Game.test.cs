@@ -14,20 +14,20 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings());
 
-        game.Update(Game.AutoAccrualTime - .1f);
-        foreach (Keep bastion in game.Map.Keeps.Values)
+        TH.UpdateGame(game, Game.AutoAccrualTime - .1f);
+        foreach (Keep keep in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(Keep.StartTroopCount, bastion.GetCount(bastion.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(keep.SoldierType));
         }
-        game.Update(.2f);
-        foreach (Keep bastion in game.Map.Keeps.Values)
+        TH.UpdateGame(game, .2f);
+        foreach (Keep keep in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(Keep.StartTroopCount + 1, bastion.GetCount(bastion.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount + 1, keep.GetCount(keep.SoldierType));
         }
-        game.Update(Game.AutoAccrualTime - .1f);
-        foreach (Keep bastion in game.Map.Keeps.Values)
+        TH.UpdateGame(game, Game.AutoAccrualTime - .1f);
+        foreach (Keep keep in game.Map.Keeps.Values)
         {
-            Assert.AreEqual(Keep.StartTroopCount + 1, bastion.GetCount(bastion.SoldierType));
+            Assert.AreEqual(Keep.StartTroopCount + 1, keep.GetCount(keep.SoldierType));
         }
     }
 
@@ -82,7 +82,7 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
 
-        game.Update(Game.AutoAccrualTime + .1f);
+        TH.UpdateGame(game, Game.AutoAccrualTime + .1f);
         foreach (Keep keep in game.Map.Keeps.Values)
         {
             Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(keep.SoldierType));
@@ -95,11 +95,11 @@ public class GameTests
         Game game = new Game(TH.GetGameSettings(mode: GenerationMode.Word));
 
         Assert.AreEqual(Game.InitialWordCount, game.Map.Words.Values.Count(w => w != null));
-        game.Update(Game.AutoAccrualTime + .1f);
+        TH.UpdateGame(game, Game.AutoAccrualTime + .1f);
         Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
-        game.Update(.1f);
+        TH.UpdateGame(game, .1f);
         Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
-        game.Update(Game.WordPlacementTime + .1f);
+        TH.UpdateGame(game, Game.WordPlacementTime + .1f);
         Assert.AreEqual(Game.InitialWordCount + 2, game.Map.Words.Values.Count(w => w != null));
     }
 
@@ -109,7 +109,7 @@ public class GameTests
         Game game = new(TH.GetGameSettings());
         TH.AddPlayer(game);
         TH.AddPlayer(game);
-        game.Update(Game.NetworkTickTime + .1f);
+        TH.UpdateGame(game, Game.NetworkTickTime + .1f);
         var positionUpdate = game
             .Players.Values.First().MessageQueue
             .Where((m) => m.AllSoldierPositions != null)
@@ -123,7 +123,7 @@ public class GameTests
             source: game.Map.KeepAt(0).Id,
             target: game.Map.KeepAt(1).Id);
         game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.KeepAt(0).Id));
-        game.Update(Game.NetworkTickTime + .1f);
+        TH.UpdateGame(game, Game.NetworkTickTime + .1f);
         Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
         positionUpdate = game
             .Players.Values.First().MessageQueue
@@ -141,7 +141,7 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         for (int i = 0; i < 10; i++)
-            game.Update(Game.WordPlacementTime + .1f);
+            TH.UpdateGame(game, Game.WordPlacementTime + .1f);
 
         Word firstWord = game.Map.Words.Values.First(w => w != null)!;
         uint ownerId = game.Map.KeepLands[firstWord.Position];
@@ -183,17 +183,17 @@ public class GameTests
         map.KeepAt(1).Capture(1);
         map.KeepAt(0).SetCount(archers: 2, warriors: 0);
         map.KeepAt(1).SetCount(archers: 2, warriors: 0);
-        game.AttackBastion(map.KeepAt(0).Id, map.KeepAt(1).Id);
-        game.Update(.0001f);
+        game.AttackKeep(map.KeepAt(0).Id, map.KeepAt(1).Id);
+        TH.UpdateGame(game, .0001f);
 
         Assert.AreEqual(0, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(2, map.Soldiers.Count);
         Assert.AreEqual(0, map.KeepAt(0).DeploymentOrders.Count);
 
-        foreach (var soldier in map.Soldiers)
+        foreach (var soldier in map.Soldiers.Values)
         {
-            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceBastionId);
-            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetBastionId);
+            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceKeepId);
+            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetKeepId);
             Assert.AreEqual(SoldierType.Archer, soldier.Type);
             Assert.AreEqual(1, soldier.Alliance);
             Assert.AreEqual(0, soldier.PathProgress);
@@ -203,14 +203,14 @@ public class GameTests
 
         for (int i = 0; i < 100; i++)
         {
-            game.Update(.1f);
+            TH.UpdateGame(game, .1f);
         }
 
         Assert.AreEqual(0, map.Soldiers.Count);
 
-        game.AttackBastion(map.KeepAt(1).Id, map.KeepAt(0).Id);
+        game.AttackKeep(map.KeepAt(1).Id, map.KeepAt(0).Id);
         for (int i = 0; i < 100; i++)
-            game.Update(.1f);
+            TH.UpdateGame(game, .1f);
         Assert.AreEqual(4, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(0, map.KeepAt(1).ArcherCount);
 
@@ -234,15 +234,15 @@ public class GameTests
                 SoldierType = SoldierType.Archer
             }
         });
-        game.Update(.01);
+        TH.UpdateGame(game, .01f);
 
         Assert.AreEqual(5, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(5, map.Soldiers.Count);
 
-        foreach (var soldier in map.Soldiers)
+        foreach (var soldier in map.Soldiers.Values)
         {
-            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceBastionId);
-            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetBastionId);
+            Assert.AreEqual(map.KeepAt(0).Id, soldier.SourceKeepId);
+            Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetKeepId);
             Assert.AreEqual(SoldierType.Archer, soldier.Type);
             Assert.AreEqual(1, soldier.Alliance);
             Assert.AreEqual(0, soldier.PathProgress);
@@ -258,7 +258,7 @@ public class GameTests
         Map map = game.Map;
         TH.AddPlayer(game);
 
-        game.Update(1f);
+        TH.UpdateGame(game, 1f);
 
         var keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
         Assert.AreEqual(0, keepUpdates.Count);
@@ -266,7 +266,7 @@ public class GameTests
         game.Map.KeepAt(1).SetCount(warriors: 6, archers: 3);
         keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
         Assert.AreEqual(0, keepUpdates.Count);
-        game.Update(1f);
+        TH.UpdateGame(game, 1f);
         keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
         Assert.AreEqual(1, keepUpdates.Count);
         Assert.AreEqual(2, keepUpdates.First().KeepUpdates.Count);
@@ -279,7 +279,7 @@ public class GameTests
         Assert.AreEqual(3, secondKeepUpdate.ArcherCount);
 
         // doesn't double send message
-        game.Update(1f);
+        TH.UpdateGame(game, 1f);
         keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
         Assert.AreEqual(1, keepUpdates.Count);
     }

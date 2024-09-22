@@ -36,11 +36,12 @@ public class GameInstance
 
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-        double lastTime = 0;
+        float lastTime = 0;
         while (true)
         {
-            double time = stopwatch.ElapsedMilliseconds / 1000.0;
-            game.Update(time - lastTime);
+            float time = stopwatch.ElapsedMilliseconds / 1000f;
+            Time.Update(now: time);
+            game.Update();
             lastTime = time;
             await DrainPendingMessages();
         }
