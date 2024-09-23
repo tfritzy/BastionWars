@@ -169,6 +169,11 @@ public class Map
         Grid.RemoveEntity(id);
     }
 
+    public void AddProjectile(Projectile projectile)
+    {
+        Projectiles.Add(projectile);
+    }
+
     public float MeleePowerOf(Soldier soldier) => MeleePowerOf(soldier.Type, soldier.Alliance);
     public float MeleePowerOf(SoldierType soldierType, int alliance)
     {

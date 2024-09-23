@@ -3,8 +3,9 @@ namespace KeepLordWarriors;
 public static class Constants
 {
     public const float KeepHeight = 10f;
-    public const float ArrowGravity = -9.81f;
-    public const float ArrowVelocity = 10f;
+    public const float ArrowGravity = 5f;
+    public const float ArrowVelocity = 3f;
+    public const float ArrowWeakVelocity = 1f;
     public const float ArcherBaseCooldown = 7f;
     public const float ArcherBaseRange = 9f;
     public const float MageBaseRange = 5f;

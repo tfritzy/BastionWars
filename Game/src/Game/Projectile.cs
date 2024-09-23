@@ -13,7 +13,7 @@ public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVeloci
 
     private static float GetFlightDuration(Vector3 initialVelocity)
     {
-        float timeToPeak = Math.Abs(initialVelocity.Z) / 9.81f;
+        float timeToPeak = Math.Abs(initialVelocity.Z) / Constants.ArrowGravity;
         return timeToPeak * 2;
     }
 
@@ -37,9 +37,10 @@ public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVeloci
         */
 
         Vector3 delta = targetPos - origin;
+        Vector2 xyDelta = new Vector2(delta.X, delta.Y);
         float g = Constants.ArrowGravity;
-        float d = delta.Length();
-        float v = Constants.ArrowVelocity;
+        float d = xyDelta.Length();
+        float v = d > 2 ? Constants.ArrowVelocity : Constants.ArrowWeakVelocity;
         float y0 = origin.Z;
         float y = targetPos.Z;
 
@@ -58,7 +59,6 @@ public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVeloci
         float tanTheta = MathF.Max(solutionA, solutionB);
         float theta = MathF.Atan(tanTheta);
 
-        Vector2 xyDelta = new Vector2(delta.X, delta.Y);
         xyDelta /= xyDelta.Length();
         float nonVerticalVelocity = MathF.Cos(theta) * v;
         return new Vector3(

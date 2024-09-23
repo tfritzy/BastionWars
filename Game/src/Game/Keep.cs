@@ -55,9 +55,10 @@ public class Keep : Entity
                 for (int i = inRange.Count - 1; i >= 0; i--)
                 {
                     if (!map.Soldiers.ContainsKey(inRange[i]))
-                        continue;
-
-                    if (map.Soldiers[inRange[i]].Alliance == Alliance)
+                    {
+                        inRange.RemoveAt(i);
+                    }
+                    else if (map.Soldiers[inRange[i]].Alliance == Alliance)
                     {
                         inRange.RemoveAt(i);
                     }
@@ -118,6 +119,7 @@ public class Keep : Entity
             birthTime: Time.Now,
             initialVelocity: velocity.Value
         );
+        map.AddProjectile(projectile);
     }
 
     public int GetCount(SoldierType type)
