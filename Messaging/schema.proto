@@ -99,6 +99,7 @@ message Oneof_GameServerToPlayer {
         InitialState initial_state = 2;
         AllSoldierPositions all_soldier_positions = 3;
         AllKeepUpdates keep_updates = 4;
+        NewProjectiles new_projectiles = 5;
     }
 }
 
@@ -143,6 +144,13 @@ message V2 {
     float y = 2;
 }
 
+message V3 {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+
 message V2Int {
     int32 x = 1;
     int32 y = 2;
@@ -182,6 +190,19 @@ message KeepUpdate {
 
 message AllKeepUpdates {
     repeated KeepUpdate keep_updates = 1;
+}
+
+message NewProjectile {
+    uint32 id = 1;
+    V3 start_pos = 2;
+    float birth_time = 3;
+    V3 initial_velocity = 4;
+    float time_will_land = 5;
+    V3 final_position = 6;
+}
+
+message NewProjectiles {
+    repeated NewProjectile projectiles = 1;
 }
 
 message InitialState {

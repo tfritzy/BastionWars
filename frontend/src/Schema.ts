@@ -921,6 +921,7 @@ export interface Oneof_GameServerToPlayer {
   initial_state?: InitialState;
   all_soldier_positions?: AllSoldierPositions;
   keep_updates?: AllKeepUpdates;
+  new_projectiles?: NewProjectiles;
 }
 
 export function encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer): Uint8Array {
@@ -969,6 +970,17 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
+
+  // optional NewProjectiles new_projectiles = 5;
+  let $new_projectiles = message.new_projectiles;
+  if ($new_projectiles !== undefined) {
+    writeVarint32(bb, 42);
+    let nested = popByteBuffer();
+    _encodeNewProjectiles($new_projectiles, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
 }
 
 export function decodeOneof_GameServerToPlayer(binary: Uint8Array): Oneof_GameServerToPlayer {
@@ -1011,6 +1023,14 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
       case 4: {
         let limit = pushTemporaryLength(bb);
         message.keep_updates = _decodeAllKeepUpdates(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional NewProjectiles new_projectiles = 5;
+      case 5: {
+        let limit = pushTemporaryLength(bb);
+        message.new_projectiles = _decodeNewProjectiles(bb);
         bb.limit = limit;
         break;
       }
@@ -1163,6 +1183,81 @@ function _decodeV2(bb: ByteBuffer): V2 {
       // optional float y = 2;
       case 2: {
         message.y = readFloat(bb);
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface V3 {
+  x?: number;
+  y?: number;
+  z?: number;
+}
+
+export function encodeV3(message: V3): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeV3(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeV3(message: V3, bb: ByteBuffer): void {
+  // optional float x = 1;
+  let $x = message.x;
+  if ($x !== undefined) {
+    writeVarint32(bb, 13);
+    writeFloat(bb, $x);
+  }
+
+  // optional float y = 2;
+  let $y = message.y;
+  if ($y !== undefined) {
+    writeVarint32(bb, 21);
+    writeFloat(bb, $y);
+  }
+
+  // optional float z = 3;
+  let $z = message.z;
+  if ($z !== undefined) {
+    writeVarint32(bb, 29);
+    writeFloat(bb, $z);
+  }
+}
+
+export function decodeV3(binary: Uint8Array): V3 {
+  return _decodeV3(wrapByteBuffer(binary));
+}
+
+function _decodeV3(bb: ByteBuffer): V3 {
+  let message: V3 = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional float x = 1;
+      case 1: {
+        message.x = readFloat(bb);
+        break;
+      }
+
+      // optional float y = 2;
+      case 2: {
+        message.y = readFloat(bb);
+        break;
+      }
+
+      // optional float z = 3;
+      case 3: {
+        message.z = readFloat(bb);
         break;
       }
 
@@ -1634,6 +1729,197 @@ function _decodeAllKeepUpdates(bb: ByteBuffer): AllKeepUpdates {
         let limit = pushTemporaryLength(bb);
         let values = message.keep_updates || (message.keep_updates = []);
         values.push(_decodeKeepUpdate(bb));
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface NewProjectile {
+  id?: number;
+  start_pos?: V3;
+  birth_time?: number;
+  initial_velocity?: V3;
+  time_will_land?: number;
+  final_position?: V3;
+}
+
+export function encodeNewProjectile(message: NewProjectile): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeNewProjectile(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeNewProjectile(message: NewProjectile, bb: ByteBuffer): void {
+  // optional uint32 id = 1;
+  let $id = message.id;
+  if ($id !== undefined) {
+    writeVarint32(bb, 8);
+    writeVarint32(bb, $id);
+  }
+
+  // optional V3 start_pos = 2;
+  let $start_pos = message.start_pos;
+  if ($start_pos !== undefined) {
+    writeVarint32(bb, 18);
+    let nested = popByteBuffer();
+    _encodeV3($start_pos, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional float birth_time = 3;
+  let $birth_time = message.birth_time;
+  if ($birth_time !== undefined) {
+    writeVarint32(bb, 29);
+    writeFloat(bb, $birth_time);
+  }
+
+  // optional V3 initial_velocity = 4;
+  let $initial_velocity = message.initial_velocity;
+  if ($initial_velocity !== undefined) {
+    writeVarint32(bb, 34);
+    let nested = popByteBuffer();
+    _encodeV3($initial_velocity, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional float time_will_land = 5;
+  let $time_will_land = message.time_will_land;
+  if ($time_will_land !== undefined) {
+    writeVarint32(bb, 45);
+    writeFloat(bb, $time_will_land);
+  }
+
+  // optional V3 final_position = 6;
+  let $final_position = message.final_position;
+  if ($final_position !== undefined) {
+    writeVarint32(bb, 50);
+    let nested = popByteBuffer();
+    _encodeV3($final_position, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+}
+
+export function decodeNewProjectile(binary: Uint8Array): NewProjectile {
+  return _decodeNewProjectile(wrapByteBuffer(binary));
+}
+
+function _decodeNewProjectile(bb: ByteBuffer): NewProjectile {
+  let message: NewProjectile = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional uint32 id = 1;
+      case 1: {
+        message.id = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional V3 start_pos = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        message.start_pos = _decodeV3(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional float birth_time = 3;
+      case 3: {
+        message.birth_time = readFloat(bb);
+        break;
+      }
+
+      // optional V3 initial_velocity = 4;
+      case 4: {
+        let limit = pushTemporaryLength(bb);
+        message.initial_velocity = _decodeV3(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional float time_will_land = 5;
+      case 5: {
+        message.time_will_land = readFloat(bb);
+        break;
+      }
+
+      // optional V3 final_position = 6;
+      case 6: {
+        let limit = pushTemporaryLength(bb);
+        message.final_position = _decodeV3(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface NewProjectiles {
+  projectiles?: NewProjectile[];
+}
+
+export function encodeNewProjectiles(message: NewProjectiles): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeNewProjectiles(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeNewProjectiles(message: NewProjectiles, bb: ByteBuffer): void {
+  // repeated NewProjectile projectiles = 1;
+  let array$projectiles = message.projectiles;
+  if (array$projectiles !== undefined) {
+    for (let value of array$projectiles) {
+      writeVarint32(bb, 10);
+      let nested = popByteBuffer();
+      _encodeNewProjectile(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
+}
+
+export function decodeNewProjectiles(binary: Uint8Array): NewProjectiles {
+  return _decodeNewProjectiles(wrapByteBuffer(binary));
+}
+
+function _decodeNewProjectiles(bb: ByteBuffer): NewProjectiles {
+  let message: NewProjectiles = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // repeated NewProjectile projectiles = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.projectiles || (message.projectiles = []);
+        values.push(_decodeNewProjectile(bb));
         bb.limit = limit;
         break;
       }

@@ -33,6 +33,34 @@ public class KeepTest
     }
 
     [TestMethod]
+    public void Keep_NetworkTickListsNewProjectiles()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        TH.AddPlayer(game);
+        Keep keep = game.Map.KeepAt(0);
+        game.Map.KeepAt(0).SetCount(archers: 100);
+        game.Map.AddSoldier(
+            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game.Map),
+            game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
+
+        TH.UpdateGame(game, (int)(1f / Game.NetworkTickTime));
+        int originalProjCount = game.Map.Projectiles.Count;
+        Assert.IsTrue(originalProjCount > 0);
+        game.Players.Values.First().MessageQueue.Clear();
+
+        TH.UpdateGame(game, Game.NetworkTickTime * .5f);
+        var projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
+        Assert.AreEqual(0, projMsgs.Count);
+
+        TH.UpdateGame(game, Constants.ArcherBaseCooldown + .1f);
+        projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
+        Assert.AreEqual(1, projMsgs.Count);
+        Assert.AreEqual(
+            game.Map.Projectiles.Count - originalProjCount,
+            projMsgs.First().NewProjectiles.Projectiles.Count);
+    }
+
+    [TestMethod]
     public void Keep_CanShootEverywhereInItsRange()
     {
         Vector3 origin = new Vector3(0, 0, 10);

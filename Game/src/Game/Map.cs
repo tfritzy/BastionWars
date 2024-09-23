@@ -18,6 +18,7 @@ public class Map
     public Dictionary<Vector2Int, Word?> Words { get; private set; } = [];
     private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
     public List<Projectile> Projectiles { get; private set; } = [];
+    public HashSet<uint> NewProjectiles { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -172,6 +173,7 @@ public class Map
     public void AddProjectile(Projectile projectile)
     {
         Projectiles.Add(projectile);
+        NewProjectiles.Add(projectile.Id);
     }
 
     public float MeleePowerOf(Soldier soldier) => MeleePowerOf(soldier.Type, soldier.Alliance);

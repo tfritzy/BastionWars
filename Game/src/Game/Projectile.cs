@@ -5,6 +5,7 @@ namespace KeepLordWarriors;
 
 public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVelocity)
 {
+    public uint Id { get; private set; } = IdGenerator.NextId();
     public Vector3 StartPos { get; private set; } = startPos;
     public float BirthTime { get; private set; } = birthTime;
     public Vector3 InitialVelocity { get; private set; } = initialVelocity;

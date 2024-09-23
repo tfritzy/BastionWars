@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Xml;
 using Schema;
 
@@ -72,6 +73,7 @@ public class Game
     {
         SendSoldierPositions();
         SendKeepUpdates();
+        SendNewProjectileUpdates();
     }
 
     private void SendSoldierPositions()
@@ -109,6 +111,28 @@ public class Game
 
         if (allKeepUpdates.KeepUpdates.Count > 0)
             AddMessageToOutbox(new Oneof_GameServerToPlayer { KeepUpdates = allKeepUpdates });
+    }
+
+    private void SendNewProjectileUpdates()
+    {
+        NewProjectiles newProjectiles = new();
+        foreach (Projectile p in Map.Projectiles)
+        {
+            if (Map.NewProjectiles.Contains(p.Id))
+            {
+                newProjectiles.Projectiles.Add(new NewProjectile()
+                {
+                    Id = p.Id,
+                    BirthTime = p.BirthTime,
+                    FinalPosition = p.FinalPosition.ToSchema(),
+                    InitialVelocity = p.InitialVelocity.ToSchema(),
+                    StartPos = p.StartPos.ToSchema(),
+                    TimeWillLand = p.TimeWillLand,
+                });
+            }
+        }
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { NewProjectiles = newProjectiles });
+        Map.NewProjectiles.Clear();
     }
 
 
