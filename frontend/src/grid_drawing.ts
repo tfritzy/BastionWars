@@ -779,7 +779,7 @@ function renderFullWater() {}
 function styleForCorner(tile: RenderTile, i: number) {
   const alliance = tile.corner_alliance![i];
 
-  if (alliance == 0) {
+  if (!alliance || alliance === 1) {
     return "";
   }
 

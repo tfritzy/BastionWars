@@ -1,77 +1,137 @@
-import {
-  BOUNDARY_LINE_DASH,
-  BOUNDARY_LINE_STYLE,
-  BOUNDARY_LINE_WIDTH,
-} from "./constants";
+import { BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH } from "./constants";
 
 type DrawFunction = (ctx: CanvasRenderingContext2D) => void;
 
+type DrawStyle = {
+  should_fill?: boolean | undefined;
+  should_stroke?: boolean | undefined;
+  layer?: number | undefined;
+  stroke_style?: string | undefined;
+  fill_style?: string | undefined;
+  line_width?: number | undefined;
+  text_align?: CanvasTextAlign | undefined;
+};
+
+function drawStyleHashcode(drawStyle: DrawStyle): number {
+  let hash = 17;
+
+  hash = hash * 31 + (drawStyle.should_fill ? 1 : 0);
+  hash = hash * 31 + (drawStyle.should_stroke ? 1 : 0);
+
+  hash = hash * 31 + (drawStyle.layer ?? 0);
+  hash = hash * 31 + (drawStyle.line_width ?? 0);
+
+  hash = hash * 31 + (drawStyle.stroke_style?.length ?? 0);
+  hash = hash * 31 + (drawStyle.fill_style?.length ?? 0);
+  hash = hash * 31 + (drawStyle.text_align?.length ?? 0);
+
+  return hash;
+}
+
+function drawStyleEquals(
+  drawStyle1: DrawStyle,
+  drawStyle2: DrawStyle
+): boolean {
+  return (
+    drawStyle1.should_fill === drawStyle2.should_fill &&
+    drawStyle1.should_stroke === drawStyle2.should_stroke &&
+    drawStyle1.layer === drawStyle2.layer &&
+    drawStyle1.stroke_style === drawStyle2.stroke_style &&
+    drawStyle1.fill_style === drawStyle2.fill_style &&
+    drawStyle1.line_width === drawStyle2.line_width &&
+    drawStyle1.text_align === drawStyle2.text_align
+  );
+}
+
 export class Drawing {
-  private fill_queue = new Map<string, DrawFunction[]>();
-  private stroke_queue = new Map<string, DrawFunction[]>();
+  private draw_queue = new Map<number, [DrawStyle, DrawFunction[]][]>();
 
   constructor() {}
 
+  addToDrawQueue(style: DrawStyle, func: DrawFunction) {
+    const hashCode = drawStyleHashcode(style);
+    if (!this.draw_queue.has(hashCode)) {
+      return this.draw_queue.set(hashCode, [[style, [func]]]);
+    } else {
+      const tuple = this.draw_queue
+        .get(hashCode)!
+        .find((t) => drawStyleEquals(t[0], style));
+
+      if (!tuple) {
+        this.draw_queue.get(hashCode)?.push([style, [func]]);
+      } else {
+        tuple[1].push(func);
+      }
+    }
+  }
+
   drawFillable(style: string, steps: DrawFunction) {
-    if (!this.fill_queue.has(style)) this.fill_queue.set(style, []);
-    this.fill_queue.get(style)!.push(steps);
+    if (!style) return;
+
+    const drawStyle: DrawStyle = {
+      fill_style: style,
+      layer: 0,
+      should_fill: true,
+    };
+    this.addToDrawQueue(drawStyle, steps);
   }
 
   drawBoundary(steps: DrawFunction) {
-    if (!this.stroke_queue.has(BOUNDARY_LINE_STYLE))
-      this.stroke_queue.set(BOUNDARY_LINE_STYLE, []);
-    this.stroke_queue.get(BOUNDARY_LINE_STYLE)!.push((ctx) => {
-      ctx.lineWidth = BOUNDARY_LINE_WIDTH;
-      // ctx.setLineDash(BOUNDARY_LINE_DASH);
-      steps(ctx);
-    });
+    const drawStyle: DrawStyle = {
+      stroke_style: BOUNDARY_LINE_STYLE,
+      line_width: BOUNDARY_LINE_WIDTH,
+      layer: 0,
+      should_stroke: true,
+    };
+    this.addToDrawQueue(drawStyle, steps);
   }
 
   drawStrokeable(style: string, line_width: number, steps: DrawFunction) {
-    if (!this.stroke_queue.has(style)) this.stroke_queue.set(style, []);
-    this.stroke_queue.get(style)!.push((ctx) => {
-      ctx.lineWidth = line_width;
-      steps(ctx);
-    });
+    if (!style) return;
+
+    const drawStyle: DrawStyle = {
+      stroke_style: style,
+      line_width: line_width,
+      layer: 0,
+      should_stroke: true,
+    };
+    this.addToDrawQueue(drawStyle, steps);
   }
 
   drawText(style: string, align: CanvasTextAlign, steps: DrawFunction) {
-    this.drawFillable(style, (ctx) => {
-      ctx.textAlign = align;
-      steps(ctx);
-    });
+    const drawStyle: DrawStyle = {
+      fill_style: style,
+      layer: 50,
+      should_fill: true,
+      text_align: align,
+    };
+    this.addToDrawQueue(drawStyle, steps);
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.save();
-    for (const [fill, seq] of this.fill_queue) {
-      if (fill) {
-        ctx.fillStyle = fill;
+    for (const [_, drawTuples] of this.draw_queue) {
+      for (const drawTuple of drawTuples) {
+        ctx.save();
+        if (drawTuple[0].fill_style) ctx.fillStyle = drawTuple[0].fill_style;
+
+        if (drawTuple[0].stroke_style)
+          ctx.strokeStyle = drawTuple[0].stroke_style;
+
+        if (drawTuple[0].line_width) ctx.lineWidth = drawTuple[0].line_width;
+
+        if (drawTuple[0].text_align) ctx.textAlign = drawTuple[0].text_align;
+
         ctx.beginPath();
-        seq?.forEach((func) => {
+        drawTuple[1].forEach((func) => {
           func(ctx);
         });
 
-        ctx.fill();
+        if (drawTuple[0].should_fill) ctx.fill();
+
+        if (drawTuple[0].should_stroke) ctx.stroke();
+        drawTuple[1].length = 0;
+        ctx.restore();
       }
-
-      // Clear list without garbage collecting.
-      this.fill_queue.get(fill)!.length = 0;
     }
-    ctx.restore();
-
-    ctx.save();
-    for (const [stroke, seq] of this.stroke_queue) {
-      ctx.strokeStyle = stroke;
-      ctx.beginPath();
-      seq?.forEach((func) => {
-        func(ctx);
-      });
-      ctx.stroke();
-
-      // Clear list without garbage collecting.
-      this.stroke_queue.get(stroke)!.length = 0;
-    }
-    ctx.restore();
   }
 }

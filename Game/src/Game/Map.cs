@@ -285,7 +285,7 @@ public class Map
         }
         else
         {
-            value = 0;
+            value = 1;
         }
 
         // // A bit of a hack to have un-owned keeps all have different alliances, but be
