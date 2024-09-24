@@ -6,7 +6,7 @@ namespace TestHelpers;
 
 public static class TH
 {
-    public static GameSettings GetGameSettings(GenerationMode mode = GenerationMode.AutoAccrue, string? map = null)
+    public static GameSettings GetGameSettings(GenerationMode mode = GenerationMode.Word, string? map = null)
     {
         return new GameSettings()
         {
@@ -27,14 +27,14 @@ public static class TH
         return entity;
     }
 
-    public static Soldier BuildEnemySoldier(SoldierType type, int ofAlliance, KeepLordWarriors.Map map)
+    public static Soldier BuildEnemySoldier(SoldierType type, int ofAlliance, Game game)
     {
-        return new Soldier(map, ofAlliance + 1, type, map.KeepAt(0).Id, map.KeepAt(1).Id);
+        return new Soldier(game, ofAlliance + 1, type, game.Map.KeepAt(0).Id, game.Map.KeepAt(1).Id);
     }
 
-    public static Soldier BuildAllySoldier(SoldierType type, int ofAlliance, KeepLordWarriors.Map map)
+    public static Soldier BuildAllySoldier(SoldierType type, int ofAlliance, Game game)
     {
-        return new Soldier(map, ofAlliance, type, map.KeepAt(0).Id, map.KeepAt(1).Id);
+        return new Soldier(game, ofAlliance, type, game.Map.KeepAt(0).Id, game.Map.KeepAt(1).Id);
     }
 
     public static void ClearOutbox(Game game)
@@ -65,20 +65,7 @@ public static class TH
 
     public static void UpdateGame(Game game, float deltaTime)
     {
-        Time.Update(Time.Now + deltaTime);
-        game.Update();
-    }
-
-    public static void UpdateMap(Map map, float deltaTime)
-    {
-        Time.Update(Time.Now + deltaTime);
-        map.Update();
-    }
-
-    public static void UpdateKeep(Keep keep, float deltaTime)
-    {
-        Time.Update(Time.Now + deltaTime);
-        keep.Update();
+        game.Update(game.Time.Now + deltaTime);
     }
 
     public static bool AssertIsApproximately(Vector3 v1, Vector3 v2, float tolerance = 0.1f)

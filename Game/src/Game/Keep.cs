@@ -10,7 +10,6 @@ public class Keep : Entity
     public int WarriorCount { get; private set; }
     public int MageCount { get; private set; }
     public SoldierType SoldierType { get; }
-    public Map Map { get; private set; }
     public List<DeploymentOrder> DeploymentOrders { get; } = [];
     public string? Name { get; set; }
     public delegate void CapturedEventHandler(uint sender);
@@ -29,10 +28,9 @@ public class Keep : Entity
     private List<float> archerFireCooldowns = [];
     private List<uint> archerTargets = [];
 
-    public Keep(Map map, SoldierType soldierType, int alliance = 0) : base(map, alliance)
+    public Keep(Game game, SoldierType soldierType, int alliance = 0) : base(game, alliance)
     {
         SoldierType = soldierType;
-        Map = map;
         SetCount(soldierType, StartTroopCount);
         OccupancyChanged = false;
     }
@@ -47,18 +45,20 @@ public class Keep : Entity
     {
         if (ArcherCount > 0 || MageCount > 0)
         {
-            targetCheckCooldown -= Time.deltaTime;
+            targetCheckCooldown -= Game.Time.deltaTime;
             if (targetCheckCooldown <= 0)
             {
                 targetCheckCooldown = TargetCheckTime;
-                List<uint> inRange = map.Grid.GetCollisions(Map.Grid.GetEntityPosition(Id), Constants.ArcherBaseRange);
+                List<uint> inRange = Game.Map.Grid.GetCollisions(
+                    Game.Map.Grid.GetEntityPosition(Id),
+                    Constants.ArcherBaseRange);
                 for (int i = inRange.Count - 1; i >= 0; i--)
                 {
-                    if (!map.Soldiers.ContainsKey(inRange[i]))
+                    if (!Game.Map.Soldiers.ContainsKey(inRange[i]))
                     {
                         inRange.RemoveAt(i);
                     }
-                    else if (map.Soldiers[inRange[i]].Alliance == Alliance)
+                    else if (Game.Map.Soldiers[inRange[i]].Alliance == Alliance)
                     {
                         inRange.RemoveAt(i);
                     }
@@ -82,7 +82,7 @@ public class Keep : Entity
 
             for (int i = 0; i < archerFireCooldowns.Count; i++)
             {
-                archerFireCooldowns[i] -= Time.deltaTime;
+                archerFireCooldowns[i] -= Game.Time.deltaTime;
                 if (archerFireCooldowns[i] <= 0)
                 {
                     FireArrow();
@@ -99,11 +99,11 @@ public class Keep : Entity
 
         uint target = Randy.ChaoticElement(archerTargets);
 
-        if (!map.Grid.ContainsEntity(target))
+        if (!Game.Map.Grid.ContainsEntity(target))
             return;
 
-        Vector2 startPos2D = map.Grid.GetEntityPosition(Id);
-        Vector2 targetPos2D = map.Grid.GetEntityPosition(target);
+        Vector2 startPos2D = Game.Map.Grid.GetEntityPosition(Id);
+        Vector2 targetPos2D = Game.Map.Grid.GetEntityPosition(target);
         Vector3 startPos = new Vector3(startPos2D.X, startPos2D.Y, Constants.KeepHeight);
         Vector3 targetPos = new Vector3(targetPos2D.X, targetPos2D.Y, 0);
         Vector3? velocity = Projectile.CalculateFireVector(startPos, targetPos);
@@ -116,10 +116,10 @@ public class Keep : Entity
 
         Projectile projectile = new Projectile(
             startPos: startPos,
-            birthTime: Time.Now,
+            birthTime: Game.Time.Now,
             initialVelocity: velocity.Value
         );
-        map.AddProjectile(projectile);
+        Game.Map.AddProjectile(projectile);
     }
 
     public int GetCount(SoldierType type)
@@ -175,7 +175,7 @@ public class Keep : Entity
             var order = DeploymentOrders[i];
             if (order.WaveCooldown > 0)
             {
-                order.WaveCooldown -= Time.deltaTime;
+                order.WaveCooldown -= Game.Time.deltaTime;
             }
         }
 
@@ -194,9 +194,9 @@ public class Keep : Entity
 
                 for (int j = 0; j < toDeploy; j++)
                 {
-                    Map.AddSoldier(
-                        new Soldier(Map, Alliance, SoldierType.Warrior, Id, order.TargetId),
-                        Map.Grid.GetEntityPosition(Id));
+                    Game.Map.AddSoldier(
+                        new Soldier(Game, Alliance, SoldierType.Warrior, Id, order.TargetId),
+                        Game.Map.Grid.GetEntityPosition(Id));
                 }
 
                 toDeploy = Min(ArcherCount, waveCap, order.ArcherCount);
@@ -205,9 +205,9 @@ public class Keep : Entity
 
                 for (int j = 0; j < toDeploy; j++)
                 {
-                    Map.AddSoldier(
-                        new Soldier(Map, Alliance, SoldierType.Archer, Id, order.TargetId),
-                        Map.Grid.GetEntityPosition(Id));
+                    Game.Map.AddSoldier(
+                        new Soldier(Game, Alliance, SoldierType.Archer, Id, order.TargetId),
+                        Game.Map.Grid.GetEntityPosition(Id));
                 }
 
                 if (order.ArcherCount == 0 && order.WarriorCount == 0)
@@ -254,7 +254,7 @@ public class Keep : Entity
         }
         else
         {
-            float attackerPower = map.MeleePowerOf(soldier);
+            float attackerPower = Game.Map.MeleePowerOf(soldier);
             while (attackerPower > 0)
             {
                 if (WarriorCount > 0)
@@ -269,7 +269,7 @@ public class Keep : Entity
                 {
                     Capture(soldier.Alliance);
                     IncrementSoldierCount(soldier.Type);
-                    powerOverflow = attackerPower - map.MeleePowerOf(soldier);
+                    powerOverflow = attackerPower - Game.Map.MeleePowerOf(soldier);
                     break;
                 }
             }
@@ -278,7 +278,7 @@ public class Keep : Entity
 
     private float DoBattle(float attackerPower, SoldierType defenderType)
     {
-        float defenderPower = map.MeleePowerOf(defenderType, Alliance);
+        float defenderPower = Game.Map.MeleePowerOf(defenderType, Alliance);
         if (attackerPower >= defenderPower + powerOverflow)
         {
             // attacker wins

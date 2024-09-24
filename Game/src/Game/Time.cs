@@ -1,11 +1,11 @@
 namespace KeepLordWarriors;
 
-public static class Time
+public class Time
 {
-    public static float Now;
-    public static float deltaTime;
+    public float Now = 0f;
+    public float deltaTime;
 
-    public static void Update(float now)
+    public void Update(float now)
     {
         deltaTime = now - Now;
         Now = now;

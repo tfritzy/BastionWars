@@ -25,7 +25,7 @@ public class KeepTest
 
         Assert.AreEqual(0, game.Map.Projectiles.Count);
         game.Map.AddSoldier(
-            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game.Map),
+            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game),
             game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
 
         TH.UpdateGame(game, 1);
@@ -40,7 +40,7 @@ public class KeepTest
         Keep keep = game.Map.KeepAt(0);
         game.Map.KeepAt(0).SetCount(archers: 100);
         game.Map.AddSoldier(
-            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game.Map),
+            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game),
             game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
 
         TH.UpdateGame(game, (int)(1f / Game.NetworkTickTime));
@@ -55,10 +55,28 @@ public class KeepTest
         TH.UpdateGame(game, Constants.ArcherBaseCooldown + .1f);
         projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
         Assert.AreEqual(1, projMsgs.Count);
-        Assert.AreEqual(
-            game.Map.Projectiles.Count - originalProjCount,
-            projMsgs.First().NewProjectiles.Projectiles.Count);
+        Assert.IsTrue(projMsgs.First().NewProjectiles.Projectiles.Count >= 100);
     }
+
+    [TestMethod]
+    public void Keep_ProjectilesDespawnAfterLanding()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        TH.AddPlayer(game);
+        Keep keep = game.Map.KeepAt(0);
+        game.Map.KeepAt(0).SetCount(archers: 100);
+        game.Map.AddSoldier(
+            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game),
+            game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(4));
+        TH.UpdateGame(game, 1f);
+        var arrow = game.Map.Projectiles.First();
+
+        TH.UpdateGame(game, arrow.TimeWillLand - 1f - .1f);
+        Assert.IsTrue(game.Map.Projectiles.Contains(arrow));
+        TH.UpdateGame(game, .2f);
+        Assert.IsFalse(game.Map.Projectiles.Contains(arrow));
+    }
+
 
     [TestMethod]
     public void Keep_CanShootEverywhereInItsRange()

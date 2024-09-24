@@ -30,22 +30,37 @@ public class GameInstance
         httpListener = new();
     }
 
-    public async void StartGame()
+    public async Task StartGame()
     {
         StartAcceptingConnections();
-
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
         float lastTime = 0;
+        const float targetFrameTime = 1f / 100f;
+
         while (true)
         {
-            float time = stopwatch.ElapsedMilliseconds / 1000f;
-            Time.Update(now: time);
-            game.Update();
-            lastTime = time;
+            float startTime = stopwatch.ElapsedMilliseconds / 1000f;
+            float deltaTime = startTime - lastTime;
+
+            game.Update(now: startTime);
+
             await DrainPendingMessages();
+
+            float frameTime = (stopwatch.ElapsedMilliseconds / 1000f) - startTime;
+            if (frameTime < targetFrameTime)
+            {
+                int sleepTime = (int)((targetFrameTime - frameTime) * 1000);
+                if (sleepTime > 0)
+                {
+                    await Task.Delay(sleepTime);
+                }
+            }
+
+            lastTime = startTime;
         }
     }
+
 
     private async Task DrainPendingMessages()
     {

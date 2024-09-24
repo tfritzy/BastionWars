@@ -13,33 +13,33 @@ public class MapTests
     [TestMethod]
     public void Map_PlacesKeeps()
     {
-        KeepLordWarriors.Map map = new(TestMaps.ThirtyByTwenty);
-        Assert.IsTrue(map.Keeps.Count > 0);
+        Game game = new(TH.GetGameSettings(map: TestMaps.ThirtyByTwenty));
+        Assert.IsTrue(game.Map.Keeps.Count > 0);
 
-        foreach (var keep in map.Keeps.Values)
+        foreach (var keep in game.Map.Keeps.Values)
         {
-            Vector2 pos = map.Grid.GetEntityPosition(keep.Id);
-            Assert.IsTrue(map.Traversable[(int)pos.X, (int)pos.Y] == 0);
+            Vector2 pos = game.Map.Grid.GetEntityPosition(keep.Id);
+            Assert.IsTrue(game.Map.Traversable[(int)pos.X, (int)pos.Y] == 0);
         }
     }
 
     [TestMethod]
     public void Map_AllKeepsCanBeNavigatedBetween()
     {
-        KeepLordWarriors.Map map = new(TestMaps.TenByFive);
-        foreach (var keep in map.Keeps.Values)
+        Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
+        foreach (var keep in game.Map.Keeps.Values)
         {
-            foreach (var other in map.Keeps.Values)
+            foreach (var other in game.Map.Keeps.Values)
             {
                 if (keep == other)
                 {
                     continue;
                 }
 
-                List<Vector2Int>? path = map.GetPathBetweenKeeps(keep.Id, other.Id);
+                List<Vector2Int>? path = game.Map.GetPathBetweenKeeps(keep.Id, other.Id);
                 Assert.IsTrue(path?.Count > 0);
-                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(keep.Id)), path[0]);
-                Assert.AreEqual(Vector2Int.From(map.Grid.GetEntityPosition(other.Id)), path[^1]);
+                Assert.AreEqual(Vector2Int.From(game.Map.Grid.GetEntityPosition(keep.Id)), path[0]);
+                Assert.AreEqual(Vector2Int.From(game.Map.Grid.GetEntityPosition(other.Id)), path[^1]);
             }
         }
     }
@@ -47,7 +47,7 @@ public class MapTests
     [TestMethod]
     public void Map_ReadsKeepsCorrectly()
     {
-        Map map = new(TestMaps.TenByFive);
+        Game game = new Game(TH.GetGameSettings(map: TestMaps.TenByFive));
         List<int> expectedAlliances = new() { 1, 0, 0, 0, 0, 2 };
         List<Vector2Int> expectedPositions = new()
         {
@@ -68,11 +68,11 @@ public class MapTests
             SoldierType.Warrior
         };
 
-        for (int i = 0; i < map.Keeps.Count; i++)
+        for (int i = 0; i < game.Map.Keeps.Count; i++)
         {
-            Assert.AreEqual(expectedAlliances[i], map.Keeps.Values.ToList()[i].Alliance);
-            Assert.AreEqual(expectedTypes[i], map.Keeps.Values.ToList()[i].SoldierType);
-            Assert.AreEqual(expectedPositions[i], map.Grid.GetEntityGridPos(map.Keeps.Values.ToList()[i].Id));
+            Assert.AreEqual(expectedAlliances[i], game.Map.Keeps.Values.ToList()[i].Alliance);
+            Assert.AreEqual(expectedTypes[i], game.Map.Keeps.Values.ToList()[i].SoldierType);
+            Assert.AreEqual(expectedPositions[i], game.Map.Grid.GetEntityGridPos(game.Map.Keeps.Values.ToList()[i].Id));
         }
     }
 
@@ -97,25 +97,25 @@ public class MapTests
             0 0 0 0 0 0 0 0 0 0 
             0 0 0 0 0 0 0 0 0 0 
             0 0 0 0 0 0 0 0 0 0";
-        KeepLordWarriors.Map map = new(rawMap);
-        uint b0 = map.KeepAt(0).Id;
-        uint b1 = map.KeepAt(1).Id;
-        uint b2 = map.KeepAt(2).Id;
+        Game game = new(TH.GetGameSettings(map: rawMap));
+        uint b0 = game.Map.KeepAt(0).Id;
+        uint b1 = game.Map.KeepAt(1).Id;
+        uint b2 = game.Map.KeepAt(2).Id;
 
         StringBuilder actualOwnership = new();
         Dictionary<uint, string> lookup = new() {
             {b0, "0"}, {b1, "1"}, {b2, "2"},
         };
 
-        for (int y = 0; y < map.Height; y++)
+        for (int y = 0; y < game.Map.Height; y++)
         {
-            for (int x = 0; x < map.Width; x++)
+            for (int x = 0; x < game.Map.Width; x++)
             {
-                actualOwnership.Append($"{lookup[map.KeepLands[new Vector2Int(x, y)]]}");
-                if (x != map.Width - 1)
+                actualOwnership.Append($"{lookup[game.Map.KeepLands[new Vector2Int(x, y)]]}");
+                if (x != game.Map.Width - 1)
                     actualOwnership.Append(" ");
             }
-            if (y != map.Height - 1)
+            if (y != game.Map.Height - 1)
                 actualOwnership.Append($"\n");
         }
 
@@ -133,30 +133,30 @@ public class MapTests
     [TestMethod]
     public void Map_PlacesWords()
     {
-        KeepLordWarriors.Map map = new(TestMaps.TenByFive);
+        Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive, mode: GenerationMode.Word));
         int numAvailableSpots = 0;
-        for (int x = 0; x < map.Width; x++)
+        for (int x = 0; x < game.Map.Width; x++)
         {
-            for (int y = 0; y < map.Height; y++)
+            for (int y = 0; y < game.Map.Height; y++)
             {
                 if (x % 2 == 0 && y % 2 == 0)
                 {
-                    numAvailableSpots += map.Traversable[x, y] == Navigation.Constants.TRAVERSABLE ? 1 : 0;
+                    numAvailableSpots += game.Map.Traversable[x, y] == Navigation.Constants.TRAVERSABLE ? 1 : 0;
                 }
             }
         }
-        Assert.AreEqual(numAvailableSpots, map.Words.Keys.Count);
-        Assert.AreEqual(0, map.Words.Values.Count(w => w != null));
-        map.PlaceWord();
-        Assert.AreEqual(1, map.Words.Values.Count(w => w != null));
-        map.PlaceWord();
-        Assert.AreEqual(2, map.Words.Values.Count(w => w != null));
+        Assert.AreEqual(numAvailableSpots, game.Map.Words.Keys.Count);
+        Assert.AreEqual(Game.InitialWordCount, game.Map.Words.Values.Count(w => w != null));
+        game.Map.PlaceWord();
+        Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
+        game.Map.PlaceWord();
+        Assert.AreEqual(Game.InitialWordCount + 2, game.Map.Words.Values.Count(w => w != null));
 
         for (int i = 0; i < 100; i++)
         {
-            map.PlaceWord();
+            game.Map.PlaceWord();
         }
 
-        Assert.AreEqual(numAvailableSpots, map.Words.Values.Count(w => w != null));
+        Assert.AreEqual(numAvailableSpots, game.Map.Words.Values.Count(w => w != null));
     }
 }

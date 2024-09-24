@@ -7,6 +7,7 @@ namespace KeepLordWarriors;
 
 public class Map
 {
+    public Game Game;
     public TileType[,] Tiles { get; private set; } = new TileType[0, 0];
     public RenderTile[,] RenderTiles { get; private set; } = new RenderTile[0, 0];
     public short[,] Traversable { get; private set; } = new short[0, 0];
@@ -22,8 +23,9 @@ public class Map
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
-    public Map(string rawMap)
+    public Map(Game game, string rawMap)
     {
+        Game = game;
         ParseMap(rawMap);
         CalculateKeepPathing();
         CalculateKeepOwnership();
@@ -41,6 +43,19 @@ public class Map
         for (int i = 0; i < SoldierIds.Count; i++)
         {
             Soldiers[SoldierIds[i]].Update();
+        }
+
+        UpdateProjectiles();
+    }
+
+    private void UpdateProjectiles()
+    {
+        for (int i = Projectiles.Count - 1; i >= 0; i--)
+        {
+            if (Game.Time.Now > Projectiles[i].TimeWillLand)
+            {
+                Projectiles.RemoveAt(i);
+            }
         }
     }
 
@@ -218,7 +233,7 @@ public class Map
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Navigation.Constants.BLOCKED;
                         var archerKeep = new Keep(
-                            this,
+                            Game,
                             SoldierType.Archer,
                             alliance: 0);
                         archerKeep.Alliance = GetKeepAlliance(ownership[y][x], archerKeep.Id);
@@ -233,7 +248,7 @@ public class Map
                         Tiles[x, y] = TileType.Land;
                         Traversable[x, y] = Navigation.Constants.BLOCKED;
                         var warriorKeep = new Keep(
-                            this,
+                            Game,
                             SoldierType.Warrior,
                             alliance: 0);
                         warriorKeep.Alliance = GetKeepAlliance(ownership[y][x], warriorKeep.Id);

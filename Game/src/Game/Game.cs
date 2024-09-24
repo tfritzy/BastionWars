@@ -11,6 +11,7 @@ public class Game
     public List<Oneof_GameServerToPlayer> Outbox { get; private set; } = [];
     public Dictionary<string, Player> Players { get; private set; } = [];
     public List<string> PlayerIds { get; private set; } = [];
+    public Time Time;
 
     private float lastNetworkTick = 0f;
     private float lastWordPlacement = 0f;
@@ -22,14 +23,17 @@ public class Game
 
     public Game(GameSettings settings)
     {
-        Map = new(settings.Map);
+        Time = new();
+        Map = new(this, settings.Map);
         NameKeeps();
         GenerationMode = settings.GenerationMode;
         PlaceInitialWords();
     }
 
-    public void Update()
+    public void Update(float now)
     {
+        Time.Update(now);
+
         BastionAutoAccrue();
         Map.Update();
         PlaceWord();

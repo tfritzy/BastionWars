@@ -12,7 +12,7 @@ public class GameTests
     [TestMethod]
     public void Game_AutoAccrues()
     {
-        Game game = new(TH.GetGameSettings());
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.AutoAccrue));
 
         TH.UpdateGame(game, Game.AutoAccrualTime - .1f);
         foreach (Keep keep in game.Map.Keeps.Values)
@@ -117,7 +117,7 @@ public class GameTests
             .AllSoldierPositions;
         Assert.AreEqual(0, positionUpdate.SoldierPositions.Count);
         Soldier soldier = new(
-            map: game.Map,
+            game: game,
             alliance: 0,
             type: SoldierType.Warrior,
             source: game.Map.KeepAt(0).Id,

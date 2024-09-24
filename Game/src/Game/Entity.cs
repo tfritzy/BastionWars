@@ -11,12 +11,12 @@ public abstract class Entity
     /// </summary>
     public int Alliance { get; set; }
 
-    protected Map map;
+    protected Game Game;
 
-    public Entity(Map map, int alliance = 0)
+    public Entity(Game game, int alliance = 0)
     {
         Id = IdGenerator.NextId();
         Alliance = alliance;
-        this.map = map;
+        this.Game = game;
     }
 }
