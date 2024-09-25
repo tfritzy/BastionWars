@@ -3,6 +3,7 @@ import {
   KEEP_FILL_STYLE,
   KEEP_LINE_STYLE,
   KEEP_LINE_WIDTH,
+  Layer,
   soldierColors,
   WORLD_TO_CANVAS,
 } from "./constants";
@@ -10,29 +11,6 @@ import type { CanvasControls } from "./controls";
 import type { Drawing } from "./drawing";
 import { SoldierType } from "./Schema";
 import type { Keep } from "./types";
-
-export function drawPentagon(
-  ctx: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  fillStyle: string | CanvasGradient | CanvasPattern
-): void {
-  ctx.fillStyle = fillStyle;
-  ctx.beginPath();
-  for (let i = 0; i < 5; i++) {
-    const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2;
-    const x = centerX + Math.cos(angle) * radius;
-    const y = centerY + Math.sin(angle) * radius;
-    if (i === 0) {
-      ctx.moveTo(x, y);
-    } else {
-      ctx.lineTo(x, y);
-    }
-  }
-  ctx.closePath();
-  ctx.fill();
-}
 
 export function drawGrid(
   ctx: CanvasRenderingContext2D,
@@ -88,11 +66,16 @@ function drawBlockRing(drawing: Drawing, x: number, y: number, radius: number) {
     const blockEndY = y + Math.sin(endAngle) * KEEP_MIDDLE_RADIUS;
     angle = endAngle;
 
-    drawing.drawStrokeable(KEEP_LINE_STYLE, KEEP_LINE_WIDTH, (ctx) => {
-      ctx.moveTo(blockX, y);
-      ctx.quadraticCurveTo(x, y, blockEndX, blockEndY);
-    });
-    drawing.drawFillable(KEEP_FILL_STYLE, (ctx) => {
+    drawing.drawStrokeable(
+      KEEP_LINE_STYLE,
+      KEEP_LINE_WIDTH,
+      Layer.Keeps,
+      (ctx) => {
+        ctx.moveTo(blockX, y);
+        ctx.quadraticCurveTo(x, y, blockEndX, blockEndY);
+      }
+    );
+    drawing.drawFillable(KEEP_FILL_STYLE, Layer.Keeps, (ctx) => {
       ctx.moveTo(blockX + BLOCK_RADIUS, y);
       ctx.arc(blockX, blockY, BLOCK_RADIUS, 0, 2 * Math.PI);
     });
@@ -105,26 +88,12 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
 
   drawBlockRing(drawing, x, y, KEEP_RADIUS);
 
-  // // Draw main keep circle
-  // drawing.drawStrokeable(KEEP_LINE_STYLE, KEEP_LINE_WIDTH, (ctx) => {
-  //   ctx.moveTo(x + KEEP_RADIUS, y);
-  //   ctx.arc(x, y, KEEP_RADIUS, 0, 2 * Math.PI);
-  // });
-
-  // // Draw inner keep circle
-  // drawing.drawStrokeable(KEEP_LINE_STYLE, KEEP_LINE_WIDTH, (ctx) => {
-  //   ctx.moveTo(x + KEEP_INNER_RADIUS, y);
-  //   ctx.arc(x, y, KEEP_INNER_RADIUS, 0, 2 * Math.PI);
-  // });
-
-  // Draw block ring
-
   // Draw pie chart (assuming this function exists)
   drawPieChart(drawing, x, y, PIE_RADIUS, keep);
 
   // Draw total count
   const totalCount = (keep.archer_count + keep.warrior_count).toString();
-  drawing.drawText("#4a4b5b", "center", (ctx) => {
+  drawing.drawText("#4a4b5b", "center", "16px Arial", (ctx) => {
     ctx.fillText(totalCount, x, y + 4);
   });
 }
@@ -170,7 +139,7 @@ export function drawArc(
   sliceAngle: number,
   color: string
 ) {
-  drawing.drawFillable(color, (ctx) => {
+  drawing.drawFillable(color, Layer.UI, (ctx) => {
     ctx.moveTo(x, y);
     ctx.arc(x, y, radius, startAngle, startAngle + sliceAngle);
   });

@@ -1,18 +1,27 @@
 export class Performance {
-  private start_time: number;
-  private frame_time: number;
+  private frameCount: number;
+  private lastFpsUpdateTime: number;
+  private fps: number;
 
   constructor() {
-    this.start_time = 0;
-    this.frame_time = 0;
+    this.frameCount = 0;
+    this.lastFpsUpdateTime = 0;
+    this.fps = 0;
   }
 
   public start(): void {
-    this.start_time = performance.now();
+    this.frameCount++;
+
+    const currentTime = performance.now();
+    if (currentTime - this.lastFpsUpdateTime >= 1000) {
+      this.fps = this.frameCount;
+      this.frameCount = 0;
+      this.lastFpsUpdateTime = currentTime;
+    }
   }
 
   public stop(): void {
-    this.frame_time = performance.now() - this.start_time;
+    // This method is no longer needed for FPS calculation
   }
 
   public draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
@@ -22,7 +31,7 @@ export class Performance {
     ctx.fillStyle = "black";
     ctx.textAlign = "right";
     ctx.textBaseline = "top";
-    const metrics = `${this.frame_time.toFixed(0)} ms`;
+    const metrics = `${this.fps} FPS`;
     ctx.fillText(metrics, canvas.width - 10, 10);
     ctx.restore();
   }

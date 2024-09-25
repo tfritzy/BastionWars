@@ -1,5 +1,14 @@
 import { SoldierType } from "./Schema";
 
+export const Layer = {
+  Map: 1,
+  Grass: 2,
+  Units: 3,
+  Keeps: 4,
+  Trees: 5,
+  UI: 6,
+};
+
 export const Constants = {
   MATCHMAKING_URL: "http://localhost:7249",
 };
@@ -40,5 +49,6 @@ export const BOUNDARY_LINE_DASH = [4, 4];
 export const KEEP_FILL_STYLE = "#e2e8f0";
 export const KEEP_LINE_STYLE = "black";
 export const KEEP_LINE_WIDTH = 1;
+export const KEEP_LABEL_FONT = "20px Arial";
 export const LAND_LINE_STYLE = "black";
-export const LAND_LINE_WIDTH = 4;
+export const LAND_LINE_WIDTH = 2;

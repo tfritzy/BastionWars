@@ -1,5 +1,5 @@
 import { Connection } from "./connection.ts";
-import { WORLD_TO_CANVAS } from "./constants.ts";
+import { KEEP_LABEL_FONT, Layer, WORLD_TO_CANVAS } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
 import { drawKeep } from "./rendering.ts";
@@ -38,8 +38,8 @@ export class Game {
     drawMap(this.drawing, this.gameState);
     this.drawKeeps(deltaTime);
     this.drawSoldiers();
-
     this.drawing.draw(this.ctx);
+    this.drawKeepLables(deltaTime);
   }
 
   drawKeeps(deltaTime: number) {
@@ -47,24 +47,27 @@ export class Game {
       const x = keep.pos.x * WORLD_TO_CANVAS;
       const y = keep.pos.y * WORLD_TO_CANVAS;
       drawKeep(this.drawing, keep, deltaTime);
+    });
+  }
+
+  drawKeepLables(deltaTime: number) {
+    this.gameState.keeps.forEach((keep) => {
+      const x = keep.pos.x * WORLD_TO_CANVAS;
+      const y = keep.pos.y * WORLD_TO_CANVAS;
       this.keepLabels.get(keep.id)?.draw(x, y - 25, deltaTime);
     });
   }
 
   drawSoldiers() {
-    this.ctx.save();
+    this.gameState.soldiers.forEach((soldier) => {
+      this.drawing.drawStrokeable("black", 1, Layer.Units, (ctx) => {
+        const x = soldier.pos.x * WORLD_TO_CANVAS;
+        const y = soldier.pos.y * WORLD_TO_CANVAS;
 
-    const radius = 4;
-    this.gameState.soldiers.forEach((keep) => {
-      const x = keep.pos.x * WORLD_TO_CANVAS;
-      const y = keep.pos.y * WORLD_TO_CANVAS;
-
-      this.ctx.beginPath();
-      this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
-      this.ctx.stroke();
+        ctx.moveTo(x + 4, y);
+        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+      });
     });
-
-    this.ctx.restore();
   }
 
   connectToGameServer(details: GameFoundForPlayer) {
@@ -112,9 +115,9 @@ export class Game {
           keep.id,
           new Typeable(
             keep.name,
+            KEEP_LABEL_FONT,
             () => this.handleTypeKeepName(id),
-            this.canvas,
-            this.ctx
+            this.drawing
           )
         );
       }

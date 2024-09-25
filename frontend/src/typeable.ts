@@ -1,48 +1,53 @@
+import type { Drawing } from "./drawing";
+
 const shakeDampenPerS = 15;
 
 export class Typeable {
-  private canvas: HTMLCanvasElement;
-  private ctx: CanvasRenderingContext2D;
   private text: string;
   private progress: number;
   private boundHandleKeyDown: (event: KeyboardEvent) => void;
   private onComplete: () => void;
   private shakeMagnitude: number;
+  private drawing: Drawing;
+  private font: string;
 
   constructor(
     text: string,
+    font: string,
     onComplete: () => void,
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D
+    drawing: Drawing
   ) {
     this.text = text;
-    this.canvas = canvas;
-    this.ctx = ctx;
     this.progress = 0;
+    this.drawing = drawing;
     this.onComplete = onComplete;
     this.shakeMagnitude = 0;
+    this.font = font;
 
     this.boundHandleKeyDown = this.handleKeyDown.bind(this);
     document.addEventListener("keydown", this.boundHandleKeyDown);
   }
 
   draw(x: number, y: number, deltaTime: number): void {
-    this.ctx.save();
-    this.ctx.textAlign = "start";
-
-    const width = this.ctx.measureText(this.text).width;
-    const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
-    const baseY = y + Math.random() * this.shakeMagnitude;
-
     const completedPart = this.text.substring(0, this.progress);
-    this.ctx.fillStyle = "#4a4b5b";
-    this.ctx.fillText(completedPart, baseX, baseY);
-    this.ctx.fillStyle = "#4a4b5b88";
-    this.ctx.fillText(
-      this.text.substring(this.progress),
-      baseX + this.ctx.measureText(completedPart).width,
-      baseY
-    );
+
+    this.drawing.drawText("#4a4b5b", "start", this.font, (ctx) => {
+      const width = ctx.measureText(this.text).width;
+      const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
+      const baseY = y + Math.random() * this.shakeMagnitude;
+
+      ctx.fillText(completedPart, baseX, baseY);
+    });
+    this.drawing.drawText("#4a4b5b88", "start", this.font, (ctx) => {
+      const width = ctx.measureText(this.text).width;
+      const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
+      const baseY = y + Math.random() * this.shakeMagnitude;
+      ctx.fillText(
+        this.text.substring(this.progress),
+        baseX + ctx.measureText(completedPart).width,
+        baseY
+      );
+    });
 
     if (this.shakeMagnitude > 0) {
       this.shakeMagnitude -= shakeDampenPerS * deltaTime;
@@ -50,8 +55,6 @@ export class Typeable {
         this.shakeMagnitude = 0;
       }
     }
-
-    this.ctx.restore();
   }
 
   public removeEventListener(): void {

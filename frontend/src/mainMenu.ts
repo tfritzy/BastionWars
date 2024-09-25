@@ -1,6 +1,5 @@
-import type { Connection } from "./connection.ts";
 import { Constants } from "./constants.ts";
-import { drawPentagon } from "./rendering.ts";
+import { Drawing } from "./drawing.ts";
 import {
   decodeOneof_MatchMakerToPlayer,
   encodeOneof_PlayerToMatchmaker,
@@ -15,6 +14,7 @@ export class MainMenu {
   private ctx: CanvasRenderingContext2D;
   private buttons: Array<Typeable>;
   private enterGame: (details: GameFoundForPlayer) => void;
+  private drawing: Drawing;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -24,26 +24,26 @@ export class MainMenu {
     this.canvas = canvas;
     this.ctx = ctx;
     this.enterGame = enterGame;
+    this.drawing = new Drawing();
 
     this.buttons = [
-      new Typeable("Start", () => this.findGame(), canvas, ctx),
+      new Typeable("Start", "30px Arial", () => this.findGame(), this.drawing),
       new Typeable(
         "Options",
+        "30px Arial",
         () => console.log("Options complete"),
-        canvas,
-        ctx
+        this.drawing
       ),
-      new Typeable("Exit", () => console.log("Exit complete"), canvas, ctx),
+      new Typeable(
+        "Exit",
+        "15px Times New Roman",
+        () => console.log("Exit complete"),
+        this.drawing
+      ),
     ];
   }
 
   draw(dpr: number, deltaTime: number): void {
-    this.ctx.save();
-
-    this.ctx.font = "30px Arial";
-    this.ctx.fillStyle = "black";
-    this.ctx.textAlign = "center";
-
     const canvasLogicalHeight = this.canvas.height / dpr;
     const canvasLogicalWidth = this.canvas.width / dpr;
 
@@ -53,13 +53,7 @@ export class MainMenu {
       button.draw(x, y, deltaTime);
     });
 
-    this.drawShapes();
-
-    this.ctx.restore();
-  }
-
-  private drawShapes(): void {
-    drawPentagon(this.ctx, 300, 300, 50, "rgba(255, 0, 255, 0.5)");
+    this.drawing.draw(this.ctx);
   }
 
   private async findGame() {

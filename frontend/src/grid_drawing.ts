@@ -1,4 +1,4 @@
-import { HALF_T, keepColors, FULL_T } from "./constants.ts";
+import { HALF_T, keepColors, FULL_T, Layer } from "./constants.ts";
 import type { Drawing } from "./drawing.ts";
 import { RenderAllianceCase, type RenderTile } from "./Schema.ts";
 import {
@@ -99,16 +99,16 @@ function renderFullLandIndividualCorners(
   tile: RenderTile
 ) {
   if (!tile.corner_alliance) return;
-  drawing.drawFillable(styleForCorner(tile, 0), (ctx) =>
+  drawing.drawFillable(styleForCorner(tile, 0), Layer.Map, (ctx) =>
     ctx.rect(x, y, HALF_T, HALF_T)
   );
-  drawing.drawFillable(styleForCorner(tile, 1), (ctx) =>
+  drawing.drawFillable(styleForCorner(tile, 1), Layer.Map, (ctx) =>
     ctx.rect(x + HALF_T, y, HALF_T, HALF_T)
   );
-  drawing.drawFillable(styleForCorner(tile, 2), (ctx) =>
+  drawing.drawFillable(styleForCorner(tile, 2), Layer.Map, (ctx) =>
     ctx.rect(x, y + HALF_T, HALF_T, HALF_T)
   );
-  drawing.drawFillable(styleForCorner(tile, 3), (ctx) =>
+  drawing.drawFillable(styleForCorner(tile, 3), Layer.Map, (ctx) =>
     ctx.rect(x + HALF_T, y + HALF_T, HALF_T, HALF_T)
   );
 
@@ -149,7 +149,7 @@ function renderFullLandOneOwner(
 ) {
   if (!tile.corner_alliance) return;
 
-  drawing.drawFillable(styleForCorner(tile, 0), (ctx) =>
+  drawing.drawFillable(styleForCorner(tile, 0), Layer.Map, (ctx) =>
     ctx.rect(x, y, FULL_T, FULL_T)
   );
 }
@@ -163,10 +163,10 @@ function renderFullLandSplitDownMiddle(
   if (!tile.corner_alliance) return;
   const isHorizontal = tile.corner_alliance[0] === tile.corner_alliance[1];
   if (isHorizontal) {
-    drawing.drawFillable(styleForCorner(tile, 0), (ctx) =>
+    drawing.drawFillable(styleForCorner(tile, 0), Layer.Map, (ctx) =>
       ctx.rect(x, y, FULL_T, HALF_T)
     );
-    drawing.drawFillable(styleForCorner(tile, 2), (ctx) =>
+    drawing.drawFillable(styleForCorner(tile, 2), Layer.Map, (ctx) =>
       ctx.rect(x, y + HALF_T, FULL_T, HALF_T)
     );
     drawing.drawBoundary((ctx) => {
@@ -174,10 +174,10 @@ function renderFullLandSplitDownMiddle(
       ctx.lineTo(x + FULL_T, y + HALF_T);
     });
   } else {
-    drawing.drawFillable(styleForCorner(tile, 0), (ctx) =>
+    drawing.drawFillable(styleForCorner(tile, 0), Layer.Map, (ctx) =>
       ctx.rect(x, y, HALF_T, FULL_T)
     );
-    drawing.drawFillable(styleForCorner(tile, 1), (ctx) =>
+    drawing.drawFillable(styleForCorner(tile, 1), Layer.Map, (ctx) =>
       ctx.rect(x + HALF_T, y, HALF_T, FULL_T)
     );
     drawing.drawBoundary((ctx) => {
