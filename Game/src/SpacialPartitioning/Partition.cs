@@ -42,6 +42,22 @@ public class Partition
         return collisions;
     }
 
+    public uint? FindCollision(Vector2 point, float radius, Func<uint, bool> predicate)
+    {
+        foreach (Entity entity in entities.Values)
+        {
+            if (predicate(entity.Id))
+            {
+                if (Vector2.DistanceSquared(point, entity.Position) <= Math.Pow(entity.Radius + radius, 2))
+                {
+                    return entity.Id;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public void UpdateEntityPosition(uint id, Vector2 newPosition)
     {
         entities[id].Position = newPosition;

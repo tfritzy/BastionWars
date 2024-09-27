@@ -10,15 +10,20 @@ public class Soldier : Entity
     public readonly uint TargetKeepId;
     public readonly uint SourceKeepId;
     public int PathProgress { get; private set; }
+    public float MovementSpeed { get; private set; }
+    public int Health { get; private set; }
 
     public const float Radius = 0.5f;
     public const float BaseMovementSpeed = 1.0f;
+    public const int BaseHealth = 4;
 
     public Soldier(Game game, int alliance, SoldierType type, uint source, uint target) : base(game, alliance)
     {
         Type = type;
         SourceKeepId = source;
         TargetKeepId = target;
+        MovementSpeed = BaseMovementSpeed;
+        Health = BaseHealth;
     }
 
     public void Update()
@@ -33,12 +38,27 @@ public class Soldier : Entity
         }
         Vector2 currentPos = Game.Map.Grid.GetEntityPosition(Id);
         Vector2 delta = target.Value - currentPos;
-        Vector2 moveDelta = Vector2.Normalize(delta) * BaseMovementSpeed * Game.Time.deltaTime;
+        Vector2 moveDelta = Vector2.Normalize(delta) * MovementSpeed * Game.Time.deltaTime;
         Game.Map.Grid.MoveEntity(Id, currentPos + moveDelta);
 
         if (Vector2.DistanceSquared(Game.Map.Grid.GetEntityPosition(Id), target.Value) < 0.05f)
         {
             PathProgress++;
+        }
+    }
+
+    public void Freeze()
+    {
+        MovementSpeed = 0;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+
+        if (Health <= 0)
+        {
+            Game.Map.RemoveSoldier(Id);
         }
     }
 }

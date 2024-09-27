@@ -117,7 +117,9 @@ public class Keep : Entity
         Projectile projectile = new Projectile(
             startPos: startPos,
             birthTime: Game.Time.Now,
-            initialVelocity: velocity.Value
+            initialVelocity: velocity.Value,
+            Alliance,
+            Constants.ArrowBaseDamage
         );
         Game.Map.AddProjectile(projectile);
     }

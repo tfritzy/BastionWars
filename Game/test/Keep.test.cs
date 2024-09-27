@@ -77,7 +77,6 @@ public class KeepTest
         Assert.IsFalse(game.Map.Projectiles.Contains(arrow));
     }
 
-
     [TestMethod]
     public void Keep_CanShootEverywhereInItsRange()
     {
@@ -92,6 +91,30 @@ public class KeepTest
         AssertIsSensibleShot(origin, new Vector3(.1f, .1f, 0));
     }
 
+
+    [TestMethod]
+    public void Keep_KillsSoldiersArrowsHit()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        TH.AddPlayer(game);
+        Keep keep = game.Map.KeepAt(0);
+        game.Map.KeepAt(0).SetCount(archers: 100);
+        var enemy = TH.BuildEnemySoldier(SoldierType.Warrior, keep.Alliance, game);
+        var ally = TH.BuildAllySoldier(SoldierType.Warrior, keep.Alliance, game);
+        enemy.Freeze();
+        ally.Freeze();
+        game.Map.AddSoldier(enemy, game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
+        game.Map.AddSoldier(ally, game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
+
+        TH.UpdateGame(game, .5f);
+        var proj = game.Map.Projectiles.First();
+
+        Assert.IsTrue(game.Map.Soldiers.ContainsKey(enemy.Id));
+        TH.UpdateGame(game, proj.TimeWillLand - proj.BirthTime + .3f);
+        Assert.IsFalse(game.Map.Soldiers.ContainsKey(enemy.Id));
+        Assert.IsTrue(game.Map.Soldiers.ContainsKey(ally.Id));
+    }
+
     private void AssertIsSensibleShot(Vector3 origin, Vector3 target)
     {
         Vector3? shot = Projectile.CalculateFireVector(origin, target);
@@ -100,7 +123,7 @@ public class KeepTest
         Assert.IsTrue(
             (MathF.Abs(shot.Value.X) + MathF.Abs(shot.Value.Y)) / MathF.Abs(shot.Value.Z) > .05f,
             $"Shot ${shot} to {target} is excessively arcing");
-        Projectile proj = new Projectile(origin, 0f, shot.Value);
+        Projectile proj = new Projectile(origin, 0f, shot.Value, 0, Constants.ArrowBaseDamage);
         Assert.IsTrue(proj.TimeWillLand < 3f, $"Shot will take projectile {proj.TimeWillLand}s to land");
         TH.AssertIsApproximately(target, proj.FinalPosition);
     }

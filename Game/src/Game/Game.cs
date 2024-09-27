@@ -47,6 +47,13 @@ public class Game
         }
     }
 
+    private void NetworkTick()
+    {
+        SendSoldierPositions();
+        SendKeepUpdates();
+        SendNewProjectileUpdates();
+    }
+
     public void HandleCommand(Oneof_PlayerToGameServer msg)
     {
         switch (msg.MsgCase)
@@ -71,13 +78,6 @@ public class Game
         }
 
         Outbox.Clear();
-    }
-
-    private void NetworkTick()
-    {
-        SendSoldierPositions();
-        SendKeepUpdates();
-        SendNewProjectileUpdates();
     }
 
     private void SendSoldierPositions()
@@ -138,7 +138,6 @@ public class Game
         AddMessageToOutbox(new Oneof_GameServerToPlayer { NewProjectiles = newProjectiles });
         Map.NewProjectiles.Clear();
     }
-
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
     private void BastionAutoAccrue()

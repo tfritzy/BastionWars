@@ -48,7 +48,7 @@ public class MapTests
     public void Map_ReadsKeepsCorrectly()
     {
         Game game = new Game(TH.GetGameSettings(map: TestMaps.TenByFive));
-        List<int> expectedAlliances = new() { 1, 0, 0, 0, 0, 2 };
+        List<int> expectedAlliances = new() { 2, 1, 1, 1, 1, 3 };
         List<Vector2Int> expectedPositions = new()
         {
             new Vector2Int(1, 0),

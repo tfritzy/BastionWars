@@ -115,6 +115,29 @@ public class Grid
         return collisions;
     }
 
+    public uint? FindCollision(Vector2 point, float radius, Func<uint, bool> predicate)
+    {
+        int xPartMin = Math.Max((int)((point.X - radius) / PartitionSize - 1), 0);
+        int xPartMax = Math.Min((int)((point.X + radius) / PartitionSize) + 1, partitions.GetLength(0) - 1);
+        int yPartMin = Math.Max((int)((point.Y - radius) / PartitionSize) - 1, 0);
+        int yPartMax = Math.Min((int)((point.Y + radius) / PartitionSize) + 1, partitions.GetLength(1) - 1);
+
+        List<uint> collisions = new();
+        for (int x = xPartMin; x <= xPartMax; x++)
+        {
+            for (int y = yPartMin; y <= yPartMax; y++)
+            {
+                var hit = partitions[x, y].FindCollision(point, radius, predicate);
+                if (hit != null)
+                {
+                    return hit;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public bool ContainsEntity(uint id)
     {
         return entityPartitionLookup.ContainsKey(id);
