@@ -14,6 +14,7 @@ public class SoldierTests
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(1);
+        TH.ErradicateAllArchers(game);
         var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
         game.Map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));

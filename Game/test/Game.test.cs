@@ -160,14 +160,15 @@ public class GameTests
     public void Game_DoestCompleteNonOwnedWords()
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
-        Keep allyKeep = game.Map.Keeps.Values.First(b => b.Alliance == 1);
+        Keep allyKeep = game.Map.Keeps.Values.First(b => b.Alliance == 2);
         allyKeep.SetCount(archers: 0, warriors: 0);
 
         // Fill in words
         foreach (Vector2Int pos in game.Map.Words.Keys)
             game.Map.Words[pos] = new Word("a", pos);
 
-        int numWordsOwned = game.Map.Words.Values.Count(w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
+        int numWordsOwned = game.Map.Words.Values.Count(
+            w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
         game.HandleKeystroke('a', allyKeep.Alliance);
         Assert.AreEqual(numWordsOwned, game.Map.Words.Values.Count(w => w == null));
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));

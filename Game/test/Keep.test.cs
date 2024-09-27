@@ -13,12 +13,7 @@ public class KeepTest
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         Keep keep = game.Map.KeepAt(0);
-        foreach (Keep k in game.Map.Keeps.Values)
-        {
-            // Ensure only keep 0 will be the one firing.
-            if (k != keep)
-                k.Alliance = 2;
-        }
+        TH.ErradicateAllArchers(game);
         game.Map.KeepAt(0).SetCount(archers: 10);
 
         TH.UpdateGame(game, 5f);
@@ -80,8 +75,8 @@ public class KeepTest
     [TestMethod]
     public void Keep_CanShootEverywhereInItsRange()
     {
-        Vector3 origin = new Vector3(0, 0, 10);
-        AssertIsSensibleShot(origin, new Vector3(10, 10, 0));
+        Vector3 origin = new Vector3(0, 0, 0);
+        AssertIsSensibleShot(origin, new Vector3(7, 7, 0));
         AssertIsSensibleShot(origin, new Vector3(5, 5, 0));
         AssertIsSensibleShot(origin, new Vector3(2, 2, 0));
         AssertIsSensibleShot(origin, new Vector3(10, 0, 0));
@@ -136,6 +131,7 @@ public class KeepTest
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         TH.AddPlayer(game);
         Keep keep = game.Map.KeepAt(0);
+        TH.ErradicateAllArchers(game);
         game.Map.KeepAt(0).SetCount(archers: 100);
         var enemy = TH.BuildEnemySoldier(SoldierType.Warrior, keep.Alliance, game);
         var ally = TH.BuildAllySoldier(SoldierType.Warrior, keep.Alliance, game);

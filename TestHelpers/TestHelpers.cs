@@ -68,6 +68,14 @@ public static class TH
         game.Update(game.Time.Now + deltaTime);
     }
 
+    public static void ErradicateAllArchers(Game game)
+    {
+        foreach (var keep in game.Map.Keeps.Values)
+        {
+            keep.SetCount(archers: 0);
+        }
+    }
+
     public static void AssertIsApproximately(Vector3 v1, Vector3 v2, float tolerance = 0.1f)
     {
         Vector3 difference = v1 - v2;
