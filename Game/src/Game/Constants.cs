@@ -11,6 +11,7 @@ public static class Constants
     public const float MageBaseRange = 5f;
     public const float ArcherSetupMaxTime = .5f;
     public const float ArcherSetupMinTime = .2f;
+    public const int ArrowBaseDamage = 1;
 
     public static readonly string[] KeepNames = new string[]
     {

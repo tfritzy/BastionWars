@@ -52,8 +52,28 @@ public class Map
     {
         for (int i = Projectiles.Count - 1; i >= 0; i--)
         {
-            if (Game.Time.Now > Projectiles[i].TimeWillLand)
+            var proj = Projectiles[i];
+            if (Game.Time.Now > proj.TimeWillLand)
             {
+                uint? hit = Grid.FindCollision(proj.FinalPosition.ToVector2(), .1f, (uint id) =>
+                {
+                    if (Soldiers.TryGetValue(id, out Soldier? soldier))
+                    {
+                        if (soldier.Alliance != proj.Alliance)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                });
+
+                if (hit != null)
+                {
+                    Soldier soldier = Soldiers[hit.Value];
+                    soldier.TakeDamage(proj.Damage);
+                }
+
                 Projectiles.RemoveAt(i);
             }
         }

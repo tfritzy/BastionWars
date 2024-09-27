@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace KeepLordWarriors;
 
-public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVelocity)
+public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVelocity, int alliance, int damage)
 {
     public uint Id { get; private set; } = IdGenerator.NextId();
     public Vector3 StartPos { get; private set; } = startPos;
@@ -11,6 +11,8 @@ public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVeloci
     public Vector3 InitialVelocity { get; private set; } = initialVelocity;
     public float TimeWillLand { get; private set; } = birthTime + GetFlightDuration(initialVelocity);
     public Vector3 FinalPosition { get; private set; } = CalculateFinalPosition(startPos, initialVelocity);
+    public int Alliance { get; private set; } = alliance;
+    public int Damage { get; private set; } = damage;
 
     private static float GetFlightDuration(Vector3 initialVelocity)
     {
