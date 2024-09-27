@@ -12,7 +12,7 @@ public class Soldier : Entity
     public int PathProgress { get; private set; }
 
     public const float Radius = 0.5f;
-    public const float BaseMovementSpeed = 1.0f;
+    public const float BaseMovementSpeed = .1f;
 
     public Soldier(Game game, int alliance, SoldierType type, uint source, uint target) : base(game, alliance)
     {

@@ -103,14 +103,16 @@ public class Keep : Entity
             return;
 
         Vector2 startPos2D = Game.Map.Grid.GetEntityPosition(Id);
+        startPos2D.X += Randy.ChaoticInRange(-.2f, .2f);
+        startPos2D.Y += Randy.ChaoticInRange(-.2f, .2f);
         Vector2 targetPos2D = Game.Map.Grid.GetEntityPosition(target);
-        Vector3 startPos = new Vector3(startPos2D.X, startPos2D.Y, Constants.KeepHeight);
+        Vector3 startPos = new Vector3(startPos2D.X, startPos2D.Y, 0);
         Vector3 targetPos = new Vector3(targetPos2D.X, targetPos2D.Y, 0);
         Vector3? velocity = Projectile.CalculateFireVector(startPos, targetPos);
 
         if (velocity == null)
         {
-            Logger.Log("ERROR - could not calculate a vector to shoot target. Skipping arrow");
+            Logger.Log($"ERROR - could not calculate a vector to shoot {targetPos} from {startPos}. Skipping arrow");
             return;
         }
 

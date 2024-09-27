@@ -49,51 +49,28 @@ function drawRoundedRect(
 
 const KEEP_RADIUS = 20;
 const KEEP_INNER_RADIUS = KEEP_RADIUS * 0.8;
-const KEEP_MIDDLE_RADIUS =
-  KEEP_INNER_RADIUS + (KEEP_RADIUS - KEEP_INNER_RADIUS) / 2;
-const PIE_RADIUS = KEEP_INNER_RADIUS;
-const BLOCK_COUNT = 8;
-const BLOCK_RADIUS = 4;
-function drawBlockRing(drawing: Drawing, x: number, y: number, radius: number) {
-  const angleStep = (2 * Math.PI) / BLOCK_COUNT;
-
-  let angle = angleStep;
-  for (let i = 0; i < BLOCK_COUNT; i++) {
-    const endAngle = i * angleStep;
-    const blockX = x + Math.cos(angle) * KEEP_MIDDLE_RADIUS;
-    const blockY = y + Math.sin(angle) * KEEP_MIDDLE_RADIUS;
-    const blockEndX = x + Math.cos(endAngle) * KEEP_MIDDLE_RADIUS;
-    const blockEndY = y + Math.sin(endAngle) * KEEP_MIDDLE_RADIUS;
-    angle = endAngle;
-
-    drawing.drawStrokeable(
-      KEEP_LINE_STYLE,
-      KEEP_LINE_WIDTH,
-      Layer.Keeps,
-      (ctx) => {
-        ctx.moveTo(blockX, y);
-        ctx.quadraticCurveTo(x, y, blockEndX, blockEndY);
-      }
-    );
-    drawing.drawFillable(KEEP_FILL_STYLE, Layer.Keeps, (ctx) => {
-      ctx.moveTo(blockX + BLOCK_RADIUS, y);
-      ctx.arc(blockX, blockY, BLOCK_RADIUS, 0, 2 * Math.PI);
-    });
-  }
-}
+const PIE_RADIUS = KEEP_RADIUS;
 
 export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
   const x = Math.round(keep.pos.x * WORLD_TO_CANVAS);
   const y = Math.round(keep.pos.y * WORLD_TO_CANVAS);
 
-  drawBlockRing(drawing, x, y, KEEP_RADIUS);
+  drawing.drawStrokeable(
+    KEEP_LINE_STYLE,
+    KEEP_LINE_WIDTH,
+    Layer.Keeps,
+    (ctx) => {
+      ctx.moveTo(x + KEEP_RADIUS, y);
+      ctx.arc(x, y, KEEP_RADIUS, 0, 360);
+    }
+  );
 
   // Draw pie chart (assuming this function exists)
   drawPieChart(drawing, x, y, PIE_RADIUS, keep);
 
   // Draw total count
   const totalCount = (keep.archer_count + keep.warrior_count).toString();
-  drawing.drawText("#4a4b5b", "center", "16px Arial", (ctx) => {
+  drawing.drawText("#4a4b5b", "white", 1, "center", "16px Arial", (ctx) => {
     ctx.fillText(totalCount, x, y + 4);
   });
 }

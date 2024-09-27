@@ -1,5 +1,11 @@
 import { Connection } from "./connection.ts";
-import { KEEP_LABEL_FONT, Layer, WORLD_TO_CANVAS } from "./constants.ts";
+import {
+  ARROW_LENGTH,
+  KEEP_LABEL_FONT,
+  KEEP_LABEL_STROKE,
+  Layer,
+  WORLD_TO_CANVAS,
+} from "./constants.ts";
 import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
 import { drawKeep } from "./rendering.ts";
@@ -8,12 +14,20 @@ import {
   type AllSoldierPositions,
   type GameFoundForPlayer,
   type InitialState,
+  type NewProjectiles,
   type Oneof_GameServerToPlayer,
 } from "./Schema.ts";
 import { Typeable } from "./typeable.ts";
 import {
+  addV3,
+  cloneMultiplyV3,
+  divide,
   initialGameState,
+  magnitude,
+  multiplyV3,
+  normalize,
   parseKeep,
+  parseProjectile,
   parseSoldier,
   updateSoldier,
   type GameState,
@@ -40,6 +54,7 @@ export class Game {
     this.drawSoldiers();
     this.drawing.draw(this.ctx);
     this.drawKeepLables(deltaTime);
+    this.drawProjectiles(deltaTime);
   }
 
   drawKeeps(deltaTime: number) {
@@ -60,14 +75,53 @@ export class Game {
 
   drawSoldiers() {
     this.gameState.soldiers.forEach((soldier) => {
-      this.drawing.drawStrokeable("black", 1, Layer.Units, (ctx) => {
+      this.drawing.drawFillable("#ca8a04", Layer.Units, (ctx) => {
         const x = soldier.pos.x * WORLD_TO_CANVAS;
         const y = soldier.pos.y * WORLD_TO_CANVAS;
 
-        ctx.moveTo(x + 4, y);
-        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+        ctx.moveTo(x + 5, y);
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
       });
     });
+  }
+
+  drawProjectiles(deltaTime: number) {
+    for (let i = this.gameState.projectiles.length - 1; i >= 0; i--) {
+      const proj = this.gameState.projectiles[i];
+      proj.remaining_life -= deltaTime;
+      proj.remaining_movement_time -= deltaTime;
+
+      if (proj.remaining_life <= 0) {
+        const lastIndex = this.gameState.projectiles.length - 1;
+        if (i !== lastIndex) {
+          this.gameState.projectiles[i] = this.gameState.projectiles[lastIndex];
+        }
+        this.gameState.projectiles.pop();
+        continue;
+      }
+
+      const hasLanded = proj.remaining_movement_time <= 0;
+      if (!hasLanded) {
+        proj.current_velocity.z -= proj.gravitational_force * deltaTime;
+        const deltaV = cloneMultiplyV3(proj.current_velocity, deltaTime);
+        addV3(proj.current_pos, deltaV);
+      }
+
+      const layer = hasLanded ? Layer.ProjectilesOnGround : Layer.Projectiles;
+      this.drawing.drawStrokeable("black", 1, layer, (ctx) => {
+        const x = proj.current_pos.x * WORLD_TO_CANVAS;
+        const y = proj.current_pos.y * WORLD_TO_CANVAS;
+        const xy = { x: proj.current_velocity.x, y: proj.current_velocity.y };
+        const xyMag = magnitude(xy);
+        const theta = Math.atan(proj.current_velocity.z / xyMag);
+        const arrowVisibleLength = Math.cos(theta) * ARROW_LENGTH;
+        const halfArrow = arrowVisibleLength / 2;
+        divide(xy, xyMag);
+
+        ctx.moveTo(x + xy.x * halfArrow, y + xy.y * halfArrow);
+        ctx.lineTo(x - xy.x * halfArrow, y - xy.y * halfArrow);
+      });
+    }
   }
 
   connectToGameServer(details: GameFoundForPlayer) {
@@ -101,6 +155,8 @@ export class Game {
       this.handleSoldierPositionsMsg(message.all_soldier_positions);
     } else if (message.keep_updates) {
       this.handleKeepUpdates(message.keep_updates);
+    } else if (message.new_projectiles) {
+      this.handleNewProjectiles(message.new_projectiles);
     }
   };
 
@@ -117,7 +173,8 @@ export class Game {
             keep.name,
             KEEP_LABEL_FONT,
             () => this.handleTypeKeepName(id),
-            this.drawing
+            this.drawing,
+            KEEP_LABEL_STROKE
           )
         );
       }
@@ -156,6 +213,15 @@ export class Game {
       if (keepIndex >= 0) {
         this.gameState.keeps[keepIndex].archer_count = ku.archer_count || 0;
         this.gameState.keeps[keepIndex].warrior_count = ku.warrior_count || 0;
+      }
+    });
+  }
+
+  handleNewProjectiles(msg: NewProjectiles) {
+    msg.projectiles?.forEach((p) => {
+      const proj = parseProjectile(p);
+      if (proj) {
+        this.gameState.projectiles.push(proj);
       }
     });
   }

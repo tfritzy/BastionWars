@@ -117,14 +117,19 @@ export class Drawing {
 
   drawText(
     style: string,
+    strokeStyle: string | undefined,
+    line_width: number,
     align: CanvasTextAlign,
     font: string,
     steps: DrawFunction
   ) {
     const drawStyle: DrawStyle = {
       fill_style: style,
+      stroke_style: strokeStyle,
+      line_width: line_width,
       layer: Layer.UI,
       should_fill: true,
+      should_stroke: !!strokeStyle,
       text_align: align,
       font: font,
     };

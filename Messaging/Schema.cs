@@ -68,32 +68,32 @@ namespace Schema {
             "VXBkYXRlEgoKAmlkGAEgASgNEhUKDXdhcnJpb3JfY291bnQYAiABKAUSFAoM",
             "YXJjaGVyX2NvdW50GAMgASgFEhAKCGFsbGlhbmNlGAQgASgFIjoKDkFsbEtl",
             "ZXBVcGRhdGVzEigKDGtlZXBfdXBkYXRlcxgBIAMoCzISLlNjaGVtYS5LZWVw",
-            "VXBkYXRlIrABCg1OZXdQcm9qZWN0aWxlEgoKAmlkGAEgASgNEh0KCXN0YXJ0",
+            "VXBkYXRlIqkBCg1OZXdQcm9qZWN0aWxlEgoKAmlkGAEgASgNEh0KCXN0YXJ0",
             "X3BvcxgCIAEoCzIKLlNjaGVtYS5WMxISCgpiaXJ0aF90aW1lGAMgASgCEiQK",
             "EGluaXRpYWxfdmVsb2NpdHkYBCABKAsyCi5TY2hlbWEuVjMSFgoOdGltZV93",
-            "aWxsX2xhbmQYBSABKAISIgoOZmluYWxfcG9zaXRpb24YBiABKAsyCi5TY2hl",
-            "bWEuVjMiPAoOTmV3UHJvamVjdGlsZXMSKgoLcHJvamVjdGlsZXMYASADKAsy",
-            "FS5TY2hlbWEuTmV3UHJvamVjdGlsZSKiAQoMSW5pdGlhbFN0YXRlEiAKBWtl",
-            "ZXBzGAEgAygLMhEuU2NoZW1hLktlZXBTdGF0ZRIRCgltYXBfd2lkdGgYAiAB",
-            "KAUSEgoKbWFwX2hlaWdodBgDIAEoBRIfCgV0aWxlcxgEIAMoDjIQLlNjaGVt",
-            "YS5UaWxlVHlwZRIoCgxyZW5kZXJfdGlsZXMYBSADKAsyEi5TY2hlbWEuUmVu",
-            "ZGVyVGlsZSKjAQoUSXNzdWVEZXBsb3ltZW50T3JkZXISEwoLc291cmNlX2tl",
-            "ZXAYASABKA0SEwoLdGFyZ2V0X2tlZXAYAiABKA0SLgoMc29sZGllcl90eXBl",
-            "GAMgASgOMhMuU2NoZW1hLlNvbGRpZXJUeXBlSACIAQESFAoHcGVyY2VudBgE",
-            "IAEoAkgBiAEBQg8KDV9zb2xkaWVyX3R5cGVCCgoIX3BlcmNlbnQqKgoOR2Vu",
-            "ZXJhdGlvbk1vZGUSDgoKQXV0b0FjY3J1ZRAAEggKBFdvcmQQASo2CghUaWxl",
-            "VHlwZRILCgdJbnZhbGlkEAASCAoETGFuZBABEgkKBVdhdGVyEAISCAoEVHJl",
-            "ZRADKpcDChJSZW5kZXJBbGxpYW5jZUNhc2USGQoVSW52YWxpZFJlbmRlckFs",
-            "bGlhbmNlEAASIAocRnVsbExhbmRfU2luZ2xlUm91bmRlZENvcm5lchABEhwK",
-            "GEZ1bGxMYW5kX1NwbGl0RG93bk1pZGRsZRACEh4KGkZ1bGxMYW5kX0luZGl2",
-            "aWR1YWxDb3JuZXJzEAMSFQoRRnVsbExhbmRfT25lT3duZXIQBBIZChVUaHJl",
-            "ZUNvcm5lcnNfT25lT3duZXIQBRIaChZUaHJlZUNvcm5lcnNfVHdvT3duZXJz",
-            "EAYSHAoYVGhyZWVDb3JuZXJzX1RocmVlT3duZXJzEAcSGQoVVHdvQWRqYWNl",
-            "bnRfVHdvT3duZXJzEAgSGAoUVHdvQWRqYWNlbnRfT25lT3duZXIQCRIZChVU",
-            "d29PcHBvc2l0ZV9Ud29Pd25lcnMQChIYChRUd29PcHBvc2l0ZV9PbmVPd25l",
-            "chALEhkKFVNpbmdsZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1bGxXYXRlcl9O",
-            "b09ud2VyEA0qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQABIL",
-            "CgdXYXJyaW9yEAESCgoGQXJjaGVyEAJiBnByb3RvMw=="));
+            "aWxsX2xhbmQYBSABKAISGwoTZ3Jhdml0YXRpb25hbF9mb3JjZRgGIAEoAiI8",
+            "Cg5OZXdQcm9qZWN0aWxlcxIqCgtwcm9qZWN0aWxlcxgBIAMoCzIVLlNjaGVt",
+            "YS5OZXdQcm9qZWN0aWxlIqIBCgxJbml0aWFsU3RhdGUSIAoFa2VlcHMYASAD",
+            "KAsyES5TY2hlbWEuS2VlcFN0YXRlEhEKCW1hcF93aWR0aBgCIAEoBRISCgpt",
+            "YXBfaGVpZ2h0GAMgASgFEh8KBXRpbGVzGAQgAygOMhAuU2NoZW1hLlRpbGVU",
+            "eXBlEigKDHJlbmRlcl90aWxlcxgFIAMoCzISLlNjaGVtYS5SZW5kZXJUaWxl",
+            "IqMBChRJc3N1ZURlcGxveW1lbnRPcmRlchITCgtzb3VyY2Vfa2VlcBgBIAEo",
+            "DRITCgt0YXJnZXRfa2VlcBgCIAEoDRIuCgxzb2xkaWVyX3R5cGUYAyABKA4y",
+            "Ey5TY2hlbWEuU29sZGllclR5cGVIAIgBARIUCgdwZXJjZW50GAQgASgCSAGI",
+            "AQFCDwoNX3NvbGRpZXJfdHlwZUIKCghfcGVyY2VudCoqCg5HZW5lcmF0aW9u",
+            "TW9kZRIOCgpBdXRvQWNjcnVlEAASCAoEV29yZBABKjYKCFRpbGVUeXBlEgsK",
+            "B0ludmFsaWQQABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEAMqlwMK",
+            "ElJlbmRlckFsbGlhbmNlQ2FzZRIZChVJbnZhbGlkUmVuZGVyQWxsaWFuY2UQ",
+            "ABIgChxGdWxsTGFuZF9TaW5nbGVSb3VuZGVkQ29ybmVyEAESHAoYRnVsbExh",
+            "bmRfU3BsaXREb3duTWlkZGxlEAISHgoaRnVsbExhbmRfSW5kaXZpZHVhbENv",
+            "cm5lcnMQAxIVChFGdWxsTGFuZF9PbmVPd25lchAEEhkKFVRocmVlQ29ybmVy",
+            "c19PbmVPd25lchAFEhoKFlRocmVlQ29ybmVyc19Ud29Pd25lcnMQBhIcChhU",
+            "aHJlZUNvcm5lcnNfVGhyZWVPd25lcnMQBxIZChVUd29BZGphY2VudF9Ud29P",
+            "d25lcnMQCBIYChRUd29BZGphY2VudF9PbmVPd25lchAJEhkKFVR3b09wcG9z",
+            "aXRlX1R3b093bmVycxAKEhgKFFR3b09wcG9zaXRlX09uZU93bmVyEAsSGQoV",
+            "U2luZ2xlQ29ybmVyX09uZU93bmVyEAwSFQoRRnVsbFdhdGVyX05vT253ZXIQ",
+            "DSo6CgtTb2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAAEgsKB1dhcnJp",
+            "b3IQARIKCgZBcmNoZXIQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -120,7 +120,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepUpdate), global::Schema.KeepUpdate.Parser, new[]{ "Id", "WarriorCount", "ArcherCount", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllKeepUpdates), global::Schema.AllKeepUpdates.Parser, new[]{ "KeepUpdates" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectile), global::Schema.NewProjectile.Parser, new[]{ "Id", "StartPos", "BirthTime", "InitialVelocity", "TimeWillLand", "FinalPosition" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectile), global::Schema.NewProjectile.Parser, new[]{ "Id", "StartPos", "BirthTime", "InitialVelocity", "TimeWillLand", "GravitationalForce" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectiles), global::Schema.NewProjectiles.Parser, new[]{ "Projectiles" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null)
@@ -6078,7 +6078,7 @@ namespace Schema {
       birthTime_ = other.birthTime_;
       initialVelocity_ = other.initialVelocity_ != null ? other.initialVelocity_.Clone() : null;
       timeWillLand_ = other.timeWillLand_;
-      finalPosition_ = other.finalPosition_ != null ? other.finalPosition_.Clone() : null;
+      gravitationalForce_ = other.gravitationalForce_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -6148,15 +6148,15 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "final_position" field.</summary>
-    public const int FinalPositionFieldNumber = 6;
-    private global::Schema.V3 finalPosition_;
+    /// <summary>Field number for the "gravitational_force" field.</summary>
+    public const int GravitationalForceFieldNumber = 6;
+    private float gravitationalForce_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.V3 FinalPosition {
-      get { return finalPosition_; }
+    public float GravitationalForce {
+      get { return gravitationalForce_; }
       set {
-        finalPosition_ = value;
+        gravitationalForce_ = value;
       }
     }
 
@@ -6180,7 +6180,7 @@ namespace Schema {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(BirthTime, other.BirthTime)) return false;
       if (!object.Equals(InitialVelocity, other.InitialVelocity)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(TimeWillLand, other.TimeWillLand)) return false;
-      if (!object.Equals(FinalPosition, other.FinalPosition)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GravitationalForce, other.GravitationalForce)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6193,7 +6193,7 @@ namespace Schema {
       if (BirthTime != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(BirthTime);
       if (initialVelocity_ != null) hash ^= InitialVelocity.GetHashCode();
       if (TimeWillLand != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(TimeWillLand);
-      if (finalPosition_ != null) hash ^= FinalPosition.GetHashCode();
+      if (GravitationalForce != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GravitationalForce);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6232,9 +6232,9 @@ namespace Schema {
         output.WriteRawTag(45);
         output.WriteFloat(TimeWillLand);
       }
-      if (finalPosition_ != null) {
-        output.WriteRawTag(50);
-        output.WriteMessage(FinalPosition);
+      if (GravitationalForce != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(GravitationalForce);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -6266,9 +6266,9 @@ namespace Schema {
         output.WriteRawTag(45);
         output.WriteFloat(TimeWillLand);
       }
-      if (finalPosition_ != null) {
-        output.WriteRawTag(50);
-        output.WriteMessage(FinalPosition);
+      if (GravitationalForce != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(GravitationalForce);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -6295,8 +6295,8 @@ namespace Schema {
       if (TimeWillLand != 0F) {
         size += 1 + 4;
       }
-      if (finalPosition_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(FinalPosition);
+      if (GravitationalForce != 0F) {
+        size += 1 + 4;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6331,11 +6331,8 @@ namespace Schema {
       if (other.TimeWillLand != 0F) {
         TimeWillLand = other.TimeWillLand;
       }
-      if (other.finalPosition_ != null) {
-        if (finalPosition_ == null) {
-          FinalPosition = new global::Schema.V3();
-        }
-        FinalPosition.MergeFrom(other.FinalPosition);
+      if (other.GravitationalForce != 0F) {
+        GravitationalForce = other.GravitationalForce;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6378,11 +6375,8 @@ namespace Schema {
             TimeWillLand = input.ReadFloat();
             break;
           }
-          case 50: {
-            if (finalPosition_ == null) {
-              FinalPosition = new global::Schema.V3();
-            }
-            input.ReadMessage(FinalPosition);
+          case 53: {
+            GravitationalForce = input.ReadFloat();
             break;
           }
         }
@@ -6426,11 +6420,8 @@ namespace Schema {
             TimeWillLand = input.ReadFloat();
             break;
           }
-          case 50: {
-            if (finalPosition_ == null) {
-              FinalPosition = new global::Schema.V3();
-            }
-            input.ReadMessage(FinalPosition);
+          case 53: {
+            GravitationalForce = input.ReadFloat();
             break;
           }
         }

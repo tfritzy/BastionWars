@@ -85,6 +85,7 @@ message Oneof_HostServerToGameServer {
 // ###### In game ######
 // #####################
 
+
 message Oneof_PlayerToGameServer {
     string sender_id = 1;
     string auth_token = 2;
@@ -198,7 +199,7 @@ message NewProjectile {
     float birth_time = 3;
     V3 initial_velocity = 4;
     float time_will_land = 5;
-    V3 final_position = 6;
+    float gravitational_force = 6;
 }
 
 message NewProjectiles {

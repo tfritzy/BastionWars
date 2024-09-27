@@ -1,3 +1,8 @@
+import {
+  KEEP_LABEL_COMPLETED_COLOR,
+  KEEP_LABEL_OUTLINE_COLOR,
+  KEEP_LABEL_REMAINING_COLOR,
+} from "./constants";
 import type { Drawing } from "./drawing";
 
 const shakeDampenPerS = 15;
@@ -10,12 +15,14 @@ export class Typeable {
   private shakeMagnitude: number;
   private drawing: Drawing;
   private font: string;
+  private strokeStyle: string;
 
   constructor(
     text: string,
     font: string,
     onComplete: () => void,
-    drawing: Drawing
+    drawing: Drawing,
+    strokeStyle: string
   ) {
     this.text = text;
     this.progress = 0;
@@ -23,31 +30,52 @@ export class Typeable {
     this.onComplete = onComplete;
     this.shakeMagnitude = 0;
     this.font = font;
+    this.strokeStyle = strokeStyle;
 
     this.boundHandleKeyDown = this.handleKeyDown.bind(this);
     document.addEventListener("keydown", this.boundHandleKeyDown);
   }
 
   draw(x: number, y: number, deltaTime: number): void {
-    const completedPart = this.text.substring(0, this.progress);
+    this.drawing.drawText(
+      KEEP_LABEL_COMPLETED_COLOR,
+      KEEP_LABEL_OUTLINE_COLOR,
+      0.5,
+      "start",
+      this.font,
+      (ctx) => {
+        const completedPart = this.text.substring(0, this.progress);
+        const width = ctx.measureText(this.text).width;
+        const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
+        const baseY = y + Math.random() * this.shakeMagnitude;
 
-    this.drawing.drawText("#4a4b5b", "start", this.font, (ctx) => {
-      const width = ctx.measureText(this.text).width;
-      const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
-      const baseY = y + Math.random() * this.shakeMagnitude;
-
-      ctx.fillText(completedPart, baseX, baseY);
-    });
-    this.drawing.drawText("#4a4b5b88", "start", this.font, (ctx) => {
-      const width = ctx.measureText(this.text).width;
-      const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
-      const baseY = y + Math.random() * this.shakeMagnitude;
-      ctx.fillText(
-        this.text.substring(this.progress),
-        baseX + ctx.measureText(completedPart).width,
-        baseY
-      );
-    });
+        ctx.fillText(completedPart, baseX, baseY);
+        ctx.strokeText(completedPart, baseX, baseY);
+      }
+    );
+    this.drawing.drawText(
+      KEEP_LABEL_REMAINING_COLOR,
+      KEEP_LABEL_OUTLINE_COLOR,
+      0.5,
+      "start",
+      this.font,
+      (ctx) => {
+        const completedPart = this.text.substring(0, this.progress);
+        const width = ctx.measureText(this.text).width;
+        const baseX = x + Math.random() * this.shakeMagnitude - width / 2;
+        const baseY = y + Math.random() * this.shakeMagnitude;
+        ctx.fillText(
+          this.text.substring(this.progress),
+          baseX + ctx.measureText(completedPart).width,
+          baseY
+        );
+        ctx.strokeText(
+          this.text.substring(this.progress),
+          baseX + ctx.measureText(completedPart).width,
+          baseY
+        );
+      }
+    );
 
     if (this.shakeMagnitude > 0) {
       this.shakeMagnitude -= shakeDampenPerS * deltaTime;

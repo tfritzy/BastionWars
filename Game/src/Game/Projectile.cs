@@ -41,31 +41,31 @@ public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVeloci
         Vector2 xyDelta = new Vector2(delta.X, delta.Y);
         float g = Constants.ArrowGravity;
         float d = xyDelta.Length();
-        float v = d > 2 ? Constants.ArrowVelocity : Constants.ArrowWeakVelocity;
+        float s = Constants.ArrowVelocity; // d > 2 ? Constants.ArrowVelocity : Constants.ArrowWeakVelocity;
         float y0 = origin.Z;
         float y = targetPos.Z;
 
-        float quadA = (-1 * g * d * d) / (2 * v * v);
-        float quadB = d / v;
-        float quadC = (g * d * d) / (2 * v * v) + (y0 - y);
+        var constants = (d * g) / (s * s);
+        var theta = MathF.Asin(constants) / 2;
 
-        float discriminant = quadB * quadB - 4 * quadA * quadC;
-        if (discriminant < 0)
+        // theta = (MathF.PI / 2) - theta; // Convert to high arc
+
+        Logger.Log("Firing projectile at angle: " + theta * 180f / MathF.PI);
+
+        if (float.IsNaN(theta))
         {
             return null;
         }
 
-        float solutionA = (-quadB + MathF.Sqrt(discriminant)) / (2 * quadA);
-        float solutionB = (-quadB - MathF.Sqrt(discriminant)) / (2 * quadA);
-        float tanTheta = MathF.Max(solutionA, solutionB);
-        float theta = MathF.Atan(tanTheta);
+        float verticalVelocity = MathF.Sin(theta) * s;
+        float nonVerticalVelocity = MathF.Cos(theta) * s;
 
         xyDelta /= xyDelta.Length();
-        float nonVerticalVelocity = MathF.Cos(theta) * v;
+
         return new Vector3(
             x: xyDelta.X * nonVerticalVelocity,
             y: xyDelta.Y * nonVerticalVelocity,
-            z: MathF.Sin(theta) * v
+            z: verticalVelocity
         );
     }
 }

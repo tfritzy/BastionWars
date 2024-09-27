@@ -1747,7 +1747,7 @@ export interface NewProjectile {
   birth_time?: number;
   initial_velocity?: V3;
   time_will_land?: number;
-  final_position?: V3;
+  gravitational_force?: number;
 }
 
 export function encodeNewProjectile(message: NewProjectile): Uint8Array {
@@ -1800,15 +1800,11 @@ function _encodeNewProjectile(message: NewProjectile, bb: ByteBuffer): void {
     writeFloat(bb, $time_will_land);
   }
 
-  // optional V3 final_position = 6;
-  let $final_position = message.final_position;
-  if ($final_position !== undefined) {
-    writeVarint32(bb, 50);
-    let nested = popByteBuffer();
-    _encodeV3($final_position, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
+  // optional float gravitational_force = 6;
+  let $gravitational_force = message.gravitational_force;
+  if ($gravitational_force !== undefined) {
+    writeVarint32(bb, 53);
+    writeFloat(bb, $gravitational_force);
   }
 }
 
@@ -1860,11 +1856,9 @@ function _decodeNewProjectile(bb: ByteBuffer): NewProjectile {
         break;
       }
 
-      // optional V3 final_position = 6;
+      // optional float gravitational_force = 6;
       case 6: {
-        let limit = pushTemporaryLength(bb);
-        message.final_position = _decodeV3(bb);
-        bb.limit = limit;
+        message.gravitational_force = readFloat(bb);
         break;
       }
 

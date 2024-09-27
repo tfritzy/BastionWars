@@ -68,9 +68,22 @@ public static class TH
         game.Update(game.Time.Now + deltaTime);
     }
 
-    public static bool AssertIsApproximately(Vector3 v1, Vector3 v2, float tolerance = 0.1f)
+    public static void AssertIsApproximately(Vector3 v1, Vector3 v2, float tolerance = 0.1f)
     {
         Vector3 difference = v1 - v2;
-        return difference.Length() <= tolerance;
+        if (Math.Abs(v2.X - v1.X) >= tolerance)
+        {
+            throw new Exception($"{v1} is not close enough to {v2}");
+        }
+
+        if (Math.Abs(v2.Y - v1.Y) >= tolerance)
+        {
+            throw new Exception($"{v1} is not close enough to {v2}");
+        }
+
+        if (Math.Abs(v2.Z - v1.Z) >= tolerance)
+        {
+            throw new Exception($"{v1} is not close enough to {v2}");
+        }
     }
 }

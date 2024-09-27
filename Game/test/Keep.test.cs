@@ -92,6 +92,45 @@ public class KeepTest
         AssertIsSensibleShot(origin, new Vector3(.1f, .1f, 0));
     }
 
+    [TestMethod]
+    public void Keep_SimulateProjectile()
+    {
+        Vector3 origin = new Vector3(8, 5, 0);
+        List<Vector3> targets = new List<Vector3> {
+            new Vector3(1f, 3f, 0),
+            new Vector3(10f, 0, 0),
+            new Vector3(1f, 1f, 0),
+            new Vector3(6f, 2f, 0),
+            new Vector3(6f, 8f, 0),
+            new Vector3(9f, 8f, 0),
+            new Vector3(9f, 1f, 0),
+            new Vector3(0f, .5f, 0),
+            new Vector3(4.499439f, 6.81507f, 0)
+        };
+        var timeStep = .005f;
+
+        foreach (var target in targets)
+        {
+            Vector3? shot = Projectile.CalculateFireVector(origin, target);
+            Assert.IsNotNull(shot, $"Couldn't find a shot for {target}");
+            Projectile p = new Projectile(origin, 0, shot.Value);
+
+            Vector3 pos = origin;
+            Vector3 velocity = p.InitialVelocity;
+            while (true)
+            {
+                pos += velocity * timeStep;
+                velocity.Z -= Constants.ArrowGravity * timeStep;
+                if (pos.Z <= 0)
+                {
+                    break;
+                }
+            }
+
+            TH.AssertIsApproximately(pos, target);
+        }
+    }
+
     private void AssertIsSensibleShot(Vector3 origin, Vector3 target)
     {
         Vector3? shot = Projectile.CalculateFireVector(origin, target);

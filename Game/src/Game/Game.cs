@@ -128,10 +128,10 @@ public class Game
                 {
                     Id = p.Id,
                     BirthTime = p.BirthTime,
-                    FinalPosition = p.FinalPosition.ToSchema(),
                     InitialVelocity = p.InitialVelocity.ToSchema(),
                     StartPos = p.StartPos.ToSchema(),
                     TimeWillLand = p.TimeWillLand,
+                    GravitationalForce = Constants.ArrowGravity
                 });
             }
         }

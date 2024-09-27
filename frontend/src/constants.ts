@@ -3,15 +3,19 @@ import { SoldierType } from "./Schema";
 export const Layer = {
   Map: 1,
   Grass: 2,
-  Units: 3,
-  Keeps: 4,
-  Trees: 5,
-  UI: 6,
+  ProjectilesOnGround: 3,
+  Units: 4,
+  Keeps: 5,
+  Trees: 6,
+  Projectiles: 7,
+  UI: 8,
 };
 
 export const Constants = {
   MATCHMAKING_URL: "http://localhost:7249",
 };
+
+export const ARROW_LENGTH = 6;
 
 export const WORLD_TO_CANVAS = 64;
 export const TILE_SIZE = WORLD_TO_CANVAS;
@@ -43,12 +47,19 @@ export const keepColors = [
   "#fbcfe8",
   "#fecdd3",
 ];
+
 export const BOUNDARY_LINE_STYLE = "#222222";
 export const BOUNDARY_LINE_WIDTH = 1;
 export const BOUNDARY_LINE_DASH = [4, 4];
+
 export const KEEP_FILL_STYLE = "#e2e8f0";
 export const KEEP_LINE_STYLE = "black";
 export const KEEP_LINE_WIDTH = 1;
-export const KEEP_LABEL_FONT = "20px Arial";
+export const KEEP_LABEL_FONT = "bold 18pt Arial";
+export const KEEP_LABEL_STROKE = "black";
+export const KEEP_LABEL_COMPLETED_COLOR = "#6ee7b7";
+export const KEEP_LABEL_REMAINING_COLOR = "white";
+export const KEEP_LABEL_OUTLINE_COLOR = "#475569";
+
 export const LAND_LINE_STYLE = "black";
-export const LAND_LINE_WIDTH = 2;
+export const LAND_LINE_WIDTH = 1;
