@@ -101,6 +101,7 @@ message Oneof_GameServerToPlayer {
         AllSoldierPositions all_soldier_positions = 3;
         AllKeepUpdates keep_updates = 4;
         NewProjectiles new_projectiles = 5;
+        RenderTileUpdates render_tile_updates = 6;
     }
 }
 
@@ -212,6 +213,15 @@ message InitialState {
     int32 map_height = 3;
     repeated TileType tiles = 4;
     repeated RenderTile render_tiles = 5;
+}
+
+message RenderTileUpdate {
+    V2 pos = 1;
+    RenderTile render_tile = 2;
+}
+
+message RenderTileUpdates {
+    repeated RenderTileUpdate render_tile_updates = 1;
 }
 
 message IssueDeploymentOrder {

@@ -1,9 +1,14 @@
 import { Connection } from "./connection.ts";
 import {
+  ARROW_COLOR,
   ARROW_LENGTH,
   KEEP_LABEL_FONT,
   KEEP_LABEL_STROKE,
   Layer,
+  UNIT_COLOR,
+  UNIT_OUTLINE_COLOR,
+  UNIT_OUTLINE_WIDTH,
+  UNIT_RADIUS,
   WORLD_TO_CANVAS,
 } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
@@ -16,6 +21,7 @@ import {
   type InitialState,
   type NewProjectiles,
   type Oneof_GameServerToPlayer,
+  type RenderTileUpdates,
 } from "./Schema.ts";
 import { Typeable } from "./typeable.ts";
 import {
@@ -24,8 +30,6 @@ import {
   divide,
   initialGameState,
   magnitude,
-  multiplyV3,
-  normalize,
   parseKeep,
   parseProjectile,
   parseSoldier,
@@ -73,14 +77,22 @@ export class Game {
     });
   }
 
+  soldierStyle = {
+    layer: Layer.Units,
+    fill_style: UNIT_COLOR,
+    line_width: UNIT_OUTLINE_WIDTH,
+    should_fill: true,
+    should_stroke: false,
+    stroke_style: UNIT_OUTLINE_COLOR,
+  };
   drawSoldiers() {
     this.gameState.soldiers.forEach((soldier) => {
-      this.drawing.drawFillable("#ca8a04", Layer.Units, (ctx) => {
+      this.drawing.drawCustom(this.soldierStyle, (ctx) => {
         const x = soldier.pos.x * WORLD_TO_CANVAS;
         const y = soldier.pos.y * WORLD_TO_CANVAS;
 
-        ctx.moveTo(x + 5, y);
-        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.moveTo(x + UNIT_RADIUS, y);
+        ctx.arc(x, y, UNIT_RADIUS, 0, 2 * Math.PI);
       });
     });
   }
@@ -108,7 +120,7 @@ export class Game {
       }
 
       const layer = hasLanded ? Layer.ProjectilesOnGround : Layer.Projectiles;
-      this.drawing.drawStrokeable("black", 1, layer, (ctx) => {
+      this.drawing.drawStrokeable(ARROW_COLOR, 1, layer, (ctx) => {
         const x = proj.current_pos.x * WORLD_TO_CANVAS;
         const y = proj.current_pos.y * WORLD_TO_CANVAS;
         const xy = { x: proj.current_velocity.x, y: proj.current_velocity.y };
@@ -157,6 +169,8 @@ export class Game {
       this.handleKeepUpdates(message.keep_updates);
     } else if (message.new_projectiles) {
       this.handleNewProjectiles(message.new_projectiles);
+    } else if (message.render_tile_updates) {
+      this.handleRenderTileUpdates(message.render_tile_updates);
     }
   };
 
@@ -213,6 +227,7 @@ export class Game {
       if (keepIndex >= 0) {
         this.gameState.keeps[keepIndex].archer_count = ku.archer_count || 0;
         this.gameState.keeps[keepIndex].warrior_count = ku.warrior_count || 0;
+        this.gameState.keeps[keepIndex].alliance = ku.alliance || 0;
       }
     });
   }
@@ -223,6 +238,18 @@ export class Game {
       if (proj) {
         this.gameState.projectiles.push(proj);
       }
+    });
+  }
+
+  handleRenderTileUpdates(msg: RenderTileUpdates) {
+    msg.render_tile_updates?.forEach((rt) => {
+      if (!rt || !rt.pos || !rt.render_tile) {
+        return;
+      }
+
+      const index =
+        (rt.pos.x || 0) + (rt.pos.y || 0) * (this.gameState.mapWidth + 1);
+      this.gameState.renderTiles[index] = rt.render_tile;
     });
   }
 }

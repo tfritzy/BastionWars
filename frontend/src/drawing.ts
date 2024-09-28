@@ -77,6 +77,10 @@ export class Drawing {
     }
   }
 
+  drawCustom(style: DrawStyle, steps: DrawFunction) {
+    this.addToDrawQueue(style, steps);
+  }
+
   drawFillable(style: string, layer: number, steps: DrawFunction) {
     if (!style) return;
 

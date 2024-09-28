@@ -6,10 +6,10 @@ public static class Constants
     public const float ArrowGravity = 3.5f;
     public const float ArrowVelocity = 6f;
     public const float ArrowWeakVelocity = 3f;
-    public const float ArcherBaseCooldown = 7f;
-    public const float ArcherBaseRange = 9f;
+    public const float ArcherBaseCooldown = 10f;
+    public const float ArcherBaseRange = 6f;
     public const float MageBaseRange = 5f;
-    public const float ArcherSetupMaxTime = .5f;
+    public const float ArcherSetupMaxTime = 1f;
     public const float ArcherSetupMinTime = .2f;
     public const int ArrowBaseDamage = 1;
 

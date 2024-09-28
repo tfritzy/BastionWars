@@ -922,6 +922,7 @@ export interface Oneof_GameServerToPlayer {
   all_soldier_positions?: AllSoldierPositions;
   keep_updates?: AllKeepUpdates;
   new_projectiles?: NewProjectiles;
+  render_tile_updates?: RenderTileUpdates;
 }
 
 export function encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer): Uint8Array {
@@ -981,6 +982,17 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
+
+  // optional RenderTileUpdates render_tile_updates = 6;
+  let $render_tile_updates = message.render_tile_updates;
+  if ($render_tile_updates !== undefined) {
+    writeVarint32(bb, 50);
+    let nested = popByteBuffer();
+    _encodeRenderTileUpdates($render_tile_updates, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
 }
 
 export function decodeOneof_GameServerToPlayer(binary: Uint8Array): Oneof_GameServerToPlayer {
@@ -1031,6 +1043,14 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
       case 5: {
         let limit = pushTemporaryLength(bb);
         message.new_projectiles = _decodeNewProjectiles(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional RenderTileUpdates render_tile_updates = 6;
+      case 6: {
+        let limit = pushTemporaryLength(bb);
+        message.render_tile_updates = _decodeRenderTileUpdates(bb);
         bb.limit = limit;
         break;
       }
@@ -2050,6 +2070,135 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
         let limit = pushTemporaryLength(bb);
         let values = message.render_tiles || (message.render_tiles = []);
         values.push(_decodeRenderTile(bb));
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface RenderTileUpdate {
+  pos?: V2;
+  render_tile?: RenderTile;
+}
+
+export function encodeRenderTileUpdate(message: RenderTileUpdate): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeRenderTileUpdate(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeRenderTileUpdate(message: RenderTileUpdate, bb: ByteBuffer): void {
+  // optional V2 pos = 1;
+  let $pos = message.pos;
+  if ($pos !== undefined) {
+    writeVarint32(bb, 10);
+    let nested = popByteBuffer();
+    _encodeV2($pos, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional RenderTile render_tile = 2;
+  let $render_tile = message.render_tile;
+  if ($render_tile !== undefined) {
+    writeVarint32(bb, 18);
+    let nested = popByteBuffer();
+    _encodeRenderTile($render_tile, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+}
+
+export function decodeRenderTileUpdate(binary: Uint8Array): RenderTileUpdate {
+  return _decodeRenderTileUpdate(wrapByteBuffer(binary));
+}
+
+function _decodeRenderTileUpdate(bb: ByteBuffer): RenderTileUpdate {
+  let message: RenderTileUpdate = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional V2 pos = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        message.pos = _decodeV2(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional RenderTile render_tile = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        message.render_tile = _decodeRenderTile(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface RenderTileUpdates {
+  render_tile_updates?: RenderTileUpdate[];
+}
+
+export function encodeRenderTileUpdates(message: RenderTileUpdates): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeRenderTileUpdates(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeRenderTileUpdates(message: RenderTileUpdates, bb: ByteBuffer): void {
+  // repeated RenderTileUpdate render_tile_updates = 1;
+  let array$render_tile_updates = message.render_tile_updates;
+  if (array$render_tile_updates !== undefined) {
+    for (let value of array$render_tile_updates) {
+      writeVarint32(bb, 10);
+      let nested = popByteBuffer();
+      _encodeRenderTileUpdate(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
+}
+
+export function decodeRenderTileUpdates(binary: Uint8Array): RenderTileUpdates {
+  return _decodeRenderTileUpdates(wrapByteBuffer(binary));
+}
+
+function _decodeRenderTileUpdates(bb: ByteBuffer): RenderTileUpdates {
+  let message: RenderTileUpdates = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // repeated RenderTileUpdate render_tile_updates = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.render_tile_updates || (message.render_tile_updates = []);
+        values.push(_decodeRenderTileUpdate(bb));
         bb.limit = limit;
         break;
       }

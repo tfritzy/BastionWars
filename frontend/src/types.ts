@@ -68,6 +68,7 @@ export type Keep = {
   pos: Vector2;
   warrior_count: number;
   archer_count: number;
+  alliance: number;
 };
 
 export type Soldier = {
@@ -108,12 +109,12 @@ export type GameState = {
 export const parseKeep: (keep: KeepState | undefined) => Keep | null = (
   keep
 ) => {
-  if (!keep || !keep.id || !keep.name || !keep.pos) {
+  if (!keep || !keep.id || !keep.name || !keep.pos || !keep.alliance) {
     return null;
   }
 
   return {
-    alliance: keep.alliance || 0,
+    alliance: keep.alliance,
     id: keep.id,
     name: keep.name,
     pos: parseV2(keep.pos),

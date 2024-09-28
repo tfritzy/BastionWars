@@ -16,7 +16,7 @@ public class Game
     private float lastNetworkTick = 0f;
     private float lastWordPlacement = 0f;
 
-    public const float AutoAccrualTime = 1f;
+    public const float AutoAccrualTime = 3f;
     public const float NetworkTickTime = 1f / 20f;
     public const int InitialWordCount = 5;
     public const float WordPlacementTime = 1f;
@@ -100,7 +100,7 @@ public class Game
         AllKeepUpdates allKeepUpdates = new();
         foreach (Keep keep in Map.Keeps.Values)
         {
-            if (keep.OccupancyChanged)
+            if (keep.SomethingChanged)
             {
                 allKeepUpdates.KeepUpdates.Add(new KeepUpdate
                 {
@@ -305,7 +305,7 @@ public class Game
         return list;
     }
 
-    private void AddMessageToOutbox(Oneof_GameServerToPlayer update, string? recipient = null)
+    public void AddMessageToOutbox(Oneof_GameServerToPlayer update, string? recipient = null)
     {
         if (recipient == null)
         {

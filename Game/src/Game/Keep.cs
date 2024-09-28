@@ -12,9 +12,7 @@ public class Keep : Entity
     public SoldierType SoldierType { get; }
     public List<DeploymentOrder> DeploymentOrders { get; } = [];
     public string? Name { get; set; }
-    public delegate void CapturedEventHandler(uint sender);
-    public event CapturedEventHandler? OnCaptured;
-    public bool OccupancyChanged { get; private set; }
+    public bool SomethingChanged { get; private set; }
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .25f;
@@ -32,7 +30,7 @@ public class Keep : Entity
     {
         SoldierType = soldierType;
         SetCount(soldierType, StartTroopCount);
-        OccupancyChanged = false;
+        SomethingChanged = false;
     }
 
     public void Update()
@@ -102,12 +100,17 @@ public class Keep : Entity
         if (!Game.Map.Grid.ContainsEntity(target))
             return;
 
+        Soldier s = Game.Map.Soldiers[target];
+        var sVel = s.GetVelocity();
+
         Vector2 startPos2D = Game.Map.Grid.GetEntityPosition(Id);
         startPos2D.X += Randy.ChaoticInRange(-.2f, .2f);
         startPos2D.Y += Randy.ChaoticInRange(-.2f, .2f);
         Vector2 targetPos2D = Game.Map.Grid.GetEntityPosition(target);
         Vector3 startPos = new Vector3(startPos2D.X, startPos2D.Y, 0);
         Vector3 targetPos = new Vector3(targetPos2D.X, targetPos2D.Y, 0);
+        targetPos.X += Randy.ChaoticInRange(-.1f, .1f);
+        targetPos.Y += Randy.ChaoticInRange(-.1f, .1f);
         Vector3? velocity = Projectile.CalculateFireVector(startPos, targetPos);
 
         if (velocity == null)
@@ -154,7 +157,7 @@ public class Keep : Entity
                 break;
         }
 
-        OccupancyChanged = true;
+        SomethingChanged = true;
     }
 
     public void Accrue()
@@ -302,11 +305,12 @@ public class Keep : Entity
     public void Capture(int alliance)
     {
         Alliance = alliance;
-        OnCaptured?.Invoke(Id);
+        SomethingChanged = true;
+        Game.Map.RecalculateRenderTiles();
     }
 
     public void AckOccupancyChanged()
     {
-        OccupancyChanged = false;
+        SomethingChanged = false;
     }
 }

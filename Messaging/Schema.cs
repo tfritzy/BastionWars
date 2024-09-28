@@ -48,52 +48,57 @@ namespace Schema {
             "AQoYT25lb2ZfUGxheWVyVG9HYW1lU2VydmVyEhEKCXNlbmRlcl9pZBgBIAEo",
             "CRISCgphdXRoX3Rva2VuGAIgASgJEj4KFmlzc3VlX2RlcGxveW1lbnRfb3Jk",
             "ZXIYAyABKAsyHC5TY2hlbWEuSXNzdWVEZXBsb3ltZW50T3JkZXJIAEIFCgNt",
-            "c2cihwIKGE9uZW9mX0dhbWVTZXJ2ZXJUb1BsYXllchIUCgxyZWNpcGllbnRf",
+            "c2ciwQIKGE9uZW9mX0dhbWVTZXJ2ZXJUb1BsYXllchIUCgxyZWNpcGllbnRf",
             "aWQYASABKAkSLQoNaW5pdGlhbF9zdGF0ZRgCIAEoCzIULlNjaGVtYS5Jbml0",
             "aWFsU3RhdGVIABI8ChVhbGxfc29sZGllcl9wb3NpdGlvbnMYAyABKAsyGy5T",
             "Y2hlbWEuQWxsU29sZGllclBvc2l0aW9uc0gAEi4KDGtlZXBfdXBkYXRlcxgE",
             "IAEoCzIWLlNjaGVtYS5BbGxLZWVwVXBkYXRlc0gAEjEKD25ld19wcm9qZWN0",
-            "aWxlcxgFIAEoCzIWLlNjaGVtYS5OZXdQcm9qZWN0aWxlc0gAQgUKA21zZyJr",
-            "CgpSZW5kZXJUaWxlEhEKCXRpbGVfY2FzZRgBIAEoDRIXCg9jb3JuZXJfYWxs",
-            "aWFuY2UYAiADKAUSMQoNYWxsaWFuY2VfY2FzZRgDIAEoDjIaLlNjaGVtYS5S",
-            "ZW5kZXJBbGxpYW5jZUNhc2UiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgC",
-            "IiUKAlYzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIh0KBVYy",
-            "SW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSJGChNBbGxTb2xkaWVyUG9zaXRp",
-            "b25zEi8KEXNvbGRpZXJfcG9zaXRpb25zGAEgAygLMhQuU2NoZW1hLlNvbGRp",
-            "ZXJTdGF0ZSJRCgxTb2xkaWVyU3RhdGUSCgoCaWQYASABKA0SFwoDcG9zGAIg",
-            "ASgLMgouU2NoZW1hLlYyEhwKCHZlbG9jaXR5GAMgASgLMgouU2NoZW1hLlYy",
-            "In0KCUtlZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hl",
-            "bWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNoZXJfY291bnQY",
-            "BCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEoBSJXCgpLZWVw",
-            "VXBkYXRlEgoKAmlkGAEgASgNEhUKDXdhcnJpb3JfY291bnQYAiABKAUSFAoM",
-            "YXJjaGVyX2NvdW50GAMgASgFEhAKCGFsbGlhbmNlGAQgASgFIjoKDkFsbEtl",
-            "ZXBVcGRhdGVzEigKDGtlZXBfdXBkYXRlcxgBIAMoCzISLlNjaGVtYS5LZWVw",
-            "VXBkYXRlIqkBCg1OZXdQcm9qZWN0aWxlEgoKAmlkGAEgASgNEh0KCXN0YXJ0",
-            "X3BvcxgCIAEoCzIKLlNjaGVtYS5WMxISCgpiaXJ0aF90aW1lGAMgASgCEiQK",
-            "EGluaXRpYWxfdmVsb2NpdHkYBCABKAsyCi5TY2hlbWEuVjMSFgoOdGltZV93",
-            "aWxsX2xhbmQYBSABKAISGwoTZ3Jhdml0YXRpb25hbF9mb3JjZRgGIAEoAiI8",
-            "Cg5OZXdQcm9qZWN0aWxlcxIqCgtwcm9qZWN0aWxlcxgBIAMoCzIVLlNjaGVt",
-            "YS5OZXdQcm9qZWN0aWxlIqIBCgxJbml0aWFsU3RhdGUSIAoFa2VlcHMYASAD",
-            "KAsyES5TY2hlbWEuS2VlcFN0YXRlEhEKCW1hcF93aWR0aBgCIAEoBRISCgpt",
-            "YXBfaGVpZ2h0GAMgASgFEh8KBXRpbGVzGAQgAygOMhAuU2NoZW1hLlRpbGVU",
-            "eXBlEigKDHJlbmRlcl90aWxlcxgFIAMoCzISLlNjaGVtYS5SZW5kZXJUaWxl",
-            "IqMBChRJc3N1ZURlcGxveW1lbnRPcmRlchITCgtzb3VyY2Vfa2VlcBgBIAEo",
-            "DRITCgt0YXJnZXRfa2VlcBgCIAEoDRIuCgxzb2xkaWVyX3R5cGUYAyABKA4y",
-            "Ey5TY2hlbWEuU29sZGllclR5cGVIAIgBARIUCgdwZXJjZW50GAQgASgCSAGI",
-            "AQFCDwoNX3NvbGRpZXJfdHlwZUIKCghfcGVyY2VudCoqCg5HZW5lcmF0aW9u",
-            "TW9kZRIOCgpBdXRvQWNjcnVlEAASCAoEV29yZBABKjYKCFRpbGVUeXBlEgsK",
-            "B0ludmFsaWQQABIICgRMYW5kEAESCQoFV2F0ZXIQAhIICgRUcmVlEAMqlwMK",
-            "ElJlbmRlckFsbGlhbmNlQ2FzZRIZChVJbnZhbGlkUmVuZGVyQWxsaWFuY2UQ",
-            "ABIgChxGdWxsTGFuZF9TaW5nbGVSb3VuZGVkQ29ybmVyEAESHAoYRnVsbExh",
-            "bmRfU3BsaXREb3duTWlkZGxlEAISHgoaRnVsbExhbmRfSW5kaXZpZHVhbENv",
-            "cm5lcnMQAxIVChFGdWxsTGFuZF9PbmVPd25lchAEEhkKFVRocmVlQ29ybmVy",
-            "c19PbmVPd25lchAFEhoKFlRocmVlQ29ybmVyc19Ud29Pd25lcnMQBhIcChhU",
-            "aHJlZUNvcm5lcnNfVGhyZWVPd25lcnMQBxIZChVUd29BZGphY2VudF9Ud29P",
-            "d25lcnMQCBIYChRUd29BZGphY2VudF9PbmVPd25lchAJEhkKFVR3b09wcG9z",
-            "aXRlX1R3b093bmVycxAKEhgKFFR3b09wcG9zaXRlX09uZU93bmVyEAsSGQoV",
-            "U2luZ2xlQ29ybmVyX09uZU93bmVyEAwSFQoRRnVsbFdhdGVyX05vT253ZXIQ",
-            "DSo6CgtTb2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAAEgsKB1dhcnJp",
-            "b3IQARIKCgZBcmNoZXIQAmIGcHJvdG8z"));
+            "aWxlcxgFIAEoCzIWLlNjaGVtYS5OZXdQcm9qZWN0aWxlc0gAEjgKE3JlbmRl",
+            "cl90aWxlX3VwZGF0ZXMYBiABKAsyGS5TY2hlbWEuUmVuZGVyVGlsZVVwZGF0",
+            "ZXNIAEIFCgNtc2ciawoKUmVuZGVyVGlsZRIRCgl0aWxlX2Nhc2UYASABKA0S",
+            "FwoPY29ybmVyX2FsbGlhbmNlGAIgAygFEjEKDWFsbGlhbmNlX2Nhc2UYAyAB",
+            "KA4yGi5TY2hlbWEuUmVuZGVyQWxsaWFuY2VDYXNlIhoKAlYyEgkKAXgYASAB",
+            "KAISCQoBeRgCIAEoAiIlCgJWMxIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoB",
+            "ehgDIAEoAiIdCgVWMkludBIJCgF4GAEgASgFEgkKAXkYAiABKAUiRgoTQWxs",
+            "U29sZGllclBvc2l0aW9ucxIvChFzb2xkaWVyX3Bvc2l0aW9ucxgBIAMoCzIU",
+            "LlNjaGVtYS5Tb2xkaWVyU3RhdGUiUQoMU29sZGllclN0YXRlEgoKAmlkGAEg",
+            "ASgNEhcKA3BvcxgCIAEoCzIKLlNjaGVtYS5WMhIcCgh2ZWxvY2l0eRgDIAEo",
+            "CzIKLlNjaGVtYS5WMiJ9CglLZWVwU3RhdGUSCgoCaWQYASABKA0SFwoDcG9z",
+            "GAIgASgLMgouU2NoZW1hLlYyEhUKDXdhcnJpb3JfY291bnQYAyABKAUSFAoM",
+            "YXJjaGVyX2NvdW50GAQgASgFEgwKBG5hbWUYBSABKAkSEAoIYWxsaWFuY2UY",
+            "BiABKAUiVwoKS2VlcFVwZGF0ZRIKCgJpZBgBIAEoDRIVCg13YXJyaW9yX2Nv",
+            "dW50GAIgASgFEhQKDGFyY2hlcl9jb3VudBgDIAEoBRIQCghhbGxpYW5jZRgE",
+            "IAEoBSI6Cg5BbGxLZWVwVXBkYXRlcxIoCgxrZWVwX3VwZGF0ZXMYASADKAsy",
+            "Ei5TY2hlbWEuS2VlcFVwZGF0ZSKpAQoNTmV3UHJvamVjdGlsZRIKCgJpZBgB",
+            "IAEoDRIdCglzdGFydF9wb3MYAiABKAsyCi5TY2hlbWEuVjMSEgoKYmlydGhf",
+            "dGltZRgDIAEoAhIkChBpbml0aWFsX3ZlbG9jaXR5GAQgASgLMgouU2NoZW1h",
+            "LlYzEhYKDnRpbWVfd2lsbF9sYW5kGAUgASgCEhsKE2dyYXZpdGF0aW9uYWxf",
+            "Zm9yY2UYBiABKAIiPAoOTmV3UHJvamVjdGlsZXMSKgoLcHJvamVjdGlsZXMY",
+            "ASADKAsyFS5TY2hlbWEuTmV3UHJvamVjdGlsZSKiAQoMSW5pdGlhbFN0YXRl",
+            "EiAKBWtlZXBzGAEgAygLMhEuU2NoZW1hLktlZXBTdGF0ZRIRCgltYXBfd2lk",
+            "dGgYAiABKAUSEgoKbWFwX2hlaWdodBgDIAEoBRIfCgV0aWxlcxgEIAMoDjIQ",
+            "LlNjaGVtYS5UaWxlVHlwZRIoCgxyZW5kZXJfdGlsZXMYBSADKAsyEi5TY2hl",
+            "bWEuUmVuZGVyVGlsZSJUChBSZW5kZXJUaWxlVXBkYXRlEhcKA3BvcxgBIAEo",
+            "CzIKLlNjaGVtYS5WMhInCgtyZW5kZXJfdGlsZRgCIAEoCzISLlNjaGVtYS5S",
+            "ZW5kZXJUaWxlIkoKEVJlbmRlclRpbGVVcGRhdGVzEjUKE3JlbmRlcl90aWxl",
+            "X3VwZGF0ZXMYASADKAsyGC5TY2hlbWEuUmVuZGVyVGlsZVVwZGF0ZSKjAQoU",
+            "SXNzdWVEZXBsb3ltZW50T3JkZXISEwoLc291cmNlX2tlZXAYASABKA0SEwoL",
+            "dGFyZ2V0X2tlZXAYAiABKA0SLgoMc29sZGllcl90eXBlGAMgASgOMhMuU2No",
+            "ZW1hLlNvbGRpZXJUeXBlSACIAQESFAoHcGVyY2VudBgEIAEoAkgBiAEBQg8K",
+            "DV9zb2xkaWVyX3R5cGVCCgoIX3BlcmNlbnQqKgoOR2VuZXJhdGlvbk1vZGUS",
+            "DgoKQXV0b0FjY3J1ZRAAEggKBFdvcmQQASo2CghUaWxlVHlwZRILCgdJbnZh",
+            "bGlkEAASCAoETGFuZBABEgkKBVdhdGVyEAISCAoEVHJlZRADKpcDChJSZW5k",
+            "ZXJBbGxpYW5jZUNhc2USGQoVSW52YWxpZFJlbmRlckFsbGlhbmNlEAASIAoc",
+            "RnVsbExhbmRfU2luZ2xlUm91bmRlZENvcm5lchABEhwKGEZ1bGxMYW5kX1Nw",
+            "bGl0RG93bk1pZGRsZRACEh4KGkZ1bGxMYW5kX0luZGl2aWR1YWxDb3JuZXJz",
+            "EAMSFQoRRnVsbExhbmRfT25lT3duZXIQBBIZChVUaHJlZUNvcm5lcnNfT25l",
+            "T3duZXIQBRIaChZUaHJlZUNvcm5lcnNfVHdvT3duZXJzEAYSHAoYVGhyZWVD",
+            "b3JuZXJzX1RocmVlT3duZXJzEAcSGQoVVHdvQWRqYWNlbnRfVHdvT3duZXJz",
+            "EAgSGAoUVHdvQWRqYWNlbnRfT25lT3duZXIQCRIZChVUd29PcHBvc2l0ZV9U",
+            "d29Pd25lcnMQChIYChRUd29PcHBvc2l0ZV9PbmVPd25lchALEhkKFVNpbmds",
+            "ZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1bGxXYXRlcl9Ob09ud2VyEA0qOgoL",
+            "U29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQABILCgdXYXJyaW9yEAES",
+            "CgoGQXJjaGVyEAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -110,7 +115,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_MatchmakerToHostServer), global::Schema.Oneof_MatchmakerToHostServer.Parser, new[]{ "PlacePlayerInGame", "Registered" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToGameServer), global::Schema.Oneof_HostServerToGameServer.Parser, new[]{ "Register" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions", "KeepUpdates", "NewProjectiles" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "AllSoldierPositions", "KeepUpdates", "NewProjectiles", "RenderTileUpdates" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTile), global::Schema.RenderTile.Parser, new[]{ "TileCase", "CornerAlliance", "AllianceCase" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2), global::Schema.V2.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V3), global::Schema.V3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
@@ -123,6 +128,8 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectile), global::Schema.NewProjectile.Parser, new[]{ "Id", "StartPos", "BirthTime", "InitialVelocity", "TimeWillLand", "GravitationalForce" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectiles), global::Schema.NewProjectiles.Parser, new[]{ "Projectiles" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTileUpdate), global::Schema.RenderTileUpdate.Parser, new[]{ "Pos", "RenderTile" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTileUpdates), global::Schema.RenderTileUpdates.Parser, new[]{ "RenderTileUpdates_" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null)
           }));
     }
@@ -3370,6 +3377,9 @@ namespace Schema {
         case MsgOneofCase.NewProjectiles:
           NewProjectiles = other.NewProjectiles.Clone();
           break;
+        case MsgOneofCase.RenderTileUpdates:
+          RenderTileUpdates = other.RenderTileUpdates.Clone();
+          break;
       }
 
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -3441,6 +3451,18 @@ namespace Schema {
       }
     }
 
+    /// <summary>Field number for the "render_tile_updates" field.</summary>
+    public const int RenderTileUpdatesFieldNumber = 6;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.RenderTileUpdates RenderTileUpdates {
+      get { return msgCase_ == MsgOneofCase.RenderTileUpdates ? (global::Schema.RenderTileUpdates) msg_ : null; }
+      set {
+        msg_ = value;
+        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.RenderTileUpdates;
+      }
+    }
+
     private object msg_;
     /// <summary>Enum of possible cases for the "msg" oneof.</summary>
     public enum MsgOneofCase {
@@ -3449,6 +3471,7 @@ namespace Schema {
       AllSoldierPositions = 3,
       KeepUpdates = 4,
       NewProjectiles = 5,
+      RenderTileUpdates = 6,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3484,6 +3507,7 @@ namespace Schema {
       if (!object.Equals(AllSoldierPositions, other.AllSoldierPositions)) return false;
       if (!object.Equals(KeepUpdates, other.KeepUpdates)) return false;
       if (!object.Equals(NewProjectiles, other.NewProjectiles)) return false;
+      if (!object.Equals(RenderTileUpdates, other.RenderTileUpdates)) return false;
       if (MsgCase != other.MsgCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -3497,6 +3521,7 @@ namespace Schema {
       if (msgCase_ == MsgOneofCase.AllSoldierPositions) hash ^= AllSoldierPositions.GetHashCode();
       if (msgCase_ == MsgOneofCase.KeepUpdates) hash ^= KeepUpdates.GetHashCode();
       if (msgCase_ == MsgOneofCase.NewProjectiles) hash ^= NewProjectiles.GetHashCode();
+      if (msgCase_ == MsgOneofCase.RenderTileUpdates) hash ^= RenderTileUpdates.GetHashCode();
       hash ^= (int) msgCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -3536,6 +3561,10 @@ namespace Schema {
         output.WriteRawTag(42);
         output.WriteMessage(NewProjectiles);
       }
+      if (msgCase_ == MsgOneofCase.RenderTileUpdates) {
+        output.WriteRawTag(50);
+        output.WriteMessage(RenderTileUpdates);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -3566,6 +3595,10 @@ namespace Schema {
         output.WriteRawTag(42);
         output.WriteMessage(NewProjectiles);
       }
+      if (msgCase_ == MsgOneofCase.RenderTileUpdates) {
+        output.WriteRawTag(50);
+        output.WriteMessage(RenderTileUpdates);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3590,6 +3623,9 @@ namespace Schema {
       }
       if (msgCase_ == MsgOneofCase.NewProjectiles) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(NewProjectiles);
+      }
+      if (msgCase_ == MsgOneofCase.RenderTileUpdates) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RenderTileUpdates);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3630,6 +3666,12 @@ namespace Schema {
             NewProjectiles = new global::Schema.NewProjectiles();
           }
           NewProjectiles.MergeFrom(other.NewProjectiles);
+          break;
+        case MsgOneofCase.RenderTileUpdates:
+          if (RenderTileUpdates == null) {
+            RenderTileUpdates = new global::Schema.RenderTileUpdates();
+          }
+          RenderTileUpdates.MergeFrom(other.RenderTileUpdates);
           break;
       }
 
@@ -3688,6 +3730,15 @@ namespace Schema {
             NewProjectiles = subBuilder;
             break;
           }
+          case 50: {
+            global::Schema.RenderTileUpdates subBuilder = new global::Schema.RenderTileUpdates();
+            if (msgCase_ == MsgOneofCase.RenderTileUpdates) {
+              subBuilder.MergeFrom(RenderTileUpdates);
+            }
+            input.ReadMessage(subBuilder);
+            RenderTileUpdates = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -3741,6 +3792,15 @@ namespace Schema {
             }
             input.ReadMessage(subBuilder);
             NewProjectiles = subBuilder;
+            break;
+          }
+          case 50: {
+            global::Schema.RenderTileUpdates subBuilder = new global::Schema.RenderTileUpdates();
+            if (msgCase_ == MsgOneofCase.RenderTileUpdates) {
+              subBuilder.MergeFrom(RenderTileUpdates);
+            }
+            input.ReadMessage(subBuilder);
+            RenderTileUpdates = subBuilder;
             break;
           }
         }
@@ -6915,6 +6975,428 @@ namespace Schema {
 
   }
 
+  public sealed partial class RenderTileUpdate : pb::IMessage<RenderTileUpdate>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<RenderTileUpdate> _parser = new pb::MessageParser<RenderTileUpdate>(() => new RenderTileUpdate());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<RenderTileUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[26]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTileUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTileUpdate(RenderTileUpdate other) : this() {
+      pos_ = other.pos_ != null ? other.pos_.Clone() : null;
+      renderTile_ = other.renderTile_ != null ? other.renderTile_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTileUpdate Clone() {
+      return new RenderTileUpdate(this);
+    }
+
+    /// <summary>Field number for the "pos" field.</summary>
+    public const int PosFieldNumber = 1;
+    private global::Schema.V2 pos_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.V2 Pos {
+      get { return pos_; }
+      set {
+        pos_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "render_tile" field.</summary>
+    public const int RenderTileFieldNumber = 2;
+    private global::Schema.RenderTile renderTile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.RenderTile RenderTile {
+      get { return renderTile_; }
+      set {
+        renderTile_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as RenderTileUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(RenderTileUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Pos, other.Pos)) return false;
+      if (!object.Equals(RenderTile, other.RenderTile)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (pos_ != null) hash ^= Pos.GetHashCode();
+      if (renderTile_ != null) hash ^= RenderTile.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (pos_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Pos);
+      }
+      if (renderTile_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(RenderTile);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (pos_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Pos);
+      }
+      if (renderTile_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(RenderTile);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (pos_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pos);
+      }
+      if (renderTile_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RenderTile);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(RenderTileUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.pos_ != null) {
+        if (pos_ == null) {
+          Pos = new global::Schema.V2();
+        }
+        Pos.MergeFrom(other.Pos);
+      }
+      if (other.renderTile_ != null) {
+        if (renderTile_ == null) {
+          RenderTile = new global::Schema.RenderTile();
+        }
+        RenderTile.MergeFrom(other.RenderTile);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (pos_ == null) {
+              Pos = new global::Schema.V2();
+            }
+            input.ReadMessage(Pos);
+            break;
+          }
+          case 18: {
+            if (renderTile_ == null) {
+              RenderTile = new global::Schema.RenderTile();
+            }
+            input.ReadMessage(RenderTile);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (pos_ == null) {
+              Pos = new global::Schema.V2();
+            }
+            input.ReadMessage(Pos);
+            break;
+          }
+          case 18: {
+            if (renderTile_ == null) {
+              RenderTile = new global::Schema.RenderTile();
+            }
+            input.ReadMessage(RenderTile);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class RenderTileUpdates : pb::IMessage<RenderTileUpdates>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<RenderTileUpdates> _parser = new pb::MessageParser<RenderTileUpdates>(() => new RenderTileUpdates());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<RenderTileUpdates> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[27]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTileUpdates() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTileUpdates(RenderTileUpdates other) : this() {
+      renderTileUpdates_ = other.renderTileUpdates_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RenderTileUpdates Clone() {
+      return new RenderTileUpdates(this);
+    }
+
+    /// <summary>Field number for the "render_tile_updates" field.</summary>
+    public const int RenderTileUpdates_FieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Schema.RenderTileUpdate> _repeated_renderTileUpdates_codec
+        = pb::FieldCodec.ForMessage(10, global::Schema.RenderTileUpdate.Parser);
+    private readonly pbc::RepeatedField<global::Schema.RenderTileUpdate> renderTileUpdates_ = new pbc::RepeatedField<global::Schema.RenderTileUpdate>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Schema.RenderTileUpdate> RenderTileUpdates_ {
+      get { return renderTileUpdates_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as RenderTileUpdates);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(RenderTileUpdates other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!renderTileUpdates_.Equals(other.renderTileUpdates_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= renderTileUpdates_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      renderTileUpdates_.WriteTo(output, _repeated_renderTileUpdates_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      renderTileUpdates_.WriteTo(ref output, _repeated_renderTileUpdates_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += renderTileUpdates_.CalculateSize(_repeated_renderTileUpdates_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(RenderTileUpdates other) {
+      if (other == null) {
+        return;
+      }
+      renderTileUpdates_.Add(other.renderTileUpdates_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            renderTileUpdates_.AddEntriesFrom(input, _repeated_renderTileUpdates_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            renderTileUpdates_.AddEntriesFrom(ref input, _repeated_renderTileUpdates_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class IssueDeploymentOrder : pb::IMessage<IssueDeploymentOrder>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6930,7 +7412,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -326,30 +326,94 @@ public class Map
         {
             for (int y = -1; y < Height; y++)
             {
-                var renderTile = new RenderTile()
+                RenderTiles[x + 1, y + 1] = CalculateRenderTile(x, y);
+            }
+        }
+    }
+
+    public void RecalculateRenderTiles()
+    {
+        var updatedTiles = new RenderTileUpdates();
+        for (int x = -1; x < Width; x++)
+        {
+            for (int y = -1; y < Height; y++)
+            {
+                var renderTile = CalculateRenderTile(x, y);
+                var existingTile = RenderTiles[x + 1, y + 1];
+
+                if (!AreTilesEqual(renderTile, existingTile))
                 {
-                    TileCase = GetRenderTileCase(
+                    RenderTiles[x + 1, y + 1] = renderTile;
+                    updatedTiles.RenderTileUpdates_.Add(new RenderTileUpdate()
+                    {
+                        Pos = new V2()
+                        {
+                            X = x + 1,
+                            Y = y + 1
+                        },
+                        RenderTile = renderTile
+                    });
+                }
+            }
+        }
+
+        Game.AddMessageToOutbox(new Oneof_GameServerToPlayer()
+        {
+            RenderTileUpdates = updatedTiles
+        });
+    }
+
+    private RenderTile CalculateRenderTile(int x, int y)
+    {
+        var renderTile = new RenderTile()
+        {
+            TileCase = GetRenderTileCase(
                         tl: GetMaybeOOBTile(x, y),
                         tr: GetMaybeOOBTile(x + 1, y),
                         bl: GetMaybeOOBTile(x + 1, y + 1),
                         br: GetMaybeOOBTile(x, y + 1)
                     ),
-                };
-                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y));
-                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y));
-                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y + 1));
-                renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y + 1));
-                if (AllAreOwnedBySameKeep(renderTile.CornerAlliance))
-                {
-                    int owner = renderTile.CornerAlliance[0];
-                    renderTile.CornerAlliance.Clear();
-                    renderTile.CornerAlliance.Add(owner);
-                }
-                renderTile.AllianceCase = GetAllianceCase(renderTile);
+        };
+        renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y));
+        renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y));
+        renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y + 1));
+        renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y + 1));
+        if (AllAreOwnedBySameKeep(renderTile.CornerAlliance))
+        {
+            int owner = renderTile.CornerAlliance[0];
+            renderTile.CornerAlliance.Clear();
+            renderTile.CornerAlliance.Add(owner);
+        }
+        renderTile.AllianceCase = GetAllianceCase(renderTile);
+        return renderTile;
+    }
 
-                RenderTiles[x + 1, y + 1] = renderTile;
+    private bool AreTilesEqual(RenderTile t1, RenderTile t2)
+    {
+        if (t1.TileCase != t2.TileCase)
+        {
+            return false;
+        }
+
+        if (t1.AllianceCase != t2.AllianceCase)
+        {
+            return false;
+        }
+
+        if (t1.CornerAlliance.Count != t2.CornerAlliance.Count)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < t1.CornerAlliance.Count; i++)
+        {
+            if (t1.CornerAlliance[i] != t2.CornerAlliance[i])
+            {
+                return false;
             }
         }
+
+        return true;
     }
 
     private RenderAllianceCase GetAllianceCase(RenderTile renderTile)

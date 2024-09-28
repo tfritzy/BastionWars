@@ -27,6 +27,29 @@ public class KeepTest
         Assert.AreEqual(10, game.Map.Projectiles.Count);
     }
 
+
+    [TestMethod]
+    public void Keep_SendsANetworkUpdateWhenCaptured()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        Keep keep = game.Map.KeepAt(0);
+        TH.AddPlayer(game);
+        TH.UpdateGame(game, 5f);
+
+        var player = game.Players.Values.First();
+        player.MessageQueue.Clear();
+        keep.Capture(5);
+        TH.UpdateGame(game, Game.NetworkTickTime + .0001f);
+
+        var tileUpdates = player.MessageQueue.Where(m => m.RenderTileUpdates != null).First();
+        Assert.AreEqual(12, tileUpdates.RenderTileUpdates.RenderTileUpdates_.Count);
+
+        var keepUpdates = player.MessageQueue.Where(m => m.KeepUpdates != null).ToList();
+        Assert.AreEqual(1, keepUpdates.Count);
+        Assert.AreEqual(1, keepUpdates.First().KeepUpdates.KeepUpdates.Count); // lol
+        Assert.IsTrue(keepUpdates.First().KeepUpdates.KeepUpdates.First().Alliance == 5);
+    }
+
     [TestMethod]
     public void Keep_NetworkTickListsNewProjectiles()
     {

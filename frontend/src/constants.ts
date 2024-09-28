@@ -5,10 +5,11 @@ export const Layer = {
   Grass: 2,
   ProjectilesOnGround: 3,
   Units: 4,
-  Keeps: 5,
-  Trees: 6,
-  Projectiles: 7,
-  UI: 8,
+  UnitOutlines: 5,
+  Keeps: 6,
+  Trees: 7,
+  Projectiles: 8,
+  UI: 9,
 };
 
 export const Constants = {
@@ -60,6 +61,12 @@ export const KEEP_LABEL_STROKE = "black";
 export const KEEP_LABEL_COMPLETED_COLOR = "#6ee7b7";
 export const KEEP_LABEL_REMAINING_COLOR = "white";
 export const KEEP_LABEL_OUTLINE_COLOR = "#475569";
+export const ARROW_COLOR = "#475569";
 
 export const LAND_LINE_STYLE = "black";
 export const LAND_LINE_WIDTH = 1;
+
+export const UNIT_COLOR = "#9d4343";
+export const UNIT_OUTLINE_COLOR = "#813645";
+export const UNIT_OUTLINE_WIDTH = 0.25;
+export const UNIT_RADIUS = 2;

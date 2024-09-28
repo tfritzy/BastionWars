@@ -13,9 +13,9 @@ public class Soldier : Entity
     public float MovementSpeed { get; private set; }
     public int Health { get; private set; }
 
-    public const float Radius = 0.5f;
-    public const float BaseMovementSpeed = .3f;
-    public const int BaseHealth = 4;
+    public const float Radius = 0.1f;
+    public const float BaseMovementSpeed = 3f;
+    public const int BaseHealth = 10;
 
     public Soldier(Game game, int alliance, SoldierType type, uint source, uint target) : base(game, alliance)
     {
@@ -45,6 +45,19 @@ public class Soldier : Entity
         {
             PathProgress++;
         }
+    }
+
+    public Vector2 GetVelocity()
+    {
+        Vector2? target = Game.Map.GetNextPathPoint(SourceKeepId, TargetKeepId, PathProgress);
+        if (target == null)
+        {
+            return Vector2.Zero;
+        }
+
+        Vector2 currentPos = Game.Map.Grid.GetEntityPosition(Id);
+        Vector2 delta = target.Value - currentPos;
+        return Vector2.Normalize(delta) * MovementSpeed;
     }
 
     public void Freeze()
