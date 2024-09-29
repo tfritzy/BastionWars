@@ -13,7 +13,7 @@ import {
 } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
-import { drawKeep } from "./rendering.ts";
+import { drawKeep } from "./keep_drawing.ts";
 import {
   type AllKeepUpdates,
   type AllSoldierPositions,

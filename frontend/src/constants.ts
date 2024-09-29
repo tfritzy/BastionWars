@@ -6,10 +6,13 @@ export const Layer = {
   ProjectilesOnGround: 3,
   Units: 4,
   UnitOutlines: 5,
-  Keeps: 6,
-  Trees: 7,
-  Projectiles: 8,
-  UI: 9,
+  KeepShadows: 6,
+  KeepBase: 7,
+  KeepTowers: 8,
+  KeepCenter: 9,
+  Trees: 10,
+  Projectiles: 11,
+  UI: 12,
 };
 
 export const Constants = {
@@ -27,26 +30,25 @@ export const CORNER_RADIUS = TILE_SIZE / 4;
 export const THREE_Q_T = HALF_T + QUARTER_T;
 
 export const soldierColors: { [key: string]: string } = {
-  [SoldierType.Archer]: "#86efacaa",
-  [SoldierType.Warrior]: "#fb7185aa",
+  [SoldierType.Archer]: "#bbf7d0",
+  [SoldierType.Warrior]: "#fde68a",
+};
+
+export const soldierOutlineColors: { [key: string]: string } = {
+  [SoldierType.Archer]: "#166534",
+  [SoldierType.Warrior]: "#92400e",
 };
 
 export const keepColors = [
-  "#fecaca",
-  "#bfdbfe",
-  "#fef08a",
-  "#d9f99d",
-  "#fde68a",
-  "#bbf7d0",
-  "#99f6e4",
-  "#a5f3fc",
-  "#bae6fd",
-  "#fed7aa",
-  "#c7d2fe",
-  "#e9d5ff",
-  "#f5d0fe",
-  "#fbcfe8",
-  "#fecdd3",
+  "#ecfccb",
+  "#ffe4e6",
+  "#d1fae5",
+  "#fee2e2",
+  "#dbeafe",
+  "#cffafe",
+  "#ede9fe",
+  "#fef3c7",
+  "#fae8ff",
 ];
 
 export const BOUNDARY_LINE_STYLE = "#222222";
@@ -55,7 +57,7 @@ export const BOUNDARY_LINE_DASH = [4, 4];
 
 export const KEEP_FILL_STYLE = "#e2e8f0";
 export const KEEP_LINE_STYLE = "black";
-export const KEEP_LINE_WIDTH = 1;
+export const KEEP_LINE_WIDTH = 0.5;
 export const KEEP_LABEL_FONT = "bold 18pt Arial";
 export const KEEP_LABEL_STROKE = "black";
 export const KEEP_LABEL_COMPLETED_COLOR = "#6ee7b7";

@@ -1,4 +1,4 @@
-import { drawGrid } from "./rendering.js";
+import { drawGrid } from "./keep_drawing.js";
 import { CanvasControls } from "./controls.js";
 import { Performance } from "./performance.js";
 import { MainMenu } from "./mainMenu.js";

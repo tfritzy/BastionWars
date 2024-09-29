@@ -2,7 +2,17 @@ import { BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, Layer } from "./constants";
 
 type DrawFunction = (ctx: CanvasRenderingContext2D) => void;
 
-type DrawStyle = {
+export function drawCircle(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  radius: number
+) {
+  ctx.moveTo(x + radius, y);
+  ctx.arc(x, y, radius, 0, 2 * Math.PI);
+}
+
+export type DrawStyle = {
   should_fill?: boolean | undefined;
   should_stroke?: boolean | undefined;
   layer: number;
