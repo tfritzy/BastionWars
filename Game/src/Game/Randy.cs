@@ -2,12 +2,12 @@ namespace KeepLordWarriors;
 
 public static class Randy
 {
-    public static System.Random WorldGen = new();
-    public static System.Random Chaos = new();
+    public static Random WorldGen = new();
+    public static Random Chaos = new();
 
     public static void SetSeed(int seed)
     {
-        WorldGen = new System.Random(seed);
+        WorldGen = new Random(seed);
     }
 
     public static float ChaoticInRange(float min, float max)
