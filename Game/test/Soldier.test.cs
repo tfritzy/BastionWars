@@ -53,4 +53,21 @@ public class SoldierTests
         Assert.AreEqual(1, keep1.WarriorCount);
         Assert.AreEqual(0, keep1.ArcherCount);
     }
+
+    [TestMethod]
+    public void Soldier_SendsMessageOnSpawn()
+    {
+        Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
+        var p = TH.AddPlayer(game);
+        Keep keep0 = game.Map.KeepAt(0);
+        Keep keep1 = game.Map.KeepAt(1);
+        keep0.Capture(1);
+        keep1.Capture(2);
+        keep1.SetCount(archers: 2);
+        keep0.SetDeploymentOrder(keep1.Id);
+
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        var newSoldiers = p.MessageQueue.Where(m => m.NewSoldiers != null).ToList();
+        Assert.AreEqual(1, newSoldiers.Count);
+    }
 }

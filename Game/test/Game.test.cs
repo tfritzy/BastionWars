@@ -59,11 +59,38 @@ public class GameTests
             Assert.AreEqual(keep.Name, keepState.Name);
             Assert.AreEqual(keep.Id, keepState.Id);
             Vector2 keepPos = game.Map.Grid.GetEntityPosition(keep.Id);
-            Assert.AreEqual(keepPos.X, keepState.Pos.X);
-            Assert.AreEqual(keepPos.Y, keepState.Pos.Y);
+            Assert.AreEqual(keepPos.X + .5f, keepState.Pos.X);
+            Assert.AreEqual(keepPos.Y + .5f, keepState.Pos.Y);
         }
     }
 
+
+    [TestMethod]
+    public void Game_InitialStateHasPathBetweenAllKeeps()
+    {
+        Game game = new(TH.GetGameSettings());
+        TH.AddPlayer(game);
+        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
+        var s = initialStates[0].InitialState;
+
+        for (int i = 0; i < game.Map.Keeps.Count; i++)
+        {
+            var source = s.Keeps.Where(k => k.Id == game.Map.KeepAt(i).Id).First();
+            for (int j = 0; j < game.Map.Keeps.Count; j++)
+            {
+                if (i == j)
+                    continue;
+
+                var target = s.Keeps.Where(k => k.Id == game.Map.KeepAt(j).Id).First();
+                var targetPaths = source.Paths.Where(p => p.TargetId == game.Map.KeepAt(j).Id).ToList();
+                Assert.AreEqual(1, targetPaths.Count);
+                var path = targetPaths.First();
+                Assert.IsNotNull(path);
+                Assert.AreEqual(source.Pos, path.Path.First());
+                Assert.AreEqual(target.Pos, path.Path.Last());
+            }
+        }
+    }
 
     [TestMethod]
     public void Game_DisconnectPlayer()
@@ -101,39 +128,6 @@ public class GameTests
         Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
         TH.UpdateGame(game, Game.WordPlacementTime + .1f);
         Assert.AreEqual(Game.InitialWordCount + 2, game.Map.Words.Values.Count(w => w != null));
-    }
-
-    [TestMethod]
-    public void Game_ReportsSoldierPositions()
-    {
-        Game game = new(TH.GetGameSettings());
-        TH.AddPlayer(game);
-        TH.AddPlayer(game);
-        TH.UpdateGame(game, Game.NetworkTickTime + .1f);
-        var positionUpdate = game
-            .Players.Values.First().MessageQueue
-            .Where((m) => m.AllSoldierPositions != null)
-            .First()
-            .AllSoldierPositions;
-        Assert.AreEqual(0, positionUpdate.SoldierPositions.Count);
-        Soldier soldier = new(
-            game: game,
-            alliance: 0,
-            type: SoldierType.Warrior,
-            source: game.Map.KeepAt(0).Id,
-            target: game.Map.KeepAt(1).Id);
-        game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(game.Map.KeepAt(0).Id));
-        TH.UpdateGame(game, Game.NetworkTickTime + .1f);
-        Vector2 newPos = game.Map.Grid.GetEntityPosition(soldier.Id);
-        positionUpdate = game
-            .Players.Values.First().MessageQueue
-            .Where((m) => m.AllSoldierPositions != null)
-            .Last()
-            .AllSoldierPositions;
-        Assert.AreEqual(1, positionUpdate.SoldierPositions.Count);
-        Assert.AreEqual(soldier.Id, positionUpdate.SoldierPositions[0].Id);
-        Assert.AreEqual(newPos.X, positionUpdate.SoldierPositions[0].Pos.X);
-        Assert.AreEqual(newPos.Y, positionUpdate.SoldierPositions[0].Pos.Y);
     }
 
     [TestMethod]

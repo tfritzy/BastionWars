@@ -919,7 +919,7 @@ function _decodeOneof_PlayerToGameServer(bb: ByteBuffer): Oneof_PlayerToGameServ
 export interface Oneof_GameServerToPlayer {
   recipient_id?: string;
   initial_state?: InitialState;
-  all_soldier_positions?: AllSoldierPositions;
+  new_soldiers?: NewSoldiers;
   keep_updates?: AllKeepUpdates;
   new_projectiles?: NewProjectiles;
   render_tile_updates?: RenderTileUpdates;
@@ -950,12 +950,12 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional AllSoldierPositions all_soldier_positions = 3;
-  let $all_soldier_positions = message.all_soldier_positions;
-  if ($all_soldier_positions !== undefined) {
+  // optional NewSoldiers new_soldiers = 3;
+  let $new_soldiers = message.new_soldiers;
+  if ($new_soldiers !== undefined) {
     writeVarint32(bb, 26);
     let nested = popByteBuffer();
-    _encodeAllSoldierPositions($all_soldier_positions, nested);
+    _encodeNewSoldiers($new_soldiers, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -1023,10 +1023,10 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
         break;
       }
 
-      // optional AllSoldierPositions all_soldier_positions = 3;
+      // optional NewSoldiers new_soldiers = 3;
       case 3: {
         let limit = pushTemporaryLength(bb);
-        message.all_soldier_positions = _decodeAllSoldierPositions(bb);
+        message.new_soldiers = _decodeNewSoldiers(bb);
         bb.limit = limit;
         break;
       }
@@ -1350,62 +1350,6 @@ function _decodeV2Int(bb: ByteBuffer): V2Int {
   return message;
 }
 
-export interface AllSoldierPositions {
-  soldier_positions?: SoldierState[];
-}
-
-export function encodeAllSoldierPositions(message: AllSoldierPositions): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeAllSoldierPositions(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeAllSoldierPositions(message: AllSoldierPositions, bb: ByteBuffer): void {
-  // repeated SoldierState soldier_positions = 1;
-  let array$soldier_positions = message.soldier_positions;
-  if (array$soldier_positions !== undefined) {
-    for (let value of array$soldier_positions) {
-      writeVarint32(bb, 10);
-      let nested = popByteBuffer();
-      _encodeSoldierState(value, nested);
-      writeVarint32(bb, nested.limit);
-      writeByteBuffer(bb, nested);
-      pushByteBuffer(nested);
-    }
-  }
-}
-
-export function decodeAllSoldierPositions(binary: Uint8Array): AllSoldierPositions {
-  return _decodeAllSoldierPositions(wrapByteBuffer(binary));
-}
-
-function _decodeAllSoldierPositions(bb: ByteBuffer): AllSoldierPositions {
-  let message: AllSoldierPositions = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // repeated SoldierState soldier_positions = 1;
-      case 1: {
-        let limit = pushTemporaryLength(bb);
-        let values = message.soldier_positions || (message.soldier_positions = []);
-        values.push(_decodeSoldierState(bb));
-        bb.limit = limit;
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
 export interface SoldierState {
   id?: number;
   pos?: V2;
@@ -1493,6 +1437,132 @@ function _decodeSoldierState(bb: ByteBuffer): SoldierState {
   return message;
 }
 
+export interface NewSoldiers {
+  soldiers?: SoldierState[];
+}
+
+export function encodeNewSoldiers(message: NewSoldiers): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeNewSoldiers(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeNewSoldiers(message: NewSoldiers, bb: ByteBuffer): void {
+  // repeated SoldierState soldiers = 1;
+  let array$soldiers = message.soldiers;
+  if (array$soldiers !== undefined) {
+    for (let value of array$soldiers) {
+      writeVarint32(bb, 10);
+      let nested = popByteBuffer();
+      _encodeSoldierState(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
+}
+
+export function decodeNewSoldiers(binary: Uint8Array): NewSoldiers {
+  return _decodeNewSoldiers(wrapByteBuffer(binary));
+}
+
+function _decodeNewSoldiers(bb: ByteBuffer): NewSoldiers {
+  let message: NewSoldiers = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // repeated SoldierState soldiers = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.soldiers || (message.soldiers = []);
+        values.push(_decodeSoldierState(bb));
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface PathToKeep {
+  target_id?: number;
+  path?: V2[];
+}
+
+export function encodePathToKeep(message: PathToKeep): Uint8Array {
+  let bb = popByteBuffer();
+  _encodePathToKeep(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodePathToKeep(message: PathToKeep, bb: ByteBuffer): void {
+  // optional uint32 target_id = 1;
+  let $target_id = message.target_id;
+  if ($target_id !== undefined) {
+    writeVarint32(bb, 8);
+    writeVarint32(bb, $target_id);
+  }
+
+  // repeated V2 path = 2;
+  let array$path = message.path;
+  if (array$path !== undefined) {
+    for (let value of array$path) {
+      writeVarint32(bb, 18);
+      let nested = popByteBuffer();
+      _encodeV2(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
+}
+
+export function decodePathToKeep(binary: Uint8Array): PathToKeep {
+  return _decodePathToKeep(wrapByteBuffer(binary));
+}
+
+function _decodePathToKeep(bb: ByteBuffer): PathToKeep {
+  let message: PathToKeep = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional uint32 target_id = 1;
+      case 1: {
+        message.target_id = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // repeated V2 path = 2;
+      case 2: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.path || (message.path = []);
+        values.push(_decodeV2(bb));
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface KeepState {
   id?: number;
   pos?: V2;
@@ -1500,6 +1570,7 @@ export interface KeepState {
   archer_count?: number;
   name?: string;
   alliance?: number;
+  paths?: PathToKeep[];
 }
 
 export function encodeKeepState(message: KeepState): Uint8Array {
@@ -1554,6 +1625,19 @@ function _encodeKeepState(message: KeepState, bb: ByteBuffer): void {
     writeVarint32(bb, 48);
     writeVarint64(bb, intToLong($alliance));
   }
+
+  // repeated PathToKeep paths = 7;
+  let array$paths = message.paths;
+  if (array$paths !== undefined) {
+    for (let value of array$paths) {
+      writeVarint32(bb, 58);
+      let nested = popByteBuffer();
+      _encodePathToKeep(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
 }
 
 export function decodeKeepState(binary: Uint8Array): KeepState {
@@ -1605,6 +1689,15 @@ function _decodeKeepState(bb: ByteBuffer): KeepState {
       // optional int32 alliance = 6;
       case 6: {
         message.alliance = readVarint32(bb);
+        break;
+      }
+
+      // repeated PathToKeep paths = 7;
+      case 7: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.paths || (message.paths = []);
+        values.push(_decodePathToKeep(bb));
+        bb.limit = limit;
         break;
       }
 

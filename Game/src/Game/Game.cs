@@ -49,7 +49,6 @@ public class Game
 
     private void NetworkTick()
     {
-        SendSoldierPositions();
         SendKeepUpdates();
         SendNewProjectileUpdates();
     }
@@ -78,21 +77,6 @@ public class Game
         }
 
         Outbox.Clear();
-    }
-
-    private void SendSoldierPositions()
-    {
-        AllSoldierPositions allSoldierPositions = new();
-        foreach (Soldier soldier in Map.Soldiers.Values)
-        {
-            allSoldierPositions.SoldierPositions.Add(new SoldierState
-            {
-                Id = soldier.Id,
-                Pos = Map.Grid.GetEntitySchemaPosition(soldier.Id),
-            });
-        }
-
-        AddMessageToOutbox(new Oneof_GameServerToPlayer { AllSoldierPositions = allSoldierPositions });
     }
 
     private void SendKeepUpdates()
@@ -283,11 +267,35 @@ public class Game
             Id = k.Id,
             Name = k.Name,
             Alliance = k.Alliance,
-            Pos = Map.Grid.GetEntitySchemaPosition(k.Id),
+            Pos = Map.Grid.GetEntityPosition(k.Id).Add(.5f).ToSchema(),
             WarriorCount = k.GetCount(SoldierType.Warrior),
             ArcherCount = k.GetCount(SoldierType.Archer),
         }));
+        for (int i = 0; i < state.Keeps.Count; i++)
+        {
+            state.Keeps[i].Paths.AddRange(GetPathsToOtherKeeps(Map, state.Keeps[i].Id));
+        }
         return state;
+    }
+
+    private static List<PathToKeep> GetPathsToOtherKeeps(Map map, uint source)
+    {
+        List<PathToKeep> paths = [];
+        foreach (uint kid in map.Keeps.Keys)
+        {
+            if (kid == source)
+                continue;
+
+            var pathMessage = new PathToKeep()
+            {
+                TargetId = kid,
+            };
+            var path = map.GetPathBetweenKeeps(source, kid);
+            pathMessage.Path.AddRange(path!.Select(gridP => new V2() { X = gridP.X + .5f, Y = gridP.Y + .5f }));
+            paths.Add(pathMessage);
+        }
+
+        return paths;
     }
 
     private static List<T> GridToList<T>(T[,] grid)

@@ -98,7 +98,7 @@ message Oneof_GameServerToPlayer {
     string recipient_id = 1;
     oneof msg {
         InitialState initial_state = 2;
-        AllSoldierPositions all_soldier_positions = 3;
+        NewSoldiers new_soldiers = 3;
         AllKeepUpdates keep_updates = 4;
         NewProjectiles new_projectiles = 5;
         RenderTileUpdates render_tile_updates = 6;
@@ -152,7 +152,6 @@ message V3 {
     float z = 3;
 }
 
-
 message V2Int {
     int32 x = 1;
     int32 y = 2;
@@ -164,14 +163,19 @@ enum SoldierType {
     Archer = 2;
 }
 
-message AllSoldierPositions {
-    repeated SoldierState soldier_positions = 1;
-}
-
 message SoldierState {
     uint32 id = 1;
     V2 pos = 2;
     V2 velocity = 3;
+}
+
+message NewSoldiers {
+    repeated SoldierState soldiers = 1;
+}
+
+message PathToKeep {
+    uint32 target_id = 1;
+    repeated V2 path = 2;
 }
 
 message KeepState {
@@ -181,6 +185,7 @@ message KeepState {
     int32 archer_count = 4;
     string name = 5;
     int32 alliance = 6;
+    repeated PathToKeep paths = 7;
 }
 
 message KeepUpdate {

@@ -14,6 +14,13 @@ namespace System.Numerics
             return new V2() { X = vector.X, Y = vector.Y };
         }
 
+        public static Vector2 Add(this Vector2 vector, float val)
+        {
+            vector.X += val;
+            vector.Y += val;
+            return vector;
+        }
+
         public static Vector2 ToVector2(this Vector3 vector)
         {
             return new Vector2(vector.X, vector.Y); // Discard Z component
