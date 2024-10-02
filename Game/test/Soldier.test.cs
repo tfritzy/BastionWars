@@ -32,6 +32,38 @@ public class SoldierTests
     }
 
     [TestMethod]
+    public void Soldier_TakesCorrectAmountOfTimeToWalkPath()
+    {
+        Game game = new(TH.GetGameSettings(map: TestMaps.ThirtyByTwenty));
+        Keep keep0 = game.Map.KeepAt(0);
+        Keep keep1 = game.Map.KeepAt(5);
+        TH.ErradicateAllArchers(game);
+        var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
+        game.Map.AddSoldier(soldier);
+
+        List<Vector2Int> path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
+        float expectedDistance = 0;
+        for (int i = 1; i < path.Count; i++)
+        {
+            Pathing.PathType type = Pathing.DeterminePathType(path[i - 1], path[i]);
+            expectedDistance += Pathing.PathLengths[type];
+        }
+
+        Assert.Fail("TODO");
+
+        // HashSet<Vector2Int?> visited = new();
+        // for (int i = 0; i < 200; i++)
+        // {
+        //     visited.Add(game.Map.Grid.GetEntityGridPos(soldier.Id));
+        //     TH.UpdateGame(game, .1f);
+        // }
+
+        // Console.WriteLine($"Expected path: {string.Join(", ", path)}");
+        // Console.WriteLine($"Visited path: {string.Join(", ", visited)}");
+        // CollectionAssert.IsSubsetOf(path, visited.ToArray());
+    }
+
+    [TestMethod]
     public void Soldier_BreachesTarget()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));

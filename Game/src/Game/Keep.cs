@@ -104,7 +104,6 @@ public class Keep : Entity
             return;
 
         Soldier s = Game.Map.Soldiers[target];
-        var sVel = s.GetVelocity();
 
         Vector2 startPos2D = Game.Map.Grid.GetEntityPosition(Id);
         startPos2D.X += Randy.ChaoticInRange(-.2f, .2f);

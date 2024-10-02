@@ -90,17 +90,6 @@ public class Map
         return keepPaths[startId][endId];
     }
 
-    public Vector2? GetNextPathPoint(uint originId, uint targetId, int progress)
-    {
-        List<Vector2Int>? path = GetPathBetweenKeeps(originId, targetId);
-        if (path == null || progress + 1 >= path.Count)
-        {
-            return null;
-        }
-
-        return new Vector2(path[progress + 1].X + .5f, path[progress + 1].Y + .5f);
-    }
-
     private void CalculateKeepPathing()
     {
         foreach (Keep keep in Keeps.Values)
@@ -188,12 +177,12 @@ public class Map
         return Dictionary.MostCommon[Randy.WorldGen.Next(0, Dictionary.MostCommon.Length)];
     }
 
-    public void AddSoldier(Soldier soldier, Vector2 pos)
+    public void AddSoldier(Soldier soldier, Vector2? pos = null)
     {
         Soldiers.Add(soldier.Id, soldier);
         SoldierIds.Add(soldier.Id);
         Grid.AddEntity(new SpacialPartitioning.Entity(
-            pos,
+            pos ?? new Vector2(),
             soldier.Id,
             Soldier.Radius
         ));

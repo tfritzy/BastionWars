@@ -52,8 +52,6 @@ public class Projectile(Vector3 startPos, float birthTime, Vector3 initialVeloci
 
         // theta = (MathF.PI / 2) - theta; // Convert to high arc
 
-        Logger.Log("Firing projectile at angle: " + theta * 180f / MathF.PI);
-
         if (float.IsNaN(theta))
         {
             return null;
