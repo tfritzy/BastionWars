@@ -1350,19 +1350,22 @@ function _decodeV2Int(bb: ByteBuffer): V2Int {
   return message;
 }
 
-export interface SoldierState {
+export interface NewSoldier {
   id?: number;
-  pos?: V2;
-  velocity?: V2;
+  movement_speed?: number;
+  type?: SoldierType;
+  source_keep_id?: number;
+  target_keep_id?: number;
+  row_offset?: number;
 }
 
-export function encodeSoldierState(message: SoldierState): Uint8Array {
+export function encodeNewSoldier(message: NewSoldier): Uint8Array {
   let bb = popByteBuffer();
-  _encodeSoldierState(message, bb);
+  _encodeNewSoldier(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeSoldierState(message: SoldierState, bb: ByteBuffer): void {
+function _encodeNewSoldier(message: NewSoldier, bb: ByteBuffer): void {
   // optional uint32 id = 1;
   let $id = message.id;
   if ($id !== undefined) {
@@ -1370,35 +1373,48 @@ function _encodeSoldierState(message: SoldierState, bb: ByteBuffer): void {
     writeVarint32(bb, $id);
   }
 
-  // optional V2 pos = 2;
-  let $pos = message.pos;
-  if ($pos !== undefined) {
-    writeVarint32(bb, 18);
-    let nested = popByteBuffer();
-    _encodeV2($pos, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
+  // optional float movement_speed = 2;
+  let $movement_speed = message.movement_speed;
+  if ($movement_speed !== undefined) {
+    writeVarint32(bb, 21);
+    writeFloat(bb, $movement_speed);
   }
 
-  // optional V2 velocity = 3;
-  let $velocity = message.velocity;
-  if ($velocity !== undefined) {
-    writeVarint32(bb, 26);
-    let nested = popByteBuffer();
-    _encodeV2($velocity, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
+  // optional SoldierType type = 3;
+  let $type = message.type;
+  if ($type !== undefined) {
+    writeVarint32(bb, 24);
+    writeVarint32(bb, encodeSoldierType[$type]);
+  }
+
+  // optional uint32 source_keep_id = 4;
+  let $source_keep_id = message.source_keep_id;
+  if ($source_keep_id !== undefined) {
+    writeVarint32(bb, 32);
+    writeVarint32(bb, $source_keep_id);
+  }
+
+  // optional uint32 target_keep_id = 5;
+  let $target_keep_id = message.target_keep_id;
+  if ($target_keep_id !== undefined) {
+    writeVarint32(bb, 40);
+    writeVarint32(bb, $target_keep_id);
+  }
+
+  // optional float row_offset = 6;
+  let $row_offset = message.row_offset;
+  if ($row_offset !== undefined) {
+    writeVarint32(bb, 53);
+    writeFloat(bb, $row_offset);
   }
 }
 
-export function decodeSoldierState(binary: Uint8Array): SoldierState {
-  return _decodeSoldierState(wrapByteBuffer(binary));
+export function decodeNewSoldier(binary: Uint8Array): NewSoldier {
+  return _decodeNewSoldier(wrapByteBuffer(binary));
 }
 
-function _decodeSoldierState(bb: ByteBuffer): SoldierState {
-  let message: SoldierState = {} as any;
+function _decodeNewSoldier(bb: ByteBuffer): NewSoldier {
+  let message: NewSoldier = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -1413,19 +1429,33 @@ function _decodeSoldierState(bb: ByteBuffer): SoldierState {
         break;
       }
 
-      // optional V2 pos = 2;
+      // optional float movement_speed = 2;
       case 2: {
-        let limit = pushTemporaryLength(bb);
-        message.pos = _decodeV2(bb);
-        bb.limit = limit;
+        message.movement_speed = readFloat(bb);
         break;
       }
 
-      // optional V2 velocity = 3;
+      // optional SoldierType type = 3;
       case 3: {
-        let limit = pushTemporaryLength(bb);
-        message.velocity = _decodeV2(bb);
-        bb.limit = limit;
+        message.type = decodeSoldierType[readVarint32(bb)];
+        break;
+      }
+
+      // optional uint32 source_keep_id = 4;
+      case 4: {
+        message.source_keep_id = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional uint32 target_keep_id = 5;
+      case 5: {
+        message.target_keep_id = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional float row_offset = 6;
+      case 6: {
+        message.row_offset = readFloat(bb);
         break;
       }
 
@@ -1438,7 +1468,7 @@ function _decodeSoldierState(bb: ByteBuffer): SoldierState {
 }
 
 export interface NewSoldiers {
-  soldiers?: SoldierState[];
+  soldiers?: NewSoldier[];
 }
 
 export function encodeNewSoldiers(message: NewSoldiers): Uint8Array {
@@ -1448,13 +1478,13 @@ export function encodeNewSoldiers(message: NewSoldiers): Uint8Array {
 }
 
 function _encodeNewSoldiers(message: NewSoldiers, bb: ByteBuffer): void {
-  // repeated SoldierState soldiers = 1;
+  // repeated NewSoldier soldiers = 1;
   let array$soldiers = message.soldiers;
   if (array$soldiers !== undefined) {
     for (let value of array$soldiers) {
       writeVarint32(bb, 10);
       let nested = popByteBuffer();
-      _encodeSoldierState(value, nested);
+      _encodeNewSoldier(value, nested);
       writeVarint32(bb, nested.limit);
       writeByteBuffer(bb, nested);
       pushByteBuffer(nested);
@@ -1476,11 +1506,11 @@ function _decodeNewSoldiers(bb: ByteBuffer): NewSoldiers {
       case 0:
         break end_of_message;
 
-      // repeated SoldierState soldiers = 1;
+      // repeated NewSoldier soldiers = 1;
       case 1: {
         let limit = pushTemporaryLength(bb);
         let values = message.soldiers || (message.soldiers = []);
-        values.push(_decodeSoldierState(bb));
+        values.push(_decodeNewSoldier(bb));
         bb.limit = limit;
         break;
       }

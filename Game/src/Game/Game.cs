@@ -51,6 +51,7 @@ public class Game
     {
         SendKeepUpdates();
         SendNewProjectileUpdates();
+        SendNewSoldierUpdates();
     }
 
     public void HandleCommand(Oneof_PlayerToGameServer msg)
@@ -103,6 +104,11 @@ public class Game
 
     private void SendNewProjectileUpdates()
     {
+        if (Map.NewProjectiles.Count == 0)
+        {
+            return;
+        }
+
         NewProjectiles newProjectiles = new();
         foreach (Projectile p in Map.Projectiles)
         {
@@ -119,9 +125,39 @@ public class Game
                 });
             }
         }
+
         AddMessageToOutbox(new Oneof_GameServerToPlayer { NewProjectiles = newProjectiles });
         Map.NewProjectiles.Clear();
     }
+
+    private void SendNewSoldierUpdates()
+    {
+        if (Map.NewSoldiers.Count == 0)
+        {
+            return;
+        }
+
+        NewSoldiers newSoldiers = new();
+        foreach (Soldier s in Map.Soldiers.Values)
+        {
+            if (Map.NewSoldiers.Contains(s.Id))
+            {
+                newSoldiers.Soldiers.Add(new NewSoldier()
+                {
+                    Id = s.Id,
+                    MovementSpeed = s.MovementSpeed,
+                    Type = s.Type,
+                    SourceKeepId = s.SourceKeepId,
+                    TargetKeepId = s.TargetKeepId,
+                    RowOffset = s.RowOffset
+                });
+            }
+        }
+
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { NewSoldiers = newSoldiers });
+        Map.NewSoldiers.Clear();
+    }
+
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
     private void BastionAutoAccrue()

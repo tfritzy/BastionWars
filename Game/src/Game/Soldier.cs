@@ -12,18 +12,20 @@ public class Soldier : Entity
     public int PathProgress { get; private set; }
     public float MovementSpeed { get; private set; }
     public int Health { get; private set; }
+    public float RowOffset { get; private set; }
 
     public const float Radius = 0.1f;
     public const float BaseMovementSpeed = 3f;
     public const int BaseHealth = 10;
 
-    public Soldier(Game game, int alliance, SoldierType type, uint source, uint target) : base(game, alliance)
+    public Soldier(Game game, int alliance, SoldierType type, uint source, uint target, float rowOffset) : base(game, alliance)
     {
         Type = type;
         SourceKeepId = source;
         TargetKeepId = target;
         MovementSpeed = BaseMovementSpeed;
         Health = BaseHealth;
+        RowOffset = rowOffset;
     }
 
     public void Update()
@@ -73,5 +75,11 @@ public class Soldier : Entity
         {
             Game.Map.RemoveSoldier(Id);
         }
+    }
+
+
+    public static float CalculatePathLength(List<Vector2Int> stops)
+    {
+
     }
 }

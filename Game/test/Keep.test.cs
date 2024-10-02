@@ -55,7 +55,13 @@ public class KeepTest
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         TH.AddPlayer(game);
+        TH.ErradicateAllArchers(game);
         Keep keep = game.Map.KeepAt(0);
+
+        TH.UpdateGame(game, Game.NetworkTickTime + .1f);
+        var projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
+        Assert.AreEqual(0, projMsgs.Count);
+
         game.Map.KeepAt(0).SetCount(archers: 100);
         game.Map.AddSoldier(
             TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game),
@@ -67,7 +73,7 @@ public class KeepTest
         game.Players.Values.First().MessageQueue.Clear();
 
         TH.UpdateGame(game, Game.NetworkTickTime * .5f);
-        var projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
+        projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
         Assert.AreEqual(0, projMsgs.Count);
 
         TH.UpdateGame(game, Constants.ArcherBaseCooldown + .1f);

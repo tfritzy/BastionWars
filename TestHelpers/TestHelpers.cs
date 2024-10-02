@@ -29,12 +29,12 @@ public static class TH
 
     public static Soldier BuildEnemySoldier(SoldierType type, int ofAlliance, Game game)
     {
-        return new Soldier(game, ofAlliance + 1, type, game.Map.KeepAt(0).Id, game.Map.KeepAt(1).Id);
+        return new Soldier(game, ofAlliance + 1, type, game.Map.KeepAt(0).Id, game.Map.KeepAt(1).Id, 0);
     }
 
     public static Soldier BuildAllySoldier(SoldierType type, int ofAlliance, Game game)
     {
-        return new Soldier(game, ofAlliance, type, game.Map.KeepAt(0).Id, game.Map.KeepAt(1).Id);
+        return new Soldier(game, ofAlliance, type, game.Map.KeepAt(0).Id, game.Map.KeepAt(1).Id, 0);
     }
 
     public static void ClearOutbox(Game game)

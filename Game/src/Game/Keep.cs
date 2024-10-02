@@ -17,6 +17,9 @@ public class Keep : Entity
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .25f;
     public const int MaxTroopsPerWave = 6;
+    public const float RowMaxWidth = .6f;
+    public const float RowOffsetStepSize = RowMaxWidth / MaxTroopsPerWave;
+    public const float RowOffsetLeft = -RowMaxWidth / 2;
     public const int StartTroopCount = 5;
     public const float TargetCheckTime = .2f;
 
@@ -195,6 +198,7 @@ public class Keep : Entity
                 int waveCap = MaxTroopsPerWave;
 
                 int toDeploy = Min(WarriorCount, waveCap, order.WarriorCount);
+                float rowOffset = RowOffsetLeft;
                 SetCount(SoldierType.Warrior, WarriorCount - toDeploy);
                 order.WarriorCount -= toDeploy;
                 waveCap -= toDeploy;
@@ -202,8 +206,9 @@ public class Keep : Entity
                 for (int j = 0; j < toDeploy; j++)
                 {
                     Game.Map.AddSoldier(
-                        new Soldier(Game, Alliance, SoldierType.Warrior, Id, order.TargetId),
+                        new Soldier(Game, Alliance, SoldierType.Warrior, Id, order.TargetId, rowOffset),
                         Game.Map.Grid.GetEntityPosition(Id));
+                    rowOffset += RowOffsetStepSize;
                 }
 
                 toDeploy = Min(ArcherCount, waveCap, order.ArcherCount);
@@ -213,8 +218,9 @@ public class Keep : Entity
                 for (int j = 0; j < toDeploy; j++)
                 {
                     Game.Map.AddSoldier(
-                        new Soldier(Game, Alliance, SoldierType.Archer, Id, order.TargetId),
+                        new Soldier(Game, Alliance, SoldierType.Archer, Id, order.TargetId, rowOffset),
                         Game.Map.Grid.GetEntityPosition(Id));
+                    rowOffset += RowOffsetStepSize;
                 }
 
                 if (order.ArcherCount == 0 && order.WarriorCount == 0)

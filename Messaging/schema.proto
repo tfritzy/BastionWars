@@ -163,14 +163,17 @@ enum SoldierType {
     Archer = 2;
 }
 
-message SoldierState {
+message NewSoldier {
     uint32 id = 1;
-    V2 pos = 2;
-    V2 velocity = 3;
+    float movement_speed = 2;
+    SoldierType type = 3;
+    uint32 source_keep_id = 4;
+    uint32 target_keep_id = 5;
+    float row_offset = 6;
 }
 
 message NewSoldiers {
-    repeated SoldierState soldiers = 1;
+    repeated NewSoldier soldiers = 1;
 }
 
 message PathToKeep {

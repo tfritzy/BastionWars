@@ -20,6 +20,7 @@ public class Map
     private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
     public List<Projectile> Projectiles { get; private set; } = [];
     public HashSet<uint> NewProjectiles { get; private set; } = [];
+    public HashSet<uint> NewSoldiers { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -196,6 +197,7 @@ public class Map
             soldier.Id,
             Soldier.Radius
         ));
+        NewSoldiers.Add(soldier.Id);
     }
 
     public void RemoveSoldier(uint id)

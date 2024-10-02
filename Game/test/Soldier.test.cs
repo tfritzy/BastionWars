@@ -15,7 +15,7 @@ public class SoldierTests
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(1);
         TH.ErradicateAllArchers(game);
-        var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id);
+        var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
         game.Map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
 
@@ -40,7 +40,7 @@ public class SoldierTests
         keep0.Capture(1);
         keep1.Capture(2);
         keep1.SetCount(archers: 2);
-        var soldier = new Soldier(game, 1, SoldierType.Warrior, keep0.Id, keep1.Id);
+        var soldier = new Soldier(game, 1, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
         game.Map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
 
@@ -64,10 +64,31 @@ public class SoldierTests
         keep0.Capture(1);
         keep1.Capture(2);
         keep1.SetCount(archers: 2);
-        keep0.SetDeploymentOrder(keep1.Id);
 
         TH.UpdateGame(game, Game.NetworkTickTime);
         var newSoldiers = p.MessageQueue.Where(m => m.NewSoldiers != null).ToList();
+        Assert.AreEqual(0, newSoldiers.Count);
+
+        keep0.SetDeploymentOrder(keep1.Id);
+
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        newSoldiers = p.MessageQueue.Where(m => m.NewSoldiers != null).ToList();
         Assert.AreEqual(1, newSoldiers.Count);
+
+        var msg = newSoldiers.First();
+        var expectedSoldiers = game.Map.Soldiers.Values;
+        Assert.AreEqual(expectedSoldiers.Count, msg.NewSoldiers.Soldiers.Count);
+        Assert.IsTrue(msg.NewSoldiers.Soldiers.All(s => expectedSoldiers.Any(es => es.Id == s.Id)));
+
+        foreach (NewSoldier newSoldier in msg.NewSoldiers.Soldiers)
+        {
+            Soldier corresponding = expectedSoldiers.First(s => s.Id == newSoldier.Id);
+            Assert.AreEqual(corresponding.Id, newSoldier.Id);
+            Assert.AreEqual(corresponding.MovementSpeed, newSoldier.MovementSpeed);
+            Assert.AreEqual(corresponding.Type, newSoldier.Type);
+            Assert.AreEqual(corresponding.SourceKeepId, newSoldier.SourceKeepId);
+            Assert.AreEqual(corresponding.TargetKeepId, newSoldier.TargetKeepId);
+            Assert.AreEqual(corresponding.RowOffset, newSoldier.RowOffset);
+        }
     }
 }
