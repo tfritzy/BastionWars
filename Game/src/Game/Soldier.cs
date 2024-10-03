@@ -16,7 +16,7 @@ public class Soldier : Entity
     public float RowOffset { get; private set; }
 
     public const float Radius = 0.1f;
-    public const float BaseMovementSpeed = 3f;
+    public const float BaseMovementSpeed = .3f;
     public const int BaseHealth = 10;
 
     public Soldier(Game game, int alliance, SoldierType type, uint source, uint target, float rowOffset) : base(game, alliance)

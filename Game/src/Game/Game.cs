@@ -327,7 +327,7 @@ public class Game
                 TargetId = kid,
             };
             var path = map.GetPathBetweenKeeps(source, kid);
-            pathMessage.Path.AddRange(path!.Select(gridP => new V2() { X = gridP.X + .5f, Y = gridP.Y + .5f }));
+            pathMessage.Path.AddRange(path!.Select(gridP => new V2() { X = gridP.X, Y = gridP.Y }));
             paths.Add(pathMessage);
         }
 

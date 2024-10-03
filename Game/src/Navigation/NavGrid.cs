@@ -41,7 +41,7 @@ public static class NavGrid
                 return;
             }
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Vector2Int neighbor = current + Vector2Int.GetDirection(i);
                 if (!InBounds(neighbor, traversable))

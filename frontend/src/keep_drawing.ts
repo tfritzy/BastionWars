@@ -57,8 +57,8 @@ const keepCenterStyle: DrawStyle = {
 };
 
 export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
-  const x = Math.round(keep.pos.x * WORLD_TO_CANVAS) + HALF_T;
-  const y = Math.round(keep.pos.y * WORLD_TO_CANVAS) + HALF_T;
+  const x = Math.round(keep.pos.x * WORLD_TO_CANVAS);
+  const y = Math.round(keep.pos.y * WORLD_TO_CANVAS);
   const stepSize = Math.PI / 5;
 
   drawing.drawCustom(keepBaseStyle, (ctx) => {
