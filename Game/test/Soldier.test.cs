@@ -49,18 +49,18 @@ public class SoldierTests
             expectedDistance += Pathing.PathLengths[type];
         }
 
-        Assert.Fail("TODO");
+        float time = 0;
+        for (int i = 0; i < 1000; i++)
+        {
+            TH.UpdateGame(game, .05f);
+            time += .05f;
+            if (!game.Map.SoldierIds.Contains(soldier.Id))
+            {
+                break;
+            }
+        }
 
-        // HashSet<Vector2Int?> visited = new();
-        // for (int i = 0; i < 200; i++)
-        // {
-        //     visited.Add(game.Map.Grid.GetEntityGridPos(soldier.Id));
-        //     TH.UpdateGame(game, .1f);
-        // }
-
-        // Console.WriteLine($"Expected path: {string.Join(", ", path)}");
-        // Console.WriteLine($"Visited path: {string.Join(", ", visited)}");
-        // CollectionAssert.IsSubsetOf(path, visited.ToArray());
+        TH.AssertIsApproximately(expectedDistance / Soldier.BaseMovementSpeed, time);
     }
 
     [TestMethod]

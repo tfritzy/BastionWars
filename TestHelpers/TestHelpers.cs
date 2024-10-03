@@ -76,6 +76,16 @@ public static class TH
         }
     }
 
+
+    public static void AssertIsApproximately(float f1, float f2, float tolerance = 0.1f)
+    {
+        float difference = f2 - f1;
+        if (MathF.Abs(difference) > tolerance)
+        {
+            throw new Exception($"{f1} is not close enough to {f2}");
+        }
+    }
+
     public static void AssertIsApproximately(Vector3 v1, Vector3 v2, float tolerance = 0.1f)
     {
         Vector3 difference = v1 - v2;
