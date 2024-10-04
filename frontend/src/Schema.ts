@@ -103,6 +103,51 @@ export const decodeSoldierType: { [key: number]: SoldierType } = {
   2: SoldierType.Archer,
 };
 
+export const enum WalkPathType {
+  StraightToRight = "StraightToRight",
+  StraightDown = "StraightDown",
+  StraightLeft = "StraightLeft",
+  StraightUp = "StraightUp",
+  CircularLeftDown = "CircularLeftDown",
+  CircularLeftUp = "CircularLeftUp",
+  CircularDownLeft = "CircularDownLeft",
+  CircularDownRight = "CircularDownRight",
+  CircularRightDown = "CircularRightDown",
+  CircularRightUp = "CircularRightUp",
+  CircularUpRight = "CircularUpRight",
+  CircularUpLeft = "CircularUpLeft",
+}
+
+export const encodeWalkPathType: { [key: string]: number } = {
+  StraightToRight: 0,
+  StraightDown: 1,
+  StraightLeft: 2,
+  StraightUp: 3,
+  CircularLeftDown: 4,
+  CircularLeftUp: 5,
+  CircularDownLeft: 6,
+  CircularDownRight: 7,
+  CircularRightDown: 8,
+  CircularRightUp: 9,
+  CircularUpRight: 10,
+  CircularUpLeft: 11,
+};
+
+export const decodeWalkPathType: { [key: number]: WalkPathType } = {
+  0: WalkPathType.StraightToRight,
+  1: WalkPathType.StraightDown,
+  2: WalkPathType.StraightLeft,
+  3: WalkPathType.StraightUp,
+  4: WalkPathType.CircularLeftDown,
+  5: WalkPathType.CircularLeftUp,
+  6: WalkPathType.CircularDownLeft,
+  7: WalkPathType.CircularDownRight,
+  8: WalkPathType.CircularRightDown,
+  9: WalkPathType.CircularRightUp,
+  10: WalkPathType.CircularUpRight,
+  11: WalkPathType.CircularUpLeft,
+};
+
 export interface GameSettings {
   generation_mode?: GenerationMode;
   map?: string;
@@ -1526,6 +1571,7 @@ function _decodeNewSoldiers(bb: ByteBuffer): NewSoldiers {
 export interface PathToKeep {
   target_id?: number;
   path?: V2[];
+  walk_types?: WalkPathType[];
 }
 
 export function encodePathToKeep(message: PathToKeep): Uint8Array {
@@ -1553,6 +1599,19 @@ function _encodePathToKeep(message: PathToKeep, bb: ByteBuffer): void {
       writeByteBuffer(bb, nested);
       pushByteBuffer(nested);
     }
+  }
+
+  // repeated WalkPathType walk_types = 3;
+  let array$walk_types = message.walk_types;
+  if (array$walk_types !== undefined) {
+    let packed = popByteBuffer();
+    for (let value of array$walk_types) {
+      writeVarint32(packed, encodeWalkPathType[value]);
+    }
+    writeVarint32(bb, 26);
+    writeVarint32(bb, packed.offset);
+    writeByteBuffer(bb, packed);
+    pushByteBuffer(packed);
   }
 }
 
@@ -1582,6 +1641,21 @@ function _decodePathToKeep(bb: ByteBuffer): PathToKeep {
         let values = message.path || (message.path = []);
         values.push(_decodeV2(bb));
         bb.limit = limit;
+        break;
+      }
+
+      // repeated WalkPathType walk_types = 3;
+      case 3: {
+        let values = message.walk_types || (message.walk_types = []);
+        if ((tag & 7) === 2) {
+          let outerLimit = pushTemporaryLength(bb);
+          while (!isAtEnd(bb)) {
+            values.push(decodeWalkPathType[readVarint32(bb)]);
+          }
+          bb.limit = outerLimit;
+        } else {
+          values.push(decodeWalkPathType[readVarint32(bb)]);
+        }
         break;
       }
 

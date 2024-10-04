@@ -176,9 +176,25 @@ message NewSoldiers {
     repeated NewSoldier soldiers = 1;
 }
 
+enum WalkPathType {
+    StraightToRight = 0;
+    StraightDown = 1;
+    StraightLeft = 2;
+    StraightUp = 3;
+    CircularLeftDown = 4;
+    CircularLeftUp = 5;
+    CircularDownLeft = 6;
+    CircularDownRight = 7;
+    CircularRightDown = 8;
+    CircularRightUp = 9;
+    CircularUpRight = 10;
+    CircularUpLeft = 11;
+}
+
 message PathToKeep {
     uint32 target_id = 1;
     repeated V2 path = 2;
+    repeated WalkPathType walk_types = 3;
 }
 
 message KeepState {

@@ -44,13 +44,14 @@ public class NavGridTests
             { 1, 1, 0, 1, 0 }
         };
         List<Vector2Int> path = NavGrid.FindPath(new Vector2Int(0, 0), new Vector2Int(2, 4), traversable);
-        Assert.AreEqual(6, path.Count);
+        Assert.AreEqual(7, path.Count);
         Assert.AreEqual(new Vector2Int(0, 0), path[0]);
         Assert.AreEqual(new Vector2Int(0, 1), path[1]);
         Assert.AreEqual(new Vector2Int(0, 2), path[2]);
         Assert.AreEqual(new Vector2Int(0, 3), path[3]);
-        Assert.AreEqual(new Vector2Int(1, 4), path[4]);
-        Assert.AreEqual(new Vector2Int(2, 4), path[5]);
+        Assert.AreEqual(new Vector2Int(0, 4), path[4]);
+        Assert.AreEqual(new Vector2Int(1, 4), path[5]);
+        Assert.AreEqual(new Vector2Int(2, 4), path[6]);
     }
 
     [TestMethod]

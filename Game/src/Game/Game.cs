@@ -303,7 +303,7 @@ public class Game
             Id = k.Id,
             Name = k.Name,
             Alliance = k.Alliance,
-            Pos = Map.Grid.GetEntityPosition(k.Id).Add(.5f).ToSchema(),
+            Pos = Map.Grid.GetEntityPosition(k.Id).ToSchema(),
             WarriorCount = k.GetCount(SoldierType.Warrior),
             ArcherCount = k.GetCount(SoldierType.Archer),
         }));
@@ -327,7 +327,9 @@ public class Game
                 TargetId = kid,
             };
             var path = map.GetPathBetweenKeeps(source, kid);
-            pathMessage.Path.AddRange(path!.Select(gridP => new V2() { X = gridP.X, Y = gridP.Y }));
+            if (path == null) continue;
+            pathMessage.Path.AddRange(path.Select(gridP => new V2() { X = gridP.X, Y = gridP.Y }));
+            pathMessage.WalkTypes.AddRange(Pathing.GetWalkTypes(path));
             paths.Add(pathMessage);
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Schema;
 
 public class Pathing
 {
@@ -21,6 +22,119 @@ public class Pathing
         { PathType.Circular, 1.571f }, // Approximately pi/2
         { PathType.CornerTurn, 1f - cornerTurnRadius + 0.5f * MathF.PI * cornerTurnRadius } // Precise calculation
     };
+
+    public static List<WalkPathType> GetWalkTypes(List<Vector2Int> path)
+    {
+        List<WalkPathType> walkPath = new(path.Count);
+
+        for (int pi = 0; pi < path.Count; pi++)
+        {
+            if (pi == 0)
+            {
+                walkPath.Add(GetWalkPathType(null, path[0], path[1]));
+            }
+            else if (pi < path.Count - 1)
+            {
+                walkPath.Add(GetWalkPathType(path[pi - 1], path[pi], path[pi + 1]));
+            }
+            else
+            {
+                walkPath.Add(GetWalkPathType(path[pi - 1], path[pi], null));
+            }
+        }
+
+        return walkPath;
+    }
+
+    private static WalkPathType GetWalkPathType(Vector2Int? prev, Vector2Int cur, Vector2Int? next)
+    {
+        if (prev == null)
+        {
+            return GetStraightDir(cur, next!.Value);
+        }
+
+        if (next == null)
+        {
+            return GetStraightDir(prev!.Value, cur);
+        }
+
+        var prevDir = cur - prev!.Value;
+        var nextDir = next!.Value - cur;
+
+        if (prevDir.X != 0 && prevDir.X != nextDir.X)
+        {
+            // circular
+            if (prevDir.X > 0 && nextDir.Y > 0)
+            {
+                return WalkPathType.CircularLeftDown;
+            }
+            else if (prevDir.X > 0 && nextDir.Y < 0)
+            {
+                return WalkPathType.CircularLeftUp;
+            }
+            else if (prevDir.X < 0 && nextDir.Y > 0)
+            {
+                return WalkPathType.CircularRightDown;
+            }
+            else if (prevDir.X < 0 && nextDir.Y < 0)
+            {
+                return WalkPathType.CircularRightUp;
+            }
+            else
+            {
+                throw new Exception($"Unexpected circular condition prev:{prevDir} next:{nextDir}");
+            }
+        }
+        else if (prevDir.Y != 0 && prevDir.Y != nextDir.Y)
+        {
+            // circular
+            if (prevDir.Y > 0 && nextDir.X < 0)
+            {
+                return WalkPathType.CircularUpLeft;
+            }
+            else if (prevDir.Y > 0 && nextDir.X > 0)
+            {
+                return WalkPathType.CircularUpRight;
+            }
+            else if (prevDir.Y < 0 && nextDir.X < 0)
+            {
+                return WalkPathType.CircularDownLeft;
+            }
+            else if (prevDir.Y < 0 && nextDir.X > 0)
+            {
+                return WalkPathType.CircularDownRight;
+            }
+            else
+            {
+                throw new Exception($"Unexpected circular condition prev:{prevDir} next:{nextDir}");
+            }
+        }
+        else
+        {
+            return GetStraightDir(cur, next!.Value);
+        }
+    }
+
+    private static WalkPathType GetStraightDir(Vector2Int cur, Vector2Int next)
+    {
+        var dir = next - cur;
+        if (dir.X > 0)
+        {
+            return WalkPathType.StraightToRight;
+        }
+        else if (dir.X < 0)
+        {
+            return WalkPathType.StraightLeft;
+        }
+        else if (dir.Y > 0)
+        {
+            return WalkPathType.StraightDown;
+        }
+        else
+        {
+            return WalkPathType.StraightUp;
+        }
+    }
 
     public static PathType DeterminePathType(Vector2Int from, Vector2Int to)
     {

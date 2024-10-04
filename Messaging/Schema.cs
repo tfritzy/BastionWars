@@ -64,47 +64,54 @@ namespace Schema {
             "Y2hlbWEuU29sZGllclR5cGUSFgoOc291cmNlX2tlZXBfaWQYBCABKA0SFgoO",
             "dGFyZ2V0X2tlZXBfaWQYBSABKA0SEgoKcm93X29mZnNldBgGIAEoAiIzCgtO",
             "ZXdTb2xkaWVycxIkCghzb2xkaWVycxgBIAMoCzISLlNjaGVtYS5OZXdTb2xk",
-            "aWVyIjkKClBhdGhUb0tlZXASEQoJdGFyZ2V0X2lkGAEgASgNEhgKBHBhdGgY",
-            "AiADKAsyCi5TY2hlbWEuVjIioAEKCUtlZXBTdGF0ZRIKCgJpZBgBIAEoDRIX",
-            "CgNwb3MYAiABKAsyCi5TY2hlbWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEo",
-            "BRIUCgxhcmNoZXJfY291bnQYBCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxp",
-            "YW5jZRgGIAEoBRIhCgVwYXRocxgHIAMoCzISLlNjaGVtYS5QYXRoVG9LZWVw",
-            "IlcKCktlZXBVcGRhdGUSCgoCaWQYASABKA0SFQoNd2Fycmlvcl9jb3VudBgC",
-            "IAEoBRIUCgxhcmNoZXJfY291bnQYAyABKAUSEAoIYWxsaWFuY2UYBCABKAUi",
-            "OgoOQWxsS2VlcFVwZGF0ZXMSKAoMa2VlcF91cGRhdGVzGAEgAygLMhIuU2No",
-            "ZW1hLktlZXBVcGRhdGUiqQEKDU5ld1Byb2plY3RpbGUSCgoCaWQYASABKA0S",
-            "HQoJc3RhcnRfcG9zGAIgASgLMgouU2NoZW1hLlYzEhIKCmJpcnRoX3RpbWUY",
-            "AyABKAISJAoQaW5pdGlhbF92ZWxvY2l0eRgEIAEoCzIKLlNjaGVtYS5WMxIW",
-            "Cg50aW1lX3dpbGxfbGFuZBgFIAEoAhIbChNncmF2aXRhdGlvbmFsX2ZvcmNl",
-            "GAYgASgCIjwKDk5ld1Byb2plY3RpbGVzEioKC3Byb2plY3RpbGVzGAEgAygL",
-            "MhUuU2NoZW1hLk5ld1Byb2plY3RpbGUiogEKDEluaXRpYWxTdGF0ZRIgCgVr",
-            "ZWVwcxgBIAMoCzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIg",
-            "ASgFEhIKCm1hcF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hl",
-            "bWEuVGlsZVR5cGUSKAoMcmVuZGVyX3RpbGVzGAUgAygLMhIuU2NoZW1hLlJl",
-            "bmRlclRpbGUiVAoQUmVuZGVyVGlsZVVwZGF0ZRIXCgNwb3MYASABKAsyCi5T",
-            "Y2hlbWEuVjISJwoLcmVuZGVyX3RpbGUYAiABKAsyEi5TY2hlbWEuUmVuZGVy",
-            "VGlsZSJKChFSZW5kZXJUaWxlVXBkYXRlcxI1ChNyZW5kZXJfdGlsZV91cGRh",
-            "dGVzGAEgAygLMhguU2NoZW1hLlJlbmRlclRpbGVVcGRhdGUiowEKFElzc3Vl",
-            "RGVwbG95bWVudE9yZGVyEhMKC3NvdXJjZV9rZWVwGAEgASgNEhMKC3Rhcmdl",
-            "dF9rZWVwGAIgASgNEi4KDHNvbGRpZXJfdHlwZRgDIAEoDjITLlNjaGVtYS5T",
-            "b2xkaWVyVHlwZUgAiAEBEhQKB3BlcmNlbnQYBCABKAJIAYgBAUIPCg1fc29s",
-            "ZGllcl90eXBlQgoKCF9wZXJjZW50KioKDkdlbmVyYXRpb25Nb2RlEg4KCkF1",
-            "dG9BY2NydWUQABIICgRXb3JkEAEqNgoIVGlsZVR5cGUSCwoHSW52YWxpZBAA",
-            "EggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQAyqXAwoSUmVuZGVyQWxs",
-            "aWFuY2VDYXNlEhkKFUludmFsaWRSZW5kZXJBbGxpYW5jZRAAEiAKHEZ1bGxM",
-            "YW5kX1NpbmdsZVJvdW5kZWRDb3JuZXIQARIcChhGdWxsTGFuZF9TcGxpdERv",
-            "d25NaWRkbGUQAhIeChpGdWxsTGFuZF9JbmRpdmlkdWFsQ29ybmVycxADEhUK",
-            "EUZ1bGxMYW5kX09uZU93bmVyEAQSGQoVVGhyZWVDb3JuZXJzX09uZU93bmVy",
-            "EAUSGgoWVGhyZWVDb3JuZXJzX1R3b093bmVycxAGEhwKGFRocmVlQ29ybmVy",
-            "c19UaHJlZU93bmVycxAHEhkKFVR3b0FkamFjZW50X1R3b093bmVycxAIEhgK",
-            "FFR3b0FkamFjZW50X09uZU93bmVyEAkSGQoVVHdvT3Bwb3NpdGVfVHdvT3du",
-            "ZXJzEAoSGAoUVHdvT3Bwb3NpdGVfT25lT3duZXIQCxIZChVTaW5nbGVDb3Ju",
-            "ZXJfT25lT3duZXIQDBIVChFGdWxsV2F0ZXJfTm9PbndlchANKjoKC1NvbGRp",
-            "ZXJUeXBlEhIKDkludmFsaWRTb2xkaWVyEAASCwoHV2FycmlvchABEgoKBkFy",
-            "Y2hlchACYgZwcm90bzM="));
+            "aWVyImMKClBhdGhUb0tlZXASEQoJdGFyZ2V0X2lkGAEgASgNEhgKBHBhdGgY",
+            "AiADKAsyCi5TY2hlbWEuVjISKAoKd2Fsa190eXBlcxgDIAMoDjIULlNjaGVt",
+            "YS5XYWxrUGF0aFR5cGUioAEKCUtlZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNw",
+            "b3MYAiABKAsyCi5TY2hlbWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEoBRIU",
+            "CgxhcmNoZXJfY291bnQYBCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxpYW5j",
+            "ZRgGIAEoBRIhCgVwYXRocxgHIAMoCzISLlNjaGVtYS5QYXRoVG9LZWVwIlcK",
+            "CktlZXBVcGRhdGUSCgoCaWQYASABKA0SFQoNd2Fycmlvcl9jb3VudBgCIAEo",
+            "BRIUCgxhcmNoZXJfY291bnQYAyABKAUSEAoIYWxsaWFuY2UYBCABKAUiOgoO",
+            "QWxsS2VlcFVwZGF0ZXMSKAoMa2VlcF91cGRhdGVzGAEgAygLMhIuU2NoZW1h",
+            "LktlZXBVcGRhdGUiqQEKDU5ld1Byb2plY3RpbGUSCgoCaWQYASABKA0SHQoJ",
+            "c3RhcnRfcG9zGAIgASgLMgouU2NoZW1hLlYzEhIKCmJpcnRoX3RpbWUYAyAB",
+            "KAISJAoQaW5pdGlhbF92ZWxvY2l0eRgEIAEoCzIKLlNjaGVtYS5WMxIWCg50",
+            "aW1lX3dpbGxfbGFuZBgFIAEoAhIbChNncmF2aXRhdGlvbmFsX2ZvcmNlGAYg",
+            "ASgCIjwKDk5ld1Byb2plY3RpbGVzEioKC3Byb2plY3RpbGVzGAEgAygLMhUu",
+            "U2NoZW1hLk5ld1Byb2plY3RpbGUiogEKDEluaXRpYWxTdGF0ZRIgCgVrZWVw",
+            "cxgBIAMoCzIRLlNjaGVtYS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgF",
+            "EhIKCm1hcF9oZWlnaHQYAyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEu",
+            "VGlsZVR5cGUSKAoMcmVuZGVyX3RpbGVzGAUgAygLMhIuU2NoZW1hLlJlbmRl",
+            "clRpbGUiVAoQUmVuZGVyVGlsZVVwZGF0ZRIXCgNwb3MYASABKAsyCi5TY2hl",
+            "bWEuVjISJwoLcmVuZGVyX3RpbGUYAiABKAsyEi5TY2hlbWEuUmVuZGVyVGls",
+            "ZSJKChFSZW5kZXJUaWxlVXBkYXRlcxI1ChNyZW5kZXJfdGlsZV91cGRhdGVz",
+            "GAEgAygLMhguU2NoZW1hLlJlbmRlclRpbGVVcGRhdGUiowEKFElzc3VlRGVw",
+            "bG95bWVudE9yZGVyEhMKC3NvdXJjZV9rZWVwGAEgASgNEhMKC3RhcmdldF9r",
+            "ZWVwGAIgASgNEi4KDHNvbGRpZXJfdHlwZRgDIAEoDjITLlNjaGVtYS5Tb2xk",
+            "aWVyVHlwZUgAiAEBEhQKB3BlcmNlbnQYBCABKAJIAYgBAUIPCg1fc29sZGll",
+            "cl90eXBlQgoKCF9wZXJjZW50KioKDkdlbmVyYXRpb25Nb2RlEg4KCkF1dG9B",
+            "Y2NydWUQABIICgRXb3JkEAEqNgoIVGlsZVR5cGUSCwoHSW52YWxpZBAAEggK",
+            "BExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQAyqXAwoSUmVuZGVyQWxsaWFu",
+            "Y2VDYXNlEhkKFUludmFsaWRSZW5kZXJBbGxpYW5jZRAAEiAKHEZ1bGxMYW5k",
+            "X1NpbmdsZVJvdW5kZWRDb3JuZXIQARIcChhGdWxsTGFuZF9TcGxpdERvd25N",
+            "aWRkbGUQAhIeChpGdWxsTGFuZF9JbmRpdmlkdWFsQ29ybmVycxADEhUKEUZ1",
+            "bGxMYW5kX09uZU93bmVyEAQSGQoVVGhyZWVDb3JuZXJzX09uZU93bmVyEAUS",
+            "GgoWVGhyZWVDb3JuZXJzX1R3b093bmVycxAGEhwKGFRocmVlQ29ybmVyc19U",
+            "aHJlZU93bmVycxAHEhkKFVR3b0FkamFjZW50X1R3b093bmVycxAIEhgKFFR3",
+            "b0FkamFjZW50X09uZU93bmVyEAkSGQoVVHdvT3Bwb3NpdGVfVHdvT3duZXJz",
+            "EAoSGAoUVHdvT3Bwb3NpdGVfT25lT3duZXIQCxIZChVTaW5nbGVDb3JuZXJf",
+            "T25lT3duZXIQDBIVChFGdWxsV2F0ZXJfTm9PbndlchANKjoKC1NvbGRpZXJU",
+            "eXBlEhIKDkludmFsaWRTb2xkaWVyEAASCwoHV2FycmlvchABEgoKBkFyY2hl",
+            "chACKoMCCgxXYWxrUGF0aFR5cGUSEwoPU3RyYWlnaHRUb1JpZ2h0EAASEAoM",
+            "U3RyYWlnaHREb3duEAESEAoMU3RyYWlnaHRMZWZ0EAISDgoKU3RyYWlnaHRV",
+            "cBADEhQKEENpcmN1bGFyTGVmdERvd24QBBISCg5DaXJjdWxhckxlZnRVcBAF",
+            "EhQKEENpcmN1bGFyRG93bkxlZnQQBhIVChFDaXJjdWxhckRvd25SaWdodBAH",
+            "EhUKEUNpcmN1bGFyUmlnaHREb3duEAgSEwoPQ2lyY3VsYXJSaWdodFVwEAkS",
+            "EwoPQ2lyY3VsYXJVcFJpZ2h0EAoSEgoOQ2lyY3VsYXJVcExlZnQQC2IGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), typeof(global::Schema.WalkPathType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameSettings), global::Schema.GameSettings.Parser, new[]{ "GenerationMode", "Map" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.SearchForGame), global::Schema.SearchForGame.Parser, new[]{ "Ranked" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GameAvailableOnPort), global::Schema.GameAvailableOnPort.Parser, new[]{ "GameId", "PlayerId", "Port" }, null, null, null, null),
@@ -125,7 +132,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2Int), global::Schema.V2Int.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewSoldier), global::Schema.NewSoldier.Parser, new[]{ "Id", "MovementSpeed", "Type", "SourceKeepId", "TargetKeepId", "RowOffset" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewSoldiers), global::Schema.NewSoldiers.Parser, new[]{ "Soldiers" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.PathToKeep), global::Schema.PathToKeep.Parser, new[]{ "TargetId", "Path" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.PathToKeep), global::Schema.PathToKeep.Parser, new[]{ "TargetId", "Path", "WalkTypes" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance", "Paths" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepUpdate), global::Schema.KeepUpdate.Parser, new[]{ "Id", "WarriorCount", "ArcherCount", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllKeepUpdates), global::Schema.AllKeepUpdates.Parser, new[]{ "KeepUpdates" }, null, null, null, null),
@@ -174,6 +181,21 @@ namespace Schema {
     [pbr::OriginalName("InvalidSoldier")] InvalidSoldier = 0,
     [pbr::OriginalName("Warrior")] Warrior = 1,
     [pbr::OriginalName("Archer")] Archer = 2,
+  }
+
+  public enum WalkPathType {
+    [pbr::OriginalName("StraightToRight")] StraightToRight = 0,
+    [pbr::OriginalName("StraightDown")] StraightDown = 1,
+    [pbr::OriginalName("StraightLeft")] StraightLeft = 2,
+    [pbr::OriginalName("StraightUp")] StraightUp = 3,
+    [pbr::OriginalName("CircularLeftDown")] CircularLeftDown = 4,
+    [pbr::OriginalName("CircularLeftUp")] CircularLeftUp = 5,
+    [pbr::OriginalName("CircularDownLeft")] CircularDownLeft = 6,
+    [pbr::OriginalName("CircularDownRight")] CircularDownRight = 7,
+    [pbr::OriginalName("CircularRightDown")] CircularRightDown = 8,
+    [pbr::OriginalName("CircularRightUp")] CircularRightUp = 9,
+    [pbr::OriginalName("CircularUpRight")] CircularUpRight = 10,
+    [pbr::OriginalName("CircularUpLeft")] CircularUpLeft = 11,
   }
 
   #endregion
@@ -5371,6 +5393,7 @@ namespace Schema {
     public PathToKeep(PathToKeep other) : this() {
       targetId_ = other.targetId_;
       path_ = other.path_.Clone();
+      walkTypes_ = other.walkTypes_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5403,6 +5426,17 @@ namespace Schema {
       get { return path_; }
     }
 
+    /// <summary>Field number for the "walk_types" field.</summary>
+    public const int WalkTypesFieldNumber = 3;
+    private static readonly pb::FieldCodec<global::Schema.WalkPathType> _repeated_walkTypes_codec
+        = pb::FieldCodec.ForEnum(26, x => (int) x, x => (global::Schema.WalkPathType) x);
+    private readonly pbc::RepeatedField<global::Schema.WalkPathType> walkTypes_ = new pbc::RepeatedField<global::Schema.WalkPathType>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Schema.WalkPathType> WalkTypes {
+      get { return walkTypes_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5420,6 +5454,7 @@ namespace Schema {
       }
       if (TargetId != other.TargetId) return false;
       if(!path_.Equals(other.path_)) return false;
+      if(!walkTypes_.Equals(other.walkTypes_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5429,6 +5464,7 @@ namespace Schema {
       int hash = 1;
       if (TargetId != 0) hash ^= TargetId.GetHashCode();
       hash ^= path_.GetHashCode();
+      hash ^= walkTypes_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5452,6 +5488,7 @@ namespace Schema {
         output.WriteUInt32(TargetId);
       }
       path_.WriteTo(output, _repeated_path_codec);
+      walkTypes_.WriteTo(output, _repeated_walkTypes_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5467,6 +5504,7 @@ namespace Schema {
         output.WriteUInt32(TargetId);
       }
       path_.WriteTo(ref output, _repeated_path_codec);
+      walkTypes_.WriteTo(ref output, _repeated_walkTypes_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5481,6 +5519,7 @@ namespace Schema {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TargetId);
       }
       size += path_.CalculateSize(_repeated_path_codec);
+      size += walkTypes_.CalculateSize(_repeated_walkTypes_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -5497,6 +5536,7 @@ namespace Schema {
         TargetId = other.TargetId;
       }
       path_.Add(other.path_);
+      walkTypes_.Add(other.walkTypes_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -5520,6 +5560,11 @@ namespace Schema {
             path_.AddEntriesFrom(input, _repeated_path_codec);
             break;
           }
+          case 26:
+          case 24: {
+            walkTypes_.AddEntriesFrom(input, _repeated_walkTypes_codec);
+            break;
+          }
         }
       }
     #endif
@@ -5541,6 +5586,11 @@ namespace Schema {
           }
           case 18: {
             path_.AddEntriesFrom(ref input, _repeated_path_codec);
+            break;
+          }
+          case 26:
+          case 24: {
+            walkTypes_.AddEntriesFrom(ref input, _repeated_walkTypes_codec);
             break;
           }
         }

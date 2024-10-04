@@ -1,152 +1,95 @@
-import { TILE_SIZE } from "./constants";
+import { WalkPathType } from "./Schema";
 import type { Soldier, Vector2 } from "./types";
 
-enum PathType {
- Straight,
- Circular,
+function getPathLength(walkType: WalkPathType) {
+  if (
+    walkType == WalkPathType.StraightDown ||
+    walkType == WalkPathType.StraightToRight ||
+    walkType == WalkPathType.StraightUp ||
+    walkType == WalkPathType.StraightLeft
+  ) {
+    return 1;
+  } else {
+    return 1.571;
+  }
 }
 
-const cornerTurnRadius = 0.5;
-const PathLengths: Record<PathType, number> = {
- [PathType.Straight]: 1.0,
- [PathType.Circular]: 1.571,
-};
-
-function determinePathType(path: Vector2[], pathIndex: number): PathType {
- if (pathIndex >= path.length - 1) {
-  throw new Error("Invalid path index");
- }
-
- if (pathIndex === 0 || pathIndex === path.length - 2) {
-  return PathType.Straight;
- }
-
- const prev = path[pathIndex - 1];
- const current = path[pathIndex];
- const next = path[pathIndex + 1];
-
- const prevDirection = {
-  x: current.x - prev.x,
-  y: current.y - prev.y,
- };
- const nextDirection = {
-  x: next.x - current.x,
-  y: next.y - current.y,
- };
-
- return prevDirection.x !== nextDirection.x ||
-  prevDirection.y !== nextDirection.y
-  ? PathType.Circular
-  : PathType.Straight;
-}
+const A_270 = Math.PI + Math.PI / 2;
+const A_180 = Math.PI;
+const A_90 = Math.PI / 2;
+const A_0 = 0;
 
 export function determinePathPos(
- path: Vector2[],
- pathIndex: number,
- distanceAlong: number
+  p: Vector2,
+  walkType: WalkPathType,
+  distanceAlong: number
 ): Vector2 {
- const type = determinePathType(path, pathIndex);
- const source = path[pathIndex];
- const target = path[pathIndex + 1];
- const percentAlong = distanceAlong / PathLengths[type];
- const center = {
-  x: source.x + 0.5,
-  y: source.y + 0.5,
- };
- const delta = {
-  x: target.x - source.x,
-  y: target.y - source.y,
- };
- const reverseDir = {
-  x: -delta.x / 2,
-  y: -delta.y / 2,
- };
- const origin = {
-  x: center.x + reverseDir.x,
-  y: center.y + reverseDir.y,
- };
- console.log(center, reverseDir, origin);
-
- switch (type) {
-  case PathType.Straight:
-   return {
-    x: delta.x * percentAlong + origin.x,
-    y: delta.y * percentAlong + origin.y,
-   };
-  case PathType.Circular:
-   return { x: 1, y: 1 };
-  //    return calculateCircularPosition(basePosition, direction, distanceAlong);
-  default:
-   throw new Error("Invalid path type");
- }
+  switch (walkType) {
+    case WalkPathType.StraightToRight:
+      return { x: p.x + distanceAlong, y: p.y + 0.5 };
+    case WalkPathType.StraightDown:
+      return { x: p.x + 0.5, y: p.y + distanceAlong };
+    case WalkPathType.StraightUp:
+      return { x: p.x + 0.5, y: p.y + 1 - distanceAlong };
+    case WalkPathType.StraightLeft:
+      return { x: p.x + 1 - distanceAlong, y: p.y + 0.5 };
+    case WalkPathType.CircularLeftDown:
+      return determineCircularPos(p.x, p.y + 1, A_90, true, distanceAlong);
+    case WalkPathType.CircularLeftUp:
+      return determineCircularPos(p.x, p.y, A_270, false, distanceAlong);
+    case WalkPathType.CircularDownLeft:
+      return determineCircularPos(p.x, p.y + 1, A_0, false, distanceAlong);
+    case WalkPathType.CircularDownRight:
+      return determineCircularPos(p.x + 1, p.y + 1, A_180, true, distanceAlong);
+    case WalkPathType.CircularRightDown:
+      return determineCircularPos(p.x + 1, p.y + 1, A_90, false, distanceAlong);
+    case WalkPathType.CircularRightUp:
+      return determineCircularPos(p.x + 1, p.y, A_270, true, distanceAlong);
+    case WalkPathType.CircularUpRight:
+      return determineCircularPos(p.x + 1, p.y, A_180, false, distanceAlong);
+    case WalkPathType.CircularUpLeft:
+      return determineCircularPos(p.x, p.y, A_0, true, distanceAlong);
+    default:
+      console.error("Uknown walk path type", walkType);
+      return { x: 0, y: 0 };
+  }
 }
 
-function calculateCircularPosition(
- basePosition: Vector2,
- direction: Vector2,
- distanceAlong: number
+function determineCircularPos(
+  circleCenterX: number,
+  circleCenterY: number,
+  startAngle: number,
+  clockwise: boolean,
+  distanceAlong: number
 ): Vector2 {
- const percentComplete = distanceAlong / PathLengths[PathType.Circular];
- const angle = (percentComplete * Math.PI) / 2;
- const rotatedDirection = {
-  x: direction.x * Math.cos(angle) - direction.y * Math.sin(angle),
-  y: direction.x * Math.sin(angle) + direction.y * Math.cos(angle),
- };
- return {
-  x: basePosition.x + rotatedDirection.x,
-  y: basePosition.y + rotatedDirection.y,
- };
-}
+  const angleTraversed = (distanceAlong / (2 * Math.PI)) * (2 * Math.PI);
 
-function normalizeVector(vector: Vector2): Vector2 {
- const magnitude = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
- return {
-  x: vector.x / magnitude,
-  y: vector.y / magnitude,
- };
+  let finalAngle = clockwise
+    ? startAngle - angleTraversed
+    : startAngle + angleTraversed;
+
+  finalAngle = finalAngle % (2 * Math.PI);
+  if (finalAngle < 0) finalAngle += 2 * Math.PI;
+
+  const x = circleCenterX + Math.cos(finalAngle);
+  const y = circleCenterY + Math.sin(finalAngle);
+
+  return { x, y };
 }
 
 export function updateSoldierPathProgress(
- soldier: Soldier,
- path: Vector2[],
- deltaTime: number
+  soldier: Soldier,
+  walkPath: WalkPathType[],
+  deltaTime: number
 ): void {
- const step = getCurrentPathSteps(path, soldier.pathIndex);
- if (!step) return;
+  if (soldier.pathIndex < 0 || soldier.pathIndex >= walkPath.length) {
+    return;
+  }
 
- soldier.subPathProgress += soldier.movementSpeed * deltaTime;
- const pathType = determinePathType(path, soldier.pathIndex);
- const segmentLength = PathLengths[pathType];
-
- if (soldier.subPathProgress >= segmentLength) {
-  soldier.pathIndex += 1;
-  soldier.subPathProgress -= segmentLength;
-  console.log("Completed path");
- }
-}
-
-type PathStep = {
- source: Vector2;
- target: Vector2;
-};
-
-export function getCurrentPathSteps(
- path: Vector2[],
- prog: number
-): PathStep | null {
- if (path.length < 2) {
-  return null;
- }
-
- const currentSegment = Math.floor(prog);
- const nextSegment = currentSegment + 1;
-
- if (nextSegment >= path.length) {
-  return null;
- }
-
- return {
-  source: path[currentSegment],
-  target: path[nextSegment],
- };
+  soldier.subPathProgress += soldier.movementSpeed * deltaTime;
+  const segmentLength = getPathLength(walkPath[soldier.pathIndex]);
+  if (soldier.subPathProgress >= segmentLength) {
+    soldier.pathIndex += 1;
+    soldier.subPathProgress -= segmentLength;
+  }
 }

@@ -59,8 +59,8 @@ public class GameTests
             Assert.AreEqual(keep.Name, keepState.Name);
             Assert.AreEqual(keep.Id, keepState.Id);
             Vector2 keepPos = game.Map.Grid.GetEntityPosition(keep.Id);
-            Assert.AreEqual(keepPos.X + .5f, keepState.Pos.X);
-            Assert.AreEqual(keepPos.Y + .5f, keepState.Pos.Y);
+            Assert.AreEqual(keepPos.X, keepState.Pos.X);
+            Assert.AreEqual(keepPos.Y, keepState.Pos.Y);
         }
     }
 
