@@ -1,4 +1,11 @@
-import { HALF_T, Layer, SHADOW_COLOR, TILE_SIZE } from "./constants";
+import {
+ HALF_T,
+ Layer,
+ SHADOW_COLOR,
+ TILE_SIZE,
+ TREE_LINE_COLOR,
+ TREE_LINE_WIDTH,
+} from "./constants";
 import { type Drawing, type DrawStyle } from "./drawing";
 import { type Vector2 } from "./types";
 
@@ -6,16 +13,16 @@ const SHADOW_OFFSET = 3;
 
 const treeLayerConfigs = [
  { numBumps: 6, radius: 20, bumpRadius: 12 },
- { numBumps: 5, radius: 13, bumpRadius: 8.5 },
+ { numBumps: 5, radius: 13, bumpRadius: 8.8 },
 ] as const;
 
 const createTreeStyle = (layer: number): DrawStyle => ({
  layer,
  fill_style: "white",
- line_width: 0.5,
+ line_width: TREE_LINE_WIDTH,
  should_stroke: true,
  should_fill: true,
- stroke_style: "black",
+ stroke_style: TREE_LINE_COLOR,
 });
 
 const createShadowStyle = (layer: number, fillStyle: string): DrawStyle => ({

@@ -15,9 +15,9 @@ public class Keep : Entity
     public bool SomethingChanged { get; private set; }
 
     public const float Radius = 2f;
-    public const float DeploymentRefractoryPeriod = .25f;
-    public const int MaxTroopsPerWave = 6;
-    public const float RowMaxWidth = .6f;
+    public const float DeploymentRefractoryPeriod = .5f;
+    public const int MaxTroopsPerWave = 3;
+    public const float RowMaxWidth = .4f;
     public const float RowOffsetStepSize = RowMaxWidth / MaxTroopsPerWave;
     public const float RowOffsetLeft = -RowMaxWidth / 2;
     public const int StartTroopCount = 5;

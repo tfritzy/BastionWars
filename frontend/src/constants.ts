@@ -4,17 +4,18 @@ export const Layer = {
  Map: 1,
  Grass: 2,
  ProjectilesOnGround: 3,
- Units: 4,
- UnitOutlines: 5,
- KeepShadows: 6,
- KeepBase: 7,
- KeepTowers: 8,
- KeepCenter: 9,
- TreeShadows: 10,
- TreeBottoms: 11,
- TreeTops: 12,
- Projectiles: 13,
- UI: 14,
+ UnitShadows: 4,
+ Units: 5,
+ UnitOutlines: 6,
+ KeepShadows: 7,
+ KeepBase: 8,
+ KeepTowers: 9,
+ KeepCenter: 10,
+ TreeShadows: 11,
+ TreeBottoms: 12,
+ TreeTops: 13,
+ Projectiles: 14,
+ UI: 15,
 };
 
 export const Constants = {
@@ -57,6 +58,8 @@ export const keepColors = [
 
 export const SHADOW_COLOR = "#00000033";
 
+export const SOLDIER_SHAD_O = 1.5;
+
 export const BOUNDARY_LINE_STYLE = "#222222";
 export const BOUNDARY_LINE_WIDTH = 1;
 export const BOUNDARY_LINE_DASH = [4, 4];
@@ -64,11 +67,11 @@ export const BOUNDARY_LINE_DASH = [4, 4];
 export const KEEP_FILL_STYLE = "#e2e8f0";
 export const KEEP_LINE_STYLE = "black";
 export const KEEP_LINE_WIDTH = 0.5;
-export const KEEP_LABEL_FONT = "bold 18pt Arial";
+export const KEEP_LABEL_FONT = "bold 20pt Arial";
 export const KEEP_LABEL_STROKE = "black";
 export const KEEP_LABEL_COMPLETED_COLOR = "#6ee7b7";
 export const KEEP_LABEL_REMAINING_COLOR = "white";
-export const KEEP_LABEL_OUTLINE_COLOR = "#475569";
+export const KEEP_LABEL_OUTLINE_COLOR = "black";
 export const ARROW_COLOR = "#475569";
 
 export const LAND_LINE_STYLE = "black";
@@ -78,3 +81,6 @@ export const UNIT_COLOR = "white";
 export const UNIT_OUTLINE_COLOR = "black";
 export const UNIT_OUTLINE_WIDTH = 0.5;
 export const UNIT_RADIUS = 2.5;
+
+export const TREE_LINE_COLOR = "#333333";
+export const TREE_LINE_WIDTH = 0.5;

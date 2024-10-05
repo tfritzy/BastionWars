@@ -2,9 +2,12 @@ import { Connection } from "./connection.ts";
 import {
  ARROW_COLOR,
  ARROW_LENGTH,
+ HALF_T,
  KEEP_LABEL_FONT,
  KEEP_LABEL_STROKE,
  Layer,
+ SHADOW_COLOR,
+ SOLDIER_SHAD_O,
  UNIT_COLOR,
  UNIT_OUTLINE_COLOR,
  UNIT_OUTLINE_WIDTH,
@@ -88,11 +91,18 @@ export class Game {
 
  drawKeepLables(deltaTime: number) {
   this.gameState.keeps.forEach((keep) => {
-   const x = keep.pos.x * WORLD_TO_CANVAS;
-   const y = keep.pos.y * WORLD_TO_CANVAS;
-   this.keepLabels.get(keep.id)?.draw(x, y - 25, deltaTime);
+   const x = keep.pos.x * WORLD_TO_CANVAS + HALF_T;
+   const y = keep.pos.y * WORLD_TO_CANVAS + HALF_T;
+   this.keepLabels.get(keep.id)?.draw(x, y - 35, deltaTime);
   });
  }
+
+ soldierShadowOffset = 2;
+ soldierShadowStyle = {
+  layer: Layer.UnitShadows,
+  fill_style: SHADOW_COLOR,
+  should_fill: true,
+ };
 
  soldierStyle = {
   layer: Layer.Units,
@@ -121,6 +131,20 @@ export class Game {
     );
     soldier.nonOffsetPos = nextPos;
    }
+
+   this.drawing.drawCustom(this.soldierShadowStyle, (ctx) => {
+    const x = soldier.pos.x * WORLD_TO_CANVAS;
+    const y = soldier.pos.y * WORLD_TO_CANVAS;
+
+    ctx.moveTo(x + UNIT_RADIUS - SOLDIER_SHAD_O, y + SOLDIER_SHAD_O);
+    ctx.arc(
+     x - SOLDIER_SHAD_O,
+     y + SOLDIER_SHAD_O,
+     UNIT_RADIUS,
+     0,
+     2 * Math.PI
+    );
+   });
 
    this.drawing.drawCustom(this.soldierStyle, (ctx) => {
     const x = soldier.pos.x * WORLD_TO_CANVAS;
