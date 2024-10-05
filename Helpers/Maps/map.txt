@@ -1,10 +1,10 @@
-. . T T T T . . . . . T T T T T T . . . . . . . . . . . T . 
-T W . . . T T T A . . . T T T T . . . . . . . A . . . . . . 
-T T T T . . . T X X X X . . . . . . . . . . . . . . . . . . 
-T T T T T T . T X . X X . . . . . T . . . . . . . . . W . . 
-T T T T T T . T X X . X . . . . T T T . . . . . . . . . . T 
+. . T . T . . . . . . T T T T T T . . . . . . . . . . . T . 
+T W . . . . T T A . . . T T T T . . . . . . . A . . . . . . 
+T . . T . . . T X X X X . . . . . . . . . . . . . . . . . . 
+T T . T . T . T X . X X . . . . . T . . . . . . . . . W . . 
+T . . T . T . T X X . X . . . . T T T . . . . . . . . . . T 
 . . T . . . . T A X X X . . . . T T T . . . . . . . . . T T 
-. . T . T T T T . . . . . . . T T T . . . . . . . . . . T T 
+. . . . T T T T . . . . . . . T T T . . . . . . . . . . T T 
 T . T . T T T T . . . . . . . . T T . . . . . . . . . . T T 
 T T T . . W . . . . . . . X . . . . . . . . . A . . . . . T 
 T . T T T T . . . . . X X X X . . . . . . . . . . . . . . . 

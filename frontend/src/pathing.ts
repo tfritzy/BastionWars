@@ -1,5 +1,5 @@
 import { WalkPathType } from "./Schema";
-import type { Soldier, Vector2 } from "./types";
+import { addV3, normalize, type Soldier, type Vector2 } from "./types";
 
 function getPathLength(walkType: WalkPathType) {
  if (
@@ -10,7 +10,7 @@ function getPathLength(walkType: WalkPathType) {
  ) {
   return 1;
  } else {
-  return 1.571;
+  return 0.7855;
  }
 }
 
@@ -55,6 +55,21 @@ export function determinePathPos(
  }
 }
 
+export function adjustPosForRowOffset(
+ currentPos: Vector2,
+ nextPos: Vector2,
+ rowOffset: number
+): Vector2 {
+ const xVel = nextPos.x - currentPos.x;
+ const yVel = nextPos.y - currentPos.y;
+
+ const perp = normalize({ x: yVel, y: -xVel });
+ return {
+  x: nextPos.x + perp.x * rowOffset,
+  y: nextPos.y + perp.y * rowOffset,
+ };
+}
+
 function determineCircularPos(
  circleCenterX: number,
  circleCenterY: number,
@@ -62,8 +77,7 @@ function determineCircularPos(
  clockwise: boolean,
  distanceAlong: number
 ): Vector2 {
- const angleTraversed =
-  (distanceAlong / (0.5 * 2 * Math.PI)) * (0.5 * 2 * Math.PI);
+ const angleTraversed = (distanceAlong / (0.5 * 2 * Math.PI)) * (2 * Math.PI);
 
  let finalAngle = clockwise
   ? startAngle - angleTraversed
