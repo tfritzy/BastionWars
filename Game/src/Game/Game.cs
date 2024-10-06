@@ -53,6 +53,7 @@ public class Game
         SendNewProjectileUpdates();
         SendNewSoldierUpdates();
         SendRemovedSoldierUpdates();
+        SendNewWordUpdates();
     }
 
     public void HandleCommand(Oneof_PlayerToGameServer msg)
@@ -171,6 +172,30 @@ public class Game
 
         AddMessageToOutbox(new Oneof_GameServerToPlayer { RemovedSoldiers = removedSoldiers });
         Map.RemovedSoldiers.Clear();
+    }
+
+    private void SendNewWordUpdates()
+    {
+        if (Map.NewWords.Count == 0)
+        {
+            return;
+        }
+
+        NewWords newWords = new();
+        foreach (Vector2Int gridPos in Map.NewWords)
+        {
+            if (Map.Words.TryGetValue(gridPos, out Word? word))
+            {
+                newWords.Words.Add(new NewWord()
+                {
+                    GridPos = gridPos.ToSchema(),
+                    Text = word!.Text,
+                });
+            }
+        }
+
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { NewWords = newWords });
+        Map.NewWords.Clear();
     }
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
@@ -324,6 +349,13 @@ public class Game
         for (int i = 0; i < state.Keeps.Count; i++)
         {
             state.Keeps[i].Paths.AddRange(GetPathsToOtherKeeps(Map, state.Keeps[i].Id));
+        }
+        foreach (Vector2Int pos in Map.Words.Keys)
+        {
+            if (Map.Words.TryGetValue(pos, out Word? word) && word != null)
+            {
+                state.Words.Add(new NewWord() { GridPos = pos.ToSchema(), Text = word.Text });
+            }
         }
         return state;
     }

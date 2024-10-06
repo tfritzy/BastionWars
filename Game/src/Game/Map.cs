@@ -23,6 +23,7 @@ public class Map
     public HashSet<uint> NewProjectiles { get; private set; } = [];
     public HashSet<uint> NewSoldiers { get; private set; } = [];
     public HashSet<uint> RemovedSoldiers { get; private set; } = [];
+    public HashSet<Vector2Int> NewWords { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -180,6 +181,7 @@ public class Map
                 {
                     string word = GetRandomWord();
                     Words[pos] = new Word(word, pos);
+                    NewWords.Add(pos);
                     return;
                 }
             }

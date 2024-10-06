@@ -45,6 +45,7 @@ import {
   parseKeep,
   parseProjectile,
   parseSoldier,
+  parseWords,
   type GameState,
 } from "./types.ts";
 
@@ -269,6 +270,7 @@ export class Game {
     this.gameState.renderTiles = msg.render_tiles || [];
     this.gameState.mapHeight = msg.map_height || 0;
     this.gameState.mapWidth = msg.map_width || 0;
+    this.gameState.words = parseWords(msg);
   }
 
   handleNewSoldiersMsg(msg: NewSoldiers) {

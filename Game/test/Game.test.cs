@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Reflection;
 using Castle.Components.DictionaryAdapter;
 using Schema;
 using TestHelpers;
@@ -64,7 +65,6 @@ public class GameTests
         }
     }
 
-
     [TestMethod]
     public void Game_InitialStateHasPathBetweenAllKeeps()
     {
@@ -88,6 +88,24 @@ public class GameTests
                 Assert.IsNotNull(path);
                 Assert.AreEqual(source.Pos, path.Path.First());
                 Assert.AreEqual(target.Pos, path.Path.Last());
+            }
+        }
+    }
+
+    [TestMethod]
+    public void Game_InitialStateHasInitialWords()
+    {
+        Game game = new(TH.GetGameSettings());
+        TH.AddPlayer(game);
+        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
+        var state = initialStates[0].InitialState;
+
+        foreach (Vector2Int pos in game.Map.Words.Keys)
+        {
+            if (game.Map.Words.TryGetValue(pos, out Word? word) && word != null)
+            {
+                NewWord stateWord = state.Words.First(w => w.GridPos.X == pos.X && w.GridPos.Y == pos.Y);
+                Assert.AreEqual(word!.Text, stateWord.Text);
             }
         }
     }
@@ -208,7 +226,6 @@ public class GameTests
             TH.UpdateGame(game, .1f);
         Assert.AreEqual(4, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(0, map.KeepAt(1).ArcherCount);
-
     }
 
     [TestMethod]
@@ -277,5 +294,17 @@ public class GameTests
         TH.UpdateGame(game, 1f);
         keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
         Assert.AreEqual(1, keepUpdates.Count);
+    }
+
+    [TestMethod]
+    public void Game_SendsNewWordUpdates()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        Map map = game.Map;
+        TH.AddPlayer(game);
+
+        TH.UpdateGame(game, Game.WordPlacementTime + Game.NetworkTickTime);
+        var wordUpdates = game.Players.Values.First().MessageQueue.Where(m => m.NewWords != null).ToList();
+        Assert.AreEqual(1, wordUpdates.Count);
     }
 }

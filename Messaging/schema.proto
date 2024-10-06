@@ -103,6 +103,7 @@ message Oneof_GameServerToPlayer {
         AllKeepUpdates keep_updates = 5;
         NewProjectiles new_projectiles = 6;
         RenderTileUpdates render_tile_updates = 7;
+        NewWords new_words = 8;
     }
 }
 
@@ -181,6 +182,15 @@ message RemovedSoldiers {
     repeated uint32 soldier_ids = 1;
 }
 
+message NewWord {
+    V2Int grid_pos = 1;
+    string text = 2;
+}
+
+message NewWords {
+    repeated NewWord words = 1;
+}
+
 enum WalkPathType {
     StraightToRight = 0;
     StraightDown = 1;
@@ -242,6 +252,7 @@ message InitialState {
     int32 map_height = 3;
     repeated TileType tiles = 4;
     repeated RenderTile render_tiles = 5;
+    repeated NewWord words = 6;
 }
 
 message RenderTileUpdate {

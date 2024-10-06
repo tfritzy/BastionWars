@@ -123,7 +123,6 @@ public class SoldierTests
         }
     }
 
-
     [TestMethod]
     public void Soldier_SendsMessageOnDeath()
     {
@@ -133,18 +132,14 @@ public class SoldierTests
         var keep = game.Map.KeepAt(0);
         var keep1 = game.Map.KeepAt(5);
         keep1.Capture(5);
-        keep1.SetCount(archers: 500);
 
         var soldier = new Soldier(game, 1, SoldierType.Warrior, keep.Id, keep1.Id, 0);
         game.Map.AddSoldier(soldier, Vector2.Zero);
 
-        while (game.Map.Soldiers.ContainsKey(soldier.Id))
-        {
-            TH.UpdateGame(game, .01f);
-        }
-
         var removed = game.Players.Values.First().MessageQueue.Where(m => m.RemovedSoldiers != null);
         Assert.AreEqual(0, removed.ToList().Count);
+
+        soldier.TakeDamage(100);
 
         TH.UpdateGame(game, Game.NetworkTickTime);
         removed = game.Players.Values.First().MessageQueue.Where(m => m.RemovedSoldiers != null);

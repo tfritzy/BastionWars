@@ -14,6 +14,11 @@ namespace System.Numerics
             return new V2() { X = vector.X, Y = vector.Y };
         }
 
+        public static V2Int ToSchema(this Vector2Int vector)
+        {
+            return new V2Int() { X = vector.X, Y = vector.Y };
+        }
+
         public static Vector2 Add(this Vector2 vector, float val)
         {
             vector.X += val;
