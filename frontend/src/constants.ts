@@ -1,3 +1,4 @@
+import type { DrawStyle } from "./drawing";
 import { SoldierType } from "./Schema";
 
 export const Layer = {
@@ -57,31 +58,59 @@ export const keepColors = [
   "#fae8ff",
 ];
 
+// Shadows
 export const SHADOW_COLOR = "#00000033";
 
-export const SOLDIER_SHAD_O = 1.5;
-
+// Ownership boundary
 export const BOUNDARY_LINE_STYLE = "#222222";
 export const BOUNDARY_LINE_WIDTH = 1;
 export const BOUNDARY_LINE_DASH = [4, 4];
 
+// Keeps
 export const KEEP_FILL_STYLE = "#e2e8f0";
 export const KEEP_LINE_STYLE = "black";
 export const KEEP_LINE_WIDTH = 0.5;
-export const KEEP_LABEL_FONT = "bold 20pt Arial";
-export const KEEP_LABEL_STROKE = "black";
-export const KEEP_LABEL_COMPLETED_COLOR = "#6ee7b7";
-export const KEEP_LABEL_REMAINING_COLOR = "white";
-export const KEEP_LABEL_OUTLINE_COLOR = "black";
 export const ARROW_COLOR = "#475569";
+export const KEEP_LABEL_COMPLETED_STYLE: DrawStyle = {
+  layer: Layer.UI,
+  fill_style: "#6ee7b7",
+  font: "bold 10pt Verdana",
+  should_fill: true,
+};
+export const KEEP_LABEL_REMAINING_STYLE: DrawStyle = {
+  layer: Layer.UI,
+  fill_style: "#444444",
+  font: "bold 10pt Verdana",
+  should_fill: true,
+};
 
+// Land
 export const LAND_LINE_STYLE = "black";
 export const LAND_LINE_WIDTH = 1;
 
+// Units
 export const UNIT_COLOR = "white";
 export const UNIT_OUTLINE_COLOR = "black";
 export const UNIT_OUTLINE_WIDTH = 0.5;
 export const UNIT_RADIUS = 2.5;
+export const UNIT_SHADOW_OFFSET = 1.5;
 
+// Trees
 export const TREE_LINE_COLOR = "#333333";
 export const TREE_LINE_WIDTH = 0.5;
+
+// Ground words
+export const GROUND_WORD_COMPLETED_STYLE: DrawStyle = {
+  layer: Layer.UI,
+  fill_style: "#333333",
+  font: "semibold 10px Verdana",
+  should_fill: true,
+  text_align: "start",
+};
+export const GROUND_WORD_REMAINING_STYLE: DrawStyle = {
+  layer: Layer.UI,
+  fill_style: "#00000066",
+  font: "semibold 10px Verdana",
+  should_fill: true,
+  text_align: "start",
+};

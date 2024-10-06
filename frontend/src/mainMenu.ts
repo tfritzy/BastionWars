@@ -26,28 +26,16 @@ export class MainMenu {
     this.enterGame = enterGame;
     this.drawing = new Drawing();
 
+    this.findGame();
+
     this.buttons = [
-      new Typeable(
-        "Start",
-        "30px Arial",
-        () => this.findGame(),
-        this.drawing,
-        "green"
-      ),
-      new Typeable(
-        "Options",
-        "30px Arial",
-        () => console.log("Options complete"),
-        this.drawing,
-        "green"
-      ),
-      new Typeable(
-        "Exit",
-        "15px Times New Roman",
-        () => console.log("Exit complete"),
-        this.drawing,
-        "green"
-      ),
+      // new Typeable(
+      //   "Start",
+      //   "30px Arial",
+      //   () => this.findGame(),
+      //   this.drawing,
+      //   "green"
+      // ),
     ];
   }
 

@@ -186,7 +186,7 @@ public class Server
         Logger.Log("Starting up game instance");
         var settings = new GameSettings
         {
-            GenerationMode = GenerationMode.AutoAccrue,
+            GenerationMode = GenerationMode.Word,
             Map = Maps.Map
         };
         string gameId = IdGenerator.GenerateGameId();

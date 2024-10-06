@@ -4,16 +4,17 @@ import {
   ARROW_LENGTH,
   ARROW_LINE_WIDTH,
   HALF_T,
-  KEEP_LABEL_FONT,
-  KEEP_LABEL_STROKE,
   Layer,
   SHADOW_COLOR,
-  SOLDIER_SHAD_O,
+  UNIT_SHADOW_OFFSET,
   UNIT_COLOR,
   UNIT_OUTLINE_COLOR,
   UNIT_OUTLINE_WIDTH,
   UNIT_RADIUS,
   WORLD_TO_CANVAS,
+  TILE_SIZE,
+  KEEP_LABEL_COMPLETED_STYLE,
+  KEEP_LABEL_REMAINING_STYLE,
 } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
@@ -74,11 +75,20 @@ export class Game {
     this.drawKeepLables(deltaTime);
     this.drawProjectiles(deltaTime);
     this.drawTrees(this.time);
+    this.drawWords(deltaTime);
   }
 
   drawKeeps(deltaTime: number) {
     this.gameState.keeps.forEach((keep) => {
       drawKeep(this.drawing, keep, deltaTime);
+    });
+  }
+
+  drawWords(deltaTime: number) {
+    this.gameState.words.forEach((word, i) => {
+      const x = word.pos.x * TILE_SIZE + HALF_T;
+      const y = word.pos.y * TILE_SIZE + HALF_T;
+      word.typeable.draw(x, y, deltaTime);
     });
   }
 
@@ -139,10 +149,13 @@ export class Game {
         const x = soldier.pos.x * WORLD_TO_CANVAS;
         const y = soldier.pos.y * WORLD_TO_CANVAS;
 
-        ctx.moveTo(x + UNIT_RADIUS - SOLDIER_SHAD_O, y + SOLDIER_SHAD_O);
+        ctx.moveTo(
+          x + UNIT_RADIUS - UNIT_SHADOW_OFFSET,
+          y + UNIT_SHADOW_OFFSET
+        );
         ctx.arc(
-          x - SOLDIER_SHAD_O,
-          y + SOLDIER_SHAD_O,
+          x - UNIT_SHADOW_OFFSET,
+          y + UNIT_SHADOW_OFFSET,
           UNIT_RADIUS,
           0,
           2 * Math.PI
@@ -257,10 +270,10 @@ export class Game {
           keep.id,
           new Typeable(
             keep.name,
-            KEEP_LABEL_FONT,
-            () => this.handleTypeKeepName(id),
+            KEEP_LABEL_COMPLETED_STYLE,
+            KEEP_LABEL_REMAINING_STYLE,
             this.drawing,
-            KEEP_LABEL_STROKE
+            () => this.handleTypeKeepName(id)
           )
         );
       }
@@ -270,7 +283,7 @@ export class Game {
     this.gameState.renderTiles = msg.render_tiles || [];
     this.gameState.mapHeight = msg.map_height || 0;
     this.gameState.mapWidth = msg.map_width || 0;
-    this.gameState.words = parseWords(msg);
+    this.gameState.words = parseWords(msg, this.drawing);
   }
 
   handleNewSoldiersMsg(msg: NewSoldiers) {

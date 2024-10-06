@@ -1,3 +1,8 @@
+import {
+  GROUND_WORD_COMPLETED_STYLE,
+  GROUND_WORD_REMAINING_STYLE,
+} from "./constants";
+import type { Drawing } from "./drawing";
 import type {
   KeepState,
   NewProjectile,
@@ -9,6 +14,7 @@ import type {
   WalkPathType,
   NewWords,
 } from "./Schema";
+import { Typeable } from "./typeable";
 
 export type Vector2 = {
   x: number;
@@ -103,6 +109,7 @@ export type Projectile = {
 export type Word = {
   pos: Vector2;
   text: string;
+  typeable: Typeable;
 };
 
 export type GameState = {
@@ -189,7 +196,10 @@ export function parseSoldier(soldier: NewSoldier | undefined): Soldier | null {
   };
 }
 
-export function parseWords(msgWords: NewWords | undefined): Word[] {
+export function parseWords(
+  msgWords: NewWords | undefined,
+  drawing: Drawing
+): Word[] {
   if (!msgWords?.words) {
     return [];
   }
@@ -200,6 +210,15 @@ export function parseWords(msgWords: NewWords | undefined): Word[] {
       words.push({
         pos: parseV2(word.grid_pos),
         text: word.text,
+        typeable: new Typeable(
+          word.text,
+          GROUND_WORD_COMPLETED_STYLE,
+          GROUND_WORD_REMAINING_STYLE,
+          drawing,
+          () => {
+            console.log("Completed", word);
+          }
+        ),
       });
     }
   }
