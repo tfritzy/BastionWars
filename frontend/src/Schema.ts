@@ -965,6 +965,7 @@ export interface Oneof_GameServerToPlayer {
   recipient_id?: string;
   initial_state?: InitialState;
   new_soldiers?: NewSoldiers;
+  removed_soldiers?: RemovedSoldiers;
   keep_updates?: AllKeepUpdates;
   new_projectiles?: NewProjectiles;
   render_tile_updates?: RenderTileUpdates;
@@ -1006,10 +1007,21 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional AllKeepUpdates keep_updates = 4;
+  // optional RemovedSoldiers removed_soldiers = 4;
+  let $removed_soldiers = message.removed_soldiers;
+  if ($removed_soldiers !== undefined) {
+    writeVarint32(bb, 34);
+    let nested = popByteBuffer();
+    _encodeRemovedSoldiers($removed_soldiers, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional AllKeepUpdates keep_updates = 5;
   let $keep_updates = message.keep_updates;
   if ($keep_updates !== undefined) {
-    writeVarint32(bb, 34);
+    writeVarint32(bb, 42);
     let nested = popByteBuffer();
     _encodeAllKeepUpdates($keep_updates, nested);
     writeVarint32(bb, nested.limit);
@@ -1017,10 +1029,10 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional NewProjectiles new_projectiles = 5;
+  // optional NewProjectiles new_projectiles = 6;
   let $new_projectiles = message.new_projectiles;
   if ($new_projectiles !== undefined) {
-    writeVarint32(bb, 42);
+    writeVarint32(bb, 50);
     let nested = popByteBuffer();
     _encodeNewProjectiles($new_projectiles, nested);
     writeVarint32(bb, nested.limit);
@@ -1028,10 +1040,10 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional RenderTileUpdates render_tile_updates = 6;
+  // optional RenderTileUpdates render_tile_updates = 7;
   let $render_tile_updates = message.render_tile_updates;
   if ($render_tile_updates !== undefined) {
-    writeVarint32(bb, 50);
+    writeVarint32(bb, 58);
     let nested = popByteBuffer();
     _encodeRenderTileUpdates($render_tile_updates, nested);
     writeVarint32(bb, nested.limit);
@@ -1076,24 +1088,32 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
         break;
       }
 
-      // optional AllKeepUpdates keep_updates = 4;
+      // optional RemovedSoldiers removed_soldiers = 4;
       case 4: {
+        let limit = pushTemporaryLength(bb);
+        message.removed_soldiers = _decodeRemovedSoldiers(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional AllKeepUpdates keep_updates = 5;
+      case 5: {
         let limit = pushTemporaryLength(bb);
         message.keep_updates = _decodeAllKeepUpdates(bb);
         bb.limit = limit;
         break;
       }
 
-      // optional NewProjectiles new_projectiles = 5;
-      case 5: {
+      // optional NewProjectiles new_projectiles = 6;
+      case 6: {
         let limit = pushTemporaryLength(bb);
         message.new_projectiles = _decodeNewProjectiles(bb);
         bb.limit = limit;
         break;
       }
 
-      // optional RenderTileUpdates render_tile_updates = 6;
-      case 6: {
+      // optional RenderTileUpdates render_tile_updates = 7;
+      case 7: {
         let limit = pushTemporaryLength(bb);
         message.render_tile_updates = _decodeRenderTileUpdates(bb);
         bb.limit = limit;
@@ -1557,6 +1577,68 @@ function _decodeNewSoldiers(bb: ByteBuffer): NewSoldiers {
         let values = message.soldiers || (message.soldiers = []);
         values.push(_decodeNewSoldier(bb));
         bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface RemovedSoldiers {
+  soldier_ids?: number[];
+}
+
+export function encodeRemovedSoldiers(message: RemovedSoldiers): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeRemovedSoldiers(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeRemovedSoldiers(message: RemovedSoldiers, bb: ByteBuffer): void {
+  // repeated uint32 soldier_ids = 1;
+  let array$soldier_ids = message.soldier_ids;
+  if (array$soldier_ids !== undefined) {
+    let packed = popByteBuffer();
+    for (let value of array$soldier_ids) {
+      writeVarint32(packed, value);
+    }
+    writeVarint32(bb, 10);
+    writeVarint32(bb, packed.offset);
+    writeByteBuffer(bb, packed);
+    pushByteBuffer(packed);
+  }
+}
+
+export function decodeRemovedSoldiers(binary: Uint8Array): RemovedSoldiers {
+  return _decodeRemovedSoldiers(wrapByteBuffer(binary));
+}
+
+function _decodeRemovedSoldiers(bb: ByteBuffer): RemovedSoldiers {
+  let message: RemovedSoldiers = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // repeated uint32 soldier_ids = 1;
+      case 1: {
+        let values = message.soldier_ids || (message.soldier_ids = []);
+        if ((tag & 7) === 2) {
+          let outerLimit = pushTemporaryLength(bb);
+          while (!isAtEnd(bb)) {
+            values.push(readVarint32(bb) >>> 0);
+          }
+          bb.limit = outerLimit;
+        } else {
+          values.push(readVarint32(bb) >>> 0);
+        }
         break;
       }
 

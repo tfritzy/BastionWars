@@ -99,9 +99,10 @@ message Oneof_GameServerToPlayer {
     oneof msg {
         InitialState initial_state = 2;
         NewSoldiers new_soldiers = 3;
-        AllKeepUpdates keep_updates = 4;
-        NewProjectiles new_projectiles = 5;
-        RenderTileUpdates render_tile_updates = 6;
+        RemovedSoldiers removed_soldiers = 4;
+        AllKeepUpdates keep_updates = 5;
+        NewProjectiles new_projectiles = 6;
+        RenderTileUpdates render_tile_updates = 7;
     }
 }
 
@@ -174,6 +175,10 @@ message NewSoldier {
 
 message NewSoldiers {
     repeated NewSoldier soldiers = 1;
+}
+
+message RemovedSoldiers {
+    repeated uint32 soldier_ids = 1;
 }
 
 enum WalkPathType {

@@ -191,7 +191,7 @@ public class GameTests
             Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetKeepId);
             Assert.AreEqual(SoldierType.Archer, soldier.Type);
             Assert.AreEqual(1, soldier.Alliance);
-            Assert.AreEqual(0, soldier.PathProgress);
+            Assert.AreEqual(0, soldier.PathIndex);
             Vector2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }
@@ -231,8 +231,8 @@ public class GameTests
         });
         TH.UpdateGame(game, .01f);
 
-        Assert.AreEqual(5, map.KeepAt(0).ArcherCount);
-        Assert.AreEqual(5, map.Soldiers.Count);
+        Assert.AreEqual(10 - Keep.MaxTroopsPerWave, map.KeepAt(0).ArcherCount);
+        Assert.AreEqual(Keep.MaxTroopsPerWave, map.Soldiers.Count);
 
         foreach (var soldier in map.Soldiers.Values)
         {
@@ -240,7 +240,7 @@ public class GameTests
             Assert.AreEqual(map.KeepAt(1).Id, soldier.TargetKeepId);
             Assert.AreEqual(SoldierType.Archer, soldier.Type);
             Assert.AreEqual(1, soldier.Alliance);
-            Assert.AreEqual(0, soldier.PathProgress);
+            Assert.AreEqual(0, soldier.PathIndex);
             Vector2Int? gridPos = map.Grid.GetEntityGridPos(map.KeepAt(0).Id);
             Assert.AreEqual(gridPos, map.Grid.GetEntityGridPos(soldier.Id));
         }

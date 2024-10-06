@@ -18,9 +18,11 @@ public class Map
     public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = [];
     public Dictionary<Vector2Int, Word?> Words { get; private set; } = [];
     private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
+    private readonly Dictionary<uint, Dictionary<uint, List<WalkPathType>>> keepWalkPaths = [];
     public List<Projectile> Projectiles { get; private set; } = [];
     public HashSet<uint> NewProjectiles { get; private set; } = [];
     public HashSet<uint> NewSoldiers { get; private set; } = [];
+    public HashSet<uint> RemovedSoldiers { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -56,7 +58,7 @@ public class Map
             var proj = Projectiles[i];
             if (Game.Time.Now > proj.TimeWillLand)
             {
-                uint? hit = Grid.FindCollision(proj.FinalPosition.ToVector2(), .1f, (uint id) =>
+                uint? hit = Grid.FindCollision(proj.FinalPosition.ToVector2(), .001f, (uint id) =>
                 {
                     if (Soldiers.TryGetValue(id, out Soldier? soldier))
                     {
@@ -90,6 +92,16 @@ public class Map
         return keepPaths[startId][endId];
     }
 
+    public List<WalkPathType>? GetWalkPathBetweenKeeps(uint startId, uint endId)
+    {
+        if (!keepWalkPaths.ContainsKey(startId) || !keepWalkPaths[startId].ContainsKey(endId))
+        {
+            return null;
+        }
+
+        return keepWalkPaths[startId][endId];
+    }
+
     private void CalculateKeepPathing()
     {
         foreach (Keep keep in Keeps.Values)
@@ -114,9 +126,11 @@ public class Map
                 if (!keepPaths.ContainsKey(keep.Id))
                 {
                     keepPaths.Add(keep.Id, new());
+                    keepWalkPaths.Add(keep.Id, new());
                 }
 
                 keepPaths[keep.Id].Add(other.Id, path);
+                keepWalkPaths[keep.Id].Add(other.Id, Pathing.GetWalkTypes(path));
             }
         }
     }
@@ -194,6 +208,7 @@ public class Map
         Soldiers.Remove(id);
         SoldierIds.RemoveAll((sid) => sid == id);
         Grid.RemoveEntity(id);
+        RemovedSoldiers.Add(id);
     }
 
     public void AddProjectile(Projectile projectile)

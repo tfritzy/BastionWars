@@ -1,28 +1,29 @@
 import { SoldierType } from "./Schema";
 
 export const Layer = {
- Map: 1,
- Grass: 2,
- ProjectilesOnGround: 3,
- UnitShadows: 4,
- Units: 5,
- UnitOutlines: 6,
- KeepShadows: 7,
- KeepBase: 8,
- KeepTowers: 9,
- KeepCenter: 10,
- TreeShadows: 11,
- TreeBottoms: 12,
- TreeTops: 13,
- Projectiles: 14,
- UI: 15,
+  Map: 1,
+  Grass: 2,
+  ProjectilesOnGround: 3,
+  UnitShadows: 4,
+  Units: 5,
+  UnitOutlines: 6,
+  KeepShadows: 7,
+  KeepBase: 8,
+  KeepTowers: 9,
+  KeepCenter: 10,
+  TreeShadows: 11,
+  TreeBottoms: 12,
+  TreeTops: 13,
+  Projectiles: 14,
+  UI: 15,
 };
 
 export const Constants = {
- MATCHMAKING_URL: "http://localhost:7249",
+  MATCHMAKING_URL: "http://localhost:7249",
 };
 
-export const ARROW_LENGTH = 6;
+export const ARROW_LENGTH = 4;
+export const ARROW_LINE_WIDTH = 0.5;
 
 export const WORLD_TO_CANVAS = 64;
 export const TILE_SIZE = WORLD_TO_CANVAS;
@@ -33,27 +34,27 @@ export const CORNER_RADIUS = TILE_SIZE / 4;
 export const THREE_Q_T = HALF_T + QUARTER_T;
 
 export const soldierColors: { [key: string]: string } = {
- [SoldierType.Archer]: "#bbf7d0",
- [SoldierType.Warrior]: "#fde68a",
+  [SoldierType.Archer]: "#bbf7d0",
+  [SoldierType.Warrior]: "#fde68a",
 };
 
 export const soldierOutlineColors: {
- [key: string]: string;
+  [key: string]: string;
 } = {
- [SoldierType.Archer]: "#166534",
- [SoldierType.Warrior]: "#92400e",
+  [SoldierType.Archer]: "#166534",
+  [SoldierType.Warrior]: "#92400e",
 };
 
 export const keepColors = [
- "#ecfccb",
- "#ffe4e6",
- "#d1fae5",
- "#fee2e2",
- "#dbeafe",
- "#cffafe",
- "#ede9fe",
- "#fef3c7",
- "#fae8ff",
+  "#ecfccb",
+  "#ffe4e6",
+  "#d1fae5",
+  "#fee2e2",
+  "#dbeafe",
+  "#cffafe",
+  "#ede9fe",
+  "#fef3c7",
+  "#fae8ff",
 ];
 
 export const SHADOW_COLOR = "#00000033";

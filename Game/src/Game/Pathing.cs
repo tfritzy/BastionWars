@@ -1,27 +1,134 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Numerics;
+using KeepLordWarriors;
 using Schema;
 
 public class Pathing
 {
-    public enum PathType
-    {
-        Straight,
-        Diagonal,
-        Circular,
-        CornerTurn
-    }
 
     private const float cornerTurnRadius = 0.5f;
 
-    public static readonly Dictionary<PathType, float> PathLengths = new Dictionary<PathType, float>
+    public static float GetPathLength(WalkPathType walkType)
     {
-        { PathType.Straight, 1.0f },
-        { PathType.Diagonal, 1.414f }, // Approximately sqrt(2)
-        { PathType.Circular, 1.571f }, // Approximately pi/2
-        { PathType.CornerTurn, 1f - cornerTurnRadius + 0.5f * MathF.PI * cornerTurnRadius } // Precise calculation
-    };
+        if (
+         walkType == WalkPathType.StraightDown ||
+         walkType == WalkPathType.StraightToRight ||
+         walkType == WalkPathType.StraightUp ||
+         walkType == WalkPathType.StraightLeft
+        )
+        {
+            return 1;
+        }
+        else
+        {
+            return 0.7855f;
+        }
+    }
+
+    const float A_270 = MathF.PI + MathF.PI / 2;
+    const float A_180 = MathF.PI;
+    const float A_90 = MathF.PI / 2;
+    const float A_0 = 0;
+
+    public static Vector2 DeterminePathPos(
+     Vector2Int p,
+     WalkPathType walkType,
+     float distanceAlong)
+    {
+        switch (walkType)
+        {
+            case WalkPathType.StraightToRight:
+                return new Vector2(x: p.X + distanceAlong, y: p.Y + 0.5f);
+            case WalkPathType.StraightDown:
+                return new Vector2(x: p.X + 0.5f, y: p.Y + distanceAlong);
+            case WalkPathType.StraightUp:
+                return new Vector2(x: p.X + 0.5f, y: p.Y + 1 - distanceAlong);
+            case WalkPathType.StraightLeft:
+                return new Vector2(x: p.X + 1 - distanceAlong, y: p.Y + 0.5f);
+            case WalkPathType.CircularLeftDown:
+                return DetermineCircularPos(p.X, p.Y + 1, A_90, true, distanceAlong);
+            case WalkPathType.CircularLeftUp:
+                return DetermineCircularPos(p.X, p.Y, A_270, false, distanceAlong);
+            case WalkPathType.CircularDownLeft:
+                return DetermineCircularPos(p.X, p.Y + 1, A_0, false, distanceAlong);
+            case WalkPathType.CircularDownRight:
+                return DetermineCircularPos(p.X + 1, p.Y + 1, A_180, true, distanceAlong);
+            case WalkPathType.CircularRightDown:
+                return DetermineCircularPos(p.X + 1, p.Y + 1, A_90, false, distanceAlong);
+            case WalkPathType.CircularRightUp:
+                return DetermineCircularPos(p.X + 1, p.Y, A_270, true, distanceAlong);
+            case WalkPathType.CircularUpRight:
+                return DetermineCircularPos(p.X + 1, p.Y, A_180, false, distanceAlong);
+            case WalkPathType.CircularUpLeft:
+                return DetermineCircularPos(p.X, p.Y, A_0, true, distanceAlong);
+            default:
+                return Vector2.Zero;
+        }
+    }
+
+
+    public static Vector2 DetermineCircularPos(
+      float circleCenterX,
+      float circleCenterY,
+      float startAngle,
+      Boolean clockwise,
+      float distanceAlong
+    )
+    {
+        float angleTraversed = (distanceAlong / (0.5f * 2 * MathF.PI)) * (2 * MathF.PI);
+
+        float finalAngle = clockwise
+          ? startAngle - angleTraversed
+          : startAngle + angleTraversed;
+
+        finalAngle = finalAngle % (2 * MathF.PI);
+        if (finalAngle < 0) finalAngle += 2 * MathF.PI;
+
+        float x = circleCenterX + 0.5f * MathF.Cos(finalAngle);
+        float y = circleCenterY - 0.5f * MathF.Sin(finalAngle);
+
+        return new Vector2(x, y);
+    }
+
+    public static void UpdateSoldierPathProgress(
+        Soldier soldier,
+        List<WalkPathType> walkPath,
+        float deltaTime
+    )
+    {
+        if (soldier.PathIndex < 0 || soldier.PathIndex >= walkPath.Count)
+        {
+            return;
+        }
+
+        soldier.SubPathProgress += soldier.MovementSpeed * deltaTime;
+        float segmentLength = GetPathLength(walkPath[soldier.PathIndex]);
+        if (soldier.SubPathProgress >= segmentLength)
+        {
+            soldier.PathIndex += 1;
+            soldier.SubPathProgress -= segmentLength;
+        }
+    }
+
+    public static Vector2 AdjustPosForRowOffset(
+      Vector2 currentPos,
+      Vector2 nextPos,
+      float rowOffset
+    )
+    {
+        Vector2 perp = Vector2.Normalize(new Vector2(
+            x: nextPos.Y - currentPos.Y,
+            y: -(nextPos.X - currentPos.X)
+        ));
+
+        perp.X = nextPos.X + perp.X * rowOffset;
+        perp.Y = nextPos.Y + perp.Y * rowOffset;
+
+        return perp;
+    }
 
     public static List<WalkPathType> GetWalkTypes(List<Vector2Int> path)
     {
@@ -133,93 +240,6 @@ public class Pathing
         else
         {
             return WalkPathType.StraightUp;
-        }
-    }
-
-    public static PathType DeterminePathType(Vector2Int from, Vector2Int to)
-    {
-        int dx = Math.Abs(to.X - from.X);
-        int dy = Math.Abs(to.Y - from.Y);
-
-        if (dx == 0 && dy == 0)
-            return PathType.Straight; // No movement
-
-        if (dx == 1 && dy == 0 || dx == 0 && dy == 1)
-            return PathType.Straight;
-
-        if (dx == 1 && dy == 1)
-            return PathType.Diagonal;
-
-        if (dx + dy == 1)
-            return PathType.Circular;
-
-        if (dx + dy == 2 && (dx == 1 || dy == 1))
-            return PathType.CornerTurn;
-
-        throw new ArgumentException("Invalid path segment: movement greater than one tile is not supported.");
-    }
-
-    public static bool HasFinishedSubPath(Vector2Int source, Vector2Int target, float distanceAlong)
-    {
-        PathType type = DeterminePathType(source, target);
-        float distance = PathLengths[type];
-        return distanceAlong >= distance;
-    }
-
-    public static Vector2 DeterminePathPos(Vector2Int source, Vector2Int target, float distanceAlong)
-    {
-        PathType type = DeterminePathType(source, target);
-        Vector2 direction = Vector2.Normalize(new Vector2(target.X - source.X, target.Y - source.Y));
-        float normalizedDistance = Math.Clamp(distanceAlong / PathLengths[type], 0f, 1f);
-        Vector2 basePosition = new Vector2(source.X + 0.5f, source.Y + 0.5f);  // Center of the source tile
-
-        switch (type)
-        {
-            case PathType.Straight:
-            case PathType.Diagonal:
-                return basePosition + direction * normalizedDistance;
-
-            case PathType.Circular:
-                return CalculateCircularPosition(basePosition, direction, normalizedDistance);
-
-            case PathType.CornerTurn:
-                return CalculateCornerTurnPosition(basePosition, direction, normalizedDistance);
-
-            default:
-                throw new ArgumentException("Invalid path type");
-        }
-    }
-
-    private static Vector2 CalculateCircularPosition(Vector2 basePosition, Vector2 direction, float normalizedDistance)
-    {
-        float angle = normalizedDistance * MathF.PI / 2;
-        Vector2 rotatedDirection = new Vector2(
-            direction.X * MathF.Cos(angle) - direction.Y * MathF.Sin(angle),
-            direction.X * MathF.Sin(angle) + direction.Y * MathF.Cos(angle)
-        );
-        return basePosition + rotatedDirection;
-    }
-
-    private static Vector2 CalculateCornerTurnPosition(Vector2 basePosition, Vector2 direction, float normalizedDistance)
-    {
-        float straightPart = 1f - cornerTurnRadius;
-        float arcLength = 0.5f * MathF.PI * cornerTurnRadius;
-        float totalLength = straightPart + arcLength;
-
-        if (normalizedDistance <= straightPart / totalLength)
-        {
-            // On the straight part
-            return basePosition + direction * (normalizedDistance * totalLength);
-        }
-        else
-        {
-            // On the curved part
-            float arcDistance = (normalizedDistance * totalLength) - straightPart;
-            float angle = arcDistance / cornerTurnRadius;
-            Vector2 cornerCenter = basePosition + direction * straightPart;
-            Vector2 perpDirection = new Vector2(-direction.Y, direction.X);
-            return cornerCenter + (direction * cornerTurnRadius * MathF.Sin(angle)) +
-                   (perpDirection * cornerTurnRadius * (1 - MathF.Cos(angle)));
         }
     }
 }

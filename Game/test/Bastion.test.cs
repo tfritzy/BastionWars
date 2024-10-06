@@ -68,19 +68,19 @@ public class KeepTests
         Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Warrior));
         Assert.AreEqual(30, keep.GetCount(SoldierType.Archer));
 
-        keep.SetCount(warriors: 4, archers: 10);
+        keep.SetCount(warriors: 2, archers: 10);
         keep.SetDeploymentOrder(target.Id, percent: 1f);
         TH.UpdateGame(game, .0001f);
         TH.UpdateGame(game, Keep.DeploymentRefractoryPeriod);
         Assert.AreEqual(0, keep.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(8, keep.GetCount(SoldierType.Archer));
+        Assert.AreEqual(9, keep.GetCount(SoldierType.Archer));
 
         keep.SetCount(warriors: 4, archers: 10);
         keep.SetDeploymentOrder(target.Id, percent: .5f);
         TH.UpdateGame(game, .0001f);
         TH.UpdateGame(game, Keep.DeploymentRefractoryPeriod);
         Assert.AreEqual(2, keep.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(6, keep.GetCount(SoldierType.Archer));
+        Assert.AreEqual(9, keep.GetCount(SoldierType.Archer));
     }
 
     [TestMethod]
@@ -92,13 +92,13 @@ public class KeepTests
         keep.SetCount(warriors: 30, archers: 0);
         keep.SetDeploymentOrder(target.Id, SoldierType.Warrior, .5f);
         TH.UpdateGame(game, .0001f);
-        Assert.AreEqual(24, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Warrior));
         TH.UpdateGame(game, Keep.DeploymentRefractoryPeriod - .1f);
-        Assert.AreEqual(24, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave, keep.GetCount(SoldierType.Warrior));
         TH.UpdateGame(game, .11f);
-        Assert.AreEqual(18, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave * 2, keep.GetCount(SoldierType.Warrior));
         TH.UpdateGame(game, 10f);
-        Assert.AreEqual(15, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(30 - Keep.MaxTroopsPerWave * 3, keep.GetCount(SoldierType.Warrior));
     }
 
     [TestMethod]

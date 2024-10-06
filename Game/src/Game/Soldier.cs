@@ -9,15 +9,16 @@ public class Soldier : Entity
     public SoldierType Type { get; private set; }
     public readonly uint TargetKeepId;
     public readonly uint SourceKeepId;
-    public int PathProgress { get; private set; }
-    public float SubPathProgress { get; private set; }
+    public int PathIndex { get; set; }
+    public float SubPathProgress { get; set; }
     public float MovementSpeed { get; private set; }
     public int Health { get; private set; }
     public float RowOffset { get; private set; }
+    public Vector2 Velocity { get; private set; }
 
     public const float Radius = 0.1f;
     public const float BaseMovementSpeed = .3f;
-    public const int BaseHealth = 10;
+    public const int BaseHealth = 1;
 
     public Soldier(Game game, int alliance, SoldierType type, uint source, uint target, float rowOffset) : base(game, alliance)
     {
@@ -27,6 +28,7 @@ public class Soldier : Entity
         MovementSpeed = BaseMovementSpeed;
         Health = BaseHealth;
         RowOffset = rowOffset;
+        SubPathProgress = .5f;
     }
 
     public void Update()
@@ -37,42 +39,44 @@ public class Soldier : Entity
         }
 
         List<Vector2Int>? path = Game.Map.GetPathBetweenKeeps(SourceKeepId, TargetKeepId);
-        if (path == null)
+        List<WalkPathType>? walkPath = Game.Map.GetWalkPathBetweenKeeps(SourceKeepId, TargetKeepId);
+        if (path == null || walkPath == null)
         {
             Game.Map.RemoveSoldier(Id);
             Logger.Log("Error - a soldier's path between keeps was not found and it got deleted");
             return;
         }
 
-        if (PathProgress + 1 >= path.Count)
+        if (PathIndex + 1 >= path.Count)
         {
             Breach();
             return;
         }
 
-        Vector2Int currentTile = path[PathProgress];
-        Vector2Int nextTile = path[PathProgress + 1];
-        float movementDelta = MovementSpeed * Game.Time.deltaTime;
-        SubPathProgress += movementDelta;
+        Vector2 prevPos = Pathing.DeterminePathPos(
+           path[PathIndex],
+           walkPath[PathIndex],
+           SubPathProgress
+       );
 
-        Pathing.PathType type = Pathing.DeterminePathType(currentTile, nextTile);
-        float subPathLength = Pathing.PathLengths[type];
+        Pathing.UpdateSoldierPathProgress(this, walkPath, Game.Time.deltaTime);
 
-        if (SubPathProgress >= subPathLength)
+        if (PathIndex >= 0 && PathIndex < path.Count)
         {
-            PathProgress += 1;
-            SubPathProgress = SubPathProgress - subPathLength;
+            Vector2 nextPos = Pathing.DeterminePathPos(
+                path[PathIndex],
+                walkPath[PathIndex],
+                SubPathProgress
+            );
 
-            // This is a little incorrect. Ideally the entity
-            // position would be updated to match the sliver of
-            // sub path progress we will have here, but since
-            // the server's position doesn't get directly rendered
-            // I feel it's not worth the complexity of handling it here.
-            return;
+            Vector2 updatedPos = Pathing.AdjustPosForRowOffset(
+             prevPos,
+             nextPos,
+             RowOffset
+            );
+            Game.Map.Grid.MoveEntity(Id, updatedPos);
+            Velocity = Vector2.Normalize(nextPos - prevPos) * MovementSpeed;
         }
-
-        Vector2 newPos = Pathing.DeterminePathPos(currentTile, nextTile, SubPathProgress);
-        Game.Map.Grid.MoveEntity(Id, newPos);
     }
 
     public void Freeze()
@@ -86,6 +90,7 @@ public class Soldier : Entity
 
         if (Health <= 0)
         {
+            Logger.Log($"Soldier {Id} died at {Game.Map.Grid.GetEntityPosition(Id)}");
             Game.Map.RemoveSoldier(Id);
         }
     }

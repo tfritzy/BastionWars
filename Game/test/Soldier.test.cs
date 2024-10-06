@@ -41,12 +41,11 @@ public class SoldierTests
         var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         game.Map.AddSoldier(soldier);
 
-        List<Vector2Int> path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
+        var walkPath = game.Map.GetWalkPathBetweenKeeps(keep0.Id, keep1.Id)!;
         float expectedDistance = 0;
-        for (int i = 1; i < path.Count; i++)
+        for (int i = 1; i < walkPath.Count; i++)
         {
-            Pathing.PathType type = Pathing.DeterminePathType(path[i - 1], path[i]);
-            expectedDistance += Pathing.PathLengths[type];
+            expectedDistance += Pathing.GetPathLength(walkPath[i]);
         }
 
         float time = 0;

@@ -52,6 +52,7 @@ public class Game
         SendKeepUpdates();
         SendNewProjectileUpdates();
         SendNewSoldierUpdates();
+        SendRemovedSoldierUpdates();
     }
 
     public void HandleCommand(Oneof_PlayerToGameServer msg)
@@ -158,6 +159,19 @@ public class Game
         Map.NewSoldiers.Clear();
     }
 
+    private void SendRemovedSoldierUpdates()
+    {
+        if (Map.RemovedSoldiers.Count == 0)
+        {
+            return;
+        }
+
+        RemovedSoldiers removedSoldiers = new();
+        removedSoldiers.SoldierIds.AddRange(Map.RemovedSoldiers);
+
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { RemovedSoldiers = removedSoldiers });
+        Map.RemovedSoldiers.Clear();
+    }
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
     private void BastionAutoAccrue()

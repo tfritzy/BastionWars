@@ -20,7 +20,7 @@ public class Keep : Entity
     public const float RowMaxWidth = .4f;
     public const float RowOffsetStepSize = RowMaxWidth / MaxTroopsPerWave;
     public const float RowOffsetLeft = -RowMaxWidth / 2;
-    public const int StartTroopCount = 5;
+    public const int StartTroopCount = 10;
     public const float TargetCheckTime = .2f;
 
     // Overkill damage during a breach is stored here and applied to the next wave
@@ -106,13 +106,17 @@ public class Keep : Entity
         Soldier s = Game.Map.Soldiers[target];
 
         Vector2 startPos2D = Game.Map.Grid.GetEntityPosition(Id);
-        startPos2D.X += Randy.ChaoticInRange(-.2f, .2f);
-        startPos2D.Y += Randy.ChaoticInRange(-.2f, .2f);
+        startPos2D.X += Randy.ChaoticInRange(-.2f, .2f) + .5f;
+        startPos2D.Y += Randy.ChaoticInRange(-.2f, .2f) + .5f;
         Vector2 targetPos2D = Game.Map.Grid.GetEntityPosition(target);
         Vector3 startPos = new Vector3(startPos2D.X, startPos2D.Y, 0);
         Vector3 targetPos = new Vector3(targetPos2D.X, targetPos2D.Y, 0);
         targetPos.X += Randy.ChaoticInRange(-.1f, .1f);
         targetPos.Y += Randy.ChaoticInRange(-.1f, .1f);
+        float distance = (targetPos2D - startPos2D).Length();
+        float roughFlightTime = distance / (Constants.ArrowVelocity * .8f);
+        targetPos.X += s.Velocity.X * roughFlightTime;
+        targetPos.Y += s.Velocity.Y * roughFlightTime;
         Vector3? velocity = Projectile.CalculateFireVector(startPos, targetPos);
 
         if (velocity == null)
