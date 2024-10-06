@@ -66,11 +66,12 @@ public class SoldierTests
     public void Soldier_BreachesTarget()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
+        TH.ErradicateAllArchers(game);
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(1);
         keep0.Capture(1);
         keep1.Capture(2);
-        keep1.SetCount(archers: 2);
+        keep1.SetCount(archers: 0, warriors: 0);
         var soldier = new Soldier(game, 1, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
         game.Map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
@@ -94,7 +95,6 @@ public class SoldierTests
         Keep keep1 = game.Map.KeepAt(1);
         keep0.Capture(1);
         keep1.Capture(2);
-        keep1.SetCount(archers: 2);
 
         TH.UpdateGame(game, Game.NetworkTickTime);
         var newSoldiers = p.MessageQueue.Where(m => m.NewSoldiers != null).ToList();
@@ -121,5 +121,35 @@ public class SoldierTests
             Assert.AreEqual(corresponding.TargetKeepId, newSoldier.TargetKeepId);
             Assert.AreEqual(corresponding.RowOffset, newSoldier.RowOffset);
         }
+    }
+
+
+    [TestMethod]
+    public void Soldier_SendsMessageOnDeath()
+    {
+        Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
+        TH.AddPlayer(game);
+        var p = TH.AddPlayer(game);
+        var keep = game.Map.KeepAt(0);
+        var keep1 = game.Map.KeepAt(5);
+        keep1.Capture(5);
+        keep1.SetCount(archers: 500);
+
+        var soldier = new Soldier(game, 1, SoldierType.Warrior, keep.Id, keep1.Id, 0);
+        game.Map.AddSoldier(soldier, Vector2.Zero);
+
+        while (game.Map.Soldiers.ContainsKey(soldier.Id))
+        {
+            TH.UpdateGame(game, .01f);
+        }
+
+        var removed = game.Players.Values.First().MessageQueue.Where(m => m.RemovedSoldiers != null);
+        Assert.AreEqual(0, removed.ToList().Count);
+
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        removed = game.Players.Values.First().MessageQueue.Where(m => m.RemovedSoldiers != null);
+        Assert.AreEqual(1, removed.ToList().Count);
+        Assert.AreEqual(1, removed.First().RemovedSoldiers.SoldierIds.Count);
+        Assert.AreEqual(soldier.Id, removed.First().RemovedSoldiers.SoldierIds.First());
     }
 }

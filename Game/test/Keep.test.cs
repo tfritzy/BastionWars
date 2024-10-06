@@ -62,10 +62,10 @@ public class KeepTest
         var projMsgs = game.Players.Values.First().MessageQueue.Where(m => m.NewProjectiles != null).ToList();
         Assert.AreEqual(0, projMsgs.Count);
 
+        var soldier = TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game);
+        soldier.Freeze();
         game.Map.KeepAt(0).SetCount(archers: 100);
-        game.Map.AddSoldier(
-            TH.BuildEnemySoldier(Schema.SoldierType.Warrior, keep.Alliance, game),
-            game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
+        game.Map.AddSoldier(soldier, game.Map.Grid.GetEntityPosition(keep.Id) + new Vector2(3));
 
         TH.UpdateGame(game, (int)(1f / Game.NetworkTickTime));
         int originalProjCount = game.Map.Projectiles.Count;

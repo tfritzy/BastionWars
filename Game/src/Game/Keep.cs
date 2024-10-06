@@ -20,7 +20,7 @@ public class Keep : Entity
     public const float RowMaxWidth = .4f;
     public const float RowOffsetStepSize = RowMaxWidth / MaxTroopsPerWave;
     public const float RowOffsetLeft = -RowMaxWidth / 2;
-    public const int StartTroopCount = 10;
+    public const int StartTroopCount = 5;
     public const float TargetCheckTime = .2f;
 
     // Overkill damage during a breach is stored here and applied to the next wave
