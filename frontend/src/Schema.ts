@@ -1673,6 +1673,7 @@ function _decodeRemovedSoldiers(bb: ByteBuffer): RemovedSoldiers {
 export interface NewWord {
   grid_pos?: V2Int;
   text?: string;
+  owning_keep_pos?: V2;
 }
 
 export function encodeNewWord(message: NewWord): Uint8Array {
@@ -1698,6 +1699,17 @@ function _encodeNewWord(message: NewWord, bb: ByteBuffer): void {
   if ($text !== undefined) {
     writeVarint32(bb, 18);
     writeString(bb, $text);
+  }
+
+  // optional V2 owning_keep_pos = 3;
+  let $owning_keep_pos = message.owning_keep_pos;
+  if ($owning_keep_pos !== undefined) {
+    writeVarint32(bb, 26);
+    let nested = popByteBuffer();
+    _encodeV2($owning_keep_pos, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
   }
 }
 
@@ -1726,6 +1738,14 @@ function _decodeNewWord(bb: ByteBuffer): NewWord {
       // optional string text = 2;
       case 2: {
         message.text = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      // optional V2 owning_keep_pos = 3;
+      case 3: {
+        let limit = pushTemporaryLength(bb);
+        message.owning_keep_pos = _decodeV2(bb);
+        bb.limit = limit;
         break;
       }
 

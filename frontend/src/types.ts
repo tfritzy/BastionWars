@@ -211,8 +211,11 @@ export function parseWords(
    harvestables.push({
     pos: parseV2(word.grid_pos),
     text: word.text,
-    resource: new ResourceLabel(word.text, drawing, () =>
-     console.log(word.text)
+    resource: new ResourceLabel(
+     word.text,
+     drawing,
+     parseV2(word.owning_keep_pos!),
+     () => console.log(word.text)
     ),
    });
   }

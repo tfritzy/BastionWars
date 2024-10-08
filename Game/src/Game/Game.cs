@@ -354,7 +354,14 @@ public class Game
         {
             if (Map.Words.TryGetValue(pos, out Word? word) && word != null)
             {
-                state.Words.Add(new NewWord() { GridPos = pos.ToSchema(), Text = word.Text });
+                var owningKeepId = Map.KeepLands[pos];
+                var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
+                state.Words.Add(new NewWord()
+                {
+                    GridPos = pos.ToSchema(),
+                    Text = word.Text,
+                    OwningKeepPos = owningKeepPos
+                });
             }
         }
         return state;
