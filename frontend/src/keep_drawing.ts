@@ -56,6 +56,29 @@ const keepCenterStyle: DrawStyle = {
  should_fill: true,
 };
 
+const soldierCountStyle: DrawStyle = {
+ layer: Layer.UI,
+ fill_style: "black",
+ text_align: "center",
+ font: "10px Verdana",
+};
+const archerBubbleStyle: DrawStyle = {
+ layer: Layer.UI,
+ fill_style: "#d1fae5",
+ stroke_style: "#064e3b",
+ should_fill: true,
+ should_stroke: true,
+ line_width: 0.5,
+};
+const warriorBubbleStyle: DrawStyle = {
+ layer: Layer.UI,
+ fill_style: "#ffe4e6",
+ stroke_style: "#881337",
+ should_fill: true,
+ should_stroke: true,
+ line_width: 0.5,
+};
+
 export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
  const x = Math.round(keep.pos.x * WORLD_TO_CANVAS);
  const y = Math.round(keep.pos.y * WORLD_TO_CANVAS);
@@ -83,6 +106,15 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
 
  drawing.drawCustom(keepShadowStyle, (ctx) => {
   drawCircle(ctx, x - SHADOW_OFFSET, y + SHADOW_OFFSET, 24);
+ });
+
+ drawing.drawCustom(archerBubbleStyle, (ctx) => {
+  ctx.moveTo(x + keep.archer_count, y);
+  ctx.arc(x, y, keep.archer_count, 0, Math.PI * 2);
+ });
+ drawing.drawCustom(warriorBubbleStyle, (ctx) => {
+  ctx.moveTo(x + keep.warrior_count, y);
+  ctx.arc(x, y, keep.warrior_count, 0, Math.PI * 2);
  });
 }
 

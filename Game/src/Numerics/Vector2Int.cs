@@ -51,6 +51,11 @@ public struct Vector2Int
         return HashCode.Combine(X, Y);
     }
 
+    public static Vector2Int From(Schema.V2Int vector2)
+    {
+        return new Vector2Int((int)vector2.X, (int)vector2.Y);
+    }
+
     public static Vector2Int From(Vector2 vector2)
     {
         return new Vector2Int((int)vector2.X, (int)vector2.Y);

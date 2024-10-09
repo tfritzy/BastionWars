@@ -14,6 +14,8 @@ import type {
  V3,
  WalkPathType,
  NewWords,
+ NewWord,
+ V2Int,
 } from "./Schema";
 import { Typeable } from "./typeable";
 
@@ -197,31 +199,27 @@ export function parseSoldier(soldier: NewSoldier | undefined): Soldier | null {
  };
 }
 
-export function parseWords(
- msgWords: NewWords | undefined,
- drawing: Drawing
-): Harvestable[] {
- if (!msgWords?.words) {
-  return [];
+export function parseWord(
+ msgWord: NewWord | undefined,
+ drawing: Drawing,
+ handleComplete: (resource_pos: V2Int, resource_text: string) => void
+): Harvestable | null {
+ if (msgWord?.grid_pos && msgWord?.text) {
+  const pos = parseV2(msgWord.grid_pos);
+  const text = msgWord.text;
+  return {
+   pos: pos,
+   text: msgWord.text,
+   resource: new ResourceLabel(
+    text,
+    drawing,
+    parseV2(msgWord.owning_keep_pos!),
+    () => handleComplete(pos, text)
+   ),
+  };
  }
 
- const harvestables: Harvestable[] = [];
- for (let word of msgWords.words) {
-  if (word.grid_pos && word.text) {
-   harvestables.push({
-    pos: parseV2(word.grid_pos),
-    text: word.text,
-    resource: new ResourceLabel(
-     word.text,
-     drawing,
-     parseV2(word.owning_keep_pos!),
-     () => console.log(word.text)
-    ),
-   });
-  }
- }
-
- return harvestables;
+ return null;
 }
 
 export function parseV2(v2: V2): Vector2 {

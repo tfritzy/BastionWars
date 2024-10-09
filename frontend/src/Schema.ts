@@ -880,10 +880,167 @@ function _decodeOneof_HostServerToGameServer(bb: ByteBuffer): Oneof_HostServerTo
   return message;
 }
 
+export interface IssueDeploymentOrder {
+  source_keep?: number;
+  target_keep?: number;
+  soldier_type?: SoldierType;
+  percent?: number;
+}
+
+export function encodeIssueDeploymentOrder(message: IssueDeploymentOrder): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeIssueDeploymentOrder(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeIssueDeploymentOrder(message: IssueDeploymentOrder, bb: ByteBuffer): void {
+  // optional uint32 source_keep = 1;
+  let $source_keep = message.source_keep;
+  if ($source_keep !== undefined) {
+    writeVarint32(bb, 8);
+    writeVarint32(bb, $source_keep);
+  }
+
+  // optional uint32 target_keep = 2;
+  let $target_keep = message.target_keep;
+  if ($target_keep !== undefined) {
+    writeVarint32(bb, 16);
+    writeVarint32(bb, $target_keep);
+  }
+
+  // optional SoldierType soldier_type = 3;
+  let $soldier_type = message.soldier_type;
+  if ($soldier_type !== undefined) {
+    writeVarint32(bb, 24);
+    writeVarint32(bb, encodeSoldierType[$soldier_type]);
+  }
+
+  // optional float percent = 4;
+  let $percent = message.percent;
+  if ($percent !== undefined) {
+    writeVarint32(bb, 37);
+    writeFloat(bb, $percent);
+  }
+}
+
+export function decodeIssueDeploymentOrder(binary: Uint8Array): IssueDeploymentOrder {
+  return _decodeIssueDeploymentOrder(wrapByteBuffer(binary));
+}
+
+function _decodeIssueDeploymentOrder(bb: ByteBuffer): IssueDeploymentOrder {
+  let message: IssueDeploymentOrder = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional uint32 source_keep = 1;
+      case 1: {
+        message.source_keep = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional uint32 target_keep = 2;
+      case 2: {
+        message.target_keep = readVarint32(bb) >>> 0;
+        break;
+      }
+
+      // optional SoldierType soldier_type = 3;
+      case 3: {
+        message.soldier_type = decodeSoldierType[readVarint32(bb)];
+        break;
+      }
+
+      // optional float percent = 4;
+      case 4: {
+        message.percent = readFloat(bb);
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface TypeWord {
+  grid_pos?: V2Int;
+  text?: string;
+}
+
+export function encodeTypeWord(message: TypeWord): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeTypeWord(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeTypeWord(message: TypeWord, bb: ByteBuffer): void {
+  // optional V2Int grid_pos = 1;
+  let $grid_pos = message.grid_pos;
+  if ($grid_pos !== undefined) {
+    writeVarint32(bb, 10);
+    let nested = popByteBuffer();
+    _encodeV2Int($grid_pos, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional string text = 2;
+  let $text = message.text;
+  if ($text !== undefined) {
+    writeVarint32(bb, 18);
+    writeString(bb, $text);
+  }
+}
+
+export function decodeTypeWord(binary: Uint8Array): TypeWord {
+  return _decodeTypeWord(wrapByteBuffer(binary));
+}
+
+function _decodeTypeWord(bb: ByteBuffer): TypeWord {
+  let message: TypeWord = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional V2Int grid_pos = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        message.grid_pos = _decodeV2Int(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional string text = 2;
+      case 2: {
+        message.text = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface Oneof_PlayerToGameServer {
   sender_id?: string;
   auth_token?: string;
   issue_deployment_order?: IssueDeploymentOrder;
+  type_word?: TypeWord;
 }
 
 export function encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer): Uint8Array {
@@ -913,6 +1070,17 @@ function _encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer, bb: 
     writeVarint32(bb, 26);
     let nested = popByteBuffer();
     _encodeIssueDeploymentOrder($issue_deployment_order, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional TypeWord type_word = 4;
+  let $type_word = message.type_word;
+  if ($type_word !== undefined) {
+    writeVarint32(bb, 34);
+    let nested = popByteBuffer();
+    _encodeTypeWord($type_word, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -949,6 +1117,14 @@ function _decodeOneof_PlayerToGameServer(bb: ByteBuffer): Oneof_PlayerToGameServ
       case 3: {
         let limit = pushTemporaryLength(bb);
         message.issue_deployment_order = _decodeIssueDeploymentOrder(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional TypeWord type_word = 4;
+      case 4: {
+        let limit = pushTemporaryLength(bb);
+        message.type_word = _decodeTypeWord(bb);
         bb.limit = limit;
         break;
       }
@@ -2665,95 +2841,6 @@ function _decodeRenderTileUpdates(bb: ByteBuffer): RenderTileUpdates {
         let values = message.render_tile_updates || (message.render_tile_updates = []);
         values.push(_decodeRenderTileUpdate(bb));
         bb.limit = limit;
-        break;
-      }
-
-      default:
-        skipUnknownField(bb, tag & 7);
-    }
-  }
-
-  return message;
-}
-
-export interface IssueDeploymentOrder {
-  source_keep?: number;
-  target_keep?: number;
-  soldier_type?: SoldierType;
-  percent?: number;
-}
-
-export function encodeIssueDeploymentOrder(message: IssueDeploymentOrder): Uint8Array {
-  let bb = popByteBuffer();
-  _encodeIssueDeploymentOrder(message, bb);
-  return toUint8Array(bb);
-}
-
-function _encodeIssueDeploymentOrder(message: IssueDeploymentOrder, bb: ByteBuffer): void {
-  // optional uint32 source_keep = 1;
-  let $source_keep = message.source_keep;
-  if ($source_keep !== undefined) {
-    writeVarint32(bb, 8);
-    writeVarint32(bb, $source_keep);
-  }
-
-  // optional uint32 target_keep = 2;
-  let $target_keep = message.target_keep;
-  if ($target_keep !== undefined) {
-    writeVarint32(bb, 16);
-    writeVarint32(bb, $target_keep);
-  }
-
-  // optional SoldierType soldier_type = 3;
-  let $soldier_type = message.soldier_type;
-  if ($soldier_type !== undefined) {
-    writeVarint32(bb, 24);
-    writeVarint32(bb, encodeSoldierType[$soldier_type]);
-  }
-
-  // optional float percent = 4;
-  let $percent = message.percent;
-  if ($percent !== undefined) {
-    writeVarint32(bb, 37);
-    writeFloat(bb, $percent);
-  }
-}
-
-export function decodeIssueDeploymentOrder(binary: Uint8Array): IssueDeploymentOrder {
-  return _decodeIssueDeploymentOrder(wrapByteBuffer(binary));
-}
-
-function _decodeIssueDeploymentOrder(bb: ByteBuffer): IssueDeploymentOrder {
-  let message: IssueDeploymentOrder = {} as any;
-
-  end_of_message: while (!isAtEnd(bb)) {
-    let tag = readVarint32(bb);
-
-    switch (tag >>> 3) {
-      case 0:
-        break end_of_message;
-
-      // optional uint32 source_keep = 1;
-      case 1: {
-        message.source_keep = readVarint32(bb) >>> 0;
-        break;
-      }
-
-      // optional uint32 target_keep = 2;
-      case 2: {
-        message.target_keep = readVarint32(bb) >>> 0;
-        break;
-      }
-
-      // optional SoldierType soldier_type = 3;
-      case 3: {
-        message.soldier_type = decodeSoldierType[readVarint32(bb)];
-        break;
-      }
-
-      // optional float percent = 4;
-      case 4: {
-        message.percent = readFloat(bb);
         break;
       }
 

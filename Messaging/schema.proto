@@ -85,12 +85,24 @@ message Oneof_HostServerToGameServer {
 // ###### In game ######
 // #####################
 
+message IssueDeploymentOrder {
+    uint32 source_keep = 1;
+    uint32 target_keep = 2;
+    optional SoldierType soldier_type = 3;
+    optional float percent = 4;
+}
+
+message TypeWord {
+    V2Int grid_pos = 1;
+    string text = 2;
+}
 
 message Oneof_PlayerToGameServer {
     string sender_id = 1;
     string auth_token = 2;
     oneof msg {
          IssueDeploymentOrder issue_deployment_order = 3;
+         TypeWord type_word = 4;
     }
 }
 
@@ -263,11 +275,4 @@ message RenderTileUpdate {
 
 message RenderTileUpdates {
     repeated RenderTileUpdate render_tile_updates = 1;
-}
-
-message IssueDeploymentOrder {
-    uint32 source_keep = 1;
-    uint32 target_keep = 2;
-    optional SoldierType soldier_type = 3;
-    optional float percent = 4;
 }

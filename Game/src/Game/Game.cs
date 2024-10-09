@@ -66,6 +66,10 @@ public class Game
                 float percent = order.HasPercent ? order.Percent : 1f;
                 AttackKeep(order.SourceKeep, order.TargetKeep, soldierType, percent);
                 break;
+            case Oneof_PlayerToGameServer.MsgOneofCase.TypeWord:
+                TypeWord word = msg.TypeWord;
+                TypeWord(msg.SenderId, word.GridPos);
+                break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
                 break;
@@ -279,6 +283,21 @@ public class Game
 
         Keep sourceKeep = Map.Keeps[source];
         sourceKeep.SetDeploymentOrder(target, type, percent);
+    }
+
+    public void TypeWord(string playerId, V2Int schemaPos)
+    {
+        Vector2Int pos = Vector2Int.From(schemaPos);
+        if (Map.Words.TryGetValue(pos, out Word? word))
+        {
+            if (word != null)
+            {
+                Map.Words[pos] = null;
+                uint owningKeep = Map.KeepLands[pos];
+                Keep keep = Map.Keeps[owningKeep];
+                keep.IncrementSoldierCount(keep.SoldierType, word.Text.Length);
+            }
+        }
     }
 
     public void JoinGame(Player player)

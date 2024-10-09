@@ -171,7 +171,7 @@ public class Keep : Entity
         IncrementSoldierCount(SoldierType, 1);
     }
 
-    private void IncrementSoldierCount(SoldierType type, int amount = 1)
+    public void IncrementSoldierCount(SoldierType type, int amount = 1)
     {
         SetCount(type, GetCount(type) + amount);
     }

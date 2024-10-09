@@ -34,6 +34,7 @@ import {
  type Oneof_GameServerToPlayer,
  type RemovedSoldiers,
  type RenderTileUpdates,
+ type V2Int,
 } from "./Schema.ts";
 import { drawTree } from "./tree_drawing.ts";
 import { Typeable } from "./typeable.ts";
@@ -46,7 +47,7 @@ import {
  parseKeep,
  parseProjectile,
  parseSoldier,
- parseWords,
+ parseWord,
  type GameState,
 } from "./types.ts";
 
@@ -235,6 +236,16 @@ export class Game {
   }
  };
 
+ handleTypeResource = (resource_pos: V2Int, resource_text: string) => {
+  this.connection?.sendMessage({
+   sender_id: "Something I guess",
+   type_word: {
+    grid_pos: resource_pos,
+    text: resource_text,
+   },
+  });
+ };
+
  onMessage = (message: Oneof_GameServerToPlayer) => {
   if (message.initial_state) {
    this.handleInitialStateMsg(message.initial_state);
@@ -270,12 +281,17 @@ export class Game {
     );
    }
   });
+  this.gameState.harvestables = [];
+  msg.words?.forEach((w) => {
+   const parsed = parseWord(w, this.drawing, this.handleTypeResource);
+   if (!parsed) return;
+   this.gameState.harvestables.push(parsed);
+  });
 
   this.gameState.tiles = msg.tiles || [];
   this.gameState.renderTiles = msg.render_tiles || [];
   this.gameState.mapHeight = msg.map_height || 0;
   this.gameState.mapWidth = msg.map_width || 0;
-  this.gameState.harvestables = parseWords(msg, this.drawing);
  }
 
  handleNewSoldiersMsg(msg: NewSoldiers) {

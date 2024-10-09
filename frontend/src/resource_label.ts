@@ -81,38 +81,29 @@ export class ResourceLabel {
 
   if (this.timeSinceCompleted >= 0) {
    this.timeSinceCompleted += deltaTime;
+   this.sphereSpeed += deltaTime * 200;
+   this.sphereSpeed = Math.min(this.sphereSpeed, 200);
+
    for (let i = 0; i < this.spherePositions.length; i++) {
-    this.sphereVelocities[i].x *= 0.97;
-    this.sphereVelocities[i].y *= 0.97;
+    const delta = {
+     x: this.keepPos.x * TILE_SIZE - (x + this.spherePositions[i].x),
+     y: this.keepPos.y * TILE_SIZE - (y + this.spherePositions[i].y),
+    };
 
-    this.spherePositions[i].x += this.sphereVelocities[i].x * deltaTime;
-    this.spherePositions[i].y += this.sphereVelocities[i].y * deltaTime;
-   }
-   if (this.timeSinceCompleted < 0.75) {
-   } else if (this.timeSinceCompleted < 5) {
-    this.sphereSpeed += deltaTime * 200;
-    this.sphereSpeed = Math.min(this.sphereSpeed, 200);
-    for (let i = 0; i < this.spherePositions.length; i++) {
-     const delta = {
-      x: this.keepPos.x * TILE_SIZE - (x + this.spherePositions[i].x),
-      y: this.keepPos.y * TILE_SIZE - (y + this.spherePositions[i].y),
-     };
+    if (Math.abs(delta.x) < 10 && Math.abs(delta.y) < 10) {
+     deleteBySwap(this.spherePositions, i);
+     deleteBySwap(this.sphereVelocities, i);
 
-     if (Math.abs(delta.x) < 10 && Math.abs(delta.y) < 10) {
-      deleteBySwap(this.spherePositions, i);
-      deleteBySwap(this.sphereVelocities, i);
-
-      if (this.spherePositions.length == 0) {
-       this.timeSinceCompleted = -1;
-      }
-
-      return;
+     if (this.spherePositions.length == 0) {
+      this.timeSinceCompleted = -1;
      }
 
-     const dir = normalize(delta);
-     this.spherePositions[i].x += dir.x * this.sphereSpeed * deltaTime;
-     this.spherePositions[i].y += dir.y * this.sphereSpeed * deltaTime;
+     return;
     }
+
+    const dir = normalize(delta);
+    this.spherePositions[i].x += dir.x * this.sphereSpeed * deltaTime;
+    this.spherePositions[i].y += dir.y * this.sphereSpeed * deltaTime;
    }
    if (this.timeSinceCompleted > 5) {
     this.timeSinceCompleted = -1;
@@ -149,7 +140,7 @@ export class ResourceLabel {
     this.timeSinceCompleted = 0;
 
     const arcSize = (Math.PI * 2) / this.text.length;
-    for (let i = 0; i < this.text.length; i++) {
+    for (let i = 0; i < 1; i++) {
      this.spherePositions.push({ x: 0, y: 0 });
      this.sphereVelocities.push({
       x: Math.cos(arcSize * i) * 50,
