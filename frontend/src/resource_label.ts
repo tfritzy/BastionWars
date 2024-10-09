@@ -1,6 +1,7 @@
 import { Layer, TILE_SIZE } from "./constants";
 import type { Drawing, DrawStyle } from "./drawing";
 import { drawProgressBar } from "./drawing/progress_bar";
+import { deleteBySwap } from "./helpers";
 import { normalize, type Vector2 } from "./types";
 
 const style: DrawStyle = {
@@ -88,24 +89,33 @@ export class ResourceLabel {
     this.spherePositions[i].y += this.sphereVelocities[i].y * deltaTime;
    }
    if (this.timeSinceCompleted < 0.75) {
-    // for (let i = 0; i < this.spherePositions.length; i++) {
-    //  this.sphereVelocities[i].x *= 0.97;
-    //  this.sphereVelocities[i].y *= 0.97;
-    //  this.spherePositions[i].x += this.sphereVelocities[i].x * deltaTime;
-    //  this.spherePositions[i].y += this.sphereVelocities[i].y * deltaTime;
-    // }
-   } else if (this.timeSinceCompleted < 3) {
-    this.sphereSpeed += deltaTime * 400;
+   } else if (this.timeSinceCompleted < 5) {
+    this.sphereSpeed += deltaTime * 200;
+    this.sphereSpeed = Math.min(this.sphereSpeed, 200);
     for (let i = 0; i < this.spherePositions.length; i++) {
      const delta = {
       x: this.keepPos.x * TILE_SIZE - (x + this.spherePositions[i].x),
       y: this.keepPos.y * TILE_SIZE - (y + this.spherePositions[i].y),
      };
 
+     if (Math.abs(delta.x) < 10 && Math.abs(delta.y) < 10) {
+      deleteBySwap(this.spherePositions, i);
+      deleteBySwap(this.sphereVelocities, i);
+
+      if (this.spherePositions.length == 0) {
+       this.timeSinceCompleted = -1;
+      }
+
+      return;
+     }
+
      const dir = normalize(delta);
      this.spherePositions[i].x += dir.x * this.sphereSpeed * deltaTime;
      this.spherePositions[i].y += dir.y * this.sphereSpeed * deltaTime;
     }
+   }
+   if (this.timeSinceCompleted > 5) {
+    this.timeSinceCompleted = -1;
    }
 
    for (let i = 0; i < this.spherePositions.length; i++) {

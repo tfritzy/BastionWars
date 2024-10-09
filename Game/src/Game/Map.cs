@@ -267,7 +267,7 @@ public class Map
                         archerKeep.Alliance = GetKeepAlliance(ownership[y][x], archerKeep.Id);
                         Keeps.Add(archerKeep.Id, archerKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
-                            new Vector2(x, y),
+                            new Vector2(x + .5f, y + .5f),
                             archerKeep.Id,
                             Keep.Radius
                         ));
@@ -282,7 +282,7 @@ public class Map
                         warriorKeep.Alliance = GetKeepAlliance(ownership[y][x], warriorKeep.Id);
                         Keeps.Add(warriorKeep.Id, warriorKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
-                            new Vector2(x, y),
+                            new Vector2(x + .5f, y + .5f),
                             warriorKeep.Id,
                             Keep.Radius
                         ));

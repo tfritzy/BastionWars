@@ -104,8 +104,8 @@ export class Game {
 
  drawKeepLables(deltaTime: number) {
   this.gameState.keeps.forEach((keep) => {
-   const x = keep.pos.x * WORLD_TO_CANVAS + HALF_T;
-   const y = keep.pos.y * WORLD_TO_CANVAS + HALF_T;
+   const x = keep.pos.x * WORLD_TO_CANVAS;
+   const y = keep.pos.y * WORLD_TO_CANVAS;
    this.keepLabels.get(keep.id)?.draw(x, y - 35, deltaTime);
   });
  }
