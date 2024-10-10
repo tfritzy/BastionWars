@@ -196,6 +196,7 @@ public class Map
             return;
         }
 
+        Game.Map.Words[pos] = null;
         RemovedWords.Add(pos.ToSchema());
     }
 

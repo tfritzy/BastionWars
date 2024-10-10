@@ -191,6 +191,9 @@ public class Game
         {
             if (Map.Words.TryGetValue(gridPos, out Word? word))
             {
+                if (word == null)
+                    continue;
+
                 newWords.Words.Add(new NewWord()
                 {
                     GridPos = gridPos.ToSchema(),

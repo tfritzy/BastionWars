@@ -113,6 +113,13 @@ public class GameTests
 
         Assert.IsNull(game.Map.Words[wordPos]);
         Assert.AreEqual(Keep.StartTroopCount + text.Length, keep.GetCount(keep.SoldierType));
+
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        var removed = player.MessageQueue.Where(m => m.RemovedWords != null).ToList();
+        Assert.AreEqual(1, removed.Count);
+        Assert.AreEqual(1, removed.First().RemovedWords.Positions.Count);
+        Assert.AreEqual(wordPos.X, removed.First().RemovedWords.Positions.First().X);
+        Assert.AreEqual(wordPos.Y, removed.First().RemovedWords.Positions.First().Y);
     }
 
     [TestMethod]
