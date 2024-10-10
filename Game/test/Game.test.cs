@@ -93,6 +93,35 @@ public class GameTests
     }
 
     [TestMethod]
+    public void Game_TypeWord()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        var player = TH.AddPlayer(game);
+        var keep = game.Map.KeepAt(0);
+
+        var wordPos = game.Map.Words.Keys.First(pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
+        string text = game.Map.Words[wordPos]!.Text;
+        game.HandleCommand(new Oneof_PlayerToGameServer()
+        {
+            SenderId = player.Id,
+            TypeWord = new TypeWord()
+            {
+                GridPos = wordPos.ToSchema(),
+                Text = text
+            }
+        });
+
+        Assert.IsNull(game.Map.Words[wordPos]);
+        Assert.AreEqual(Keep.StartTroopCount + text.Length, keep.GetCount(keep.SoldierType));
+    }
+
+    [TestMethod]
+    public void Game_TypeWord_MustMatchOwner()
+    {
+        Assert.Fail("Need to build a system of giving players an alliance.");
+    }
+
+    [TestMethod]
     public void Game_InitialStateHasInitialWords()
     {
         Game game = new(TH.GetGameSettings());

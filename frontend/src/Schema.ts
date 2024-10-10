@@ -1146,6 +1146,7 @@ export interface Oneof_GameServerToPlayer {
   new_projectiles?: NewProjectiles;
   render_tile_updates?: RenderTileUpdates;
   new_words?: NewWords;
+  removed_words?: RemovedWords;
 }
 
 export function encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer): Uint8Array {
@@ -1238,6 +1239,17 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
+
+  // optional RemovedWords removed_words = 9;
+  let $removed_words = message.removed_words;
+  if ($removed_words !== undefined) {
+    writeVarint32(bb, 74);
+    let nested = popByteBuffer();
+    _encodeRemovedWords($removed_words, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
 }
 
 export function decodeOneof_GameServerToPlayer(binary: Uint8Array): Oneof_GameServerToPlayer {
@@ -1312,6 +1324,14 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
       case 8: {
         let limit = pushTemporaryLength(bb);
         message.new_words = _decodeNewWords(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional RemovedWords removed_words = 9;
+      case 9: {
+        let limit = pushTemporaryLength(bb);
+        message.removed_words = _decodeRemovedWords(bb);
         bb.limit = limit;
         break;
       }
@@ -1989,6 +2009,62 @@ function _decodeNewWords(bb: ByteBuffer): NewWords {
   return message;
 }
 
+export interface RemovedWords {
+  positions?: V2Int[];
+}
+
+export function encodeRemovedWords(message: RemovedWords): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeRemovedWords(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeRemovedWords(message: RemovedWords, bb: ByteBuffer): void {
+  // repeated V2Int positions = 1;
+  let array$positions = message.positions;
+  if (array$positions !== undefined) {
+    for (let value of array$positions) {
+      writeVarint32(bb, 10);
+      let nested = popByteBuffer();
+      _encodeV2Int(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
+}
+
+export function decodeRemovedWords(binary: Uint8Array): RemovedWords {
+  return _decodeRemovedWords(wrapByteBuffer(binary));
+}
+
+function _decodeRemovedWords(bb: ByteBuffer): RemovedWords {
+  let message: RemovedWords = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // repeated V2Int positions = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.positions || (message.positions = []);
+        values.push(_decodeV2Int(bb));
+        bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
 export interface PathToKeep {
   target_id?: number;
   path?: V2[];
@@ -2571,6 +2647,7 @@ export interface InitialState {
   tiles?: TileType[];
   render_tiles?: RenderTile[];
   words?: NewWord[];
+  removed_words?: RemovedWords[];
 }
 
 export function encodeInitialState(message: InitialState): Uint8Array {
@@ -2645,6 +2722,19 @@ function _encodeInitialState(message: InitialState, bb: ByteBuffer): void {
       pushByteBuffer(nested);
     }
   }
+
+  // repeated RemovedWords removed_words = 7;
+  let array$removed_words = message.removed_words;
+  if (array$removed_words !== undefined) {
+    for (let value of array$removed_words) {
+      writeVarint32(bb, 58);
+      let nested = popByteBuffer();
+      _encodeRemovedWords(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
 }
 
 export function decodeInitialState(binary: Uint8Array): InitialState {
@@ -2711,6 +2801,15 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
         let limit = pushTemporaryLength(bb);
         let values = message.words || (message.words = []);
         values.push(_decodeNewWord(bb));
+        bb.limit = limit;
+        break;
+      }
+
+      // repeated RemovedWords removed_words = 7;
+      case 7: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.removed_words || (message.removed_words = []);
+        values.push(_decodeRemovedWords(bb));
         bb.limit = limit;
         break;
       }

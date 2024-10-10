@@ -54,6 +54,7 @@ public class Game
         SendNewSoldierUpdates();
         SendRemovedSoldierUpdates();
         SendNewWordUpdates();
+        SendRemovedWordUpdates();
     }
 
     public void HandleCommand(Oneof_PlayerToGameServer msg)
@@ -202,6 +203,20 @@ public class Game
         Map.NewWords.Clear();
     }
 
+    private void SendRemovedWordUpdates()
+    {
+        if (Map.RemovedWords.Count == 0)
+        {
+            return;
+        }
+
+        RemovedWords removedWords = new();
+        removedWords.Positions.AddRange(Map.RemovedWords);
+
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { RemovedWords = removedWords });
+        Map.RemovedWords.Clear();
+    }
+
     private Dictionary<uint, double> bastionProduceCooldowns = new();
     private void BastionAutoAccrue()
     {
@@ -292,7 +307,7 @@ public class Game
         {
             if (word != null)
             {
-                Map.Words[pos] = null;
+                Map.RemoveWord(pos);
                 uint owningKeep = Map.KeepLands[pos];
                 Keep keep = Map.Keeps[owningKeep];
                 keep.IncrementSoldierCount(keep.SoldierType, word.Text.Length);

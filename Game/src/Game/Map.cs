@@ -24,6 +24,7 @@ public class Map
     public HashSet<uint> NewSoldiers { get; private set; } = [];
     public HashSet<uint> RemovedSoldiers { get; private set; } = [];
     public HashSet<Vector2Int> NewWords { get; private set; } = [];
+    public HashSet<V2Int> RemovedWords { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -186,6 +187,16 @@ public class Map
                 }
             }
         }
+    }
+
+    public void RemoveWord(Vector2Int pos)
+    {
+        if (!Words.ContainsKey(pos))
+        {
+            return;
+        }
+
+        RemovedWords.Add(pos.ToSchema());
     }
 
     public static string GetRandomWord()

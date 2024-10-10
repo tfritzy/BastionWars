@@ -116,6 +116,7 @@ message Oneof_GameServerToPlayer {
         NewProjectiles new_projectiles = 6;
         RenderTileUpdates render_tile_updates = 7;
         NewWords new_words = 8;
+        RemovedWords removed_words = 9;
     }
 }
 
@@ -204,6 +205,10 @@ message NewWords {
     repeated NewWord words = 1;
 }
 
+message RemovedWords {
+    repeated V2Int positions = 1;
+}
+
 enum WalkPathType {
     StraightToRight = 0;
     StraightDown = 1;
@@ -266,6 +271,7 @@ message InitialState {
     repeated TileType tiles = 4;
     repeated RenderTile render_tiles = 5;
     repeated NewWord words = 6;
+    repeated RemovedWords removed_words = 7;
 }
 
 message RenderTileUpdate {

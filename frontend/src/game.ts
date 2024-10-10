@@ -18,6 +18,7 @@ import {
 } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
+import { deleteBySwap } from "./helpers.ts";
 import { drawKeep } from "./keep_drawing.ts";
 import {
  adjustPosForRowOffset,
@@ -31,8 +32,10 @@ import {
  type InitialState,
  type NewProjectiles,
  type NewSoldiers,
+ type NewWords,
  type Oneof_GameServerToPlayer,
  type RemovedSoldiers,
+ type RemovedWords,
  type RenderTileUpdates,
  type V2Int,
 } from "./Schema.ts";
@@ -259,6 +262,10 @@ export class Game {
    this.handleNewProjectiles(message.new_projectiles);
   } else if (message.render_tile_updates) {
    this.handleRenderTileUpdates(message.render_tile_updates);
+  } else if (message.new_words) {
+   this.handleNewWords(message.new_words);
+  } else if (message.removed_words) {
+   this.handleRemovedWords(message.removed_words);
   }
  };
 
@@ -329,6 +336,27 @@ export class Game {
    const proj = parseProjectile(p);
    if (proj) {
     this.gameState.projectiles.push(proj);
+   }
+  });
+ }
+
+ handleNewWords(msg: NewWords) {
+  msg.words?.forEach((w) => {
+   const word = parseWord(w, this.drawing, this.handleTypeResource);
+   if (word) {
+    this.gameState.harvestables.push(word);
+   }
+  });
+ }
+
+ handleRemovedWords(msg: RemovedWords) {
+  msg.positions?.forEach((p) => {
+   const i = this.gameState.harvestables.findIndex(
+    (h) => h.pos.x === p.x && h.pos.y === p.y
+   );
+
+   if (i >= 0) {
+    deleteBySwap(this.gameState.harvestables, i);
    }
   });
  }
