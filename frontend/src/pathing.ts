@@ -1,5 +1,6 @@
+import { normalize } from "./helpers";
 import { WalkPathType } from "./Schema";
-import { addV3, normalize, type Soldier, type Vector2 } from "./types";
+import { type Soldier, type Vector2 } from "./types";
 
 function getPathLength(walkType: WalkPathType) {
   if (

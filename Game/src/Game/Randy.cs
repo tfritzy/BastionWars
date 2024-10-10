@@ -15,7 +15,7 @@ public static class Randy
         return (float)(Chaos.NextDouble() * (max - min) + min);
     }
 
-    public static T ChaoticElement<T>(List<T> list)
+    public static T ChaoticElement<T>(IList<T> list)
     {
         return list[Chaos.Next(0, list.Count)];
     }

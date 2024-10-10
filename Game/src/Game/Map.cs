@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Text;
 using Navigation;
 using Schema;
 using SpacialPartitioning;
@@ -200,9 +201,17 @@ public class Map
         RemovedWords.Add(pos.ToSchema());
     }
 
+    const string alphabet = "abcdefghijklmnopqrstuvwxyz";
     public static string GetRandomWord()
     {
-        return Dictionary.MostCommon[Randy.WorldGen.Next(0, Dictionary.MostCommon.Length)];
+        int length = (int)Randy.ChaoticInRange(3, 5);
+        StringBuilder sb = new();
+        for (int i = 0; i < length; i++)
+        {
+            sb.Append(alphabet[Randy.Chaos.Next(0, alphabet.Length)]);
+        }
+
+        return sb.ToString();
     }
 
     public void AddSoldier(Soldier soldier, Vector2? pos = null)

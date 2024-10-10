@@ -194,10 +194,13 @@ public class Game
                 if (word == null)
                     continue;
 
+                var owningKeepId = Map.KeepLands[gridPos];
+                var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
                 newWords.Words.Add(new NewWord()
                 {
                     GridPos = gridPos.ToSchema(),
                     Text = word!.Text,
+                    OwningKeepPos = owningKeepPos
                 });
             }
         }
@@ -306,6 +309,7 @@ public class Game
     public void TypeWord(string playerId, V2Int schemaPos)
     {
         Vector2Int pos = Vector2Int.From(schemaPos);
+        Logger.Log("Type word at pos: " + pos);
         if (Map.Words.TryGetValue(pos, out Word? word))
         {
             if (word != null)
