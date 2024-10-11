@@ -60,3 +60,32 @@ export function normalize(v: Vector2) {
 
   return { x: v.x / length, y: v.y / length };
 }
+
+export function calculateCanvasSize(): {
+  width: number;
+  height: number;
+} {
+  const dpr = window.devicePixelRatio || 1;
+  const maxSize = 16384;
+  let width = window.innerWidth * dpr;
+  let height = window.innerHeight * dpr;
+
+  if (width > maxSize || height > maxSize) {
+    const ratio = Math.min(maxSize / width, maxSize / height);
+    width *= ratio;
+    height *= ratio;
+  }
+
+  return {
+    width: Math.floor(width),
+    height: Math.floor(height),
+  };
+}
+
+export function setDpr(
+  canvas: HTMLCanvasElement,
+  ctx: CanvasRenderingContext2D
+): void {
+  const dpr = window.devicePixelRatio || 1;
+  ctx.scale(dpr, dpr);
+}

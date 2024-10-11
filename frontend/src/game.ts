@@ -77,11 +77,11 @@ export class Game {
     drawMap(this.drawing, this.gameState);
     this.drawKeeps(deltaTime);
     this.drawSoldiers(deltaTime);
-    this.drawing.draw(this.ctx);
     this.drawKeepLables(deltaTime);
     this.drawProjectiles(deltaTime);
     this.drawTrees(this.time);
     this.drawWords(deltaTime);
+    this.drawing.draw(this.ctx);
   }
 
   drawKeeps(deltaTime: number) {

@@ -1,4 +1,10 @@
-import { BOUNDARY_LINE_STYLE, BOUNDARY_LINE_WIDTH, Layer } from "./constants";
+import {
+  BOUNDARY_LINE_STYLE,
+  BOUNDARY_LINE_WIDTH,
+  Layer,
+  TILE_SIZE,
+} from "./constants";
+import { setDpr } from "./helpers";
 
 type DrawFunction = (ctx: CanvasRenderingContext2D) => void;
 
@@ -58,16 +64,15 @@ function drawStyleEquals(
 
 export class Drawing {
   private draw_queue: Map<number, [DrawStyle, DrawFunction[]][]>[] = [];
-  public Icons: Map<string, HTMLImageElement> = new Map<
+  private offscreen_canvases: Map<
     string,
-    HTMLImageElement
+    { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D }
+  > = new Map<
+    string,
+    { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D }
   >();
 
-  constructor() {
-    const wheat = new Image();
-    wheat.src = "svgs/round-straw-bale.svg";
-    this.Icons.set("wheat", wheat);
-  }
+  constructor() {}
 
   addToDrawQueue(style: DrawStyle, func: DrawFunction) {
     if (!this.draw_queue[style.layer]) {
@@ -92,6 +97,38 @@ export class Drawing {
         tuple[1].push(func);
       }
     }
+  }
+
+  drawWithOffscreen(
+    canvasKey: string,
+    targetX: number,
+    targetY: number,
+    layer: number,
+    steps: (ctx: CanvasRenderingContext2D) => void
+  ) {
+    if (!this.offscreen_canvases.has(canvasKey)) {
+      const canvas = document.createElement("canvas");
+      canvas.id = canvasKey;
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext("2d")!;
+      setDpr(canvas, ctx);
+      this.offscreen_canvases.set(canvasKey, { canvas, ctx });
+      steps(ctx);
+    }
+
+    this.addToDrawQueue({ layer }, (ctx) => {
+      ctx.drawImage(
+        this.offscreen_canvases.get(canvasKey)!.canvas,
+        0,
+        0,
+        TILE_SIZE * (window.devicePixelRatio || 1),
+        TILE_SIZE * (window.devicePixelRatio || 1),
+        targetX,
+        targetY,
+        TILE_SIZE,
+        TILE_SIZE
+      );
+    });
   }
 
   drawCustom(style: DrawStyle, steps: DrawFunction) {
