@@ -247,15 +247,16 @@ export class Drawing {
   let yOffset = 20; // Starting y-position for rendering times
 
   ctx.save();
+  ctx.resetTransform();
   ctx.fillStyle = "black";
-  ctx.font = "12px Arial";
-  ctx.textAlign = "right";
+  ctx.font = "20px Arial";
+  ctx.textAlign = "left";
 
   this.layerTimes.forEach((times, i) => {
    const avg = this.average(times);
    const timeString = `${avg.toFixed(2)}ms`;
    ctx.fillText(`Layer ${i}: ${timeString}`, 10, yOffset);
-   yOffset += 20;
+   yOffset += 26;
   });
 
   ctx.restore();
