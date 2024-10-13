@@ -330,11 +330,17 @@ public class Game
         }
     }
 
-    public void JoinGame(Player player)
+    public bool JoinGame(Player player)
     {
+        uint? emptyKeepId = FindEmptyKeep(Map);
+        if (emptyKeepId == null)
+            return false;
+
         Players[player.Id] = player;
         PlayerIds.Add(player.Id);
+        Map.Keeps[emptyKeepId.Value].OwnerId = player.Id;
         AddMessageToOutbox(new Oneof_GameServerToPlayer { InitialState = GetInitialState() }, player.Id);
+        return true;
     }
 
     public void DisconnectPlayer(string playerId)
@@ -416,6 +422,24 @@ public class Game
         return state;
     }
 
+    public void AddMessageToOutbox(Oneof_GameServerToPlayer update, string? recipient = null)
+    {
+        if (recipient == null)
+        {
+            foreach (Player player in Players.Values)
+            {
+                var u = update.Clone();
+                u.RecipientId = player.Id;
+                Outbox.Add(u);
+            }
+        }
+        else
+        {
+            update.RecipientId = recipient;
+            Outbox.Add(update);
+        }
+    }
+
     private static List<PathToKeep> GetPathsToOtherKeeps(Map map, uint source)
     {
         List<PathToKeep> paths = [];
@@ -453,21 +477,11 @@ public class Game
         return list;
     }
 
-    public void AddMessageToOutbox(Oneof_GameServerToPlayer update, string? recipient = null)
+    private static uint? FindEmptyKeep(Map map)
     {
-        if (recipient == null)
-        {
-            foreach (Player player in Players.Values)
-            {
-                var u = update.Clone();
-                u.RecipientId = player.Id;
-                Outbox.Add(u);
-            }
-        }
-        else
-        {
-            update.RecipientId = recipient;
-            Outbox.Add(update);
-        }
+        List<Keep> emptyKeeps = map.Keeps.Values.Where(k => k.OwnerId == null).ToList();
+        if (emptyKeeps.Count == 0)
+            return null;
+        return Randy.ChaoticElement(emptyKeeps).Id;
     }
 }

@@ -33,7 +33,7 @@ public class GameTests
     }
 
     [TestMethod]
-    public void Game_SendsInitialStateWhenPlayerJoins()
+    public void Game_JoinGame_SendsInitialState()
     {
         Game game = new(TH.GetGameSettings());
         TH.AddPlayer(game);
@@ -63,6 +63,12 @@ public class GameTests
             Assert.AreEqual(keepPos.X, keepState.Pos.X);
             Assert.AreEqual(keepPos.Y, keepState.Pos.Y);
         }
+    }
+
+    [TestMethod]
+    public void Game_JoinGame_ReturnsFalseIfFull()
+    {
+        Assert.Fail();
     }
 
     [TestMethod]
@@ -97,9 +103,10 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         var player = TH.AddPlayer(game);
-        var keep = game.Map.KeepAt(0);
+        var keep = game.Map.Keeps.Values.First(k => k.OwnerId == player.Id);
 
-        var wordPos = game.Map.Words.Keys.First(pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
+        var wordPos = game.Map.Words.Keys.First(
+            pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
         string text = game.Map.Words[wordPos]!.Text;
         game.HandleCommand(new Oneof_PlayerToGameServer()
         {
@@ -120,12 +127,6 @@ public class GameTests
         Assert.AreEqual(1, removed.First().RemovedWords.Positions.Count);
         Assert.AreEqual(wordPos.X, removed.First().RemovedWords.Positions.First().X);
         Assert.AreEqual(wordPos.Y, removed.First().RemovedWords.Positions.First().Y);
-    }
-
-    [TestMethod]
-    public void Game_TypeWord_MustMatchOwner()
-    {
-        Assert.Fail("Need to build a system of giving players an alliance.");
     }
 
     [TestMethod]
@@ -345,17 +346,28 @@ public class GameTests
     }
 
     [TestMethod]
-    public void Game_IgnoreInvalidTypeWord()
+    public void Game_TypeWord_MustMatchOwner()
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         var player = TH.AddPlayer(game);
-        var keep = game.Map.KeepAt(0);
+        var player2 = TH.AddPlayer(game);
+        var keep = game.Map.Keeps.Values.First(k => k.OwnerId == player.Id);
 
-        var wordPos = game.Map.Words.Keys.First(pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
+        var wordPos = game.Map.Words.Keys.First(
+            pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
         string text = game.Map.Words[wordPos]!.Text;
         game.HandleCommand(new Oneof_PlayerToGameServer()
         {
             SenderId = "plyr_wrong_id",
+            TypeWord = new TypeWord()
+            {
+                GridPos = wordPos.ToSchema(),
+                Text = text
+            }
+        });
+        game.HandleCommand(new Oneof_PlayerToGameServer()
+        {
+            SenderId = player2.Id,
             TypeWord = new TypeWord()
             {
                 GridPos = wordPos.ToSchema(),

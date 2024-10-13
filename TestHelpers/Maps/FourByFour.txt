@@ -1,6 +1,6 @@
-X X X
-A X T
-. W X
+F X F
+A F T
+F W F
 </>
 . . .
 . . .

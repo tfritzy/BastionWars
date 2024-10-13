@@ -11,12 +11,12 @@ public class KeepTests
     public void Keep_BasicStuff()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
-        Keep keep = new(game, SoldierType.Warrior);
+        Keep keep = new(game, SoldierType.Warrior, null);
         Assert.AreEqual(0, keep.ArcherCount);
         Assert.AreEqual(5, keep.WarriorCount);
         Assert.AreEqual(SoldierType.Warrior, keep.SoldierType);
         Assert.AreNotEqual(0u, keep.Id);
-        Keep keep2 = new(game, SoldierType.Archer, 3);
+        Keep keep2 = new(game, SoldierType.Archer, null, 3);
         Assert.AreEqual(keep.Id + 1, keep2.Id);
         Assert.AreEqual(3, keep2.Alliance);
     }
@@ -30,7 +30,7 @@ public class KeepTests
             if (type == SoldierType.InvalidSoldier)
                 continue;
 
-            Keep keep = new(game, type);
+            Keep keep = new(game, type, null);
             Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(type));
             keep.Accrue();
             Assert.AreEqual(Keep.StartTroopCount + 1, keep.GetCount(type));
@@ -130,7 +130,7 @@ public class KeepTests
     public void Keep_Breach_GetsCaptured()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
-        Keep keep = new(game, SoldierType.Warrior);
+        Keep keep = new(game, SoldierType.Warrior, null);
 
         keep.SetCount(warriors: 30);
         int alliance = keep.Alliance;
@@ -147,7 +147,7 @@ public class KeepTests
     public void Keep_Breach_FightsSoldiersFirst()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
-        Keep keep = new(game, SoldierType.Warrior);
+        Keep keep = new(game, SoldierType.Warrior, null);
 
         keep.SetCount(warriors: 10, archers: 30);
         int alliance = keep.Alliance;
@@ -170,7 +170,7 @@ public class KeepTests
     public void Keep_Breach_SoldiersWreckArchers()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
-        Keep keep = new(game, SoldierType.Warrior);
+        Keep keep = new(game, SoldierType.Warrior, null);
 
         keep.SetCount(archers: 30, warriors: 0);
         int alliance = keep.Alliance;
@@ -186,7 +186,7 @@ public class KeepTests
     public void Keep_Breach_ArchersNotVeryGoodAtIt()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
-        Keep keep = new(game, SoldierType.Warrior);
+        Keep keep = new(game, SoldierType.Warrior, null);
 
         keep.SetCount(warriors: 30);
         int alliance = keep.Alliance;
@@ -202,7 +202,7 @@ public class KeepTests
     public void Keep_Breach_PowerOverflowOnCapture()
     {
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
-        Keep keep = new(game, SoldierType.Warrior);
+        Keep keep = new(game, SoldierType.Warrior, null);
         int originalAlliance = keep.Alliance;
 
         keep.SetCount(archers: 2, warriors: 0);

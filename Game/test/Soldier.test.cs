@@ -15,7 +15,7 @@ public class SoldierTests
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(1);
         TH.ErradicateAllArchers(game);
-        var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
+        var soldier = new Soldier(game, null, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
         game.Map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
 
@@ -38,7 +38,7 @@ public class SoldierTests
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(5);
         TH.ErradicateAllArchers(game);
-        var soldier = new Soldier(game, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
+        var soldier = new Soldier(game, null, 0, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         game.Map.AddSoldier(soldier);
 
         var walkPath = game.Map.GetWalkPathBetweenKeeps(keep0.Id, keep1.Id)!;
@@ -72,7 +72,7 @@ public class SoldierTests
         keep0.Capture(1);
         keep1.Capture(2);
         keep1.SetCount(archers: 0, warriors: 0);
-        var soldier = new Soldier(game, 1, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
+        var soldier = new Soldier(game, null, 1, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
         game.Map.AddSoldier(soldier, new Vector2(path[0].X + .5f, path[0].Y + .5f));
 
@@ -133,7 +133,7 @@ public class SoldierTests
         var keep1 = game.Map.KeepAt(5);
         keep1.Capture(5);
 
-        var soldier = new Soldier(game, 1, SoldierType.Warrior, keep.Id, keep1.Id, 0);
+        var soldier = new Soldier(game, null, 1, SoldierType.Warrior, keep.Id, keep1.Id, 0);
         game.Map.AddSoldier(soldier, Vector2.Zero);
 
         var removed = game.Players.Values.First().MessageQueue.Where(m => m.RemovedSoldiers != null);
