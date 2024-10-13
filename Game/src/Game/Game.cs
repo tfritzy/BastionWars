@@ -18,8 +18,6 @@ public class Game
 
     public const float AutoAccrualTime = 3f;
     public const float NetworkTickTime = 1f / 20f;
-    public const int InitialWordCount = 5;
-    public const float WordPlacementTime = 1f;
 
     public Game(GameSettings settings)
     {
@@ -27,7 +25,6 @@ public class Game
         Map = new(this, settings.Map);
         NameKeeps();
         GenerationMode = settings.GenerationMode;
-        PlaceInitialWords();
     }
 
     public void Update(float now)
@@ -36,7 +33,6 @@ public class Game
 
         BastionAutoAccrue();
         Map.Update();
-        PlaceWord();
 
         lastNetworkTick += Time.deltaTime;
         if (lastNetworkTick >= NetworkTickTime)
@@ -53,7 +49,7 @@ public class Game
         SendNewProjectileUpdates();
         SendNewSoldierUpdates();
         SendRemovedSoldierUpdates();
-        SendNewWordUpdates();
+        SendGrownFieldsUpdate();
         SendRemovedWordUpdates();
     }
 
@@ -67,9 +63,10 @@ public class Game
                 float percent = order.HasPercent ? order.Percent : 1f;
                 AttackKeep(order.SourceKeep, order.TargetKeep, soldierType, percent);
                 break;
-            case Oneof_PlayerToGameServer.MsgOneofCase.TypeWord:
-                TypeWord word = msg.TypeWord;
-                TypeWord(msg.SenderId, word.GridPos);
+            case Oneof_PlayerToGameServer.MsgOneofCase.TypeChar:
+                TypeChar typed = msg.TypeChar;
+                if (typed.Char.Length == 0) return;
+                HandleKeystroke(msg.TypeChar.Char[0], msg.SenderId);
                 break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
@@ -179,34 +176,31 @@ public class Game
         Map.RemovedSoldiers.Clear();
     }
 
-    private void SendNewWordUpdates()
+    private void SendGrownFieldsUpdate()
     {
-        if (Map.NewWords.Count == 0)
+        if (Map.NewlyGrownFields.Count == 0)
         {
             return;
         }
 
-        NewWords newWords = new();
-        foreach (Vector2Int gridPos in Map.NewWords)
+        NewGrownFields grownFields = new();
+        foreach (Vector2Int gridPos in Map.NewlyGrownFields)
         {
-            if (Map.Words.TryGetValue(gridPos, out Word? word))
+            if (Map.Fields.TryGetValue(gridPos, out Field? field))
             {
-                if (word == null)
-                    continue;
-
                 var owningKeepId = Map.KeepLands[gridPos];
                 var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
-                newWords.Words.Add(new NewWord()
+                grownFields.Fields.Add(new GrownField()
                 {
                     GridPos = gridPos.ToSchema(),
-                    Text = word!.Text,
+                    Text = field!.Text,
                     OwningKeepPos = owningKeepPos
                 });
             }
         }
 
-        AddMessageToOutbox(new Oneof_GameServerToPlayer { NewWords = newWords });
-        Map.NewWords.Clear();
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { NewGrownFields = grownFields });
+        Map.NewlyGrownFields.Clear();
     }
 
     private void SendRemovedWordUpdates()
@@ -266,35 +260,6 @@ public class Game
         }
     }
 
-    private void PlaceInitialWords()
-    {
-        if (GenerationMode != GenerationMode.Word)
-        {
-            return;
-        }
-
-        lastWordPlacement = WordPlacementTime;
-        for (int i = 0; i < InitialWordCount; i++)
-        {
-            Map.PlaceWord();
-        }
-    }
-
-    private void PlaceWord()
-    {
-        if (GenerationMode != GenerationMode.Word)
-        {
-            return;
-        }
-
-        lastWordPlacement += Time.deltaTime;
-        if (lastWordPlacement >= WordPlacementTime)
-        {
-            Map.PlaceWord();
-            lastWordPlacement = 0f;
-        }
-    }
-
     public void AttackKeep(uint source, uint target, SoldierType? type = null, float percent = 1f)
     {
         if (!Map.Keeps.ContainsKey(source) || !Map.Keeps.ContainsKey(target))
@@ -304,30 +269,6 @@ public class Game
 
         Keep sourceKeep = Map.Keeps[source];
         sourceKeep.SetDeploymentOrder(target, type, percent);
-    }
-
-    public void TypeWord(string playerId, V2Int schemaPos)
-    {
-        if (Players.TryGetValue(playerId, out Player? player))
-        {
-            Vector2Int pos = Vector2Int.From(schemaPos);
-            uint owningKeepId = Map.KeepLands[pos];
-            Keep owningKeep = Map.Keeps[owningKeepId];
-
-            if (player.Id != owningKeep.OwnerId)
-            {
-                return;
-            }
-
-            if (Map.Words.TryGetValue(pos, out Word? word))
-            {
-                if (word != null)
-                {
-                    Map.RemoveWord(pos);
-                    owningKeep.IncrementSoldierCount(owningKeep.SoldierType, word.Text.Length);
-                }
-            }
-        }
     }
 
     public bool JoinGame(Player player)
@@ -349,31 +290,26 @@ public class Game
         PlayerIds.Remove(playerId);
     }
 
-    public void HandleKeystroke(char key, int alliance)
+    public void HandleKeystroke(char typed, string typer)
     {
         if (GenerationMode != GenerationMode.Word)
         {
             return;
         }
 
-        foreach (Word? word in Map.Words.Values)
+        foreach (Field word in Map.Fields.Values)
         {
-            if (word == null)
-            {
-                continue;
-            }
-
             uint landOwner = Map.KeepLands[word.Position];
-            if (Map.Keeps[landOwner].Alliance != alliance)
+            if (Map.Keeps[landOwner].OwnerId != typer)
             {
                 continue;
             }
 
-            word.HandleKeystroke(key);
+            word.HandleKeystroke(typed);
 
             if (word.TypedIndex == word.Text.Length)
             {
-                Map.Words[word.Position] = null;
+                Map.Fields[word.Position] = null;
                 if (Map.KeepLands.TryGetValue(word.Position, out uint ownerId))
                 {
                     Keep? bastion = Map.Keeps[ownerId];
@@ -405,16 +341,19 @@ public class Game
         {
             state.Keeps[i].Paths.AddRange(GetPathsToOtherKeeps(Map, state.Keeps[i].Id));
         }
-        foreach (Vector2Int pos in Map.Words.Keys)
+        foreach (Vector2Int pos in Map.Fields.Keys)
         {
-            if (Map.Words.TryGetValue(pos, out Word? word) && word != null)
+            if (Map.Fields.TryGetValue(pos, out Field? field) && field != null)
             {
+                if (field.RemainingGrowthTime > 0)
+                    continue;
+
                 var owningKeepId = Map.KeepLands[pos];
                 var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
-                state.Words.Add(new NewWord()
+                state.GrownFields.Add(new GrownField()
                 {
                     GridPos = pos.ToSchema(),
-                    Text = word.Text,
+                    Text = field.Text,
                     OwningKeepPos = owningKeepPos
                 });
             }
@@ -454,7 +393,7 @@ public class Game
             };
             var path = map.GetPathBetweenKeeps(source, kid);
             if (path == null) continue;
-            pathMessage.Path.AddRange(path.Select(gridP => new V2() { X = gridP.X, Y = gridP.Y }));
+            pathMessage.Path.AddRange(path.Select(gridP => new V2Int() { X = gridP.X, Y = gridP.Y }));
             pathMessage.WalkTypes.AddRange(Pathing.GetWalkTypes(path));
             paths.Add(pathMessage);
         }

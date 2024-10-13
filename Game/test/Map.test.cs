@@ -74,6 +74,8 @@ public class MapTests
             Assert.AreEqual(expectedTypes[i], game.Map.Keeps.Values.ToList()[i].SoldierType);
             Assert.AreEqual(expectedPositions[i], game.Map.Grid.GetEntityGridPos(game.Map.Keeps.Values.ToList()[i].Id));
         }
+
+        Assert.Fail("Check fields read correctly.");
     }
 
     [TestMethod]
@@ -128,35 +130,5 @@ public class MapTests
             "1 1 1 1 2 2 2 2 2 2\n" +
             "1 1 1 1 2 2 2 2 2 2";
         Assert.AreEqual(expectedOwnership, actualOwnership.ToString());
-    }
-
-    [TestMethod]
-    public void Map_PlacesWords()
-    {
-        Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive, mode: GenerationMode.Word));
-        int numAvailableSpots = 0;
-        for (int x = 0; x < game.Map.Width; x++)
-        {
-            for (int y = 0; y < game.Map.Height; y++)
-            {
-                if (x % 2 == 0 && y % 2 == 0)
-                {
-                    numAvailableSpots += game.Map.Traversable[x, y] == Navigation.Constants.TRAVERSABLE ? 1 : 0;
-                }
-            }
-        }
-        Assert.AreEqual(numAvailableSpots, game.Map.Words.Keys.Count);
-        Assert.AreEqual(Game.InitialWordCount, game.Map.Words.Values.Count(w => w != null));
-        game.Map.PlaceWord();
-        Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
-        game.Map.PlaceWord();
-        Assert.AreEqual(Game.InitialWordCount + 2, game.Map.Words.Values.Count(w => w != null));
-
-        for (int i = 0; i < 100; i++)
-        {
-            game.Map.PlaceWord();
-        }
-
-        Assert.AreEqual(numAvailableSpots, game.Map.Words.Values.Count(w => w != null));
     }
 }

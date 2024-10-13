@@ -92,9 +92,8 @@ message IssueDeploymentOrder {
     optional float percent = 4;
 }
 
-message TypeWord {
-    V2Int grid_pos = 1;
-    string text = 2;
+message TypeChar {
+    string char = 1;
 }
 
 message Oneof_PlayerToGameServer {
@@ -102,7 +101,7 @@ message Oneof_PlayerToGameServer {
     string auth_token = 2;
     oneof msg {
          IssueDeploymentOrder issue_deployment_order = 3;
-         TypeWord type_word = 4;
+         TypeChar type_char = 4;
     }
 }
 
@@ -115,7 +114,7 @@ message Oneof_GameServerToPlayer {
         AllKeepUpdates keep_updates = 5;
         NewProjectiles new_projectiles = 6;
         RenderTileUpdates render_tile_updates = 7;
-        NewWords new_words = 8;
+        NewGrownFields new_grown_fields = 8;
         RemovedWords removed_words = 9;
     }
 }
@@ -126,6 +125,7 @@ enum TileType
     Land = 1;
     Water = 2;
     Tree = 3;
+    Field = 4;
 }
 
 enum RenderAllianceCase {
@@ -195,14 +195,14 @@ message RemovedSoldiers {
     repeated uint32 soldier_ids = 1;
 }
 
-message NewWord {
+message GrownField {
     V2Int grid_pos = 1;
     string text = 2;
     V2 owning_keep_pos = 3;
 }
 
-message NewWords {
-    repeated NewWord words = 1;
+message NewGrownFields {
+    repeated GrownField fields = 1;
 }
 
 message RemovedWords {
@@ -226,7 +226,7 @@ enum WalkPathType {
 
 message PathToKeep {
     uint32 target_id = 1;
-    repeated V2 path = 2;
+    repeated V2Int path = 2;
     repeated WalkPathType walk_types = 3;
 }
 
@@ -270,7 +270,7 @@ message InitialState {
     int32 map_height = 3;
     repeated TileType tiles = 4;
     repeated RenderTile render_tiles = 5;
-    repeated NewWord words = 6;
+    repeated GrownField grown_fields = 6;
     repeated RemovedWords removed_words = 7;
 }
 

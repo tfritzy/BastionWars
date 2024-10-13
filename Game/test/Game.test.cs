@@ -68,7 +68,7 @@ public class GameTests
     [TestMethod]
     public void Game_JoinGame_ReturnsFalseIfFull()
     {
-        Assert.Fail();
+        Assert.Fail("Join game should return false if there's nowhere to put someone");
     }
 
     [TestMethod]
@@ -92,57 +92,36 @@ public class GameTests
                 Assert.AreEqual(1, targetPaths.Count);
                 var path = targetPaths.First();
                 Assert.IsNotNull(path);
-                Assert.AreEqual(source.Pos, path.Path.First());
-                Assert.AreEqual(target.Pos, path.Path.Last());
+                Assert.AreEqual(new Vector2Int(source.Pos).ToSchema(), path.Path.First());
+                Assert.AreEqual(new Vector2Int(target.Pos).ToSchema(), path.Path.Last());
             }
         }
     }
 
     [TestMethod]
-    public void Game_TypeWord()
-    {
-        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
-        var player = TH.AddPlayer(game);
-        var keep = game.Map.Keeps.Values.First(k => k.OwnerId == player.Id);
-
-        var wordPos = game.Map.Words.Keys.First(
-            pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
-        string text = game.Map.Words[wordPos]!.Text;
-        game.HandleCommand(new Oneof_PlayerToGameServer()
-        {
-            SenderId = player.Id,
-            TypeWord = new TypeWord()
-            {
-                GridPos = wordPos.ToSchema(),
-                Text = text
-            }
-        });
-
-        Assert.IsNull(game.Map.Words[wordPos]);
-        Assert.AreEqual(Keep.StartTroopCount + text.Length, keep.GetCount(keep.SoldierType));
-
-        TH.UpdateGame(game, Game.NetworkTickTime);
-        var removed = player.MessageQueue.Where(m => m.RemovedWords != null).ToList();
-        Assert.AreEqual(1, removed.Count);
-        Assert.AreEqual(1, removed.First().RemovedWords.Positions.Count);
-        Assert.AreEqual(wordPos.X, removed.First().RemovedWords.Positions.First().X);
-        Assert.AreEqual(wordPos.Y, removed.First().RemovedWords.Positions.First().Y);
-    }
-
-    [TestMethod]
-    public void Game_InitialStateHasInitialWords()
+    public void Game_InitialStateHasInitialGrownFields()
     {
         Game game = new(TH.GetGameSettings());
+        game.Map.Fields.Values.First().RemainingGrowthTime = 1f;
         TH.AddPlayer(game);
         var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
         var state = initialStates[0].InitialState;
 
-        foreach (Vector2Int pos in game.Map.Words.Keys)
+        foreach (Vector2Int pos in game.Map.Fields.Keys)
         {
-            if (game.Map.Words.TryGetValue(pos, out Word? word) && word != null)
+            if (game.Map.Fields.TryGetValue(pos, out Field? field))
             {
-                NewWord stateWord = state.Words.First(w => w.GridPos.X == pos.X && w.GridPos.Y == pos.Y);
-                Assert.AreEqual(word!.Text, stateWord.Text);
+                GrownField? stateField = state.GrownFields.FirstOrDefault(
+                    f => f.GridPos.X == pos.X && f.GridPos.Y == pos.Y);
+
+                if (field.RemainingGrowthTime > 0)
+                {
+                    Assert.IsNull(stateField);
+                }
+                else
+                {
+                    Assert.AreEqual(field!.Text, stateField!.Text);
+                }
             }
         }
     }
@@ -172,54 +151,49 @@ public class GameTests
     }
 
     [TestMethod]
-    public void Game_PlacesWords()
+    public void Game_FieldsStartGrown()
     {
-        Game game = new Game(TH.GetGameSettings(mode: GenerationMode.Word));
-
-        Assert.AreEqual(Game.InitialWordCount, game.Map.Words.Values.Count(w => w != null));
-        TH.UpdateGame(game, Game.AutoAccrualTime + .1f);
-        Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
-        TH.UpdateGame(game, .1f);
-        Assert.AreEqual(Game.InitialWordCount + 1, game.Map.Words.Values.Count(w => w != null));
-        TH.UpdateGame(game, Game.WordPlacementTime + .1f);
-        Assert.AreEqual(Game.InitialWordCount + 2, game.Map.Words.Values.Count(w => w != null));
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        foreach (Field f in game.Map.Fields.Values)
+        {
+            Assert.AreEqual(0, f.RemainingGrowthTime);
+        }
     }
 
     [TestMethod]
     public void Game_IncrementsWordProgress()
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
-        for (int i = 0; i < 10; i++)
-            TH.UpdateGame(game, Game.WordPlacementTime + .1f);
+        var p = TH.AddPlayer(game);
+        Keep k = game.Map.Keeps.Values.First(k => k.OwnerId == p.Id);
+        Field field = game.Map.Fields.Values.First(f => game.Map.KeepLands[f.Position] == k.Id)!;
+        int initialCount = k.GetCount(k.SoldierType);
 
-        Word firstWord = game.Map.Words.Values.First(w => w != null)!;
-        uint ownerId = game.Map.KeepLands[firstWord.Position];
-        Keep keep = game.Map.Keeps[ownerId];
-
-        for (int i = 0; i < firstWord.Text.Length; i++)
+        for (int i = 0; i < field.Text.Length; i++)
         {
-            game.HandleKeystroke(firstWord.Text[i], keep.Alliance);
+            game.HandleKeystroke(field.Text[i], k.OwnerId!);
+            Assert.AreEqual(0, field.RemainingGrowthTime);
         }
 
         // Multiple words could have been completed.
-        Assert.IsTrue(keep.GetCount(keep.SoldierType) > 0);
+        Assert.IsTrue(k.GetCount(k.SoldierType) - initialCount > 0);
     }
 
     [TestMethod]
     public void Game_DoestCompleteNonOwnedWords()
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
-        Keep allyKeep = game.Map.Keeps.Values.First(b => b.Alliance == 2);
+        var player = TH.AddPlayer(game);
+        Keep allyKeep = game.Map.Keeps.Values.First(b => b.OwnerId == player.Id);
         allyKeep.SetCount(archers: 0, warriors: 0);
 
-        // Fill in words
-        foreach (Vector2Int pos in game.Map.Words.Keys)
-            game.Map.Words[pos] = new Word("a", pos);
+        foreach (Vector2Int pos in game.Map.Fields.Keys)
+            game.Map.Fields[pos]?.TestSetText("a");
 
-        int numWordsOwned = game.Map.Words.Values.Count(
+        int numWordsOwned = game.Map.Fields.Values.Count(
             w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
-        game.HandleKeystroke('a', allyKeep.Alliance);
-        Assert.AreEqual(numWordsOwned, game.Map.Words.Values.Count(w => w == null));
+        game.HandleKeystroke('a', allyKeep.OwnerId!);
+        Assert.AreEqual(numWordsOwned, game.Map.Fields.Values.Count(w => w == null));
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }
 
@@ -331,51 +305,5 @@ public class GameTests
         TH.UpdateGame(game, 1f);
         keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
         Assert.AreEqual(1, keepUpdates.Count);
-    }
-
-    [TestMethod]
-    public void Game_SendsNewWordUpdates()
-    {
-        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
-        Map map = game.Map;
-        TH.AddPlayer(game);
-
-        TH.UpdateGame(game, Game.WordPlacementTime + Game.NetworkTickTime);
-        var wordUpdates = game.Players.Values.First().MessageQueue.Where(m => m.NewWords != null).ToList();
-        Assert.AreEqual(1, wordUpdates.Count);
-    }
-
-    [TestMethod]
-    public void Game_TypeWord_MustMatchOwner()
-    {
-        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
-        var player = TH.AddPlayer(game);
-        var player2 = TH.AddPlayer(game);
-        var keep = game.Map.Keeps.Values.First(k => k.OwnerId == player.Id);
-
-        var wordPos = game.Map.Words.Keys.First(
-            pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
-        string text = game.Map.Words[wordPos]!.Text;
-        game.HandleCommand(new Oneof_PlayerToGameServer()
-        {
-            SenderId = "plyr_wrong_id",
-            TypeWord = new TypeWord()
-            {
-                GridPos = wordPos.ToSchema(),
-                Text = text
-            }
-        });
-        game.HandleCommand(new Oneof_PlayerToGameServer()
-        {
-            SenderId = player2.Id,
-            TypeWord = new TypeWord()
-            {
-                GridPos = wordPos.ToSchema(),
-                Text = text
-            }
-        });
-
-        Assert.IsNotNull(game.Map.Words[wordPos]);
-        Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(keep.SoldierType));
     }
 }

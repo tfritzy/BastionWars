@@ -1,18 +1,26 @@
 using System.Numerics;
+using System.Text;
 
 namespace KeepLordWarriors;
 
-public class Word
+public class Field
 {
     public string Text { get; private set; }
     public int TypedIndex { get; private set; }
     public Vector2Int Position { get; set; }
+    public float RemainingGrowthTime { get; set; }
 
-    public Word(string text, Vector2Int position)
+    public Field(Vector2Int position)
     {
-        Text = text.ToLower();
+        Text = GetRandomWord().ToLower();
         TypedIndex = 0;
         Position = position;
+    }
+
+    public void Update(float deltaTime)
+    {
+        RemainingGrowthTime -= deltaTime;
+        RemainingGrowthTime = MathF.Max(0, RemainingGrowthTime);
     }
 
     public void HandleKeystroke(char key)
@@ -21,9 +29,23 @@ public class Word
         {
             TypedIndex++;
         }
-        else
+    }
+
+    public void TestSetText(string text)
+    {
+        Text = text;
+    }
+
+    const string alphabet = "abcdefghijklmnopqrstuvwxyz";
+    public static string GetRandomWord()
+    {
+        int length = (int)Randy.ChaoticInRange(3, 5);
+        StringBuilder sb = new();
+        for (int i = 0; i < length; i++)
         {
-            TypedIndex = 0;
+            sb.Append(alphabet[Randy.Chaos.Next(0, alphabet.Length)]);
         }
+
+        return sb.ToString();
     }
 }

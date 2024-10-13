@@ -11,6 +11,13 @@ public struct Vector2Int
         Y = y;
     }
 
+
+    public Vector2Int(Schema.V2 v2)
+    {
+        X = (int)v2.X;
+        Y = (int)v2.Y;
+    }
+
     public static Vector2Int operator +(Vector2Int a, Vector2Int b)
     {
         return new Vector2Int(a.X + b.X, a.Y + b.Y);

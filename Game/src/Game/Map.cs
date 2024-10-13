@@ -17,14 +17,14 @@ public class Map
     public List<uint> SoldierIds { get; private set; } = [];
     public Dictionary<uint, Soldier> Soldiers { get; private set; } = [];
     public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = [];
-    public Dictionary<Vector2Int, Word?> Words { get; private set; } = [];
+    public Dictionary<Vector2Int, Field> Fields { get; private set; } = [];
     private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
     private readonly Dictionary<uint, Dictionary<uint, List<WalkPathType>>> keepWalkPaths = [];
     public List<Projectile> Projectiles { get; private set; } = [];
     public HashSet<uint> NewProjectiles { get; private set; } = [];
     public HashSet<uint> NewSoldiers { get; private set; } = [];
     public HashSet<uint> RemovedSoldiers { get; private set; } = [];
-    public HashSet<Vector2Int> NewWords { get; private set; } = [];
+    public HashSet<Vector2Int> NewlyGrownFields { get; private set; } = [];
     public HashSet<V2Int> RemovedWords { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
@@ -35,7 +35,6 @@ public class Map
         ParseMap(rawMap);
         CalculateKeepPathing();
         CalculateKeepOwnership();
-        CalculateValidWordPositions();
         ParseRenderTiles();
     }
 
@@ -52,6 +51,7 @@ public class Map
         }
 
         UpdateProjectiles();
+        UpdateFields();
     }
 
     private void UpdateProjectiles()
@@ -81,6 +81,18 @@ public class Map
                 }
 
                 Projectiles.RemoveAt(i);
+            }
+        }
+    }
+
+    private void UpdateFields()
+    {
+        foreach (Field f in Fields.Values)
+        {
+            f.Update(Game.Time.deltaTime);
+            if (f.RemainingGrowthTime <= 0)
+            {
+                NewlyGrownFields.Add(f.Position);
             }
         }
     }
@@ -153,65 +165,15 @@ public class Map
         KeepLands = Ownership.Calculate(Width, Height, locations);
     }
 
-    private void CalculateValidWordPositions()
-    {
-        for (int x = 0; x < Width; x++)
-        {
-            for (int y = 0; y < Height; y++)
-            {
-                if (Traversable[x, y] == Navigation.Constants.TRAVERSABLE && x % 2 == 0 && y % 2 == 0)
-                {
-                    Words[new Vector2Int(x, y)] = null;
-                }
-            }
-        }
-    }
-
-    public void PlaceWord()
-    {
-        int numOpenSpots = Words.Values.Count(w => w == null);
-        if (numOpenSpots == 0)
-            return;
-
-        int placement = new Random().Next(0, numOpenSpots);
-        foreach (Vector2Int pos in Words.Keys)
-        {
-            if (Words[pos] == null)
-            {
-                placement -= 1;
-                if (placement < 0)
-                {
-                    string word = GetRandomWord();
-                    Words[pos] = new Word(word, pos);
-                    NewWords.Add(pos);
-                    return;
-                }
-            }
-        }
-    }
-
     public void RemoveWord(Vector2Int pos)
     {
-        if (!Words.ContainsKey(pos))
+        if (!Fields.ContainsKey(pos))
         {
             return;
         }
 
-        Game.Map.Words[pos] = null;
+        Game.Map.Fields[pos] = null;
         RemovedWords.Add(pos.ToSchema());
-    }
-
-    const string alphabet = "abcdefghijklmnopqrstuvwxyz";
-    public static string GetRandomWord()
-    {
-        int length = (int)Randy.ChaoticInRange(3, 5);
-        StringBuilder sb = new();
-        for (int i = 0; i < length; i++)
-        {
-            sb.Append(alphabet[Randy.Chaos.Next(0, alphabet.Length)]);
-        }
-
-        return sb.ToString();
     }
 
     public void AddSoldier(Soldier soldier, Vector2? pos = null)
@@ -313,6 +275,12 @@ public class Map
                     case 'T':
                         Tiles[x, y] = TileType.Tree;
                         Traversable[x, y] = Navigation.Constants.BLOCKED;
+                        break;
+                    case 'F':
+                        var pos = new Vector2Int(x, y);
+                        Tiles[x, y] = TileType.Field;
+                        Fields[pos] = new Field(pos);
+                        Traversable[x, y] = Navigation.Constants.TRAVERSABLE;
                         break;
                     case 'X':
                         Tiles[x, y] = TileType.Water;

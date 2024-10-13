@@ -209,7 +209,14 @@ public class Keep : Entity
                 for (int j = 0; j < toDeploy; j++)
                 {
                     Game.Map.AddSoldier(
-                        new Soldier(Game, OwnerId, Alliance, SoldierType.Warrior, Id, order.TargetId, rowOffset),
+                        new Soldier(
+                            game: Game,
+                            owner: OwnerId,
+                            alliance: Alliance,
+                            type: SoldierType.Warrior,
+                            source: Id,
+                            target: order.TargetId,
+                            rowOffset: rowOffset),
                         Game.Map.Grid.GetEntityPosition(Id));
                     rowOffset += RowOffsetStepSize;
                 }
@@ -221,7 +228,14 @@ public class Keep : Entity
                 for (int j = 0; j < toDeploy; j++)
                 {
                     Game.Map.AddSoldier(
-                        new Soldier(Game, OwnerId, Alliance, SoldierType.Archer, Id, order.TargetId, rowOffset),
+                        new Soldier(
+                            game: Game,
+                            owner: OwnerId,
+                            alliance: Alliance,
+                            type: SoldierType.Archer,
+                            source: Id,
+                            target: order.TargetId,
+                            rowOffset: rowOffset),
                         Game.Map.Grid.GetEntityPosition(Id));
                     rowOffset += RowOffsetStepSize;
                 }
