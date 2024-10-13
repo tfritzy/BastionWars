@@ -6,16 +6,15 @@ public abstract class Entity
 {
     public uint Id { get; private set; }
 
-    /// <summary>
-    /// 0 = Neutral, 1+ = Alliance
-    /// </summary>
+    public string? OwnerId { get; set; }
     public int Alliance { get; set; }
 
     protected Game Game;
 
-    public Entity(Game game, int alliance = 0)
+    public Entity(Game game, string? ownerId, int alliance = 0)
     {
         Id = IdGenerator.NextId();
+        OwnerId = ownerId;
         Alliance = alliance;
         this.Game = game;
     }

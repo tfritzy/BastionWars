@@ -20,7 +20,7 @@ public class Soldier : Entity
     public const float BaseMovementSpeed = .3f;
     public const int BaseHealth = 1;
 
-    public Soldier(Game game, int alliance, SoldierType type, uint source, uint target, float rowOffset) : base(game, alliance)
+    public Soldier(Game game, string owner, int alliance, SoldierType type, uint source, uint target, float rowOffset) : base(game, owner, alliance)
     {
         Type = type;
         SourceKeepId = source;

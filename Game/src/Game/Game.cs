@@ -308,16 +308,24 @@ public class Game
 
     public void TypeWord(string playerId, V2Int schemaPos)
     {
-        Vector2Int pos = Vector2Int.From(schemaPos);
-        Logger.Log("Type word at pos: " + pos);
-        if (Map.Words.TryGetValue(pos, out Word? word))
+        if (Players.TryGetValue(playerId, out Player? player))
         {
-            if (word != null)
+            Vector2Int pos = Vector2Int.From(schemaPos);
+            uint owningKeepId = Map.KeepLands[pos];
+            Keep owningKeep = Map.Keeps[owningKeepId];
+
+            if (player.Id != owningKeep.OwnerId)
             {
-                Map.RemoveWord(pos);
-                uint owningKeep = Map.KeepLands[pos];
-                Keep keep = Map.Keeps[owningKeep];
-                keep.IncrementSoldierCount(keep.SoldierType, word.Text.Length);
+                return;
+            }
+
+            if (Map.Words.TryGetValue(pos, out Word? word))
+            {
+                if (word != null)
+                {
+                    Map.RemoveWord(pos);
+                    owningKeep.IncrementSoldierCount(owningKeep.SoldierType, word.Text.Length);
+                }
             }
         }
     }

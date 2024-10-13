@@ -284,6 +284,7 @@ public class Map
                         var archerKeep = new Keep(
                             Game,
                             SoldierType.Archer,
+                            null,
                             alliance: 0);
                         archerKeep.Alliance = GetKeepAlliance(ownership[y][x], archerKeep.Id);
                         Keeps.Add(archerKeep.Id, archerKeep);
@@ -299,6 +300,7 @@ public class Map
                         var warriorKeep = new Keep(
                             Game,
                             SoldierType.Warrior,
+                            null,
                             alliance: 0);
                         warriorKeep.Alliance = GetKeepAlliance(ownership[y][x], warriorKeep.Id);
                         Keeps.Add(warriorKeep.Id, warriorKeep);

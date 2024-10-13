@@ -88,7 +88,7 @@ const treePoints = [
 ];
 
 const drawTreePart = (
- drawing: Drawing,
+ ctx: CanvasRenderingContext2D,
  style: DrawStyle,
  {
   start,
@@ -100,26 +100,30 @@ const drawTreePart = (
  xOffset: number,
  yOffset: number
 ) => {
- drawing.drawCustom(style, (ctx) => {
-  ctx.moveTo(start.x + xOffset, start.y + yOffset);
-  for (let i = 0; i < points.length; i++) {
-   ctx.arcTo(
-    controlPoints[i].x + xOffset,
-    controlPoints[i].y + yOffset,
-    points[i].x + xOffset,
-    points[i].y + yOffset,
-    bumpRadius
-   );
-  }
+ ctx.lineWidth = style.line_width || 0;
+ ctx.fillStyle = style.fill_style || "";
+ ctx.strokeStyle = style.stroke_style || "";
+ ctx.beginPath();
+ ctx.moveTo(start.x + xOffset, start.y + yOffset);
+ for (let i = 0; i < points.length; i++) {
   ctx.arcTo(
-   endControlPoint.x + xOffset,
-   endControlPoint.y + yOffset,
-   start.x + xOffset,
-   start.y + yOffset,
+   controlPoints[i].x + xOffset,
+   controlPoints[i].y + yOffset,
+   points[i].x + xOffset,
+   points[i].y + yOffset,
    bumpRadius
   );
-  ctx.closePath();
- });
+ }
+ ctx.arcTo(
+  endControlPoint.x + xOffset,
+  endControlPoint.y + yOffset,
+  start.x + xOffset,
+  start.y + yOffset,
+  bumpRadius
+ );
+ ctx.closePath();
+ if (style.should_fill) ctx.fill();
+ if (style.should_stroke) ctx.stroke();
 };
 
 export function drawTree(
@@ -128,48 +132,50 @@ export function drawTree(
  gridY: number,
  time: number
 ) {
- const center: Vector2 = {
-  x: Math.round(gridX * TILE_SIZE) + HALF_T,
-  y: Math.round(gridY * TILE_SIZE) + HALF_T,
- };
- const random = center.x * 17 + center.y * 31;
- center.x += Math.sin(random) * 6;
- center.y += Math.cos(random) * 6;
- const wind = (Math.sin(time + gridX + gridY) / 2 + 0.5) * 1.25;
- const bottomPoints = treePoints[0];
- drawTreePart(
-  drawing,
-  styles.treeBottom,
-  bottomPoints,
-  treeLayerConfigs[0].bumpRadius,
-  center.x + -wind,
-  center.y + wind
- );
- drawTreePart(
-  drawing,
-  styles.shadowBottom,
-  bottomPoints,
-  treeLayerConfigs[0].bumpRadius,
-  center.x + -wind - SHADOW_OFFSET,
-  center.y + wind + SHADOW_OFFSET
- );
+ drawing.drawWithOffscreen(
+  "tree",
+  Math.round(gridX * TILE_SIZE),
+  Math.round(gridY * TILE_SIZE),
+  Layer.TreeBottoms,
+  (ctx) => {
+   const random = HALF_T * 17 + HALF_T * 31;
+   const bottomPoints = treePoints[0];
 
- const topWind = wind * 2;
- const topPoints = treePoints[1];
- drawTreePart(
-  drawing,
-  styles.shadowTop,
-  topPoints,
-  treeLayerConfigs[1].bumpRadius,
-  center.x + -topWind - 2,
-  center.y + topWind + 2
- );
- drawTreePart(
-  drawing,
-  styles.treeTop,
-  topPoints,
-  treeLayerConfigs[1].bumpRadius,
-  center.x + -topWind,
-  center.y + topWind
+   drawTreePart(
+    ctx,
+    styles.shadowBottom,
+    bottomPoints,
+    treeLayerConfigs[0].bumpRadius,
+    HALF_T - SHADOW_OFFSET,
+    HALF_T + SHADOW_OFFSET
+   );
+
+   drawTreePart(
+    ctx,
+    styles.treeBottom,
+    bottomPoints,
+    treeLayerConfigs[0].bumpRadius,
+    HALF_T,
+    HALF_T
+   );
+
+   const topPoints = treePoints[1];
+   drawTreePart(
+    ctx,
+    styles.shadowTop,
+    topPoints,
+    treeLayerConfigs[1].bumpRadius,
+    HALF_T - 2,
+    HALF_T + 2
+   );
+   drawTreePart(
+    ctx,
+    styles.treeTop,
+    topPoints,
+    treeLayerConfigs[1].bumpRadius,
+    HALF_T,
+    HALF_T
+   );
+  }
  );
 }

@@ -4,17 +4,12 @@ import {
  KEEP_LINE_WIDTH,
  Layer,
  SHADOW_COLOR,
- soldierColors,
- soldierOutlineColors,
+ UNIT_AREA,
  WORLD_TO_CANVAS,
 } from "./constants";
 import { drawCircle, type Drawing, type DrawStyle } from "./drawing";
-import { SoldierType } from "./Schema";
 import type { Keep } from "./types";
 
-const KEEP_RADIUS = 20;
-const KEEP_INNER_RADIUS = KEEP_RADIUS * 0.8;
-const PIE_RADIUS = KEEP_RADIUS;
 const SHADOW_OFFSET = 7;
 
 const archerBubbleStyle: DrawStyle = {
@@ -91,56 +86,11 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
  );
 
  drawing.drawCustom(archerBubbleStyle, (ctx) => {
-  ctx.moveTo(x + keep.archer_count, y);
-  ctx.arc(x, y, keep.archer_count, 0, Math.PI * 2);
+  const r = Math.sqrt((keep.archer_count * UNIT_AREA) / Math.PI);
+  drawCircle(ctx, x, y, r);
  });
  drawing.drawCustom(warriorBubbleStyle, (ctx) => {
-  ctx.moveTo(x + keep.warrior_count, y);
-  ctx.arc(x, y, keep.warrior_count, 0, Math.PI * 2);
- });
-}
-
-export function drawPieChart(
- drawing: Drawing,
- x: number,
- y: number,
- radius: number,
- keep: Keep
-) {
- let angle = 0;
- const totalSoldiers = keep.archer_count + keep.warrior_count;
- let slice = (keep.warrior_count / totalSoldiers) * 2 * Math.PI;
- drawArc(drawing, x, y, radius, angle, slice, soldierPieStyle);
- angle += slice;
- slice = (keep.archer_count / totalSoldiers) * 2 * Math.PI;
- drawArc(drawing, x, y, radius, angle, slice, archerPieStyle);
-}
-
-const soldierPieStyle: DrawStyle = {
- layer: Layer.UI,
- should_fill: true,
- fill_style: soldierColors[SoldierType.Warrior],
- stroke_style: soldierOutlineColors[SoldierType.Warrior],
- line_width: 0.5,
-};
-
-const archerPieStyle: DrawStyle = {
- layer: Layer.UI,
- should_fill: true,
- fill_style: soldierColors[SoldierType.Archer],
-};
-export function drawArc(
- drawing: Drawing,
- x: number,
- y: number,
- radius: number,
- startAngle: number,
- sliceAngle: number,
- style: DrawStyle
-) {
- drawing.drawCustom(style, (ctx) => {
-  ctx.moveTo(x, y);
-  ctx.arc(x, y, radius, startAngle, startAngle + sliceAngle);
-  ctx.closePath();
+  const r = Math.sqrt((keep.warrior_count * UNIT_AREA) / Math.PI);
+  drawCircle(ctx, x, y, r);
  });
 }

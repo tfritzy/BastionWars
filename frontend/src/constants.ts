@@ -20,8 +20,8 @@ export const Constants = {
  MATCHMAKING_URL: "http://localhost:7249",
 };
 
-export const ARROW_LENGTH = 4;
-export const ARROW_LINE_WIDTH = 0.5;
+export const ARROW_LENGTH = 5;
+export const ARROW_LINE_WIDTH = 0.75;
 
 export const WORLD_TO_CANVAS = 64;
 export const TILE_SIZE = WORLD_TO_CANVAS;
@@ -91,6 +91,7 @@ export const UNIT_OUTLINE_COLOR = "black";
 export const UNIT_OUTLINE_WIDTH = 0.5;
 export const UNIT_RADIUS = 2.5;
 export const UNIT_SHADOW_OFFSET = 1.5;
+export const UNIT_AREA = 5;
 
 // Trees
 export const TREE_LINE_COLOR = "#333333";

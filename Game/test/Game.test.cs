@@ -343,4 +343,27 @@ public class GameTests
         var wordUpdates = game.Players.Values.First().MessageQueue.Where(m => m.NewWords != null).ToList();
         Assert.AreEqual(1, wordUpdates.Count);
     }
+
+    [TestMethod]
+    public void Game_IgnoreInvalidTypeWord()
+    {
+        Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
+        var player = TH.AddPlayer(game);
+        var keep = game.Map.KeepAt(0);
+
+        var wordPos = game.Map.Words.Keys.First(pos => game.Map.Words[pos] != null && game.Map.KeepLands[pos] == keep.Id);
+        string text = game.Map.Words[wordPos]!.Text;
+        game.HandleCommand(new Oneof_PlayerToGameServer()
+        {
+            SenderId = "plyr_wrong_id",
+            TypeWord = new TypeWord()
+            {
+                GridPos = wordPos.ToSchema(),
+                Text = text
+            }
+        });
+
+        Assert.IsNotNull(game.Map.Words[wordPos]);
+        Assert.AreEqual(Keep.StartTroopCount, keep.GetCount(keep.SoldierType));
+    }
 }

@@ -29,7 +29,7 @@ public class Keep : Entity
     private List<float> archerFireCooldowns = [];
     private List<uint> archerTargets = [];
 
-    public Keep(Game game, SoldierType soldierType, int alliance = 0) : base(game, alliance)
+    public Keep(Game game, SoldierType soldierType, string? owner, int alliance = 0) : base(game, owner, alliance)
     {
         SoldierType = soldierType;
         SetCount(soldierType, StartTroopCount);
@@ -209,7 +209,7 @@ public class Keep : Entity
                 for (int j = 0; j < toDeploy; j++)
                 {
                     Game.Map.AddSoldier(
-                        new Soldier(Game, Alliance, SoldierType.Warrior, Id, order.TargetId, rowOffset),
+                        new Soldier(Game, OwnerId, Alliance, SoldierType.Warrior, Id, order.TargetId, rowOffset),
                         Game.Map.Grid.GetEntityPosition(Id));
                     rowOffset += RowOffsetStepSize;
                 }
@@ -221,7 +221,7 @@ public class Keep : Entity
                 for (int j = 0; j < toDeploy; j++)
                 {
                     Game.Map.AddSoldier(
-                        new Soldier(Game, Alliance, SoldierType.Archer, Id, order.TargetId, rowOffset),
+                        new Soldier(Game, OwnerId, Alliance, SoldierType.Archer, Id, order.TargetId, rowOffset),
                         Game.Map.Grid.GetEntityPosition(Id));
                     rowOffset += RowOffsetStepSize;
                 }
