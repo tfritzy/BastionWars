@@ -1,5 +1,6 @@
 using System.Numerics;
 using KeepLordWarriors;
+using TestHelpers;
 
 namespace Tests;
 
@@ -9,7 +10,8 @@ public class FieldTests
     [TestMethod]
     public void Field_IncrementsProgress()
     {
-        Field field = new(new Vector2Int(0, 0));
+        Game game = new(TH.GetGameSettings());
+        Field field = new(game: game, position: new Vector2Int(0, 0));
         Assert.AreEqual(0, field.TypedIndex);
         field.HandleKeystroke(field.Text[0]);
         Assert.AreEqual(1, field.TypedIndex);

@@ -74,8 +74,13 @@ public class MapTests
             Assert.AreEqual(expectedTypes[i], game.Map.Keeps.Values.ToList()[i].SoldierType);
             Assert.AreEqual(expectedPositions[i], game.Map.Grid.GetEntityGridPos(game.Map.Keeps.Values.ToList()[i].Id));
         }
+    }
 
-        Assert.Fail("Check fields read correctly.");
+    [TestMethod]
+    public void Map_ReadsFieldsCorrectly()
+    {
+        Game game = new Game(TH.GetGameSettings(map: TestMaps.TenByFive));
+        Assert.AreEqual(12, game.Map.Fields.Count);
     }
 
     [TestMethod]

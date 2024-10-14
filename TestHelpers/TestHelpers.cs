@@ -45,7 +45,7 @@ public static class TH
     public static Player AddPlayer(Game game)
     {
         int playerCount = game.Players.Count;
-        var player = new Player(name: $"test{playerCount}", id: playerCount.ToString());
+        var player = new Player(name: $"test{playerCount}", id: $"plyr_000{playerCount}");
         game.JoinGame(player);
         return player;
     }

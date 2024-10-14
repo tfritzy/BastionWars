@@ -25,7 +25,7 @@ public class Map
     public HashSet<uint> NewSoldiers { get; private set; } = [];
     public HashSet<uint> RemovedSoldiers { get; private set; } = [];
     public HashSet<Vector2Int> NewlyGrownFields { get; private set; } = [];
-    public HashSet<V2Int> RemovedWords { get; private set; } = [];
+    public HashSet<V2Int> HarvestedFields { get; private set; } = [];
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
@@ -89,11 +89,7 @@ public class Map
     {
         foreach (Field f in Fields.Values)
         {
-            f.Update(Game.Time.deltaTime);
-            if (f.RemainingGrowthTime <= 0)
-            {
-                NewlyGrownFields.Add(f.Position);
-            }
+            f.Update();
         }
     }
 
@@ -163,17 +159,6 @@ public class Map
         }
 
         KeepLands = Ownership.Calculate(Width, Height, locations);
-    }
-
-    public void RemoveWord(Vector2Int pos)
-    {
-        if (!Fields.ContainsKey(pos))
-        {
-            return;
-        }
-
-        Game.Map.Fields[pos] = null;
-        RemovedWords.Add(pos.ToSchema());
     }
 
     public void AddSoldier(Soldier soldier, Vector2? pos = null)
@@ -279,7 +264,7 @@ public class Map
                     case 'F':
                         var pos = new Vector2Int(x, y);
                         Tiles[x, y] = TileType.Field;
-                        Fields[pos] = new Field(pos);
+                        Fields[pos] = new Field(Game, pos);
                         Traversable[x, y] = Navigation.Constants.TRAVERSABLE;
                         break;
                     case 'X':

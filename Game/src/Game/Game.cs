@@ -205,16 +205,16 @@ public class Game
 
     private void SendRemovedWordUpdates()
     {
-        if (Map.RemovedWords.Count == 0)
+        if (Map.HarvestedFields.Count == 0)
         {
             return;
         }
 
         RemovedWords removedWords = new();
-        removedWords.Positions.AddRange(Map.RemovedWords);
+        removedWords.Positions.AddRange(Map.HarvestedFields);
 
         AddMessageToOutbox(new Oneof_GameServerToPlayer { RemovedWords = removedWords });
-        Map.RemovedWords.Clear();
+        Map.HarvestedFields.Clear();
     }
 
     private Dictionary<uint, double> bastionProduceCooldowns = new();
@@ -297,23 +297,22 @@ public class Game
             return;
         }
 
-        foreach (Field word in Map.Fields.Values)
+        foreach (Field field in Map.Fields.Values)
         {
-            uint landOwner = Map.KeepLands[word.Position];
+            uint landOwner = Map.KeepLands[field.Position];
             if (Map.Keeps[landOwner].OwnerId != typer)
             {
                 continue;
             }
 
-            word.HandleKeystroke(typed);
+            bool incremented = field.HandleKeystroke(typed);
 
-            if (word.TypedIndex == word.Text.Length)
+            if (incremented)
             {
-                Map.Fields[word.Position] = null;
-                if (Map.KeepLands.TryGetValue(word.Position, out uint ownerId))
+                if (Map.KeepLands.TryGetValue(field.Position, out uint ownerId))
                 {
-                    Keep? bastion = Map.Keeps[ownerId];
-                    bastion?.SetCount(warriors: bastion.GetCount(SoldierType.Warrior) + 1);
+                    Keep bastion = Map.Keeps[ownerId];
+                    bastion.Accrue();
                 }
             }
         }

@@ -36,9 +36,9 @@ import {
  type AllKeepUpdates,
  type GameFoundForPlayer,
  type InitialState,
+ type NewGrownFields,
  type NewProjectiles,
  type NewSoldiers,
- type NewWords,
  type Oneof_GameServerToPlayer,
  type RemovedSoldiers,
  type RemovedWords,
@@ -52,7 +52,7 @@ import {
  parseKeep,
  parseProjectile,
  parseSoldier,
- parseWord,
+ parseField as parseField,
  type GameState,
 } from "./types.ts";
 
@@ -244,9 +244,8 @@ export class Game {
  handleTypeResource = (resource_pos: V2Int, resource_text: string) => {
   this.connection?.sendMessage({
    sender_id: "Something I guess",
-   type_word: {
-    grid_pos: resource_pos,
-    text: resource_text,
+   type_char: {
+    char: resource_text,
    },
   });
  };
@@ -264,8 +263,8 @@ export class Game {
    this.handleNewProjectiles(message.new_projectiles);
   } else if (message.render_tile_updates) {
    this.handleRenderTileUpdates(message.render_tile_updates);
-  } else if (message.new_words) {
-   this.handleNewWords(message.new_words);
+  } else if (message.new_grown_fields) {
+   this.handleNewGrownFields(message.new_grown_fields);
   } else if (message.removed_words) {
    this.handleRemovedWords(message.removed_words);
   }
@@ -291,8 +290,8 @@ export class Game {
    }
   });
   this.gameState.harvestables = [];
-  msg.words?.forEach((w) => {
-   const parsed = parseWord(w, this.drawing, this.handleTypeResource);
+  msg.grown_fields?.forEach((w) => {
+   const parsed = parseField(w, this.drawing, this.handleTypeResource);
    if (!parsed) return;
    this.gameState.harvestables.push(parsed);
   });
@@ -342,12 +341,11 @@ export class Game {
   });
  }
 
- handleNewWords(msg: NewWords) {
-  console.log("New words", msg);
-  msg.words?.forEach((w) => {
-   const word = parseWord(w, this.drawing, this.handleTypeResource);
-   if (word) {
-    this.gameState.harvestables.push(word);
+ handleNewGrownFields(msg: NewGrownFields) {
+  msg.fields?.forEach((f) => {
+   const field = parseField(f, this.drawing, this.handleTypeResource);
+   if (field) {
+    this.gameState.harvestables.push(field);
    }
   });
  }

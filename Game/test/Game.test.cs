@@ -107,6 +107,7 @@ public class GameTests
         var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
         var state = initialStates[0].InitialState;
 
+        Assert.IsTrue(state.GrownFields.Count > 0);
         foreach (Vector2Int pos in game.Map.Fields.Keys)
         {
             if (game.Map.Fields.TryGetValue(pos, out Field? field))
@@ -167,16 +168,27 @@ public class GameTests
         var p = TH.AddPlayer(game);
         Keep k = game.Map.Keeps.Values.First(k => k.OwnerId == p.Id);
         Field field = game.Map.Fields.Values.First(f => game.Map.KeepLands[f.Position] == k.Id)!;
-        int initialCount = k.GetCount(k.SoldierType);
+        int lastCount = k.GetCount(k.SoldierType);
+        string text = field.Text;
 
         for (int i = 0; i < field.Text.Length; i++)
         {
             game.HandleKeystroke(field.Text[i], k.OwnerId!);
-            Assert.AreEqual(0, field.RemainingGrowthTime);
+            Assert.IsTrue(k.GetCount(k.SoldierType) > lastCount);
+
+            if (i != text.Length - 1)
+                Assert.AreEqual(0, field.RemainingGrowthTime);
         }
 
-        // Multiple words could have been completed.
-        Assert.IsTrue(k.GetCount(k.SoldierType) - initialCount > 0);
+        Assert.AreNotEqual(text, field.Text);
+        Assert.AreEqual(0, field.TypedIndex);
+        Assert.AreEqual(Field.GROWTH_TIME, field.RemainingGrowthTime);
+
+        TH.UpdateGame(game, Game.NetworkTickTime);
+
+        var harvestedFieldMsg = p.MessageQueue.Where(m => m.RemovedWords != null).ToList();
+        Assert.AreEqual(1, harvestedFieldMsg.Count);
+        Assert.AreEqual(field.Position.ToSchema(), harvestedFieldMsg.First().RemovedWords.Positions.First());
     }
 
     [TestMethod]
@@ -187,13 +199,12 @@ public class GameTests
         Keep allyKeep = game.Map.Keeps.Values.First(b => b.OwnerId == player.Id);
         allyKeep.SetCount(archers: 0, warriors: 0);
 
-        foreach (Vector2Int pos in game.Map.Fields.Keys)
-            game.Map.Fields[pos]?.TestSetText("a");
+        foreach (Field f in game.Map.Fields.Values)
+            f.TestSetText("a");
 
         int numWordsOwned = game.Map.Fields.Values.Count(
             w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
         game.HandleKeystroke('a', allyKeep.OwnerId!);
-        Assert.AreEqual(numWordsOwned, game.Map.Fields.Values.Count(w => w == null));
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }
 

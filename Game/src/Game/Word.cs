@@ -9,31 +9,58 @@ public class Field
     public int TypedIndex { get; private set; }
     public Vector2Int Position { get; set; }
     public float RemainingGrowthTime { get; set; }
+    public bool IsComplete => TypedIndex >= Text.Length;
+    private Game Game;
 
-    public Field(Vector2Int position)
+    public const float GROWTH_TIME = 10f;
+
+    public Field(Game game, Vector2Int position)
     {
+        Game = game;
         Text = GetRandomWord().ToLower();
         TypedIndex = 0;
         Position = position;
     }
 
-    public void Update(float deltaTime)
+    public void Update()
     {
-        RemainingGrowthTime -= deltaTime;
+        RemainingGrowthTime -= Game.Time.deltaTime;
         RemainingGrowthTime = MathF.Max(0, RemainingGrowthTime);
+
+        if (RemainingGrowthTime == 0)
+        {
+            Game.Map.NewlyGrownFields.Add(Position);
+        }
     }
 
-    public void HandleKeystroke(char key)
+    public bool HandleKeystroke(char key)
     {
         if (key == Text[TypedIndex])
         {
             TypedIndex++;
+
+            if (IsComplete)
+            {
+                Game.Map.HarvestedFields.Add(Position.ToSchema());
+                Reset();
+            }
+
+            return true;
         }
+
+        return false;
     }
 
     public void TestSetText(string text)
     {
         Text = text;
+    }
+
+    public void Reset()
+    {
+        Text = GetRandomWord().ToLower();
+        RemainingGrowthTime = GROWTH_TIME;
+        TypedIndex = 0;
     }
 
     const string alphabet = "abcdefghijklmnopqrstuvwxyz";
