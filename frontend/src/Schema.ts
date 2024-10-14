@@ -1853,6 +1853,7 @@ export interface GrownField {
   grid_pos?: V2Int;
   text?: string;
   owning_keep_pos?: V2;
+  progress?: number;
 }
 
 export function encodeGrownField(message: GrownField): Uint8Array {
@@ -1890,6 +1891,13 @@ function _encodeGrownField(message: GrownField, bb: ByteBuffer): void {
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
+
+  // optional int32 progress = 4;
+  let $progress = message.progress;
+  if ($progress !== undefined) {
+    writeVarint32(bb, 32);
+    writeVarint64(bb, intToLong($progress));
+  }
 }
 
 export function decodeGrownField(binary: Uint8Array): GrownField {
@@ -1925,6 +1933,12 @@ function _decodeGrownField(bb: ByteBuffer): GrownField {
         let limit = pushTemporaryLength(bb);
         message.owning_keep_pos = _decodeV2(bb);
         bb.limit = limit;
+        break;
+      }
+
+      // optional int32 progress = 4;
+      case 4: {
+        message.progress = readVarint32(bb);
         break;
       }
 

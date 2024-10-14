@@ -1,22 +1,22 @@
-. . T . T . . . . . . T T T T T T . . . . . . . . . . . T . 
-T W . . . . T T A . . . T T T T . . . . . . . A . . . . . . 
-T . . T . . . T X X X X . . . . . . . . . . . . . . . . . . 
-T T T T . T . T X . X X . . . . . T . . . . . . . . . W . . 
-T . . T . T . T X X . X . . . . T T T . . . . . . . . . . T 
-. . T . . . . T A X X X . . . . T T T . . . . . . . . . T T 
+. F T F T . F F F . . T T T T T T . . . . . . . F . . F T F 
+T W F F F F T T A F . . . T T T . . . . . . F A F . . . F F 
+T F F T FF. F T X X X X . . . . . . . . . . . . F . . F F . 
+T T T T F T . T X . X X . . . . . T . . . . . F . . F W F . 
+T . . T F T . T X X . X . . . . T T T . . . . . . . . . . T 
+. . T . F F . T A X X X . . . . T T T . . . . . . . . . T T 
 . . . . T T T T . . . . . . . T T T . . . . . . . . . . T T 
 T . T . T T T T . . . . . . . . T T . . . . . . . . . . T T 
-T T T . . W . . . . . . . X . . . . . . . . . A . . . . . T 
-T . T T T T . . . . . X X X X . . . . . . . . . . . . . . . 
-. . . . X X . . . . . X X X X X . . . . . . . . . . . . . . 
+T T T . . W . . . . . . . X . . . . . . . . F A F . . . . T 
+T . T T T T . . . . . X X X X . . . . . . . F . . . . . . . 
+. . . . X X . . . . . X X X X X . . . . . . F . . . . . . . 
 . . . X . X . . . . . X X X X X . . . . . X X X . T . . . . 
 T . . . X . X . . . . X X X X . . . . . X X . X . . . . . . 
 T T T . . X X . . . . . . X . . . . . . X . X X . . . . . . 
-T T T T . . . . . . . . . . . . . . . . X X X . . . . . . . 
-T T . . . . . . . . . . . . . . . T . . . . . . . . . W . . 
-T T T . . . . . A . . . . . . . . . . . . . . . . . . . . . 
-T T T . . T . . . . . . . W . . . . . . . . A . . . . . . . 
-T T T T T T T . . . . . . . . . . . . . . . . . . . . . W . 
+T T T T . . . . . . . . . . . . . F F . X X X . . . . . . . 
+T T . . . . . F F . . F . . . . F T F . . . . . . . . W . . 
+T T T . F F . F A . . . F F F . . F . . . . . . . . . . . . 
+T T T . F T F F . . . . . W F . . F . . . . A . . . . . . . 
+T T T T T T T . . . . . . . . . . F . . . . . . . . . . W . 
 T T T T T T T T . . . . . . . . . . . . . . . . . . . . . . 
 </>
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 

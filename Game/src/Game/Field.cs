@@ -11,6 +11,7 @@ public class Field
     public float RemainingGrowthTime { get; set; }
     public bool IsComplete => TypedIndex >= Text.Length;
     private Game Game;
+    private bool ReportedGrown;
 
     public const float GROWTH_TIME = 10f;
 
@@ -20,6 +21,7 @@ public class Field
         Text = GetRandomWord().ToLower();
         TypedIndex = 0;
         Position = position;
+        ReportedGrown = true;
     }
 
     public void Update()
@@ -27,9 +29,10 @@ public class Field
         RemainingGrowthTime -= Game.Time.deltaTime;
         RemainingGrowthTime = MathF.Max(0, RemainingGrowthTime);
 
-        if (RemainingGrowthTime == 0)
+        if (RemainingGrowthTime == 0 && !ReportedGrown)
         {
             Game.Map.NewlyGrownFields.Add(Position);
+            ReportedGrown = true;
         }
     }
 
@@ -61,6 +64,7 @@ public class Field
         Text = GetRandomWord().ToLower();
         RemainingGrowthTime = GROWTH_TIME;
         TypedIndex = 0;
+        ReportedGrown = false;
     }
 
     const string alphabet = "abcdefghijklmnopqrstuvwxyz";

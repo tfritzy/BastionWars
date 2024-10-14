@@ -199,6 +199,7 @@ message GrownField {
     V2Int grid_pos = 1;
     string text = 2;
     V2 owning_keep_pos = 3;
+    int32 progress = 4;
 }
 
 message NewGrownFields {

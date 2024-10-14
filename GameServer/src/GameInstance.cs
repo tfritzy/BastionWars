@@ -145,6 +145,7 @@ public class GameInstance
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
             connections.Add(playerId, webSocketContext);
             game.JoinGame(new Player("TODO: Player name", playerId));
+            Logger.Log($"Added {playerId} to game");
             Logger.Log($"Host WebSocket connection established at {context.Request.Url}");
         }
         catch (Exception e)

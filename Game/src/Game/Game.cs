@@ -194,7 +194,8 @@ public class Game
                 {
                     GridPos = gridPos.ToSchema(),
                     Text = field!.Text,
-                    OwningKeepPos = owningKeepPos
+                    OwningKeepPos = owningKeepPos,
+                    Progress = field.TypedIndex,
                 });
             }
         }
@@ -292,6 +293,7 @@ public class Game
 
     public void HandleKeystroke(char typed, string typer)
     {
+        Logger.Log($"{typer} typed '{typed}'");
         if (GenerationMode != GenerationMode.Word)
         {
             return;
@@ -345,7 +347,9 @@ public class Game
             if (Map.Fields.TryGetValue(pos, out Field? field) && field != null)
             {
                 if (field.RemainingGrowthTime > 0)
+                {
                     continue;
+                }
 
                 var owningKeepId = Map.KeepLands[pos];
                 var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
@@ -353,7 +357,8 @@ public class Game
                 {
                     GridPos = pos.ToSchema(),
                     Text = field.Text,
-                    OwningKeepPos = owningKeepPos
+                    OwningKeepPos = owningKeepPos,
+                    Progress = field.TypedIndex,
                 });
             }
         }

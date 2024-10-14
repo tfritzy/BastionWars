@@ -1,5 +1,6 @@
 import { Constants } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
+import { generateId } from "./id_generator.ts";
 import {
   decodeOneof_MatchMakerToPlayer,
   encodeOneof_PlayerToMatchmaker,
@@ -58,7 +59,7 @@ export class MainMenu {
     };
 
     const request: Oneof_PlayerToMatchmaker = {
-      player_id: "plyr_" + Math.floor(Math.random() * 1000),
+      player_id: generateId("plyr"),
       search_for_game: searchForGame,
     };
 

@@ -102,7 +102,10 @@ public class GameTests
     public void Game_InitialStateHasInitialGrownFields()
     {
         Game game = new(TH.GetGameSettings());
-        game.Map.Fields.Values.First().RemainingGrowthTime = 1f;
+        Field f1 = game.Map.Fields.Values.First();
+        f1.RemainingGrowthTime = 1f;
+        Field f2 = game.Map.Fields.Values.Last();
+        f2.HandleKeystroke(f2.Text[0]);
         TH.AddPlayer(game);
         var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
         var state = initialStates[0].InitialState;
@@ -122,6 +125,7 @@ public class GameTests
                 else
                 {
                     Assert.AreEqual(field!.Text, stateField!.Text);
+                    Assert.AreEqual(field.TypedIndex, stateField.Progress);
                 }
             }
         }
