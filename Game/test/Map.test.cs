@@ -48,7 +48,6 @@ public class MapTests
     public void Map_ReadsKeepsCorrectly()
     {
         Game game = new Game(TH.GetGameSettings(map: TestMaps.TenByFive));
-        List<int> expectedAlliances = new() { 2, 1, 1, 1, 1, 3 };
         List<Vector2Int> expectedPositions = new()
         {
             new Vector2Int(1, 0),
@@ -70,7 +69,7 @@ public class MapTests
 
         for (int i = 0; i < game.Map.Keeps.Count; i++)
         {
-            Assert.AreEqual(expectedAlliances[i], game.Map.Keeps.Values.ToList()[i].Alliance);
+            Assert.AreEqual(0, game.Map.Keeps.Values.ToList()[i].Alliance);
             Assert.AreEqual(expectedTypes[i], game.Map.Keeps.Values.ToList()[i].SoldierType);
             Assert.AreEqual(expectedPositions[i], game.Map.Grid.GetEntityGridPos(game.Map.Keeps.Values.ToList()[i].Id));
         }
@@ -86,24 +85,12 @@ public class MapTests
     [TestMethod]
     public void Map_CalculatesKeepLands()
     {
-        string rawMap = @"
-            W . . . . . . . . .
+        string rawMap =
+          @"W . . . . . . . . .
             . . . . . . . . . .
             . . . . . . . . . .
             . . . . . . . . . .
-            . . W . W . . . . .
-            </>
-            1 . . . . . . . . .
-            . . . . . . . . . .
-            . . . . . . . . . .
-            . . . . . . . . . .
-            . . 0 . 2 . . . . .
-            </>
-            0 0 0 0 0 0 0 0 0 0 
-            0 0 0 0 0 0 0 0 0 0 
-            0 0 0 0 0 0 0 0 0 0 
-            0 0 0 0 0 0 0 0 0 0 
-            0 0 0 0 0 0 0 0 0 0";
+            . . W . W . . . . .";
         Game game = new(TH.GetGameSettings(map: rawMap));
         uint b0 = game.Map.KeepAt(0).Id;
         uint b1 = game.Map.KeepAt(1).Id;

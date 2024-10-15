@@ -297,7 +297,7 @@ public class Keep : Entity
                 }
                 else
                 {
-                    Capture(soldier.Alliance);
+                    Capture(soldier.Alliance, soldier.OwnerId);
                     IncrementSoldierCount(soldier.Type);
                     powerOverflow = attackerPower - Game.Map.MeleePowerOf(soldier);
                     break;
@@ -325,11 +325,22 @@ public class Keep : Entity
         }
     }
 
-    public void Capture(int alliance)
+    private void capture(int alliance, string? playerId)
     {
         Alliance = alliance;
+        OwnerId = playerId;
         SomethingChanged = true;
+    }
+
+    public void Capture(int alliance, string? playerId)
+    {
+        capture(alliance, playerId);
         Game.Map.RecalculateRenderTiles();
+    }
+
+    public void CaptureWithDeferredRecalculate(int alliance, string? playerId)
+    {
+        capture(alliance, playerId);
     }
 
     public void AckOccupancyChanged()

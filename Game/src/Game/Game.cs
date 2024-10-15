@@ -278,17 +278,41 @@ public class Game
         if (emptyKeepId == null)
             return false;
 
-        Players[player.Id] = player;
-        PlayerIds.Add(player.Id);
-        Map.Keeps[emptyKeepId.Value].OwnerId = player.Id;
+        if (!Players.ContainsKey(player.Id))
+        {
+            Players[player.Id] = player;
+            PlayerIds.Add(player.Id);
+            player.Alliance = PlayerIds.Count;
+            Map.Keeps[emptyKeepId.Value].OwnerId = player.Id;
+            Map.Keeps[emptyKeepId.Value].Capture(player.Alliance, player.Id);
+        }
+
         AddMessageToOutbox(new Oneof_GameServerToPlayer { InitialState = GetInitialState() }, player.Id);
         return true;
     }
 
     public void DisconnectPlayer(string playerId)
     {
+        if (Players.TryGetValue(playerId, out Player? player))
+        {
+            foreach (Keep k in Map.Keeps.Values)
+            {
+                if (k.OwnerId == playerId)
+                {
+                    k.CaptureWithDeferredRecalculate(0, null);
+                }
+
+                if (k.Alliance == player.Alliance)
+                {
+                    k.CaptureWithDeferredRecalculate(0, null);
+                }
+            }
+        }
+
         Players.Remove(playerId);
         PlayerIds.Remove(playerId);
+
+        Map.RecalculateRenderTiles();
     }
 
     public void HandleKeystroke(char typed, string typer)

@@ -207,14 +207,7 @@ public class Map
     {
         rawMap = rawMap.Replace("\r", "");
         rawMap = rawMap.Replace(" ", "");
-        string[] pieces = rawMap.Split("</>");
-        for (int i = 0; i < pieces.Length; i++)
-        {
-            pieces[i] = pieces[i].Trim();
-        }
-        string[] terrain = pieces[0].Split("\n");
-        string[] ownership = pieces[1].Split("\n");
-        string[] elevation = pieces[2].Split("\n");
+        string[] terrain = rawMap.Split("\n");
 
         Tiles = new TileType[terrain[0].Length, terrain.Length];
         Traversable = new short[terrain[0].Length, terrain.Length];
@@ -233,7 +226,6 @@ public class Map
                             SoldierType.Archer,
                             null,
                             alliance: 0);
-                        archerKeep.Alliance = GetKeepAlliance(ownership[y][x], archerKeep.Id);
                         Keeps.Add(archerKeep.Id, archerKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x + .5f, y + .5f),
@@ -249,7 +241,6 @@ public class Map
                             SoldierType.Warrior,
                             null,
                             alliance: 0);
-                        warriorKeep.Alliance = GetKeepAlliance(ownership[y][x], warriorKeep.Id);
                         Keeps.Add(warriorKeep.Id, warriorKeep);
                         Grid.AddEntity(new SpacialPartitioning.Entity(
                             new Vector2(x + .5f, y + .5f),
@@ -278,28 +269,6 @@ public class Map
                 }
             }
         }
-    }
-
-    private static int GetKeepAlliance(char mapValue, uint id)
-    {
-        int value;
-        if (mapValue >= '0' && mapValue <= '9')
-        {
-            value = mapValue - '0';
-        }
-        else
-        {
-            value = 1;
-        }
-
-        // // A bit of a hack to have un-owned keeps all have different alliances, but be
-        // // easily detectable as unowned.
-        // if (value <= Constants.GIA_ALLIANCE)
-        // {
-        //     return 10_000 + (int)id;
-        // }
-
-        return value;
     }
 
     private void ParseRenderTiles()

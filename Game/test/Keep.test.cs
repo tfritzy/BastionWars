@@ -38,7 +38,7 @@ public class KeepTest
 
         var player = game.Players.Values.First();
         player.MessageQueue.Clear();
-        keep.Capture(5);
+        keep.Capture(5, null);
         TH.UpdateGame(game, Game.NetworkTickTime + .0001f);
 
         var tileUpdates = player.MessageQueue.Where(m => m.RenderTileUpdates != null).First();

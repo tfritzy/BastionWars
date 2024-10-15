@@ -69,8 +69,8 @@ public class SoldierTests
         TH.ErradicateAllArchers(game);
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(1);
-        keep0.Capture(1);
-        keep1.Capture(2);
+        keep0.Capture(1, null);
+        keep1.Capture(2, null);
         keep1.SetCount(archers: 0, warriors: 0);
         var soldier = new Soldier(game, null, 1, SoldierType.Warrior, keep0.Id, keep1.Id, 0);
         var path = game.Map.GetPathBetweenKeeps(keep0.Id, keep1.Id)!;
@@ -93,8 +93,8 @@ public class SoldierTests
         var p = TH.AddPlayer(game);
         Keep keep0 = game.Map.KeepAt(0);
         Keep keep1 = game.Map.KeepAt(1);
-        keep0.Capture(1);
-        keep1.Capture(2);
+        keep0.Capture(1, null);
+        keep1.Capture(2, null);
 
         TH.UpdateGame(game, Game.NetworkTickTime);
         var newSoldiers = p.MessageQueue.Where(m => m.NewSoldiers != null).ToList();
@@ -131,7 +131,7 @@ public class SoldierTests
         var p = TH.AddPlayer(game);
         var keep = game.Map.KeepAt(0);
         var keep1 = game.Map.KeepAt(5);
-        keep1.Capture(5);
+        keep1.Capture(5, null);
 
         var soldier = new Soldier(game, null, 1, SoldierType.Warrior, keep.Id, keep1.Id, 0);
         game.Map.AddSoldier(soldier, Vector2.Zero);

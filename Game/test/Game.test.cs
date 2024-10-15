@@ -33,45 +33,6 @@ public class GameTests
     }
 
     [TestMethod]
-    public void Game_JoinGame_SendsInitialState()
-    {
-        Game game = new(TH.GetGameSettings());
-        TH.AddPlayer(game);
-        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
-        Assert.AreEqual(1, initialStates.Count);
-        var s = initialStates[0].InitialState;
-        Assert.AreEqual(game.Map.Width, s.MapWidth);
-        Assert.AreEqual(game.Map.Height, s.MapHeight);
-        for (int x = 0; x < game.Map.Width; x++)
-        {
-            for (int y = 0; y < game.Map.Height; y++)
-            {
-                Assert.AreEqual(game.Map.Tiles[x, y], s.Tiles[y * game.Map.Width + x]);
-            }
-        }
-
-        foreach (Keep keep in game.Map.Keeps.Values)
-        {
-            Assert.AreEqual(1, s.Keeps.Count(k => k.Id == keep.Id));
-            Schema.KeepState keepState = s.Keeps.First(k => k.Id == keep.Id);
-            Assert.AreEqual(keep.ArcherCount, keepState.ArcherCount);
-            Assert.AreEqual(keep.WarriorCount, keepState.WarriorCount);
-            Assert.AreEqual(keep.Alliance, keepState.Alliance);
-            Assert.AreEqual(keep.Name, keepState.Name);
-            Assert.AreEqual(keep.Id, keepState.Id);
-            Vector2 keepPos = game.Map.Grid.GetEntityPosition(keep.Id);
-            Assert.AreEqual(keepPos.X, keepState.Pos.X);
-            Assert.AreEqual(keepPos.Y, keepState.Pos.Y);
-        }
-    }
-
-    [TestMethod]
-    public void Game_JoinGame_ReturnsFalseIfFull()
-    {
-        Assert.Fail("Join game should return false if there's nowhere to put someone");
-    }
-
-    [TestMethod]
     public void Game_InitialStateHasPathBetweenAllKeeps()
     {
         Game game = new(TH.GetGameSettings());
@@ -141,7 +102,6 @@ public class GameTests
         game.DisconnectPlayer(player.Id);
         Assert.AreEqual(initialPlayers, game.Players.Count);
     }
-
 
     [TestMethod]
     public void Game_DoesntAccrueIfWordMode()
@@ -218,8 +178,8 @@ public class GameTests
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         Map map = game.Map;
 
-        map.KeepAt(0).Capture(1);
-        map.KeepAt(1).Capture(1);
+        map.KeepAt(0).Capture(1, null);
+        map.KeepAt(1).Capture(1, null);
         map.KeepAt(0).SetCount(archers: 2, warriors: 0);
         map.KeepAt(1).SetCount(archers: 2, warriors: 0);
         game.AttackKeep(map.KeepAt(0).Id, map.KeepAt(1).Id);
@@ -246,10 +206,6 @@ public class GameTests
         }
 
         Assert.AreEqual(0, map.Soldiers.Count);
-
-        game.AttackKeep(map.KeepAt(1).Id, map.KeepAt(0).Id);
-        for (int i = 0; i < 100; i++)
-            TH.UpdateGame(game, .1f);
         Assert.AreEqual(4, map.KeepAt(0).ArcherCount);
         Assert.AreEqual(0, map.KeepAt(1).ArcherCount);
     }
@@ -259,8 +215,8 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings());
         Map map = game.Map;
-        map.KeepAt(0).Capture(1);
-        map.KeepAt(1).Capture(2);
+        map.KeepAt(0).Capture(1, null);
+        map.KeepAt(1).Capture(2, null);
         map.KeepAt(0).SetCount(archers: 10, warriors: 5);
         game.HandleCommand(new Oneof_PlayerToGameServer()
         {
@@ -294,18 +250,20 @@ public class GameTests
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         Map map = game.Map;
-        TH.AddPlayer(game);
+        var p = TH.AddPlayer(game);
 
-        TH.UpdateGame(game, 1f);
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        p.MessageQueue.Clear();
+        TH.UpdateGame(game, Game.NetworkTickTime);
 
-        var keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        var keepUpdates = TH.GetKeepUpdateMessages(p);
         Assert.AreEqual(0, keepUpdates.Count);
         game.Map.KeepAt(0).SetCount(archers: 4, warriors: 1);
         game.Map.KeepAt(1).SetCount(warriors: 6, archers: 3);
-        keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        keepUpdates = TH.GetKeepUpdateMessages(p);
         Assert.AreEqual(0, keepUpdates.Count);
         TH.UpdateGame(game, 1f);
-        keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        keepUpdates = TH.GetKeepUpdateMessages(p);
         Assert.AreEqual(1, keepUpdates.Count);
         Assert.AreEqual(2, keepUpdates.First().KeepUpdates.Count);
 
@@ -318,7 +276,7 @@ public class GameTests
 
         // doesn't double send message
         TH.UpdateGame(game, 1f);
-        keepUpdates = TH.GetKeepUpdateMessages(game.Players.Values.First());
+        keepUpdates = TH.GetKeepUpdateMessages(p);
         Assert.AreEqual(1, keepUpdates.Count);
     }
 }

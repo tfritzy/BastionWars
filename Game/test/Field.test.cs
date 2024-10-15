@@ -42,4 +42,13 @@ public class FieldTests
         TH.UpdateGame(game, Game.NetworkTickTime);
         Assert.AreEqual(1, p.MessageQueue.Where(m => m.NewGrownFields != null).ToList().Count);
     }
+
+    [TestMethod]
+    public void Field_InitialStateOnlyContainsOwnedFields()
+    {
+        Game game = new(TH.GetGameSettings());
+        var p = TH.AddPlayer(game);
+        var initialState = p.MessageQueue.First(m => m.InitialState != null);
+        Assert.Fail();
+    }
 }

@@ -92,14 +92,7 @@ export const initialGameState: GameState = {
 export const parseKeep: (keep: KeepState | undefined) => Keep | null = (
   keep
 ) => {
-  if (
-    !keep ||
-    !keep.id ||
-    !keep.name ||
-    !keep.pos ||
-    !keep.alliance ||
-    !keep.paths
-  ) {
+  if (!keep || !keep.id || !keep.name || !keep.pos || !keep.paths) {
     return null;
   }
 
@@ -116,7 +109,7 @@ export const parseKeep: (keep: KeepState | undefined) => Keep | null = (
   });
 
   return {
-    alliance: keep.alliance,
+    alliance: keep.alliance || 0,
     id: keep.id,
     name: keep.name,
     pos: parseV2(keep.pos),
