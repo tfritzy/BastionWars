@@ -10,6 +10,7 @@ enum GenerationMode {
 message GameSettings {
     GenerationMode generation_mode = 1;
     string map = 2;
+    int32 seed = 3;
 }
 
 message SearchForGame

@@ -50,11 +50,6 @@ public static class TH
         return player;
     }
 
-    public static List<Oneof_GameServerToPlayer> GetMessagesOfType(Game game, Oneof_GameServerToPlayer.MsgOneofCase type)
-    {
-        return game.Outbox.Where((u) => u.MsgCase == type).ToList();
-    }
-
     public static List<AllKeepUpdates> GetKeepUpdateMessages(Player player)
     {
         return player.MessageQueue

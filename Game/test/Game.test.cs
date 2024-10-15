@@ -36,8 +36,8 @@ public class GameTests
     public void Game_InitialStateHasPathBetweenAllKeeps()
     {
         Game game = new(TH.GetGameSettings());
-        TH.AddPlayer(game);
-        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
+        var p = TH.AddPlayer(game);
+        var initialStates = p.MessageQueue.Where(m => m.InitialState != null).ToList();
         var s = initialStates[0].InitialState;
 
         for (int i = 0; i < game.Map.Keeps.Count; i++)
@@ -55,39 +55,6 @@ public class GameTests
                 Assert.IsNotNull(path);
                 Assert.AreEqual(new Vector2Int(source.Pos).ToSchema(), path.Path.First());
                 Assert.AreEqual(new Vector2Int(target.Pos).ToSchema(), path.Path.Last());
-            }
-        }
-    }
-
-    [TestMethod]
-    public void Game_InitialStateHasInitialGrownFields()
-    {
-        Game game = new(TH.GetGameSettings());
-        Field f1 = game.Map.Fields.Values.First();
-        f1.RemainingGrowthTime = 1f;
-        Field f2 = game.Map.Fields.Values.Last();
-        f2.HandleKeystroke(f2.Text[0]);
-        TH.AddPlayer(game);
-        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
-        var state = initialStates[0].InitialState;
-
-        Assert.IsTrue(state.GrownFields.Count > 0);
-        foreach (Vector2Int pos in game.Map.Fields.Keys)
-        {
-            if (game.Map.Fields.TryGetValue(pos, out Field? field))
-            {
-                GrownField? stateField = state.GrownFields.FirstOrDefault(
-                    f => f.GridPos.X == pos.X && f.GridPos.Y == pos.Y);
-
-                if (field.RemainingGrowthTime > 0)
-                {
-                    Assert.IsNull(stateField);
-                }
-                else
-                {
-                    Assert.AreEqual(field!.Text, stateField!.Text);
-                    Assert.AreEqual(field.TypedIndex, stateField.Progress);
-                }
             }
         }
     }

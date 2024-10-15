@@ -14,8 +14,8 @@ public class JoinGameTests
     public void Game_JoinGame_SendsInitialState()
     {
         Game game = new(TH.GetGameSettings());
-        TH.AddPlayer(game);
-        var initialStates = TH.GetMessagesOfType(game, Oneof_GameServerToPlayer.MsgOneofCase.InitialState);
+        var p = TH.AddPlayer(game);
+        var initialStates = p.MessageQueue.Where(m => m.InitialState != null).ToList();
         Assert.AreEqual(1, initialStates.Count);
         var s = initialStates[0].InitialState;
         Assert.AreEqual(game.Map.Width, s.MapWidth);

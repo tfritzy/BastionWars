@@ -154,6 +154,7 @@ export const decodeWalkPathType: { [key: number]: WalkPathType } = {
 export interface GameSettings {
   generation_mode?: GenerationMode;
   map?: string;
+  seed?: number;
 }
 
 export function encodeGameSettings(message: GameSettings): Uint8Array {
@@ -175,6 +176,13 @@ function _encodeGameSettings(message: GameSettings, bb: ByteBuffer): void {
   if ($map !== undefined) {
     writeVarint32(bb, 18);
     writeString(bb, $map);
+  }
+
+  // optional int32 seed = 3;
+  let $seed = message.seed;
+  if ($seed !== undefined) {
+    writeVarint32(bb, 24);
+    writeVarint64(bb, intToLong($seed));
   }
 }
 
@@ -201,6 +209,12 @@ function _decodeGameSettings(bb: ByteBuffer): GameSettings {
       // optional string map = 2;
       case 2: {
         message.map = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      // optional int32 seed = 3;
+      case 3: {
+        message.seed = readVarint32(bb);
         break;
       }
 

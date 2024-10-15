@@ -68,13 +68,13 @@ public class Field
     }
 
     const string alphabet = "abcdefghijklmnopqrstuvwxyz";
-    public static string GetRandomWord()
+    public string GetRandomWord()
     {
-        int length = (int)Randy.ChaoticInRange(3, 5);
+        int length = (int)Game.Randy.SeededInRange(3, 5);
         StringBuilder sb = new();
         for (int i = 0; i < length; i++)
         {
-            sb.Append(alphabet[Randy.Chaos.Next(0, alphabet.Length)]);
+            sb.Append(alphabet[Game.Randy.Seeded.Next(0, alphabet.Length)]);
         }
 
         return sb.ToString();

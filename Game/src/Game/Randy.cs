@@ -1,21 +1,33 @@
 namespace KeepLordWarriors;
 
-public static class Randy
+public class Randy
 {
-    public static Random WorldGen = new();
-    public static Random Chaos = new();
+    public Random WorldGen = new();
+    public Random Seeded = new();
+    public Random Chaos = new();
 
-    public static void SetSeed(int seed)
+    public Randy(int seed)
     {
-        WorldGen = new Random(seed);
+        WorldGen = seed > 0 ? new Random(seed) : new Random();
+        Seeded = seed > 0 ? new Random(seed) : new Random();
     }
 
-    public static float ChaoticInRange(float min, float max)
+    public float ChaoticInRange(float min, float max)
     {
         return (float)(Chaos.NextDouble() * (max - min) + min);
     }
 
-    public static T ChaoticElement<T>(IList<T> list)
+    public T ChaoticElement<T>(IList<T> list)
+    {
+        return list[Chaos.Next(0, list.Count)];
+    }
+
+    public float SeededInRange(float min, float max)
+    {
+        return (float)(Chaos.NextDouble() * (max - min) + min);
+    }
+
+    public T SeededElement<T>(IList<T> list)
     {
         return list[Chaos.Next(0, list.Count)];
     }

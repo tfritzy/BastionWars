@@ -1,5 +1,6 @@
 using System.Numerics;
 using KeepLordWarriors;
+using Schema;
 using TestHelpers;
 
 namespace Tests;
@@ -48,7 +49,64 @@ public class FieldTests
     {
         Game game = new(TH.GetGameSettings());
         var p = TH.AddPlayer(game);
-        var initialState = p.MessageQueue.First(m => m.InitialState != null);
-        Assert.Fail();
+        var initialState = p.MessageQueue.First(m => m.InitialState != null).InitialState;
+
+        foreach (Field field in game.Map.Fields.Values)
+        {
+            Keep owner = game.Map.Keeps[game.Map.KeepLands[field.Position]];
+            if (owner.OwnerId == p.Id)
+            {
+                Assert.IsTrue(
+                    initialState.GrownFields
+                        .Any(f => f.GridPos.X == field.Position.X && f.GridPos.Y == field.Position.Y)
+                );
+            }
+            else
+            {
+                Assert.IsFalse(
+                    initialState.GrownFields
+                        .Any(f => f.GridPos.X == field.Position.X && f.GridPos.Y == field.Position.X)
+                );
+            }
+        }
     }
+
+    [TestMethod]
+    public void Field_InitialStateHasInitialGrownFields()
+    {
+        Game game = new(TH.GetGameSettings());
+        Field f1 = game.Map.Fields.Values.First();
+        f1.RemainingGrowthTime = 1f;
+        Field f2 = game.Map.Fields.Values.Last();
+        f2.HandleKeystroke(f2.Text[0]);
+        var p = TH.AddPlayer(game);
+        var initialStates = p.MessageQueue.Where(m => m.InitialState != null).ToList();
+        var state = initialStates[0].InitialState;
+
+        Assert.IsTrue(state.GrownFields.Count > 0);
+        foreach (Vector2Int pos in game.Map.Fields.Keys)
+        {
+            if (game.Map.Keeps[game.Map.KeepLands[pos]].OwnerId != p.Id)
+            {
+                continue;
+            }
+
+            if (game.Map.Fields.TryGetValue(pos, out Field? field))
+            {
+                GrownField? stateField = state.GrownFields.FirstOrDefault(
+                    f => f.GridPos.X == pos.X && f.GridPos.Y == pos.Y);
+
+                if (field.RemainingGrowthTime > 0)
+                {
+                    Assert.IsNull(stateField);
+                }
+                else
+                {
+                    Assert.AreEqual(field!.Text, stateField!.Text);
+                    Assert.AreEqual(field.TypedIndex, stateField.Progress);
+                }
+            }
+        }
+    }
+
 }

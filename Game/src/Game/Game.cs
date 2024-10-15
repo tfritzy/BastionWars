@@ -12,6 +12,7 @@ public class Game
     public Dictionary<string, Player> Players { get; private set; } = [];
     public List<string> PlayerIds { get; private set; } = [];
     public Time Time;
+    public Randy Randy;
 
     private float lastNetworkTick = 0f;
     private float lastWordPlacement = 0f;
@@ -22,6 +23,7 @@ public class Game
     public Game(GameSettings settings)
     {
         Time = new();
+        Randy = new(settings.Seed);
         Map = new(this, settings.Map);
         NameKeeps();
         GenerationMode = settings.GenerationMode;
@@ -287,7 +289,7 @@ public class Game
             Map.Keeps[emptyKeepId.Value].Capture(player.Alliance, player.Id);
         }
 
-        AddMessageToOutbox(new Oneof_GameServerToPlayer { InitialState = GetInitialState() }, player.Id);
+        player.MessageQueue.Add(new Oneof_GameServerToPlayer { InitialState = GetInitialState(player) });
         return true;
     }
 
@@ -344,7 +346,7 @@ public class Game
         }
     }
 
-    public InitialState GetInitialState()
+    public InitialState GetInitialState(Player forPlayer)
     {
         var state = new InitialState()
         {
@@ -377,13 +379,16 @@ public class Game
 
                 var owningKeepId = Map.KeepLands[pos];
                 var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
-                state.GrownFields.Add(new GrownField()
+                if (Map.Keeps[owningKeepId].OwnerId == forPlayer.Id)
                 {
-                    GridPos = pos.ToSchema(),
-                    Text = field.Text,
-                    OwningKeepPos = owningKeepPos,
-                    Progress = field.TypedIndex,
-                });
+                    state.GrownFields.Add(new GrownField()
+                    {
+                        GridPos = pos.ToSchema(),
+                        Text = field.Text,
+                        OwningKeepPos = owningKeepPos,
+                        Progress = field.TypedIndex,
+                    });
+                }
             }
         }
         return state;
@@ -449,6 +454,6 @@ public class Game
         List<Keep> emptyKeeps = map.Keeps.Values.Where(k => k.OwnerId == null).ToList();
         if (emptyKeeps.Count == 0)
             return null;
-        return Randy.ChaoticElement(emptyKeeps).Id;
+        return map.Game.Randy.SeededElement(emptyKeeps).Id;
     }
 }
