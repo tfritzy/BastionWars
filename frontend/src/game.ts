@@ -377,7 +377,11 @@ export class Game {
 
       const index =
         (rt.pos.x || 0) + (rt.pos.y || 0) * (this.gameState.mapWidth + 1);
-      this.gameState.renderTiles[index] = rt.render_tile;
+      this.gameState.renderTiles[index] = {
+        tile_case: rt.render_tile.tile_case || 0,
+        corner_alliance: rt.render_tile.corner_alliance || [],
+        alliance_case: rt.render_tile.alliance_case,
+      };
     });
   }
 }

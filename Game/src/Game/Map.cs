@@ -297,6 +297,7 @@ public class Map
                 if (!AreTilesEqual(renderTile, existingTile))
                 {
                     RenderTiles[x + 1, y + 1] = renderTile;
+                    Logger.Log($"{x + 1}, {y + 1} is different. {renderTile}");
                     updatedTiles.RenderTileUpdates_.Add(new RenderTileUpdate()
                     {
                         Pos = new V2()
@@ -321,11 +322,11 @@ public class Map
         var renderTile = new RenderTile()
         {
             TileCase = GetRenderTileCase(
-                        tl: GetMaybeOOBTile(x, y),
-                        tr: GetMaybeOOBTile(x + 1, y),
-                        bl: GetMaybeOOBTile(x + 1, y + 1),
-                        br: GetMaybeOOBTile(x, y + 1)
-                    ),
+                tl: GetMaybeOOBTile(x, y),
+                tr: GetMaybeOOBTile(x + 1, y),
+                bl: GetMaybeOOBTile(x + 1, y + 1),
+                br: GetMaybeOOBTile(x, y + 1)
+            ),
         };
         renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x, y));
         renderTile.CornerAlliance.Add(GetMaybeOOBTileOwnership(x + 1, y));
@@ -477,18 +478,18 @@ public class Map
     {
         if (x < 0 || x >= Width || y < 0 || y >= Height)
         {
-            return 0;
+            return -1;
         }
 
         Vector2Int pos = new Vector2Int(x, y);
         if (!KeepLands.ContainsKey(pos))
         {
-            return 0;
+            return -1;
         }
 
         if (Tiles[x, y] == TileType.Water)
         {
-            return 0;
+            return -1;
         }
 
         uint keepId = KeepLands[pos];
