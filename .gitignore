@@ -366,3 +366,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+AI/FakesAssemblies/

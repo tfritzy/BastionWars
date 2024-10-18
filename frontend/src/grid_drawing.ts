@@ -37,9 +37,9 @@ export function drawLandTile(
   y: number,
   tile: RenderTile
 ) {
-  drawing.drawStrokeable("black", 0.5, Layer.UI, (ctx) => {
-    ctx.rect(x, y, FULL_T, FULL_T);
-  });
+  // drawing.drawStrokeable("black", 0.5, Layer.UI, (ctx) => {
+  //   ctx.rect(x, y, FULL_T, FULL_T);
+  // });
 
   switch (tile.alliance_case) {
     case RenderAllianceCase.FullLand_IndividualCorners:
