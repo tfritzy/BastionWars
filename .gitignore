@@ -367,4 +367,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-AI/FakesAssemblies/
+/AI/saved_model/

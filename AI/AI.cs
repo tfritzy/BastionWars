@@ -13,11 +13,13 @@ public class DQN
     private ITransformer targetModel;
     private int actionSpace;
     private int[] stateShape;
+    private int nKeeps;
 
-    public DQN(int[] stateShape, int actionSpace)
+    public DQN(int[] stateShape, int actionSpace, int nKeeps)
     {
         this.stateShape = stateShape;
         this.actionSpace = actionSpace;
+        this.nKeeps = nKeeps;
         mlContext = new MLContext();
         model = BuildModel();
         targetModel = BuildModel();
@@ -29,8 +31,8 @@ public class DQN
         // Define the TensorFlow model
         var pipeline = mlContext.Model.LoadTensorFlowModel("model.pb")
             .ScoreTensorFlowModel(
-                inputColumnNames: new[] { "input_1" },
-                outputColumnNames: new[] { "dense_2" },
+                inputColumnNames: new[] { "map_input", "keep_ownership", "soldier_counts", "archer_counts" },
+                outputColumnNames: new[] { "source_keep", "target_keep", "soldier_percent", "archer_percent" },
                 addBatchDimensionInput: true);
 
         // Create an empty DataView to train the model
@@ -43,22 +45,28 @@ public class DQN
         targetModel = model;
     }
 
-    public (int sourceKeep, int targetKeep, int soldierPercent, int archerPercent) GetAction(float[] state, float epsilon)
+    public (int sourceKeep, int targetKeep, int soldierPercent, int archerPercent) GetAction(GameState gameState, float epsilon)
     {
         if (new Random().NextDouble() < epsilon)
         {
             // Epsilon-greedy exploration
             return (
-                new Random().Next(Constants.NUM_KEEPS),
-                new Random().Next(Constants.NUM_KEEPS),
-                new Random().Next(Constants.ACTION_SIZE),
-                new Random().Next(Constants.ACTION_SIZE)
+                new Random().Next(nKeeps),
+                new Random().Next(nKeeps),
+                new Random().Next(4),
+                new Random().Next(4)
             );
         }
         else
         {
             var predictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(model);
-            var prediction = predictionEngine.Predict(new InputData { Input = state });
+            var prediction = predictionEngine.Predict(new InputData
+            {
+                MapInput = gameState.MapState,
+                KeepOwnership = gameState.KeepOwnership,
+                SoldierCounts = gameState.SoldierCounts,
+                ArcherCounts = gameState.ArcherCounts
+            });
 
             return (
                 np.argmax(prediction.SourceKeep),
@@ -69,17 +77,21 @@ public class DQN
         }
     }
 
-    public void Train(float[] state, (int sourceKeep, int targetKeep, int soldierPercent, int archerPercent) action, float reward, float[] nextState, bool done)
+    public void Train(GameState state, (int sourceKeep, int targetKeep, int soldierPercent, int archerPercent) action, float reward, GameState nextState, bool done)
     {
         var predictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(model);
         var targetPredictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(targetModel);
 
-        var prediction = predictionEngine.Predict(new InputData { Input = state });
+        var prediction = predictionEngine.Predict(new InputData
+        {
+            MapInput = state.MapState,
+            KeepOwnership = state.KeepOwnership,
+            SoldierCounts = state.SoldierCounts,
+            ArcherCounts = state.ArcherCounts
+        });
 
         if (done)
         {
-            // Update the Q-value for the taken action
-            // This is a simplified approach and may need to be adjusted based on your specific requirements
             prediction.SourceKeep[action.sourceKeep] = reward;
             prediction.TargetKeep[action.targetKeep] = reward;
             prediction.SoldierPercent[action.soldierPercent] = reward;
@@ -87,7 +99,13 @@ public class DQN
         }
         else
         {
-            var nextPrediction = targetPredictionEngine.Predict(new InputData { Input = nextState });
+            var nextPrediction = targetPredictionEngine.Predict(new InputData
+            {
+                MapInput = nextState.MapState,
+                KeepOwnership = nextState.KeepOwnership,
+                SoldierCounts = nextState.SoldierCounts,
+                ArcherCounts = nextState.ArcherCounts
+            });
             float maxQ = Math.Max(
                 Math.Max(np.max(nextPrediction.SourceKeep), np.max(nextPrediction.TargetKeep)),
                 Math.Max(np.max(nextPrediction.SoldierPercent), np.max(nextPrediction.ArcherPercent))
@@ -110,7 +128,16 @@ public class DQN
 public class InputData
 {
     [VectorType(Constants.MAP_SIZE, Constants.MAP_SIZE, Constants.NUM_TILES)]
-    public float[] Input { get; set; }
+    public float[] MapInput { get; set; }
+
+    [VectorType(Constants.NUM_KEEPS)]
+    public float[] KeepOwnership { get; set; }
+
+    [VectorType(Constants.NUM_KEEPS)]
+    public float[] SoldierCounts { get; set; }
+
+    [VectorType(Constants.NUM_KEEPS)]
+    public float[] ArcherCounts { get; set; }
 }
 
 public class OutputData
@@ -121,11 +148,19 @@ public class OutputData
     [VectorType(Constants.NUM_KEEPS)]
     public float[] TargetKeep { get; set; }
 
-    [VectorType(Constants.ACTION_SIZE)]
+    [VectorType(4)]
     public float[] SoldierPercent { get; set; }
 
-    [VectorType(Constants.ACTION_SIZE)]
+    [VectorType(4)]
     public float[] ArcherPercent { get; set; }
+}
+
+public class GameState
+{
+    public float[] MapState { get; set; }
+    public float[] KeepOwnership { get; set; }
+    public float[] SoldierCounts { get; set; }
+    public float[] ArcherCounts { get; set; }
 }
 
 // Main training loop
@@ -135,15 +170,16 @@ public class Trainer
     {
         var game = new KeepLordWarriors.Game(new Schema.GameSettings());
         var dqn = new DQN(
-            new[] { Constants.MAP_SIZE, Constants.MAP_SIZE, Constants.NUM_TILES },
-            Constants.TOTAL_ACTION_SPACE);
+            [Constants.MAP_SIZE, Constants.MAP_SIZE, Constants.NUM_TILES],
+            Constants.TOTAL_ACTION_SPACE,
+            Constants.NUM_KEEPS);
         float epsilon = 1.0f;
         float epsilonMin = 0.01f;
         float epsilonDecay = 0.995f;
 
         for (int episode = 0; episode < 10000; episode++)
         {
-            float[] state = game.Reset();
+            GameState state = game.Reset();
             bool done = false;
             while (!done)
             {
