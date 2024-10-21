@@ -4,198 +4,205 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 using NumSharp;
 
-namespace KeepLordWarriors.AI;
-
-public class DQN
+namespace KeepLordWarriors.AI
 {
-    private MLContext mlContext;
-    private ITransformer model;
-    private ITransformer targetModel;
-    private int actionSpace;
-    private int[] stateShape;
-    private int nKeeps;
-
-    public DQN(int[] stateShape, int actionSpace, int nKeeps)
+    public static class Constants
     {
-        this.stateShape = stateShape;
-        this.actionSpace = actionSpace;
-        this.nKeeps = nKeeps;
-        mlContext = new MLContext();
-        model = BuildModel();
-        targetModel = BuildModel();
-        UpdateTarget();
+        public const int ACTION_SIZE = 5;  // 0%, 25%, 50%, 75%, 100%
+        public const int NUM_KEEPS = 64;
+        public const int MAP_SIZE = 256;
+        public const int NUM_TILES = 1; // Traversable or not
+        public const int NUM_PLAYERS = 20;
+        public const int TOTAL_ACTION_SPACE = NUM_KEEPS * NUM_KEEPS * ACTION_SIZE * ACTION_SIZE;
     }
 
-    private ITransformer BuildModel()
+    public class HierarchicalDQN
     {
-        // Define the TensorFlow model
-        var pipeline = mlContext.Model.LoadTensorFlowModel("model.pb")
-            .ScoreTensorFlowModel(
-                inputColumnNames: new[] { "map_input", "keep_ownership", "soldier_counts", "archer_counts" },
-                outputColumnNames: new[] { "source_keep", "target_keep", "soldier_percent", "archer_percent" },
-                addBatchDimensionInput: true);
+        private DQN sourceKeepDQN;
+        private DQN targetKeepDQN;
+        private DQN soldierAllocationDQN;
+        private DQN archerAllocationDQN;
+        private int nKeeps;
 
-        // Create an empty DataView to train the model
-        var emptyData = mlContext.Data.LoadFromEnumerable(new List<InputData>());
-        return pipeline.Fit(emptyData);
-    }
-
-    public void UpdateTarget()
-    {
-        targetModel = model;
-    }
-
-    public (int sourceKeep, int targetKeep, int soldierPercent, int archerPercent) GetAction(GameState gameState, float epsilon)
-    {
-        if (new Random().NextDouble() < epsilon)
+        public HierarchicalDQN(int nKeeps)
         {
-            // Epsilon-greedy exploration
-            return (
-                new Random().Next(nKeeps),
-                new Random().Next(nKeeps),
-                new Random().Next(4),
-                new Random().Next(4)
-            );
+            this.nKeeps = nKeeps;
+            sourceKeepDQN = new DQN(nKeeps, nKeeps, "SourceKeepDQN");
+            targetKeepDQN = new DQN(nKeeps, nKeeps, "TargetKeepDQN");
+            soldierAllocationDQN = new DQN(nKeeps, Constants.ACTION_SIZE, "SoldierAllocationDQN");
+            archerAllocationDQN = new DQN(nKeeps, Constants.ACTION_SIZE, "ArcherAllocationDQN");
         }
-        else
+
+        public Action GetAction(GameState gameState, float epsilon, int ownAlliance)
+        {
+            if (new Random().NextDouble() < epsilon)
+            {
+                // Epsilon-greedy exploration
+                return new Action
+                {
+                    SourceKeep = new Random().Next(nKeeps),
+                    TargetKeep = new Random().Next(nKeeps),
+                    SoldierPercent = new Random().Next(Constants.ACTION_SIZE),
+                    ArcherPercent = new Random().Next(Constants.ACTION_SIZE)
+                };
+            }
+            else
+            {
+                int sourceKeep = sourceKeepDQN.GetAction(gameState, ownAlliance);
+                int targetKeep = targetKeepDQN.GetAction(gameState, ownAlliance);
+                int soldierPercent = soldierAllocationDQN.GetAction(gameState, ownAlliance);
+                int archerPercent = archerAllocationDQN.GetAction(gameState, ownAlliance);
+
+                return new Action
+                {
+                    SourceKeep = sourceKeep,
+                    TargetKeep = targetKeep,
+                    SoldierPercent = soldierPercent,
+                    ArcherPercent = archerPercent
+                };
+            }
+        }
+
+        public void Train(GameState state, Action action, float reward, GameState nextState, bool done, int ownAlliance)
+        {
+            sourceKeepDQN.Train(state, action.SourceKeep, reward, nextState, done, ownAlliance);
+            targetKeepDQN.Train(state, action.TargetKeep, reward, nextState, done, ownAlliance);
+            soldierAllocationDQN.Train(state, action.SoldierPercent, reward, nextState, done, ownAlliance);
+            archerAllocationDQN.Train(state, action.ArcherPercent, reward, nextState, done, ownAlliance);
+        }
+    }
+
+    public class DQN
+    {
+        private MLContext mlContext;
+        private ITransformer model;
+        private ITransformer targetModel;
+        private int actionSpace;
+        private int nKeeps;
+        private string name;
+
+        public DQN(int nKeeps, int actionSpace, string name)
+        {
+            this.nKeeps = nKeeps;
+            this.actionSpace = actionSpace;
+            this.name = name;
+            mlContext = new MLContext();
+            model = BuildModel();
+            targetModel = BuildModel();
+            UpdateTarget();
+        }
+
+        private ITransformer BuildModel()
+        {
+            // Define the TensorFlow model
+            var pipeline = mlContext.Model.LoadTensorFlowModel($"{name}_model.pb")
+                .ScoreTensorFlowModel(
+                    inputColumnNames: new[] { "MapState", "KeepOwnership", "SoldierCounts", "ArcherCounts", "OwnAlliance" },
+                    outputColumnNames: new[] { "QValues" },
+                    addBatchDimensionInput: true);
+
+            // Create an empty DataView to train the model
+            var emptyData = mlContext.Data.LoadFromEnumerable(new List<InputData>());
+            return pipeline.Fit(emptyData);
+        }
+
+        public void UpdateTarget()
+        {
+            targetModel = model;
+        }
+
+        public int GetAction(GameState gameState, int ownAlliance)
         {
             var predictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(model);
             var prediction = predictionEngine.Predict(new InputData
             {
-                MapInput = gameState.MapState,
+                MapState = gameState.MapState,
                 KeepOwnership = gameState.KeepOwnership,
                 SoldierCounts = gameState.SoldierCounts,
-                ArcherCounts = gameState.ArcherCounts
+                ArcherCounts = gameState.ArcherCounts,
+                OwnAlliance = ownAlliance
             });
 
-            return (
-                np.argmax(prediction.SourceKeep),
-                np.argmax(prediction.TargetKeep),
-                np.argmax(prediction.SoldierPercent),
-                np.argmax(prediction.ArcherPercent)
-            );
+            return np.argmax(prediction.QValues);
+        }
+
+        public void Train(GameState state, int action, float reward, GameState nextState, bool done, int ownAlliance)
+        {
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(model);
+            var targetPredictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(targetModel);
+
+            OutputData prediction = predictionEngine.Predict(new InputData
+            {
+                MapState = state.MapState,
+                KeepOwnership = state.KeepOwnership,
+                SoldierCounts = state.SoldierCounts,
+                ArcherCounts = state.ArcherCounts,
+                OwnAlliance = ownAlliance
+            });
+
+            float targetQ;
+            if (done)
+            {
+                targetQ = reward;
+            }
+            else
+            {
+                var nextPrediction = targetPredictionEngine.Predict(new InputData
+                {
+                    MapState = nextState.MapState,
+                    KeepOwnership = nextState.KeepOwnership,
+                    SoldierCounts = nextState.SoldierCounts,
+                    ArcherCounts = nextState.ArcherCounts,
+                    OwnAlliance = ownAlliance
+                });
+                float maxQ = np.max(nextPrediction.QValues);
+                targetQ = reward + 0.99f * maxQ;
+            }
+
+            prediction.QValues[action] = (1 - 0.1f) * prediction.QValues[action] + 0.1f * targetQ;
+
+            // Here you would update the model with the new target
+            // This is a simplified representation and would need to be implemented
+            // based on how you're handling model updates in ML.NET
         }
     }
 
-    public void Train(GameState state, (int sourceKeep, int targetKeep, int soldierPercent, int archerPercent) action, float reward, GameState nextState, bool done)
+    public class InputData
     {
-        var predictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(model);
-        var targetPredictionEngine = mlContext.Model.CreatePredictionEngine<InputData, OutputData>(targetModel);
+        [VectorType(Constants.MAP_SIZE, Constants.MAP_SIZE, Constants.NUM_TILES)]
+        public float[] MapState { get; set; }
 
-        var prediction = predictionEngine.Predict(new InputData
-        {
-            MapInput = state.MapState,
-            KeepOwnership = state.KeepOwnership,
-            SoldierCounts = state.SoldierCounts,
-            ArcherCounts = state.ArcherCounts
-        });
+        [VectorType(Constants.NUM_KEEPS)]
+        public float[] KeepOwnership { get; set; }
 
-        if (done)
-        {
-            prediction.SourceKeep[action.sourceKeep] = reward;
-            prediction.TargetKeep[action.targetKeep] = reward;
-            prediction.SoldierPercent[action.soldierPercent] = reward;
-            prediction.ArcherPercent[action.archerPercent] = reward;
-        }
-        else
-        {
-            var nextPrediction = targetPredictionEngine.Predict(new InputData
-            {
-                MapInput = nextState.MapState,
-                KeepOwnership = nextState.KeepOwnership,
-                SoldierCounts = nextState.SoldierCounts,
-                ArcherCounts = nextState.ArcherCounts
-            });
-            float maxQ = Math.Max(
-                Math.Max(np.max(nextPrediction.SourceKeep), np.max(nextPrediction.TargetKeep)),
-                Math.Max(np.max(nextPrediction.SoldierPercent), np.max(nextPrediction.ArcherPercent))
-            );
+        [VectorType(Constants.NUM_KEEPS)]
+        public float[] SoldierCounts { get; set; }
 
-            float newQ = reward + 0.99f * maxQ;
+        [VectorType(Constants.NUM_KEEPS)]
+        public float[] ArcherCounts { get; set; }
 
-            prediction.SourceKeep[action.sourceKeep] = newQ;
-            prediction.TargetKeep[action.targetKeep] = newQ;
-            prediction.SoldierPercent[action.soldierPercent] = newQ;
-            prediction.ArcherPercent[action.archerPercent] = newQ;
-        }
-
-        // Here you would update the model with the new target
-        // This is a simplified representation and would need to be implemented
-        // based on how you're handling model updates in ML.NET
+        public int OwnAlliance { get; set; }
     }
-}
 
-public class InputData
-{
-    [VectorType(Constants.MAP_SIZE, Constants.MAP_SIZE, Constants.NUM_TILES)]
-    public float[] MapInput { get; set; }
-
-    [VectorType(Constants.NUM_KEEPS)]
-    public float[] KeepOwnership { get; set; }
-
-    [VectorType(Constants.NUM_KEEPS)]
-    public float[] SoldierCounts { get; set; }
-
-    [VectorType(Constants.NUM_KEEPS)]
-    public float[] ArcherCounts { get; set; }
-}
-
-public class OutputData
-{
-    [VectorType(Constants.NUM_KEEPS)]
-    public float[] SourceKeep { get; set; }
-
-    [VectorType(Constants.NUM_KEEPS)]
-    public float[] TargetKeep { get; set; }
-
-    [VectorType(4)]
-    public float[] SoldierPercent { get; set; }
-
-    [VectorType(4)]
-    public float[] ArcherPercent { get; set; }
-}
-
-public class GameState
-{
-    public float[] MapState { get; set; }
-    public float[] KeepOwnership { get; set; }
-    public float[] SoldierCounts { get; set; }
-    public float[] ArcherCounts { get; set; }
-}
-
-// Main training loop
-public class Trainer
-{
-    public void Train()
+    public class OutputData
     {
-        var game = new KeepLordWarriors.Game(new Schema.GameSettings());
-        var dqn = new DQN(
-            [Constants.MAP_SIZE, Constants.MAP_SIZE, Constants.NUM_TILES],
-            Constants.TOTAL_ACTION_SPACE,
-            Constants.NUM_KEEPS);
-        float epsilon = 1.0f;
-        float epsilonMin = 0.01f;
-        float epsilonDecay = 0.995f;
+        [VectorType(-1)]  // Length will be set based on the specific DQN's action space
+        public float[] QValues { get; set; }
+    }
 
-        for (int episode = 0; episode < 10000; episode++)
-        {
-            GameState state = game.Reset();
-            bool done = false;
-            while (!done)
-            {
-                var action = dqn.GetAction(state, epsilon);
-                var (nextState, reward, isDone) = game.Step(action);
-                dqn.Train(state, action, reward, nextState, isDone);
-                state = nextState;
-                done = isDone;
-            }
+    public class GameState
+    {
+        public float[] MapState { get; set; }
+        public float[] KeepOwnership { get; set; }
+        public float[] SoldierCounts { get; set; }
+        public float[] ArcherCounts { get; set; }
+    }
 
-            epsilon = Math.Max(epsilonMin, epsilon * epsilonDecay);
-
-            if (episode % 100 == 0)
-            {
-                dqn.UpdateTarget();
-            }
-        }
+    public class Action
+    {
+        public int SourceKeep { get; set; }
+        public int TargetKeep { get; set; }
+        public int SoldierPercent { get; set; }
+        public int ArcherPercent { get; set; }
     }
 }

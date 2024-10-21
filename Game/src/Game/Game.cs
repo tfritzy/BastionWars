@@ -434,7 +434,7 @@ public class Game
         return paths;
     }
 
-    private static List<T> GridToList<T>(T[,] grid)
+    public static List<T> GridToList<T>(T[,] grid)
     {
         List<T> list = new();
 
