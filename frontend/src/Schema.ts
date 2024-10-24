@@ -2659,6 +2659,7 @@ export interface InitialState {
   render_tiles?: RenderTile[];
   grown_fields?: GrownField[];
   removed_words?: RemovedWords[];
+  own_alliance?: number;
 }
 
 export function encodeInitialState(message: InitialState): Uint8Array {
@@ -2746,6 +2747,13 @@ function _encodeInitialState(message: InitialState, bb: ByteBuffer): void {
       pushByteBuffer(nested);
     }
   }
+
+  // optional int32 own_alliance = 8;
+  let $own_alliance = message.own_alliance;
+  if ($own_alliance !== undefined) {
+    writeVarint32(bb, 64);
+    writeVarint64(bb, intToLong($own_alliance));
+  }
 }
 
 export function decodeInitialState(binary: Uint8Array): InitialState {
@@ -2822,6 +2830,12 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
         let values = message.removed_words || (message.removed_words = []);
         values.push(_decodeRemovedWords(bb));
         bb.limit = limit;
+        break;
+      }
+
+      // optional int32 own_alliance = 8;
+      case 8: {
+        message.own_alliance = readVarint32(bb);
         break;
       }
 

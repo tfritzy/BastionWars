@@ -15,6 +15,7 @@ import {
   TILE_SIZE,
   KEEP_LABEL_COMPLETED_STYLE,
   KEEP_LABEL_REMAINING_STYLE,
+  keepColors,
 } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
 import { drawMap } from "./grid_drawing.ts";
@@ -24,6 +25,7 @@ import {
   deleteBySwap,
   divide,
   magnitude,
+  normalize,
 } from "./helpers.ts";
 import { drawKeep } from "./keep_drawing.ts";
 import {
@@ -54,6 +56,7 @@ import {
   parseSoldier,
   parseField,
   type GameState,
+  type Vector2,
 } from "./types.ts";
 
 export class Game {
@@ -65,23 +68,58 @@ export class Game {
   private selectedKeep: number | null = null;
   private drawing: Drawing;
   private time: number = 0;
+  private zoom: number;
+  private camPos: Vector2 = { x: 0, y: 0 };
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.canvas = canvas;
     this.ctx = ctx;
     this.drawing = new Drawing();
+    this.zoom = this.ctx.getTransform().a;
   }
 
   draw(dpr: number, deltaTime: number): void {
     this.time += deltaTime;
+    this.scrollTowardsSelectedKeep(deltaTime);
     drawMap(this.drawing, this.gameState);
     this.drawKeeps(deltaTime);
     this.drawSoldiers(deltaTime);
     this.drawKeepLables(deltaTime);
     this.drawProjectiles(deltaTime);
     this.drawTrees(this.time);
-    this.drawWords(deltaTime);
+    this.drawFields(deltaTime);
     this.drawing.draw(this.ctx);
+  }
+
+  scrollTowardsSelectedKeep(deltaTime: number) {
+    if (this.selectedKeep) {
+      const k = this.gameState.keeps.get(this.selectedKeep);
+      if (k) {
+        const delta = {
+          x:
+            (-k.pos.x * TILE_SIZE * this.zoom +
+              this.canvas.width / 2 -
+              this.camPos.x) /
+            10,
+          y:
+            (-k.pos.y * TILE_SIZE * this.zoom +
+              this.canvas.height / 2 -
+              this.camPos.y) /
+            10,
+        };
+        this.camPos.x += delta.x;
+        this.camPos.y += delta.y;
+      }
+    }
+
+    this.ctx.setTransform(
+      this.zoom,
+      0,
+      0,
+      this.zoom,
+      this.camPos.x,
+      this.camPos.y
+    );
   }
 
   drawKeeps(deltaTime: number) {
@@ -90,12 +128,18 @@ export class Game {
     });
   }
 
-  drawWords(deltaTime: number) {
-    this.gameState.harvestables.forEach((h, i) => {
-      const x = h.pos.x * TILE_SIZE + HALF_T;
-      const y = h.pos.y * TILE_SIZE + HALF_T;
-      h.resource.draw(x, y, deltaTime);
-    });
+  drawFields(deltaTime: number) {
+    for (let i = 0; i < this.gameState.harvestables.length; i++) {
+      const h = this.gameState.harvestables[i];
+      if (h.resource.progress >= h.resource.text.length) {
+        deleteBySwap(this.gameState.harvestables, i);
+        i -= 1;
+      } else {
+        const x = h.pos.x * TILE_SIZE + HALF_T;
+        const y = h.pos.y * TILE_SIZE + HALF_T;
+        h.resource.draw(x, y, deltaTime);
+      }
+    }
   }
 
   drawTrees(time: number) {
@@ -235,16 +279,19 @@ export class Game {
   }
 
   handleTypeKeepName = (id: number) => {
-    if (this.selectedKeep == null) {
-      this.selectedKeep = id;
-    } else {
-      this.connection?.sendMessage({
-        issue_deployment_order: {
-          source_keep: this.selectedKeep,
-          target_keep: id,
-        },
-      });
-      this.selectedKeep = null;
+    const keep = this.gameState.keeps.get(id);
+
+    if (keep) {
+      if (keep.alliance == this.gameState.ownAlliance) {
+        this.selectedKeep = id;
+      } else if (this.selectedKeep != null) {
+        this.connection?.sendMessage({
+          issue_deployment_order: {
+            source_keep: this.selectedKeep,
+            target_keep: id,
+          },
+        });
+      }
     }
   };
 
@@ -306,6 +353,15 @@ export class Game {
     this.gameState.renderTiles = msg.render_tiles || [];
     this.gameState.mapHeight = msg.map_height || 0;
     this.gameState.mapWidth = msg.map_width || 0;
+    this.gameState.ownAlliance = msg.own_alliance || 0;
+
+    const k = Array.from(this.gameState.keeps.values()).find(
+      (k) => k.alliance === this.gameState.ownAlliance
+    );
+    if (k) {
+      this.camPos.x = -k.pos.x * TILE_SIZE * this.zoom + this.canvas.width / 2;
+      this.camPos.y = -k.pos.y * TILE_SIZE * this.zoom + this.canvas.height / 2;
+    }
   }
 
   handleNewSoldiersMsg(msg: NewSoldiers) {

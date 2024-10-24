@@ -352,6 +352,7 @@ public class Game
         {
             MapWidth = Map.Width,
             MapHeight = Map.Height,
+            OwnAlliance = forPlayer.Alliance,
         };
         state.Tiles.AddRange(GridToList<TileType>(Map.Tiles));
         state.RenderTiles.AddRange(GridToList<RenderTile>(Map.RenderTiles));

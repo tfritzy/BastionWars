@@ -9,7 +9,7 @@ import { calculateCanvasSize, setDpr } from "./helpers.js";
 export class KeepLordWarriors {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
-  private controls: CanvasControls;
+  // private controls: CanvasControls;
   private performance: Performance;
   private mainMenu: MainMenu;
   private game: Game | undefined;
@@ -21,7 +21,7 @@ export class KeepLordWarriors {
     this.dpr = window.devicePixelRatio || 1;
     this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
     this.ctx = this.initializeContext();
-    this.controls = new CanvasControls(this.canvas, this.draw.bind(this));
+    // this.controls = new CanvasControls(this.canvas, this.draw.bind(this));
     this.performance = new Performance();
     this.mainMenu = new MainMenu(this.canvas, this.ctx, this.enterGame);
     this.lastTime = performance.now();
@@ -46,10 +46,13 @@ export class KeepLordWarriors {
     this.canvas.style.width = `${width / this.dpr}px`;
     this.canvas.style.height = `${height / this.dpr}px`;
     setDpr(this.canvas, this.ctx);
+
+    const currentTransform = this.ctx.getTransform();
+    this.ctx.translate(-currentTransform.e, -currentTransform.f);
   }
 
   private draw(): void {
-    const { offsetX, offsetY } = this.controls.getTransform();
+    // const { offsetX, offsetY } = this.controls.getTransform();
     const deltaTime = (performance.now() - this.lastTime) / 1000;
     this.lastTime = performance.now();
 
@@ -60,7 +63,7 @@ export class KeepLordWarriors {
       this.canvas.width / this.dpr,
       this.canvas.height / this.dpr
     );
-    this.ctx.translate(offsetX, offsetY);
+    // this.ctx.translate(offsetX, offsetY);
 
     if (this.state === "in_game") {
       this.game!.draw(this.dpr, deltaTime);

@@ -76,6 +76,7 @@ export type GameState = {
   mapHeight: number;
   projectiles: Projectile[];
   harvestables: Harvestable[];
+  ownAlliance: number;
 };
 
 export const initialGameState: GameState = {
@@ -87,6 +88,7 @@ export const initialGameState: GameState = {
   mapHeight: 0,
   projectiles: [],
   harvestables: [],
+  ownAlliance: 0,
 };
 
 export const parseKeep: (keep: KeepState | undefined) => Keep | null = (
