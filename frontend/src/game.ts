@@ -1,3 +1,5 @@
+import { CommandLine } from "./command_line/command_line.ts";
+import { InGameCli } from "./command_line/in_game_cli.ts";
 import { Connection } from "./connection.ts";
 import {
   ARROW_COLOR,
@@ -57,25 +59,28 @@ import {
   parseField,
   type GameState,
   type Vector2,
+  type ClientState,
 } from "./types.ts";
 
 export class Game {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
-  private connection: Connection | undefined;
   private gameState: GameState = initialGameState;
   private keepLabels: Map<number, Typeable> = new Map();
-  private selectedKeep: number | null = null;
+  private clientState: ClientState;
   private drawing: Drawing;
   private time: number = 0;
   private zoom: number;
   private camPos: Vector2 = { x: 0, y: 0 };
+  private cli: InGameCli;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.canvas = canvas;
     this.ctx = ctx;
     this.drawing = new Drawing();
     this.zoom = this.ctx.getTransform().a;
+    this.clientState = { selectedKeep: null, connection: undefined };
+    this.cli = new InGameCli(this.clientState, this.gameState);
   }
 
   draw(dpr: number, deltaTime: number): void {
@@ -92,8 +97,8 @@ export class Game {
   }
 
   scrollTowardsSelectedKeep(deltaTime: number) {
-    if (this.selectedKeep) {
-      const k = this.gameState.keeps.get(this.selectedKeep);
+    if (this.clientState.selectedKeep) {
+      const k = this.gameState.keeps.get(this.clientState.selectedKeep);
       if (k) {
         const delta = {
           x:
@@ -270,7 +275,7 @@ export class Game {
   }
 
   connectToGameServer(details: GameFoundForPlayer) {
-    this.connection = new Connection(
+    this.clientState.connection = new Connection(
       details.address!,
       details.player_id!,
       details.auth_token!,
@@ -278,29 +283,29 @@ export class Game {
     );
   }
 
-  handleTypeKeepName = (id: number) => {
-    const keep = this.gameState.keeps.get(id);
+  // handleTypeKeepName = (id: number) => {
+  //   const keep = this.gameState.keeps.get(id);
 
-    if (keep) {
-      if (keep.alliance == this.gameState.ownAlliance) {
-        this.selectedKeep = id;
-      } else if (this.selectedKeep != null) {
-        this.connection?.sendMessage({
-          issue_deployment_order: {
-            source_keep: this.selectedKeep,
-            target_keep: id,
-          },
-        });
-      }
-    }
-  };
+  //   if (keep) {
+  //     if (keep.alliance == this.gameState.ownAlliance) {
+  //       this.selectedKeep = id;
+  //     } else if (this.selectedKeep != null) {
+  //       this.connection?.sendMessage({
+  //         issue_deployment_order: {
+  //           source_keep: this.selectedKeep,
+  //           target_keep: id,
+  //         },
+  //       });
+  //     }
+  //   }
+  // };
 
   handleTypeResource = (resource_pos: V2Int, resource_text: string) => {
-    this.connection?.sendMessage({
-      type_char: {
-        char: resource_text,
-      },
-    });
+    // this.clientState.connection?.sendMessage({
+    //   type_char: {
+    //     char: resource_text,
+    //   },
+    // });
   };
 
   onMessage = (message: Oneof_GameServerToPlayer) => {
@@ -329,6 +334,7 @@ export class Game {
       var keep = parseKeep(k);
       if (keep != null) {
         this.gameState.keeps.set(keep.id, keep);
+        this.gameState.keepNameToId.set(keep.name, keep.id);
         const id = keep.id;
         this.keepLabels.set(
           keep.id,
@@ -337,7 +343,7 @@ export class Game {
             KEEP_LABEL_COMPLETED_STYLE,
             KEEP_LABEL_REMAINING_STYLE,
             this.drawing,
-            () => this.handleTypeKeepName(id)
+            () => {}
           )
         );
       }

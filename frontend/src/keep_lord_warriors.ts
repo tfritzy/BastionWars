@@ -1,9 +1,7 @@
-import { CanvasControls } from "./controls.js";
 import { Performance } from "./performance.js";
 import { MainMenu } from "./mainMenu.js";
 import { Game } from "./game.js";
 import type { GameFoundForPlayer } from "./Schema.js";
-import { SHADOW_COLOR } from "./constants.js";
 import { calculateCanvasSize, setDpr } from "./helpers.js";
 
 export class KeepLordWarriors {
