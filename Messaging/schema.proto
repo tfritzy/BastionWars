@@ -116,7 +116,7 @@ message Oneof_GameServerToPlayer {
         NewProjectiles new_projectiles = 6;
         RenderTileUpdates render_tile_updates = 7;
         NewGrownFields new_grown_fields = 8;
-        RemovedWords removed_words = 9;
+        HarvestedFields harvested_fields = 9;
     }
 }
 
@@ -206,8 +206,14 @@ message NewGrownFields {
     repeated GrownField fields = 1;
 }
 
-message RemovedWords {
-    repeated V2Int positions = 1;
+message HarvestedFields {
+    repeated HarvestedField fields = 1;
+}
+
+message HarvestedField {
+    V2Int pos = 1;
+    float remainingGrowthTime = 2;
+    float totalGrowthTime = 3;
 }
 
 enum WalkPathType {
@@ -272,7 +278,7 @@ message InitialState {
     repeated TileType tiles = 4;
     repeated RenderTile render_tiles = 5;
     repeated GrownField grown_fields = 6;
-    repeated RemovedWords removed_words = 7;
+    repeated HarvestedField harvested_fields = 7;
     int32 own_alliance = 8;
 }
 

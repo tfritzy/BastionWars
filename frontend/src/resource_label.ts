@@ -1,5 +1,6 @@
 import { Layer } from "./constants";
 import type { Drawing, DrawStyle } from "./drawing";
+import { drawProgressBar } from "./drawing/progress_bar";
 import { drawDots } from "./drawing/progress_dots";
 import { type Vector2 } from "./types";
 
@@ -15,12 +16,10 @@ const letterRect: DrawStyle = {
 const style: DrawStyle = {
  layer: Layer.UI,
  fill_style: "#444444",
- font: "mono 14px Roboto",
+ font: "1.1em monospace",
  should_fill: true,
  text_align: "center",
 };
-
-const keyRectSize = 18;
 
 export class ResourceLabel {
  public text: string;
@@ -30,25 +29,13 @@ export class ResourceLabel {
   text: string,
   drawing: Drawing,
   keepPos: Vector2,
-  onComplete: () => void,
-  progress: number
+  onComplete: () => void
  ) {
-  this.text = text.toUpperCase();
+  this.text = text;
   this.drawing = drawing;
  }
 
  draw(x: number, y: number, deltaTime: number): void {
-  // Letter rect
-  // this.drawing.drawCustom(letterRect, (ctx) => {
-  //  ctx.roundRect(
-  //   x - keyRectSize / 2 - 5,
-  //   y - keyRectSize / 2 - 4,
-  //   5 * this.text.length + 10,
-  //   keyRectSize,
-  //   2
-  //  );
-  // });
-
   // Letter
   this.drawing.drawCustom(style, (ctx) => {
    ctx.fillText(this.text, x, y);

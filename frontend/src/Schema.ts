@@ -1143,7 +1143,7 @@ export interface Oneof_GameServerToPlayer {
   new_projectiles?: NewProjectiles;
   render_tile_updates?: RenderTileUpdates;
   new_grown_fields?: NewGrownFields;
-  removed_words?: RemovedWords;
+  harvested_fields?: HarvestedFields;
 }
 
 export function encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer): Uint8Array {
@@ -1237,12 +1237,12 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional RemovedWords removed_words = 9;
-  let $removed_words = message.removed_words;
-  if ($removed_words !== undefined) {
+  // optional HarvestedFields harvested_fields = 9;
+  let $harvested_fields = message.harvested_fields;
+  if ($harvested_fields !== undefined) {
     writeVarint32(bb, 74);
     let nested = popByteBuffer();
-    _encodeRemovedWords($removed_words, nested);
+    _encodeHarvestedFields($harvested_fields, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -1325,10 +1325,10 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
         break;
       }
 
-      // optional RemovedWords removed_words = 9;
+      // optional HarvestedFields harvested_fields = 9;
       case 9: {
         let limit = pushTemporaryLength(bb);
-        message.removed_words = _decodeRemovedWords(bb);
+        message.harvested_fields = _decodeHarvestedFields(bb);
         bb.limit = limit;
         break;
       }
@@ -2006,24 +2006,24 @@ function _decodeNewGrownFields(bb: ByteBuffer): NewGrownFields {
   return message;
 }
 
-export interface RemovedWords {
-  positions?: V2Int[];
+export interface HarvestedFields {
+  fields?: HarvestedField[];
 }
 
-export function encodeRemovedWords(message: RemovedWords): Uint8Array {
+export function encodeHarvestedFields(message: HarvestedFields): Uint8Array {
   let bb = popByteBuffer();
-  _encodeRemovedWords(message, bb);
+  _encodeHarvestedFields(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeRemovedWords(message: RemovedWords, bb: ByteBuffer): void {
-  // repeated V2Int positions = 1;
-  let array$positions = message.positions;
-  if (array$positions !== undefined) {
-    for (let value of array$positions) {
+function _encodeHarvestedFields(message: HarvestedFields, bb: ByteBuffer): void {
+  // repeated HarvestedField fields = 1;
+  let array$fields = message.fields;
+  if (array$fields !== undefined) {
+    for (let value of array$fields) {
       writeVarint32(bb, 10);
       let nested = popByteBuffer();
-      _encodeV2Int(value, nested);
+      _encodeHarvestedField(value, nested);
       writeVarint32(bb, nested.limit);
       writeByteBuffer(bb, nested);
       pushByteBuffer(nested);
@@ -2031,12 +2031,12 @@ function _encodeRemovedWords(message: RemovedWords, bb: ByteBuffer): void {
   }
 }
 
-export function decodeRemovedWords(binary: Uint8Array): RemovedWords {
-  return _decodeRemovedWords(wrapByteBuffer(binary));
+export function decodeHarvestedFields(binary: Uint8Array): HarvestedFields {
+  return _decodeHarvestedFields(wrapByteBuffer(binary));
 }
 
-function _decodeRemovedWords(bb: ByteBuffer): RemovedWords {
-  let message: RemovedWords = {} as any;
+function _decodeHarvestedFields(bb: ByteBuffer): HarvestedFields {
+  let message: HarvestedFields = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -2045,12 +2045,93 @@ function _decodeRemovedWords(bb: ByteBuffer): RemovedWords {
       case 0:
         break end_of_message;
 
-      // repeated V2Int positions = 1;
+      // repeated HarvestedField fields = 1;
       case 1: {
         let limit = pushTemporaryLength(bb);
-        let values = message.positions || (message.positions = []);
-        values.push(_decodeV2Int(bb));
+        let values = message.fields || (message.fields = []);
+        values.push(_decodeHarvestedField(bb));
         bb.limit = limit;
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface HarvestedField {
+  pos?: V2Int;
+  remainingGrowthTime?: number;
+  totalGrowthTime?: number;
+}
+
+export function encodeHarvestedField(message: HarvestedField): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeHarvestedField(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeHarvestedField(message: HarvestedField, bb: ByteBuffer): void {
+  // optional V2Int pos = 1;
+  let $pos = message.pos;
+  if ($pos !== undefined) {
+    writeVarint32(bb, 10);
+    let nested = popByteBuffer();
+    _encodeV2Int($pos, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional float remainingGrowthTime = 2;
+  let $remainingGrowthTime = message.remainingGrowthTime;
+  if ($remainingGrowthTime !== undefined) {
+    writeVarint32(bb, 21);
+    writeFloat(bb, $remainingGrowthTime);
+  }
+
+  // optional float totalGrowthTime = 3;
+  let $totalGrowthTime = message.totalGrowthTime;
+  if ($totalGrowthTime !== undefined) {
+    writeVarint32(bb, 29);
+    writeFloat(bb, $totalGrowthTime);
+  }
+}
+
+export function decodeHarvestedField(binary: Uint8Array): HarvestedField {
+  return _decodeHarvestedField(wrapByteBuffer(binary));
+}
+
+function _decodeHarvestedField(bb: ByteBuffer): HarvestedField {
+  let message: HarvestedField = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional V2Int pos = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        message.pos = _decodeV2Int(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional float remainingGrowthTime = 2;
+      case 2: {
+        message.remainingGrowthTime = readFloat(bb);
+        break;
+      }
+
+      // optional float totalGrowthTime = 3;
+      case 3: {
+        message.totalGrowthTime = readFloat(bb);
         break;
       }
 
@@ -2644,7 +2725,7 @@ export interface InitialState {
   tiles?: TileType[];
   render_tiles?: RenderTile[];
   grown_fields?: GrownField[];
-  removed_words?: RemovedWords[];
+  harvested_fields?: HarvestedField[];
   own_alliance?: number;
 }
 
@@ -2721,13 +2802,13 @@ function _encodeInitialState(message: InitialState, bb: ByteBuffer): void {
     }
   }
 
-  // repeated RemovedWords removed_words = 7;
-  let array$removed_words = message.removed_words;
-  if (array$removed_words !== undefined) {
-    for (let value of array$removed_words) {
+  // repeated HarvestedField harvested_fields = 7;
+  let array$harvested_fields = message.harvested_fields;
+  if (array$harvested_fields !== undefined) {
+    for (let value of array$harvested_fields) {
       writeVarint32(bb, 58);
       let nested = popByteBuffer();
-      _encodeRemovedWords(value, nested);
+      _encodeHarvestedField(value, nested);
       writeVarint32(bb, nested.limit);
       writeByteBuffer(bb, nested);
       pushByteBuffer(nested);
@@ -2810,11 +2891,11 @@ function _decodeInitialState(bb: ByteBuffer): InitialState {
         break;
       }
 
-      // repeated RemovedWords removed_words = 7;
+      // repeated HarvestedField harvested_fields = 7;
       case 7: {
         let limit = pushTemporaryLength(bb);
-        let values = message.removed_words || (message.removed_words = []);
-        values.push(_decodeRemovedWords(bb));
+        let values = message.harvested_fields || (message.harvested_fields = []);
+        values.push(_decodeHarvestedField(bb));
         bb.limit = limit;
         break;
       }

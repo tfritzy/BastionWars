@@ -7,7 +7,7 @@ export class CommandLine {
     <div class="cli-container">
       <style>
         .cli-container {
-          background-color: rgba(30, 30, 30, 0.6);
+          background-color: rgba(30, 30, 30, 0.8);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(12px);
           color: #f0f0f0;

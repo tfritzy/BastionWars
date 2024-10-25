@@ -1,4 +1,5 @@
 import type { Connection } from "../connection";
+import { TILE_SIZE } from "../constants";
 import type { ClientState, GameState } from "../types";
 import { CommandLine } from "./command_line";
 
@@ -17,15 +18,21 @@ export class InGameCli {
   const split = command.split(" ");
   switch (split[0]) {
    case "attack":
+   case "a":
     return this.attack(split);
    case "goto":
+   case "g":
     return this.goto(split);
    case "harvest":
+   case "h":
     return this.harvest(split);
    case "fields":
     return this.fields(split);
    case "keeps":
     return this.keeps(split);
+   case "scroll":
+   case "s":
+    return this.scroll(split);
    default:
     return `Unknown command: ${split[0]}\nType 'help' for available commands`;
   }
@@ -65,11 +72,11 @@ export class InGameCli {
    return `Unable to find keep: '${command[1]}'`;
   }
 
-  if (this.clientState.selectedKeep === keepId) {
-   return `Already viewing '${command[1]}'`;
-  }
-
-  this.clientState.selectedKeep = keepId;
+  const pos = {
+   x: this.gameState.keeps.get(keepId)!.pos.x,
+   y: this.gameState.keeps.get(keepId)!.pos.y,
+  };
+  this.clientState.targetCamPos = pos;
   return "";
  };
 
@@ -87,6 +94,41 @@ export class InGameCli {
     .map((k) => `${k.name}\t${k.warrior_count}\t${k.archer_count}`)
     .join("\n")
   );
+ };
+
+ scroll = (command: string[]): string => {
+  if (command.length < 2) {
+   return "scroll requires at least 1 argument.\nExample usage: scroll r 3";
+  }
+
+  const dir = command[1];
+  const amount = Number(command[2]) || 1;
+  if (!Number.isInteger(amount)) {
+   return "second argument must be valid integer";
+  }
+
+  switch (dir) {
+   case "left":
+   case "l":
+    this.clientState.targetCamPos.x -= amount;
+    break;
+   case "right":
+   case "r":
+    this.clientState.targetCamPos.x += amount;
+    break;
+   case "up":
+   case "u":
+    this.clientState.targetCamPos.y -= amount;
+    break;
+   case "down":
+   case "d":
+    this.clientState.targetCamPos.y += amount;
+    break;
+   default:
+    return "first argument must be a valid direction.\nValid options: l, r, u, d, left, right, up, down";
+  }
+
+  return "success";
  };
 
  harvest = (command: string[]): string => {

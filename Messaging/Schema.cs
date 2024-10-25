@@ -53,7 +53,7 @@ namespace Schema {
             "VG9HYW1lU2VydmVyEhEKCXNlbmRlcl9pZBgBIAEoCRISCgphdXRoX3Rva2Vu",
             "GAIgASgJEj4KFmlzc3VlX2RlcGxveW1lbnRfb3JkZXIYAyABKAsyHC5TY2hl",
             "bWEuSXNzdWVEZXBsb3ltZW50T3JkZXJIABItCg1oYXJ2ZXN0X2ZpZWxkGAQg",
-            "ASgLMhQuU2NoZW1hLkhhcnZlc3RGaWVsZEgAQgUKA21zZyLIAwoYT25lb2Zf",
+            "ASgLMhQuU2NoZW1hLkhhcnZlc3RGaWVsZEgAQgUKA21zZyLOAwoYT25lb2Zf",
             "R2FtZVNlcnZlclRvUGxheWVyEhQKDHJlY2lwaWVudF9pZBgBIAEoCRItCg1p",
             "bml0aWFsX3N0YXRlGAIgASgLMhQuU2NoZW1hLkluaXRpYWxTdGF0ZUgAEisK",
             "DG5ld19zb2xkaWVycxgDIAEoCzITLlNjaGVtYS5OZXdTb2xkaWVyc0gAEjMK",
@@ -62,66 +62,69 @@ namespace Schema {
             "cGRhdGVzSAASMQoPbmV3X3Byb2plY3RpbGVzGAYgASgLMhYuU2NoZW1hLk5l",
             "d1Byb2plY3RpbGVzSAASOAoTcmVuZGVyX3RpbGVfdXBkYXRlcxgHIAEoCzIZ",
             "LlNjaGVtYS5SZW5kZXJUaWxlVXBkYXRlc0gAEjIKEG5ld19ncm93bl9maWVs",
-            "ZHMYCCABKAsyFi5TY2hlbWEuTmV3R3Jvd25GaWVsZHNIABItCg1yZW1vdmVk",
-            "X3dvcmRzGAkgASgLMhQuU2NoZW1hLlJlbW92ZWRXb3Jkc0gAQgUKA21zZyJr",
-            "CgpSZW5kZXJUaWxlEhEKCXRpbGVfY2FzZRgBIAEoDRIXCg9jb3JuZXJfYWxs",
-            "aWFuY2UYAiADKAUSMQoNYWxsaWFuY2VfY2FzZRgDIAEoDjIaLlNjaGVtYS5S",
-            "ZW5kZXJBbGxpYW5jZUNhc2UiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgC",
-            "IiUKAlYzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIh0KBVYy",
-            "SW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSKXAQoKTmV3U29sZGllchIKCgJp",
-            "ZBgBIAEoDRIWCg5tb3ZlbWVudF9zcGVlZBgCIAEoAhIhCgR0eXBlGAMgASgO",
-            "MhMuU2NoZW1hLlNvbGRpZXJUeXBlEhYKDnNvdXJjZV9rZWVwX2lkGAQgASgN",
-            "EhYKDnRhcmdldF9rZWVwX2lkGAUgASgNEhIKCnJvd19vZmZzZXQYBiABKAIi",
-            "MwoLTmV3U29sZGllcnMSJAoIc29sZGllcnMYASADKAsyEi5TY2hlbWEuTmV3",
-            "U29sZGllciImCg9SZW1vdmVkU29sZGllcnMSEwoLc29sZGllcl9pZHMYASAD",
-            "KA0iYAoKR3Jvd25GaWVsZBIfCghncmlkX3BvcxgBIAEoCzINLlNjaGVtYS5W",
-            "MkludBIMCgR0ZXh0GAIgASgJEiMKD293bmluZ19rZWVwX3BvcxgDIAEoCzIK",
-            "LlNjaGVtYS5WMiI0Cg5OZXdHcm93bkZpZWxkcxIiCgZmaWVsZHMYASADKAsy",
-            "Ei5TY2hlbWEuR3Jvd25GaWVsZCIwCgxSZW1vdmVkV29yZHMSIAoJcG9zaXRp",
-            "b25zGAEgAygLMg0uU2NoZW1hLlYySW50ImYKClBhdGhUb0tlZXASEQoJdGFy",
-            "Z2V0X2lkGAEgASgNEhsKBHBhdGgYAiADKAsyDS5TY2hlbWEuVjJJbnQSKAoK",
-            "d2Fsa190eXBlcxgDIAMoDjIULlNjaGVtYS5XYWxrUGF0aFR5cGUioAEKCUtl",
-            "ZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjIS",
-            "FQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNoZXJfY291bnQYBCABKAUS",
-            "DAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEoBRIhCgVwYXRocxgHIAMo",
-            "CzISLlNjaGVtYS5QYXRoVG9LZWVwIlcKCktlZXBVcGRhdGUSCgoCaWQYASAB",
-            "KA0SFQoNd2Fycmlvcl9jb3VudBgCIAEoBRIUCgxhcmNoZXJfY291bnQYAyAB",
-            "KAUSEAoIYWxsaWFuY2UYBCABKAUiOgoOQWxsS2VlcFVwZGF0ZXMSKAoMa2Vl",
-            "cF91cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUiqQEKDU5ld1By",
-            "b2plY3RpbGUSCgoCaWQYASABKA0SHQoJc3RhcnRfcG9zGAIgASgLMgouU2No",
-            "ZW1hLlYzEhIKCmJpcnRoX3RpbWUYAyABKAISJAoQaW5pdGlhbF92ZWxvY2l0",
-            "eRgEIAEoCzIKLlNjaGVtYS5WMxIWCg50aW1lX3dpbGxfbGFuZBgFIAEoAhIb",
-            "ChNncmF2aXRhdGlvbmFsX2ZvcmNlGAYgASgCIjwKDk5ld1Byb2plY3RpbGVz",
-            "EioKC3Byb2plY3RpbGVzGAEgAygLMhUuU2NoZW1hLk5ld1Byb2plY3RpbGUi",
-            "jwIKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVtYS5LZWVw",
-            "U3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQYAyABKAUS",
-            "HwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5cGUSKAoMcmVuZGVyX3Rp",
-            "bGVzGAUgAygLMhIuU2NoZW1hLlJlbmRlclRpbGUSKAoMZ3Jvd25fZmllbGRz",
-            "GAYgAygLMhIuU2NoZW1hLkdyb3duRmllbGQSKwoNcmVtb3ZlZF93b3JkcxgH",
-            "IAMoCzIULlNjaGVtYS5SZW1vdmVkV29yZHMSFAoMb3duX2FsbGlhbmNlGAgg",
-            "ASgFIlQKEFJlbmRlclRpbGVVcGRhdGUSFwoDcG9zGAEgASgLMgouU2NoZW1h",
-            "LlYyEicKC3JlbmRlcl90aWxlGAIgASgLMhIuU2NoZW1hLlJlbmRlclRpbGUi",
-            "SgoRUmVuZGVyVGlsZVVwZGF0ZXMSNQoTcmVuZGVyX3RpbGVfdXBkYXRlcxgB",
-            "IAMoCzIYLlNjaGVtYS5SZW5kZXJUaWxlVXBkYXRlKioKDkdlbmVyYXRpb25N",
-            "b2RlEg4KCkF1dG9BY2NydWUQABIICgRXb3JkEAEqQQoIVGlsZVR5cGUSCwoH",
-            "SW52YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQAxIJCgVG",
-            "aWVsZBAEKpcDChJSZW5kZXJBbGxpYW5jZUNhc2USGQoVSW52YWxpZFJlbmRl",
-            "ckFsbGlhbmNlEAASIAocRnVsbExhbmRfU2luZ2xlUm91bmRlZENvcm5lchAB",
-            "EhwKGEZ1bGxMYW5kX1NwbGl0RG93bk1pZGRsZRACEh4KGkZ1bGxMYW5kX0lu",
-            "ZGl2aWR1YWxDb3JuZXJzEAMSFQoRRnVsbExhbmRfT25lT3duZXIQBBIZChVU",
-            "aHJlZUNvcm5lcnNfT25lT3duZXIQBRIaChZUaHJlZUNvcm5lcnNfVHdvT3du",
-            "ZXJzEAYSHAoYVGhyZWVDb3JuZXJzX1RocmVlT3duZXJzEAcSGQoVVHdvQWRq",
-            "YWNlbnRfVHdvT3duZXJzEAgSGAoUVHdvQWRqYWNlbnRfT25lT3duZXIQCRIZ",
-            "ChVUd29PcHBvc2l0ZV9Ud29Pd25lcnMQChIYChRUd29PcHBvc2l0ZV9PbmVP",
-            "d25lchALEhkKFVNpbmdsZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1bGxXYXRl",
-            "cl9Ob09ud2VyEA0qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQ",
-            "ABILCgdXYXJyaW9yEAESCgoGQXJjaGVyEAIqgwIKDFdhbGtQYXRoVHlwZRIT",
-            "Cg9TdHJhaWdodFRvUmlnaHQQABIQCgxTdHJhaWdodERvd24QARIQCgxTdHJh",
-            "aWdodExlZnQQAhIOCgpTdHJhaWdodFVwEAMSFAoQQ2lyY3VsYXJMZWZ0RG93",
-            "bhAEEhIKDkNpcmN1bGFyTGVmdFVwEAUSFAoQQ2lyY3VsYXJEb3duTGVmdBAG",
-            "EhUKEUNpcmN1bGFyRG93blJpZ2h0EAcSFQoRQ2lyY3VsYXJSaWdodERvd24Q",
-            "CBITCg9DaXJjdWxhclJpZ2h0VXAQCRITCg9DaXJjdWxhclVwUmlnaHQQChIS",
-            "Cg5DaXJjdWxhclVwTGVmdBALYgZwcm90bzM="));
+            "ZHMYCCABKAsyFi5TY2hlbWEuTmV3R3Jvd25GaWVsZHNIABIzChBoYXJ2ZXN0",
+            "ZWRfZmllbGRzGAkgASgLMhcuU2NoZW1hLkhhcnZlc3RlZEZpZWxkc0gAQgUK",
+            "A21zZyJrCgpSZW5kZXJUaWxlEhEKCXRpbGVfY2FzZRgBIAEoDRIXCg9jb3Ju",
+            "ZXJfYWxsaWFuY2UYAiADKAUSMQoNYWxsaWFuY2VfY2FzZRgDIAEoDjIaLlNj",
+            "aGVtYS5SZW5kZXJBbGxpYW5jZUNhc2UiGgoCVjISCQoBeBgBIAEoAhIJCgF5",
+            "GAIgASgCIiUKAlYzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgC",
+            "Ih0KBVYySW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSKXAQoKTmV3U29sZGll",
+            "chIKCgJpZBgBIAEoDRIWCg5tb3ZlbWVudF9zcGVlZBgCIAEoAhIhCgR0eXBl",
+            "GAMgASgOMhMuU2NoZW1hLlNvbGRpZXJUeXBlEhYKDnNvdXJjZV9rZWVwX2lk",
+            "GAQgASgNEhYKDnRhcmdldF9rZWVwX2lkGAUgASgNEhIKCnJvd19vZmZzZXQY",
+            "BiABKAIiMwoLTmV3U29sZGllcnMSJAoIc29sZGllcnMYASADKAsyEi5TY2hl",
+            "bWEuTmV3U29sZGllciImCg9SZW1vdmVkU29sZGllcnMSEwoLc29sZGllcl9p",
+            "ZHMYASADKA0iYAoKR3Jvd25GaWVsZBIfCghncmlkX3BvcxgBIAEoCzINLlNj",
+            "aGVtYS5WMkludBIMCgR0ZXh0GAIgASgJEiMKD293bmluZ19rZWVwX3BvcxgD",
+            "IAEoCzIKLlNjaGVtYS5WMiI0Cg5OZXdHcm93bkZpZWxkcxIiCgZmaWVsZHMY",
+            "ASADKAsyEi5TY2hlbWEuR3Jvd25GaWVsZCI5Cg9IYXJ2ZXN0ZWRGaWVsZHMS",
+            "JgoGZmllbGRzGAEgAygLMhYuU2NoZW1hLkhhcnZlc3RlZEZpZWxkImIKDkhh",
+            "cnZlc3RlZEZpZWxkEhoKA3BvcxgBIAEoCzINLlNjaGVtYS5WMkludBIbChNy",
+            "ZW1haW5pbmdHcm93dGhUaW1lGAIgASgCEhcKD3RvdGFsR3Jvd3RoVGltZRgD",
+            "IAEoAiJmCgpQYXRoVG9LZWVwEhEKCXRhcmdldF9pZBgBIAEoDRIbCgRwYXRo",
+            "GAIgAygLMg0uU2NoZW1hLlYySW50EigKCndhbGtfdHlwZXMYAyADKA4yFC5T",
+            "Y2hlbWEuV2Fsa1BhdGhUeXBlIqABCglLZWVwU3RhdGUSCgoCaWQYASABKA0S",
+            "FwoDcG9zGAIgASgLMgouU2NoZW1hLlYyEhUKDXdhcnJpb3JfY291bnQYAyAB",
+            "KAUSFAoMYXJjaGVyX2NvdW50GAQgASgFEgwKBG5hbWUYBSABKAkSEAoIYWxs",
+            "aWFuY2UYBiABKAUSIQoFcGF0aHMYByADKAsyEi5TY2hlbWEuUGF0aFRvS2Vl",
+            "cCJXCgpLZWVwVXBkYXRlEgoKAmlkGAEgASgNEhUKDXdhcnJpb3JfY291bnQY",
+            "AiABKAUSFAoMYXJjaGVyX2NvdW50GAMgASgFEhAKCGFsbGlhbmNlGAQgASgF",
+            "IjoKDkFsbEtlZXBVcGRhdGVzEigKDGtlZXBfdXBkYXRlcxgBIAMoCzISLlNj",
+            "aGVtYS5LZWVwVXBkYXRlIqkBCg1OZXdQcm9qZWN0aWxlEgoKAmlkGAEgASgN",
+            "Eh0KCXN0YXJ0X3BvcxgCIAEoCzIKLlNjaGVtYS5WMxISCgpiaXJ0aF90aW1l",
+            "GAMgASgCEiQKEGluaXRpYWxfdmVsb2NpdHkYBCABKAsyCi5TY2hlbWEuVjMS",
+            "FgoOdGltZV93aWxsX2xhbmQYBSABKAISGwoTZ3Jhdml0YXRpb25hbF9mb3Jj",
+            "ZRgGIAEoAiI8Cg5OZXdQcm9qZWN0aWxlcxIqCgtwcm9qZWN0aWxlcxgBIAMo",
+            "CzIVLlNjaGVtYS5OZXdQcm9qZWN0aWxlIpQCCgxJbml0aWFsU3RhdGUSIAoF",
+            "a2VlcHMYASADKAsyES5TY2hlbWEuS2VlcFN0YXRlEhEKCW1hcF93aWR0aBgC",
+            "IAEoBRISCgptYXBfaGVpZ2h0GAMgASgFEh8KBXRpbGVzGAQgAygOMhAuU2No",
+            "ZW1hLlRpbGVUeXBlEigKDHJlbmRlcl90aWxlcxgFIAMoCzISLlNjaGVtYS5S",
+            "ZW5kZXJUaWxlEigKDGdyb3duX2ZpZWxkcxgGIAMoCzISLlNjaGVtYS5Hcm93",
+            "bkZpZWxkEjAKEGhhcnZlc3RlZF9maWVsZHMYByADKAsyFi5TY2hlbWEuSGFy",
+            "dmVzdGVkRmllbGQSFAoMb3duX2FsbGlhbmNlGAggASgFIlQKEFJlbmRlclRp",
+            "bGVVcGRhdGUSFwoDcG9zGAEgASgLMgouU2NoZW1hLlYyEicKC3JlbmRlcl90",
+            "aWxlGAIgASgLMhIuU2NoZW1hLlJlbmRlclRpbGUiSgoRUmVuZGVyVGlsZVVw",
+            "ZGF0ZXMSNQoTcmVuZGVyX3RpbGVfdXBkYXRlcxgBIAMoCzIYLlNjaGVtYS5S",
+            "ZW5kZXJUaWxlVXBkYXRlKioKDkdlbmVyYXRpb25Nb2RlEg4KCkF1dG9BY2Ny",
+            "dWUQABIICgRXb3JkEAEqQQoIVGlsZVR5cGUSCwoHSW52YWxpZBAAEggKBExh",
+            "bmQQARIJCgVXYXRlchACEggKBFRyZWUQAxIJCgVGaWVsZBAEKpcDChJSZW5k",
+            "ZXJBbGxpYW5jZUNhc2USGQoVSW52YWxpZFJlbmRlckFsbGlhbmNlEAASIAoc",
+            "RnVsbExhbmRfU2luZ2xlUm91bmRlZENvcm5lchABEhwKGEZ1bGxMYW5kX1Nw",
+            "bGl0RG93bk1pZGRsZRACEh4KGkZ1bGxMYW5kX0luZGl2aWR1YWxDb3JuZXJz",
+            "EAMSFQoRRnVsbExhbmRfT25lT3duZXIQBBIZChVUaHJlZUNvcm5lcnNfT25l",
+            "T3duZXIQBRIaChZUaHJlZUNvcm5lcnNfVHdvT3duZXJzEAYSHAoYVGhyZWVD",
+            "b3JuZXJzX1RocmVlT3duZXJzEAcSGQoVVHdvQWRqYWNlbnRfVHdvT3duZXJz",
+            "EAgSGAoUVHdvQWRqYWNlbnRfT25lT3duZXIQCRIZChVUd29PcHBvc2l0ZV9U",
+            "d29Pd25lcnMQChIYChRUd29PcHBvc2l0ZV9PbmVPd25lchALEhkKFVNpbmds",
+            "ZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1bGxXYXRlcl9Ob09ud2VyEA0qOgoL",
+            "U29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQABILCgdXYXJyaW9yEAES",
+            "CgoGQXJjaGVyEAIqgwIKDFdhbGtQYXRoVHlwZRITCg9TdHJhaWdodFRvUmln",
+            "aHQQABIQCgxTdHJhaWdodERvd24QARIQCgxTdHJhaWdodExlZnQQAhIOCgpT",
+            "dHJhaWdodFVwEAMSFAoQQ2lyY3VsYXJMZWZ0RG93bhAEEhIKDkNpcmN1bGFy",
+            "TGVmdFVwEAUSFAoQQ2lyY3VsYXJEb3duTGVmdBAGEhUKEUNpcmN1bGFyRG93",
+            "blJpZ2h0EAcSFQoRQ2lyY3VsYXJSaWdodERvd24QCBITCg9DaXJjdWxhclJp",
+            "Z2h0VXAQCRITCg9DaXJjdWxhclVwUmlnaHQQChISCg5DaXJjdWxhclVwTGVm",
+            "dBALYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), typeof(global::Schema.WalkPathType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -140,7 +143,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.HarvestField), global::Schema.HarvestField.Parser, new[]{ "Text" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder", "HarvestField" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "NewSoldiers", "RemovedSoldiers", "KeepUpdates", "NewProjectiles", "RenderTileUpdates", "NewGrownFields", "RemovedWords" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "NewSoldiers", "RemovedSoldiers", "KeepUpdates", "NewProjectiles", "RenderTileUpdates", "NewGrownFields", "HarvestedFields" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTile), global::Schema.RenderTile.Parser, new[]{ "TileCase", "CornerAlliance", "AllianceCase" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2), global::Schema.V2.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V3), global::Schema.V3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
@@ -150,14 +153,15 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RemovedSoldiers), global::Schema.RemovedSoldiers.Parser, new[]{ "SoldierIds" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GrownField), global::Schema.GrownField.Parser, new[]{ "GridPos", "Text", "OwningKeepPos" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewGrownFields), global::Schema.NewGrownFields.Parser, new[]{ "Fields" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RemovedWords), global::Schema.RemovedWords.Parser, new[]{ "Positions" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.HarvestedFields), global::Schema.HarvestedFields.Parser, new[]{ "Fields" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.HarvestedField), global::Schema.HarvestedField.Parser, new[]{ "Pos", "RemainingGrowthTime", "TotalGrowthTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.PathToKeep), global::Schema.PathToKeep.Parser, new[]{ "TargetId", "Path", "WalkTypes" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepState), global::Schema.KeepState.Parser, new[]{ "Id", "Pos", "WarriorCount", "ArcherCount", "Name", "Alliance", "Paths" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.KeepUpdate), global::Schema.KeepUpdate.Parser, new[]{ "Id", "WarriorCount", "ArcherCount", "Alliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllKeepUpdates), global::Schema.AllKeepUpdates.Parser, new[]{ "KeepUpdates" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectile), global::Schema.NewProjectile.Parser, new[]{ "Id", "StartPos", "BirthTime", "InitialVelocity", "TimeWillLand", "GravitationalForce" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectiles), global::Schema.NewProjectiles.Parser, new[]{ "Projectiles" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles", "GrownFields", "RemovedWords", "OwnAlliance" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles", "GrownFields", "HarvestedFields", "OwnAlliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTileUpdate), global::Schema.RenderTileUpdate.Parser, new[]{ "Pos", "RenderTile" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTileUpdates), global::Schema.RenderTileUpdates.Parser, new[]{ "RenderTileUpdates_" }, null, null, null, null)
           }));
@@ -4038,8 +4042,8 @@ namespace Schema {
         case MsgOneofCase.NewGrownFields:
           NewGrownFields = other.NewGrownFields.Clone();
           break;
-        case MsgOneofCase.RemovedWords:
-          RemovedWords = other.RemovedWords.Clone();
+        case MsgOneofCase.HarvestedFields:
+          HarvestedFields = other.HarvestedFields.Clone();
           break;
       }
 
@@ -4148,15 +4152,15 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "removed_words" field.</summary>
-    public const int RemovedWordsFieldNumber = 9;
+    /// <summary>Field number for the "harvested_fields" field.</summary>
+    public const int HarvestedFieldsFieldNumber = 9;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.RemovedWords RemovedWords {
-      get { return msgCase_ == MsgOneofCase.RemovedWords ? (global::Schema.RemovedWords) msg_ : null; }
+    public global::Schema.HarvestedFields HarvestedFields {
+      get { return msgCase_ == MsgOneofCase.HarvestedFields ? (global::Schema.HarvestedFields) msg_ : null; }
       set {
         msg_ = value;
-        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.RemovedWords;
+        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.HarvestedFields;
       }
     }
 
@@ -4171,7 +4175,7 @@ namespace Schema {
       NewProjectiles = 6,
       RenderTileUpdates = 7,
       NewGrownFields = 8,
-      RemovedWords = 9,
+      HarvestedFields = 9,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4210,7 +4214,7 @@ namespace Schema {
       if (!object.Equals(NewProjectiles, other.NewProjectiles)) return false;
       if (!object.Equals(RenderTileUpdates, other.RenderTileUpdates)) return false;
       if (!object.Equals(NewGrownFields, other.NewGrownFields)) return false;
-      if (!object.Equals(RemovedWords, other.RemovedWords)) return false;
+      if (!object.Equals(HarvestedFields, other.HarvestedFields)) return false;
       if (MsgCase != other.MsgCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -4227,7 +4231,7 @@ namespace Schema {
       if (msgCase_ == MsgOneofCase.NewProjectiles) hash ^= NewProjectiles.GetHashCode();
       if (msgCase_ == MsgOneofCase.RenderTileUpdates) hash ^= RenderTileUpdates.GetHashCode();
       if (msgCase_ == MsgOneofCase.NewGrownFields) hash ^= NewGrownFields.GetHashCode();
-      if (msgCase_ == MsgOneofCase.RemovedWords) hash ^= RemovedWords.GetHashCode();
+      if (msgCase_ == MsgOneofCase.HarvestedFields) hash ^= HarvestedFields.GetHashCode();
       hash ^= (int) msgCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -4279,9 +4283,9 @@ namespace Schema {
         output.WriteRawTag(66);
         output.WriteMessage(NewGrownFields);
       }
-      if (msgCase_ == MsgOneofCase.RemovedWords) {
+      if (msgCase_ == MsgOneofCase.HarvestedFields) {
         output.WriteRawTag(74);
-        output.WriteMessage(RemovedWords);
+        output.WriteMessage(HarvestedFields);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -4325,9 +4329,9 @@ namespace Schema {
         output.WriteRawTag(66);
         output.WriteMessage(NewGrownFields);
       }
-      if (msgCase_ == MsgOneofCase.RemovedWords) {
+      if (msgCase_ == MsgOneofCase.HarvestedFields) {
         output.WriteRawTag(74);
-        output.WriteMessage(RemovedWords);
+        output.WriteMessage(HarvestedFields);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -4363,8 +4367,8 @@ namespace Schema {
       if (msgCase_ == MsgOneofCase.NewGrownFields) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(NewGrownFields);
       }
-      if (msgCase_ == MsgOneofCase.RemovedWords) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RemovedWords);
+      if (msgCase_ == MsgOneofCase.HarvestedFields) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HarvestedFields);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4424,11 +4428,11 @@ namespace Schema {
           }
           NewGrownFields.MergeFrom(other.NewGrownFields);
           break;
-        case MsgOneofCase.RemovedWords:
-          if (RemovedWords == null) {
-            RemovedWords = new global::Schema.RemovedWords();
+        case MsgOneofCase.HarvestedFields:
+          if (HarvestedFields == null) {
+            HarvestedFields = new global::Schema.HarvestedFields();
           }
-          RemovedWords.MergeFrom(other.RemovedWords);
+          HarvestedFields.MergeFrom(other.HarvestedFields);
           break;
       }
 
@@ -4515,12 +4519,12 @@ namespace Schema {
             break;
           }
           case 74: {
-            global::Schema.RemovedWords subBuilder = new global::Schema.RemovedWords();
-            if (msgCase_ == MsgOneofCase.RemovedWords) {
-              subBuilder.MergeFrom(RemovedWords);
+            global::Schema.HarvestedFields subBuilder = new global::Schema.HarvestedFields();
+            if (msgCase_ == MsgOneofCase.HarvestedFields) {
+              subBuilder.MergeFrom(HarvestedFields);
             }
             input.ReadMessage(subBuilder);
-            RemovedWords = subBuilder;
+            HarvestedFields = subBuilder;
             break;
           }
         }
@@ -4606,12 +4610,12 @@ namespace Schema {
             break;
           }
           case 74: {
-            global::Schema.RemovedWords subBuilder = new global::Schema.RemovedWords();
-            if (msgCase_ == MsgOneofCase.RemovedWords) {
-              subBuilder.MergeFrom(RemovedWords);
+            global::Schema.HarvestedFields subBuilder = new global::Schema.HarvestedFields();
+            if (msgCase_ == MsgOneofCase.HarvestedFields) {
+              subBuilder.MergeFrom(HarvestedFields);
             }
             input.ReadMessage(subBuilder);
-            RemovedWords = subBuilder;
+            HarvestedFields = subBuilder;
             break;
           }
         }
@@ -6781,16 +6785,16 @@ namespace Schema {
 
   }
 
-  public sealed partial class RemovedWords : pb::IMessage<RemovedWords>
+  public sealed partial class HarvestedFields : pb::IMessage<HarvestedFields>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<RemovedWords> _parser = new pb::MessageParser<RemovedWords>(() => new RemovedWords());
+    private static readonly pb::MessageParser<HarvestedFields> _parser = new pb::MessageParser<HarvestedFields>(() => new HarvestedFields());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<RemovedWords> Parser { get { return _parser; } }
+    public static pb::MessageParser<HarvestedFields> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -6806,7 +6810,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RemovedWords() {
+    public HarvestedFields() {
       OnConstruction();
     }
 
@@ -6814,44 +6818,44 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RemovedWords(RemovedWords other) : this() {
-      positions_ = other.positions_.Clone();
+    public HarvestedFields(HarvestedFields other) : this() {
+      fields_ = other.fields_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RemovedWords Clone() {
-      return new RemovedWords(this);
+    public HarvestedFields Clone() {
+      return new HarvestedFields(this);
     }
 
-    /// <summary>Field number for the "positions" field.</summary>
-    public const int PositionsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Schema.V2Int> _repeated_positions_codec
-        = pb::FieldCodec.ForMessage(10, global::Schema.V2Int.Parser);
-    private readonly pbc::RepeatedField<global::Schema.V2Int> positions_ = new pbc::RepeatedField<global::Schema.V2Int>();
+    /// <summary>Field number for the "fields" field.</summary>
+    public const int FieldsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Schema.HarvestedField> _repeated_fields_codec
+        = pb::FieldCodec.ForMessage(10, global::Schema.HarvestedField.Parser);
+    private readonly pbc::RepeatedField<global::Schema.HarvestedField> fields_ = new pbc::RepeatedField<global::Schema.HarvestedField>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Schema.V2Int> Positions {
-      get { return positions_; }
+    public pbc::RepeatedField<global::Schema.HarvestedField> Fields {
+      get { return fields_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as RemovedWords);
+      return Equals(other as HarvestedFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(RemovedWords other) {
+    public bool Equals(HarvestedFields other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!positions_.Equals(other.positions_)) return false;
+      if(!fields_.Equals(other.fields_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6859,7 +6863,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= positions_.GetHashCode();
+      hash ^= fields_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6878,7 +6882,7 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      positions_.WriteTo(output, _repeated_positions_codec);
+      fields_.WriteTo(output, _repeated_fields_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -6889,7 +6893,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      positions_.WriteTo(ref output, _repeated_positions_codec);
+      fields_.WriteTo(ref output, _repeated_fields_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -6900,7 +6904,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      size += positions_.CalculateSize(_repeated_positions_codec);
+      size += fields_.CalculateSize(_repeated_fields_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -6909,11 +6913,11 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(RemovedWords other) {
+    public void MergeFrom(HarvestedFields other) {
       if (other == null) {
         return;
       }
-      positions_.Add(other.positions_);
+      fields_.Add(other.fields_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -6930,7 +6934,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            positions_.AddEntriesFrom(input, _repeated_positions_codec);
+            fields_.AddEntriesFrom(input, _repeated_fields_codec);
             break;
           }
         }
@@ -6949,7 +6953,279 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            positions_.AddEntriesFrom(ref input, _repeated_positions_codec);
+            fields_.AddEntriesFrom(ref input, _repeated_fields_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class HarvestedField : pb::IMessage<HarvestedField>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<HarvestedField> _parser = new pb::MessageParser<HarvestedField>(() => new HarvestedField());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<HarvestedField> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[26]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HarvestedField() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HarvestedField(HarvestedField other) : this() {
+      pos_ = other.pos_ != null ? other.pos_.Clone() : null;
+      remainingGrowthTime_ = other.remainingGrowthTime_;
+      totalGrowthTime_ = other.totalGrowthTime_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public HarvestedField Clone() {
+      return new HarvestedField(this);
+    }
+
+    /// <summary>Field number for the "pos" field.</summary>
+    public const int PosFieldNumber = 1;
+    private global::Schema.V2Int pos_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Schema.V2Int Pos {
+      get { return pos_; }
+      set {
+        pos_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "remainingGrowthTime" field.</summary>
+    public const int RemainingGrowthTimeFieldNumber = 2;
+    private float remainingGrowthTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float RemainingGrowthTime {
+      get { return remainingGrowthTime_; }
+      set {
+        remainingGrowthTime_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "totalGrowthTime" field.</summary>
+    public const int TotalGrowthTimeFieldNumber = 3;
+    private float totalGrowthTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float TotalGrowthTime {
+      get { return totalGrowthTime_; }
+      set {
+        totalGrowthTime_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as HarvestedField);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(HarvestedField other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Pos, other.Pos)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RemainingGrowthTime, other.RemainingGrowthTime)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(TotalGrowthTime, other.TotalGrowthTime)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (pos_ != null) hash ^= Pos.GetHashCode();
+      if (RemainingGrowthTime != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RemainingGrowthTime);
+      if (TotalGrowthTime != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(TotalGrowthTime);
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (pos_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Pos);
+      }
+      if (RemainingGrowthTime != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(RemainingGrowthTime);
+      }
+      if (TotalGrowthTime != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(TotalGrowthTime);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (pos_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Pos);
+      }
+      if (RemainingGrowthTime != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(RemainingGrowthTime);
+      }
+      if (TotalGrowthTime != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(TotalGrowthTime);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (pos_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pos);
+      }
+      if (RemainingGrowthTime != 0F) {
+        size += 1 + 4;
+      }
+      if (TotalGrowthTime != 0F) {
+        size += 1 + 4;
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(HarvestedField other) {
+      if (other == null) {
+        return;
+      }
+      if (other.pos_ != null) {
+        if (pos_ == null) {
+          Pos = new global::Schema.V2Int();
+        }
+        Pos.MergeFrom(other.Pos);
+      }
+      if (other.RemainingGrowthTime != 0F) {
+        RemainingGrowthTime = other.RemainingGrowthTime;
+      }
+      if (other.TotalGrowthTime != 0F) {
+        TotalGrowthTime = other.TotalGrowthTime;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (pos_ == null) {
+              Pos = new global::Schema.V2Int();
+            }
+            input.ReadMessage(Pos);
+            break;
+          }
+          case 21: {
+            RemainingGrowthTime = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            TotalGrowthTime = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (pos_ == null) {
+              Pos = new global::Schema.V2Int();
+            }
+            input.ReadMessage(Pos);
+            break;
+          }
+          case 21: {
+            RemainingGrowthTime = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            TotalGrowthTime = input.ReadFloat();
             break;
           }
         }
@@ -6973,7 +7249,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7216,7 +7492,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7625,7 +7901,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7925,7 +8201,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8103,7 +8379,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8495,7 +8771,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[31]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8673,7 +8949,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8699,7 +8975,7 @@ namespace Schema {
       tiles_ = other.tiles_.Clone();
       renderTiles_ = other.renderTiles_.Clone();
       grownFields_ = other.grownFields_.Clone();
-      removedWords_ = other.removedWords_.Clone();
+      harvestedFields_ = other.harvestedFields_.Clone();
       ownAlliance_ = other.ownAlliance_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -8778,15 +9054,15 @@ namespace Schema {
       get { return grownFields_; }
     }
 
-    /// <summary>Field number for the "removed_words" field.</summary>
-    public const int RemovedWordsFieldNumber = 7;
-    private static readonly pb::FieldCodec<global::Schema.RemovedWords> _repeated_removedWords_codec
-        = pb::FieldCodec.ForMessage(58, global::Schema.RemovedWords.Parser);
-    private readonly pbc::RepeatedField<global::Schema.RemovedWords> removedWords_ = new pbc::RepeatedField<global::Schema.RemovedWords>();
+    /// <summary>Field number for the "harvested_fields" field.</summary>
+    public const int HarvestedFieldsFieldNumber = 7;
+    private static readonly pb::FieldCodec<global::Schema.HarvestedField> _repeated_harvestedFields_codec
+        = pb::FieldCodec.ForMessage(58, global::Schema.HarvestedField.Parser);
+    private readonly pbc::RepeatedField<global::Schema.HarvestedField> harvestedFields_ = new pbc::RepeatedField<global::Schema.HarvestedField>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Schema.RemovedWords> RemovedWords {
-      get { return removedWords_; }
+    public pbc::RepeatedField<global::Schema.HarvestedField> HarvestedFields {
+      get { return harvestedFields_; }
     }
 
     /// <summary>Field number for the "own_alliance" field.</summary>
@@ -8822,7 +9098,7 @@ namespace Schema {
       if(!tiles_.Equals(other.tiles_)) return false;
       if(!renderTiles_.Equals(other.renderTiles_)) return false;
       if(!grownFields_.Equals(other.grownFields_)) return false;
-      if(!removedWords_.Equals(other.removedWords_)) return false;
+      if(!harvestedFields_.Equals(other.harvestedFields_)) return false;
       if (OwnAlliance != other.OwnAlliance) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -8837,7 +9113,7 @@ namespace Schema {
       hash ^= tiles_.GetHashCode();
       hash ^= renderTiles_.GetHashCode();
       hash ^= grownFields_.GetHashCode();
-      hash ^= removedWords_.GetHashCode();
+      hash ^= harvestedFields_.GetHashCode();
       if (OwnAlliance != 0) hash ^= OwnAlliance.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -8869,7 +9145,7 @@ namespace Schema {
       tiles_.WriteTo(output, _repeated_tiles_codec);
       renderTiles_.WriteTo(output, _repeated_renderTiles_codec);
       grownFields_.WriteTo(output, _repeated_grownFields_codec);
-      removedWords_.WriteTo(output, _repeated_removedWords_codec);
+      harvestedFields_.WriteTo(output, _repeated_harvestedFields_codec);
       if (OwnAlliance != 0) {
         output.WriteRawTag(64);
         output.WriteInt32(OwnAlliance);
@@ -8896,7 +9172,7 @@ namespace Schema {
       tiles_.WriteTo(ref output, _repeated_tiles_codec);
       renderTiles_.WriteTo(ref output, _repeated_renderTiles_codec);
       grownFields_.WriteTo(ref output, _repeated_grownFields_codec);
-      removedWords_.WriteTo(ref output, _repeated_removedWords_codec);
+      harvestedFields_.WriteTo(ref output, _repeated_harvestedFields_codec);
       if (OwnAlliance != 0) {
         output.WriteRawTag(64);
         output.WriteInt32(OwnAlliance);
@@ -8921,7 +9197,7 @@ namespace Schema {
       size += tiles_.CalculateSize(_repeated_tiles_codec);
       size += renderTiles_.CalculateSize(_repeated_renderTiles_codec);
       size += grownFields_.CalculateSize(_repeated_grownFields_codec);
-      size += removedWords_.CalculateSize(_repeated_removedWords_codec);
+      size += harvestedFields_.CalculateSize(_repeated_harvestedFields_codec);
       if (OwnAlliance != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(OwnAlliance);
       }
@@ -8947,7 +9223,7 @@ namespace Schema {
       tiles_.Add(other.tiles_);
       renderTiles_.Add(other.renderTiles_);
       grownFields_.Add(other.grownFields_);
-      removedWords_.Add(other.removedWords_);
+      harvestedFields_.Add(other.harvestedFields_);
       if (other.OwnAlliance != 0) {
         OwnAlliance = other.OwnAlliance;
       }
@@ -8992,7 +9268,7 @@ namespace Schema {
             break;
           }
           case 58: {
-            removedWords_.AddEntriesFrom(input, _repeated_removedWords_codec);
+            harvestedFields_.AddEntriesFrom(input, _repeated_harvestedFields_codec);
             break;
           }
           case 64: {
@@ -9040,7 +9316,7 @@ namespace Schema {
             break;
           }
           case 58: {
-            removedWords_.AddEntriesFrom(ref input, _repeated_removedWords_codec);
+            harvestedFields_.AddEntriesFrom(ref input, _repeated_harvestedFields_codec);
             break;
           }
           case 64: {
@@ -9068,7 +9344,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[33]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9312,7 +9588,7 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[34]; }
+      get { return global::Schema.SchemaReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

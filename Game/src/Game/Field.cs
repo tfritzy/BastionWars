@@ -11,7 +11,7 @@ public class Field
     private Game Game;
     private bool ReportedGrown;
 
-    public const float GROWTH_TIME = 10f;
+    public const float GROWTH_TIME = 30f;
 
     public Field(Game game, Vector2Int position)
     {
@@ -60,7 +60,7 @@ public class Field
     const string alphabet = "abcdefghijklmnopqrstuvwxyz";
     public string GetRandomWord()
     {
-        int length = (int)Game.Randy.SeededInRange(3, 5);
+        int length = 3;
         StringBuilder sb = new();
         for (int i = 0; i < length; i++)
         {

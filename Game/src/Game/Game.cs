@@ -52,7 +52,7 @@ public class Game
         SendNewSoldierUpdates();
         SendRemovedSoldierUpdates();
         SendGrownFieldsUpdate();
-        SendRemovedWordUpdates();
+        SendHarvestedFieldUpdates();
     }
 
     public void HandleCommand(Oneof_PlayerToGameServer msg)
@@ -205,17 +205,22 @@ public class Game
         Map.NewlyGrownFields.Clear();
     }
 
-    private void SendRemovedWordUpdates()
+    private void SendHarvestedFieldUpdates()
     {
         if (Map.HarvestedFields.Count == 0)
         {
             return;
         }
 
-        RemovedWords removedWords = new();
-        removedWords.Positions.AddRange(Map.HarvestedFields);
+        HarvestedFields harvested = new();
+        harvested.Fields.AddRange(Map.HarvestedFields.Select(pos => new HarvestedField()
+        {
+            Pos = pos,
+            RemainingGrowthTime = Field.GROWTH_TIME,
+            TotalGrowthTime = Field.GROWTH_TIME
+        }));
 
-        AddMessageToOutbox(new Oneof_GameServerToPlayer { RemovedWords = removedWords });
+        AddMessageToOutbox(new Oneof_GameServerToPlayer { HarvestedFields = harvested });
         Map.HarvestedFields.Clear();
     }
 

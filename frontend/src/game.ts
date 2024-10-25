@@ -20,6 +20,7 @@ import {
  keepColors,
 } from "./constants.ts";
 import { Drawing } from "./drawing.ts";
+import { drawProgressBar } from "./drawing/progress_bar.ts";
 import { drawMap } from "./grid_drawing.ts";
 import {
  addV3,
@@ -39,13 +40,13 @@ import {
  TileType,
  type AllKeepUpdates,
  type GameFoundForPlayer,
+ type HarvestedFields,
  type InitialState,
  type NewGrownFields,
  type NewProjectiles,
  type NewSoldiers,
  type Oneof_GameServerToPlayer,
  type RemovedSoldiers,
- type RemovedWords,
  type RenderTileUpdates,
  type V2Int,
 } from "./Schema.ts";
@@ -71,7 +72,6 @@ export class Game {
  private drawing: Drawing;
  private time: number = 0;
  private zoom: number;
- private camPos: Vector2 = { x: 0, y: 0 };
  private cli: InGameCli;
 
  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
@@ -79,13 +79,17 @@ export class Game {
   this.ctx = ctx;
   this.drawing = new Drawing();
   this.zoom = this.ctx.getTransform().a;
-  this.clientState = { selectedKeep: null, connection: undefined };
+  this.clientState = {
+   connection: undefined,
+   camPos: { x: 0, y: 0 },
+   targetCamPos: { x: 0, y: 0 },
+  };
   this.cli = new InGameCli(this.clientState, this.gameState);
  }
 
  draw(dpr: number, deltaTime: number): void {
   this.time += deltaTime;
-  this.scrollTowardsSelectedKeep(deltaTime);
+  this.scrollTowardsTargetPos(deltaTime);
   drawMap(this.drawing, this.gameState);
   this.drawKeeps(deltaTime);
   this.drawSoldiers(deltaTime);
@@ -96,35 +100,35 @@ export class Game {
   this.drawing.draw(this.ctx);
  }
 
- scrollTowardsSelectedKeep(deltaTime: number) {
-  if (this.clientState.selectedKeep) {
-   const k = this.gameState.keeps.get(this.clientState.selectedKeep);
-   if (k) {
-    const delta = {
-     x:
-      (-k.pos.x * TILE_SIZE * this.zoom +
-       this.canvas.width / 2 -
-       this.camPos.x) /
-      10,
-     y:
-      (-k.pos.y * TILE_SIZE * this.zoom +
-       this.canvas.height / 2 -
-       this.camPos.y) /
-      10,
-    };
-    this.camPos.x += delta.x;
-    this.camPos.y += delta.y;
-   }
-  }
+ scrollTowardsTargetPos(deltaTime: number) {
+  if (
+   this.clientState.camPos.x != this.clientState.targetCamPos.x ||
+   this.clientState.camPos.y != this.clientState.targetCamPos.y
+  ) {
+   const delta = {
+    x:
+     (-this.clientState.targetCamPos.x * TILE_SIZE * this.zoom +
+      this.canvas.width / 2 -
+      this.clientState.camPos.x) /
+     10,
+    y:
+     (-this.clientState.targetCamPos.y * TILE_SIZE * this.zoom +
+      this.canvas.height * 0.35 -
+      this.clientState.camPos.y) /
+     10,
+   };
+   this.clientState.camPos.x += delta.x;
+   this.clientState.camPos.y += delta.y;
 
-  this.ctx.setTransform(
-   this.zoom,
-   0,
-   0,
-   this.zoom,
-   this.camPos.x,
-   this.camPos.y
-  );
+   this.ctx.setTransform(
+    this.zoom,
+    0,
+    0,
+    this.zoom,
+    this.clientState.camPos.x,
+    this.clientState.camPos.y
+   );
+  }
  }
 
  drawKeeps(deltaTime: number) {
@@ -138,7 +142,16 @@ export class Game {
    const h = this.gameState.harvestables[i];
    const x = h.pos.x * TILE_SIZE + HALF_T;
    const y = h.pos.y * TILE_SIZE + HALF_T;
-   h.resource.draw(x, y, deltaTime);
+   h.remainingGrowth -= deltaTime;
+   h.remainingGrowth = Math.max(0, h.remainingGrowth);
+   const progress = (h.totalGrowthTime - h.remainingGrowth) / h.totalGrowthTime;
+
+   if (progress < 1) {
+    drawProgressBar(this.drawing, x - 15, y, 30, 6, 3.5, progress);
+   } else {
+    h.resource.draw(x, y, deltaTime);
+    drawProgressBar(this.drawing, x - 15, y + 6, 30, 6, 3.5, 1);
+   }
   }
  }
 
@@ -310,8 +323,8 @@ export class Game {
    this.handleRenderTileUpdates(message.render_tile_updates);
   } else if (message.new_grown_fields) {
    this.handleNewGrownFields(message.new_grown_fields);
-  } else if (message.removed_words) {
-   this.handleRemovedWords(message.removed_words);
+  } else if (message.harvested_fields) {
+   this.handleHarvestedFields(message.harvested_fields);
   }
  };
 
@@ -352,8 +365,11 @@ export class Game {
    (k) => k.alliance === this.gameState.ownAlliance
   );
   if (k) {
-   this.camPos.x = -k.pos.x * TILE_SIZE * this.zoom + this.canvas.width / 2;
-   this.camPos.y = -k.pos.y * TILE_SIZE * this.zoom + this.canvas.height / 2;
+   this.clientState.camPos = {
+    x: -k.pos.x * TILE_SIZE * this.zoom + this.canvas.width / 2,
+    y: -k.pos.y * TILE_SIZE * this.zoom + this.canvas.height * 0.35,
+   };
+   this.clientState.targetCamPos = { x: k.pos.x, y: k.pos.y };
   }
  }
 
@@ -398,22 +414,27 @@ export class Game {
 
  handleNewGrownFields(msg: NewGrownFields) {
   msg.fields?.forEach((f) => {
-   const field = parseField(f, this.drawing, this.handleTypeResource);
-   if (field) {
-    this.gameState.harvestables.push(field);
+   const i = this.gameState.harvestables.findIndex(
+    (h) => h.pos.x === (f.grid_pos?.x || 0) && h.pos.y === (f.grid_pos?.y || 0)
+   );
+
+   if (i >= 0) {
+    this.gameState.harvestables[i].text = f.text || "";
+    this.gameState.harvestables[i].remainingGrowth = 0;
+    this.gameState.harvestables[i].resource.text = f.text || "";
    }
   });
  }
 
- handleRemovedWords(msg: RemovedWords) {
-  console.log("Removed words", msg);
-  msg.positions?.forEach((p) => {
+ handleHarvestedFields(msg: HarvestedFields) {
+  msg.fields?.forEach((f) => {
    const i = this.gameState.harvestables.findIndex(
-    (h) => h.pos.x === (p.x || 0) && h.pos.y === (p.y || 0)
+    (h) => h.pos.x === (f.pos?.x || 0) && h.pos.y === (f.pos?.y || 0)
    );
 
    if (i >= 0) {
-    deleteBySwap(this.gameState.harvestables, i);
+    this.gameState.harvestables[i].remainingGrowth = f.remainingGrowthTime || 0;
+    this.gameState.harvestables[i].totalGrowthTime = f.totalGrowthTime || 0;
    }
   });
  }
