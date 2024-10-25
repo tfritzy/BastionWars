@@ -65,10 +65,10 @@ public class Game
                 float percent = order.HasPercent ? order.Percent : 1f;
                 AttackKeep(order.SourceKeep, order.TargetKeep, soldierType, percent);
                 break;
-            case Oneof_PlayerToGameServer.MsgOneofCase.TypeChar:
-                TypeChar typed = msg.TypeChar;
-                if (typed.Char.Length == 0) return;
-                HandleKeystroke(msg.TypeChar.Char[0], msg.SenderId);
+            case Oneof_PlayerToGameServer.MsgOneofCase.HarvestField:
+                HarvestField harvest = msg.HarvestField;
+                if (harvest.Text.Length == 0) return;
+                HandleHarvest(msg.HarvestField.Text, msg.SenderId);
                 break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
@@ -197,7 +197,6 @@ public class Game
                     GridPos = gridPos.ToSchema(),
                     Text = field!.Text,
                     OwningKeepPos = owningKeepPos,
-                    Progress = field.TypedIndex,
                 });
             }
         }
@@ -326,7 +325,7 @@ public class Game
         Map.RecalculateRenderTiles();
     }
 
-    public void HandleKeystroke(char typed, string typer)
+    public void HandleHarvest(string typed, string typer)
     {
         Logger.Log($"{typer} typed '{typed}'");
         if (GenerationMode != GenerationMode.Word)
@@ -342,14 +341,12 @@ public class Game
                 continue;
             }
 
-            bool incremented = field.HandleKeystroke(typed);
-
-            if (incremented)
+            if (field.HandleTyped(typed))
             {
                 if (Map.KeepLands.TryGetValue(field.Position, out uint ownerId))
                 {
                     Keep bastion = Map.Keeps[ownerId];
-                    bastion.Accrue();
+                    bastion.IncrementSoldierCount(bastion.SoldierType, typed.Length);
                 }
             }
         }
@@ -396,7 +393,6 @@ public class Game
                         GridPos = pos.ToSchema(),
                         Text = field.Text,
                         OwningKeepPos = owningKeepPos,
-                        Progress = field.TypedIndex,
                     });
                 }
             }

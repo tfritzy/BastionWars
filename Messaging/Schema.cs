@@ -48,80 +48,80 @@ namespace Schema {
             "dGVySABCBQoDbXNnIqMBChRJc3N1ZURlcGxveW1lbnRPcmRlchITCgtzb3Vy",
             "Y2Vfa2VlcBgBIAEoDRITCgt0YXJnZXRfa2VlcBgCIAEoDRIuCgxzb2xkaWVy",
             "X3R5cGUYAyABKA4yEy5TY2hlbWEuU29sZGllclR5cGVIAIgBARIUCgdwZXJj",
-            "ZW50GAQgASgCSAGIAQFCDwoNX3NvbGRpZXJfdHlwZUIKCghfcGVyY2VudCIY",
-            "CghUeXBlQ2hhchIMCgRjaGFyGAEgASgJIq8BChhPbmVvZl9QbGF5ZXJUb0dh",
-            "bWVTZXJ2ZXISEQoJc2VuZGVyX2lkGAEgASgJEhIKCmF1dGhfdG9rZW4YAiAB",
-            "KAkSPgoWaXNzdWVfZGVwbG95bWVudF9vcmRlchgDIAEoCzIcLlNjaGVtYS5J",
-            "c3N1ZURlcGxveW1lbnRPcmRlckgAEiUKCXR5cGVfY2hhchgEIAEoCzIQLlNj",
-            "aGVtYS5UeXBlQ2hhckgAQgUKA21zZyLIAwoYT25lb2ZfR2FtZVNlcnZlclRv",
-            "UGxheWVyEhQKDHJlY2lwaWVudF9pZBgBIAEoCRItCg1pbml0aWFsX3N0YXRl",
-            "GAIgASgLMhQuU2NoZW1hLkluaXRpYWxTdGF0ZUgAEisKDG5ld19zb2xkaWVy",
-            "cxgDIAEoCzITLlNjaGVtYS5OZXdTb2xkaWVyc0gAEjMKEHJlbW92ZWRfc29s",
-            "ZGllcnMYBCABKAsyFy5TY2hlbWEuUmVtb3ZlZFNvbGRpZXJzSAASLgoMa2Vl",
-            "cF91cGRhdGVzGAUgASgLMhYuU2NoZW1hLkFsbEtlZXBVcGRhdGVzSAASMQoP",
-            "bmV3X3Byb2plY3RpbGVzGAYgASgLMhYuU2NoZW1hLk5ld1Byb2plY3RpbGVz",
-            "SAASOAoTcmVuZGVyX3RpbGVfdXBkYXRlcxgHIAEoCzIZLlNjaGVtYS5SZW5k",
-            "ZXJUaWxlVXBkYXRlc0gAEjIKEG5ld19ncm93bl9maWVsZHMYCCABKAsyFi5T",
-            "Y2hlbWEuTmV3R3Jvd25GaWVsZHNIABItCg1yZW1vdmVkX3dvcmRzGAkgASgL",
-            "MhQuU2NoZW1hLlJlbW92ZWRXb3Jkc0gAQgUKA21zZyJrCgpSZW5kZXJUaWxl",
-            "EhEKCXRpbGVfY2FzZRgBIAEoDRIXCg9jb3JuZXJfYWxsaWFuY2UYAiADKAUS",
-            "MQoNYWxsaWFuY2VfY2FzZRgDIAEoDjIaLlNjaGVtYS5SZW5kZXJBbGxpYW5j",
-            "ZUNhc2UiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgCIiUKAlYzEgkKAXgY",
-            "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIh0KBVYySW50EgkKAXgYASAB",
-            "KAUSCQoBeRgCIAEoBSKXAQoKTmV3U29sZGllchIKCgJpZBgBIAEoDRIWCg5t",
-            "b3ZlbWVudF9zcGVlZBgCIAEoAhIhCgR0eXBlGAMgASgOMhMuU2NoZW1hLlNv",
-            "bGRpZXJUeXBlEhYKDnNvdXJjZV9rZWVwX2lkGAQgASgNEhYKDnRhcmdldF9r",
-            "ZWVwX2lkGAUgASgNEhIKCnJvd19vZmZzZXQYBiABKAIiMwoLTmV3U29sZGll",
-            "cnMSJAoIc29sZGllcnMYASADKAsyEi5TY2hlbWEuTmV3U29sZGllciImCg9S",
-            "ZW1vdmVkU29sZGllcnMSEwoLc29sZGllcl9pZHMYASADKA0icgoKR3Jvd25G",
-            "aWVsZBIfCghncmlkX3BvcxgBIAEoCzINLlNjaGVtYS5WMkludBIMCgR0ZXh0",
-            "GAIgASgJEiMKD293bmluZ19rZWVwX3BvcxgDIAEoCzIKLlNjaGVtYS5WMhIQ",
-            "Cghwcm9ncmVzcxgEIAEoBSI0Cg5OZXdHcm93bkZpZWxkcxIiCgZmaWVsZHMY",
-            "ASADKAsyEi5TY2hlbWEuR3Jvd25GaWVsZCIwCgxSZW1vdmVkV29yZHMSIAoJ",
-            "cG9zaXRpb25zGAEgAygLMg0uU2NoZW1hLlYySW50ImYKClBhdGhUb0tlZXAS",
-            "EQoJdGFyZ2V0X2lkGAEgASgNEhsKBHBhdGgYAiADKAsyDS5TY2hlbWEuVjJJ",
-            "bnQSKAoKd2Fsa190eXBlcxgDIAMoDjIULlNjaGVtYS5XYWxrUGF0aFR5cGUi",
-            "oAEKCUtlZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hl",
-            "bWEuVjISFQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNoZXJfY291bnQY",
-            "BCABKAUSDAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEoBRIhCgVwYXRo",
-            "cxgHIAMoCzISLlNjaGVtYS5QYXRoVG9LZWVwIlcKCktlZXBVcGRhdGUSCgoC",
-            "aWQYASABKA0SFQoNd2Fycmlvcl9jb3VudBgCIAEoBRIUCgxhcmNoZXJfY291",
-            "bnQYAyABKAUSEAoIYWxsaWFuY2UYBCABKAUiOgoOQWxsS2VlcFVwZGF0ZXMS",
-            "KAoMa2VlcF91cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUiqQEK",
-            "DU5ld1Byb2plY3RpbGUSCgoCaWQYASABKA0SHQoJc3RhcnRfcG9zGAIgASgL",
-            "MgouU2NoZW1hLlYzEhIKCmJpcnRoX3RpbWUYAyABKAISJAoQaW5pdGlhbF92",
-            "ZWxvY2l0eRgEIAEoCzIKLlNjaGVtYS5WMxIWCg50aW1lX3dpbGxfbGFuZBgF",
-            "IAEoAhIbChNncmF2aXRhdGlvbmFsX2ZvcmNlGAYgASgCIjwKDk5ld1Byb2pl",
-            "Y3RpbGVzEioKC3Byb2plY3RpbGVzGAEgAygLMhUuU2NoZW1hLk5ld1Byb2pl",
-            "Y3RpbGUijwIKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVt",
-            "YS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQY",
-            "AyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5cGUSKAoMcmVu",
-            "ZGVyX3RpbGVzGAUgAygLMhIuU2NoZW1hLlJlbmRlclRpbGUSKAoMZ3Jvd25f",
-            "ZmllbGRzGAYgAygLMhIuU2NoZW1hLkdyb3duRmllbGQSKwoNcmVtb3ZlZF93",
-            "b3JkcxgHIAMoCzIULlNjaGVtYS5SZW1vdmVkV29yZHMSFAoMb3duX2FsbGlh",
-            "bmNlGAggASgFIlQKEFJlbmRlclRpbGVVcGRhdGUSFwoDcG9zGAEgASgLMgou",
-            "U2NoZW1hLlYyEicKC3JlbmRlcl90aWxlGAIgASgLMhIuU2NoZW1hLlJlbmRl",
-            "clRpbGUiSgoRUmVuZGVyVGlsZVVwZGF0ZXMSNQoTcmVuZGVyX3RpbGVfdXBk",
-            "YXRlcxgBIAMoCzIYLlNjaGVtYS5SZW5kZXJUaWxlVXBkYXRlKioKDkdlbmVy",
-            "YXRpb25Nb2RlEg4KCkF1dG9BY2NydWUQABIICgRXb3JkEAEqQQoIVGlsZVR5",
-            "cGUSCwoHSW52YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQ",
-            "AxIJCgVGaWVsZBAEKpcDChJSZW5kZXJBbGxpYW5jZUNhc2USGQoVSW52YWxp",
-            "ZFJlbmRlckFsbGlhbmNlEAASIAocRnVsbExhbmRfU2luZ2xlUm91bmRlZENv",
-            "cm5lchABEhwKGEZ1bGxMYW5kX1NwbGl0RG93bk1pZGRsZRACEh4KGkZ1bGxM",
-            "YW5kX0luZGl2aWR1YWxDb3JuZXJzEAMSFQoRRnVsbExhbmRfT25lT3duZXIQ",
-            "BBIZChVUaHJlZUNvcm5lcnNfT25lT3duZXIQBRIaChZUaHJlZUNvcm5lcnNf",
-            "VHdvT3duZXJzEAYSHAoYVGhyZWVDb3JuZXJzX1RocmVlT3duZXJzEAcSGQoV",
-            "VHdvQWRqYWNlbnRfVHdvT3duZXJzEAgSGAoUVHdvQWRqYWNlbnRfT25lT3du",
-            "ZXIQCRIZChVUd29PcHBvc2l0ZV9Ud29Pd25lcnMQChIYChRUd29PcHBvc2l0",
-            "ZV9PbmVPd25lchALEhkKFVNpbmdsZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1",
-            "bGxXYXRlcl9Ob09ud2VyEA0qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNv",
-            "bGRpZXIQABILCgdXYXJyaW9yEAESCgoGQXJjaGVyEAIqgwIKDFdhbGtQYXRo",
-            "VHlwZRITCg9TdHJhaWdodFRvUmlnaHQQABIQCgxTdHJhaWdodERvd24QARIQ",
-            "CgxTdHJhaWdodExlZnQQAhIOCgpTdHJhaWdodFVwEAMSFAoQQ2lyY3VsYXJM",
-            "ZWZ0RG93bhAEEhIKDkNpcmN1bGFyTGVmdFVwEAUSFAoQQ2lyY3VsYXJEb3du",
-            "TGVmdBAGEhUKEUNpcmN1bGFyRG93blJpZ2h0EAcSFQoRQ2lyY3VsYXJSaWdo",
-            "dERvd24QCBITCg9DaXJjdWxhclJpZ2h0VXAQCRITCg9DaXJjdWxhclVwUmln",
-            "aHQQChISCg5DaXJjdWxhclVwTGVmdBALYgZwcm90bzM="));
+            "ZW50GAQgASgCSAGIAQFCDwoNX3NvbGRpZXJfdHlwZUIKCghfcGVyY2VudCIc",
+            "CgxIYXJ2ZXN0RmllbGQSDAoEdGV4dBgBIAEoCSK3AQoYT25lb2ZfUGxheWVy",
+            "VG9HYW1lU2VydmVyEhEKCXNlbmRlcl9pZBgBIAEoCRISCgphdXRoX3Rva2Vu",
+            "GAIgASgJEj4KFmlzc3VlX2RlcGxveW1lbnRfb3JkZXIYAyABKAsyHC5TY2hl",
+            "bWEuSXNzdWVEZXBsb3ltZW50T3JkZXJIABItCg1oYXJ2ZXN0X2ZpZWxkGAQg",
+            "ASgLMhQuU2NoZW1hLkhhcnZlc3RGaWVsZEgAQgUKA21zZyLIAwoYT25lb2Zf",
+            "R2FtZVNlcnZlclRvUGxheWVyEhQKDHJlY2lwaWVudF9pZBgBIAEoCRItCg1p",
+            "bml0aWFsX3N0YXRlGAIgASgLMhQuU2NoZW1hLkluaXRpYWxTdGF0ZUgAEisK",
+            "DG5ld19zb2xkaWVycxgDIAEoCzITLlNjaGVtYS5OZXdTb2xkaWVyc0gAEjMK",
+            "EHJlbW92ZWRfc29sZGllcnMYBCABKAsyFy5TY2hlbWEuUmVtb3ZlZFNvbGRp",
+            "ZXJzSAASLgoMa2VlcF91cGRhdGVzGAUgASgLMhYuU2NoZW1hLkFsbEtlZXBV",
+            "cGRhdGVzSAASMQoPbmV3X3Byb2plY3RpbGVzGAYgASgLMhYuU2NoZW1hLk5l",
+            "d1Byb2plY3RpbGVzSAASOAoTcmVuZGVyX3RpbGVfdXBkYXRlcxgHIAEoCzIZ",
+            "LlNjaGVtYS5SZW5kZXJUaWxlVXBkYXRlc0gAEjIKEG5ld19ncm93bl9maWVs",
+            "ZHMYCCABKAsyFi5TY2hlbWEuTmV3R3Jvd25GaWVsZHNIABItCg1yZW1vdmVk",
+            "X3dvcmRzGAkgASgLMhQuU2NoZW1hLlJlbW92ZWRXb3Jkc0gAQgUKA21zZyJr",
+            "CgpSZW5kZXJUaWxlEhEKCXRpbGVfY2FzZRgBIAEoDRIXCg9jb3JuZXJfYWxs",
+            "aWFuY2UYAiADKAUSMQoNYWxsaWFuY2VfY2FzZRgDIAEoDjIaLlNjaGVtYS5S",
+            "ZW5kZXJBbGxpYW5jZUNhc2UiGgoCVjISCQoBeBgBIAEoAhIJCgF5GAIgASgC",
+            "IiUKAlYzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIh0KBVYy",
+            "SW50EgkKAXgYASABKAUSCQoBeRgCIAEoBSKXAQoKTmV3U29sZGllchIKCgJp",
+            "ZBgBIAEoDRIWCg5tb3ZlbWVudF9zcGVlZBgCIAEoAhIhCgR0eXBlGAMgASgO",
+            "MhMuU2NoZW1hLlNvbGRpZXJUeXBlEhYKDnNvdXJjZV9rZWVwX2lkGAQgASgN",
+            "EhYKDnRhcmdldF9rZWVwX2lkGAUgASgNEhIKCnJvd19vZmZzZXQYBiABKAIi",
+            "MwoLTmV3U29sZGllcnMSJAoIc29sZGllcnMYASADKAsyEi5TY2hlbWEuTmV3",
+            "U29sZGllciImCg9SZW1vdmVkU29sZGllcnMSEwoLc29sZGllcl9pZHMYASAD",
+            "KA0iYAoKR3Jvd25GaWVsZBIfCghncmlkX3BvcxgBIAEoCzINLlNjaGVtYS5W",
+            "MkludBIMCgR0ZXh0GAIgASgJEiMKD293bmluZ19rZWVwX3BvcxgDIAEoCzIK",
+            "LlNjaGVtYS5WMiI0Cg5OZXdHcm93bkZpZWxkcxIiCgZmaWVsZHMYASADKAsy",
+            "Ei5TY2hlbWEuR3Jvd25GaWVsZCIwCgxSZW1vdmVkV29yZHMSIAoJcG9zaXRp",
+            "b25zGAEgAygLMg0uU2NoZW1hLlYySW50ImYKClBhdGhUb0tlZXASEQoJdGFy",
+            "Z2V0X2lkGAEgASgNEhsKBHBhdGgYAiADKAsyDS5TY2hlbWEuVjJJbnQSKAoK",
+            "d2Fsa190eXBlcxgDIAMoDjIULlNjaGVtYS5XYWxrUGF0aFR5cGUioAEKCUtl",
+            "ZXBTdGF0ZRIKCgJpZBgBIAEoDRIXCgNwb3MYAiABKAsyCi5TY2hlbWEuVjIS",
+            "FQoNd2Fycmlvcl9jb3VudBgDIAEoBRIUCgxhcmNoZXJfY291bnQYBCABKAUS",
+            "DAoEbmFtZRgFIAEoCRIQCghhbGxpYW5jZRgGIAEoBRIhCgVwYXRocxgHIAMo",
+            "CzISLlNjaGVtYS5QYXRoVG9LZWVwIlcKCktlZXBVcGRhdGUSCgoCaWQYASAB",
+            "KA0SFQoNd2Fycmlvcl9jb3VudBgCIAEoBRIUCgxhcmNoZXJfY291bnQYAyAB",
+            "KAUSEAoIYWxsaWFuY2UYBCABKAUiOgoOQWxsS2VlcFVwZGF0ZXMSKAoMa2Vl",
+            "cF91cGRhdGVzGAEgAygLMhIuU2NoZW1hLktlZXBVcGRhdGUiqQEKDU5ld1By",
+            "b2plY3RpbGUSCgoCaWQYASABKA0SHQoJc3RhcnRfcG9zGAIgASgLMgouU2No",
+            "ZW1hLlYzEhIKCmJpcnRoX3RpbWUYAyABKAISJAoQaW5pdGlhbF92ZWxvY2l0",
+            "eRgEIAEoCzIKLlNjaGVtYS5WMxIWCg50aW1lX3dpbGxfbGFuZBgFIAEoAhIb",
+            "ChNncmF2aXRhdGlvbmFsX2ZvcmNlGAYgASgCIjwKDk5ld1Byb2plY3RpbGVz",
+            "EioKC3Byb2plY3RpbGVzGAEgAygLMhUuU2NoZW1hLk5ld1Byb2plY3RpbGUi",
+            "jwIKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVtYS5LZWVw",
+            "U3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQYAyABKAUS",
+            "HwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5cGUSKAoMcmVuZGVyX3Rp",
+            "bGVzGAUgAygLMhIuU2NoZW1hLlJlbmRlclRpbGUSKAoMZ3Jvd25fZmllbGRz",
+            "GAYgAygLMhIuU2NoZW1hLkdyb3duRmllbGQSKwoNcmVtb3ZlZF93b3JkcxgH",
+            "IAMoCzIULlNjaGVtYS5SZW1vdmVkV29yZHMSFAoMb3duX2FsbGlhbmNlGAgg",
+            "ASgFIlQKEFJlbmRlclRpbGVVcGRhdGUSFwoDcG9zGAEgASgLMgouU2NoZW1h",
+            "LlYyEicKC3JlbmRlcl90aWxlGAIgASgLMhIuU2NoZW1hLlJlbmRlclRpbGUi",
+            "SgoRUmVuZGVyVGlsZVVwZGF0ZXMSNQoTcmVuZGVyX3RpbGVfdXBkYXRlcxgB",
+            "IAMoCzIYLlNjaGVtYS5SZW5kZXJUaWxlVXBkYXRlKioKDkdlbmVyYXRpb25N",
+            "b2RlEg4KCkF1dG9BY2NydWUQABIICgRXb3JkEAEqQQoIVGlsZVR5cGUSCwoH",
+            "SW52YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQAxIJCgVG",
+            "aWVsZBAEKpcDChJSZW5kZXJBbGxpYW5jZUNhc2USGQoVSW52YWxpZFJlbmRl",
+            "ckFsbGlhbmNlEAASIAocRnVsbExhbmRfU2luZ2xlUm91bmRlZENvcm5lchAB",
+            "EhwKGEZ1bGxMYW5kX1NwbGl0RG93bk1pZGRsZRACEh4KGkZ1bGxMYW5kX0lu",
+            "ZGl2aWR1YWxDb3JuZXJzEAMSFQoRRnVsbExhbmRfT25lT3duZXIQBBIZChVU",
+            "aHJlZUNvcm5lcnNfT25lT3duZXIQBRIaChZUaHJlZUNvcm5lcnNfVHdvT3du",
+            "ZXJzEAYSHAoYVGhyZWVDb3JuZXJzX1RocmVlT3duZXJzEAcSGQoVVHdvQWRq",
+            "YWNlbnRfVHdvT3duZXJzEAgSGAoUVHdvQWRqYWNlbnRfT25lT3duZXIQCRIZ",
+            "ChVUd29PcHBvc2l0ZV9Ud29Pd25lcnMQChIYChRUd29PcHBvc2l0ZV9PbmVP",
+            "d25lchALEhkKFVNpbmdsZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1bGxXYXRl",
+            "cl9Ob09ud2VyEA0qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNvbGRpZXIQ",
+            "ABILCgdXYXJyaW9yEAESCgoGQXJjaGVyEAIqgwIKDFdhbGtQYXRoVHlwZRIT",
+            "Cg9TdHJhaWdodFRvUmlnaHQQABIQCgxTdHJhaWdodERvd24QARIQCgxTdHJh",
+            "aWdodExlZnQQAhIOCgpTdHJhaWdodFVwEAMSFAoQQ2lyY3VsYXJMZWZ0RG93",
+            "bhAEEhIKDkNpcmN1bGFyTGVmdFVwEAUSFAoQQ2lyY3VsYXJEb3duTGVmdBAG",
+            "EhUKEUNpcmN1bGFyRG93blJpZ2h0EAcSFQoRQ2lyY3VsYXJSaWdodERvd24Q",
+            "CBITCg9DaXJjdWxhclJpZ2h0VXAQCRITCg9DaXJjdWxhclVwUmlnaHQQChIS",
+            "Cg5DaXJjdWxhclVwTGVmdBALYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), typeof(global::Schema.WalkPathType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -138,8 +138,8 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_MatchmakerToHostServer), global::Schema.Oneof_MatchmakerToHostServer.Parser, new[]{ "PlacePlayerInGame", "Registered" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_HostServerToGameServer), global::Schema.Oneof_HostServerToGameServer.Parser, new[]{ "Register" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.IssueDeploymentOrder), global::Schema.IssueDeploymentOrder.Parser, new[]{ "SourceKeep", "TargetKeep", "SoldierType", "Percent" }, new[]{ "SoldierType", "Percent" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.TypeChar), global::Schema.TypeChar.Parser, new[]{ "Char" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder", "TypeChar" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.HarvestField), global::Schema.HarvestField.Parser, new[]{ "Text" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_PlayerToGameServer), global::Schema.Oneof_PlayerToGameServer.Parser, new[]{ "SenderId", "AuthToken", "IssueDeploymentOrder", "HarvestField" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.Oneof_GameServerToPlayer), global::Schema.Oneof_GameServerToPlayer.Parser, new[]{ "RecipientId", "InitialState", "NewSoldiers", "RemovedSoldiers", "KeepUpdates", "NewProjectiles", "RenderTileUpdates", "NewGrownFields", "RemovedWords" }, new[]{ "Msg" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTile), global::Schema.RenderTile.Parser, new[]{ "TileCase", "CornerAlliance", "AllianceCase" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.V2), global::Schema.V2.Parser, new[]{ "X", "Y" }, null, null, null, null),
@@ -148,7 +148,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewSoldier), global::Schema.NewSoldier.Parser, new[]{ "Id", "MovementSpeed", "Type", "SourceKeepId", "TargetKeepId", "RowOffset" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewSoldiers), global::Schema.NewSoldiers.Parser, new[]{ "Soldiers" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RemovedSoldiers), global::Schema.RemovedSoldiers.Parser, new[]{ "SoldierIds" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GrownField), global::Schema.GrownField.Parser, new[]{ "GridPos", "Text", "OwningKeepPos", "Progress" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.GrownField), global::Schema.GrownField.Parser, new[]{ "GridPos", "Text", "OwningKeepPos" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewGrownFields), global::Schema.NewGrownFields.Parser, new[]{ "Fields" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RemovedWords), global::Schema.RemovedWords.Parser, new[]{ "Positions" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.PathToKeep), global::Schema.PathToKeep.Parser, new[]{ "TargetId", "Path", "WalkTypes" }, null, null, null, null),
@@ -3433,16 +3433,16 @@ namespace Schema {
 
   }
 
-  public sealed partial class TypeChar : pb::IMessage<TypeChar>
+  public sealed partial class HarvestField : pb::IMessage<HarvestField>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<TypeChar> _parser = new pb::MessageParser<TypeChar>(() => new TypeChar());
+    private static readonly pb::MessageParser<HarvestField> _parser = new pb::MessageParser<HarvestField>(() => new HarvestField());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<TypeChar> Parser { get { return _parser; } }
+    public static pb::MessageParser<HarvestField> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -3458,7 +3458,7 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public TypeChar() {
+    public HarvestField() {
       OnConstruction();
     }
 
@@ -3466,45 +3466,45 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public TypeChar(TypeChar other) : this() {
-      char_ = other.char_;
+    public HarvestField(HarvestField other) : this() {
+      text_ = other.text_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public TypeChar Clone() {
-      return new TypeChar(this);
+    public HarvestField Clone() {
+      return new HarvestField(this);
     }
 
-    /// <summary>Field number for the "char" field.</summary>
-    public const int CharFieldNumber = 1;
-    private string char_ = "";
+    /// <summary>Field number for the "text" field.</summary>
+    public const int TextFieldNumber = 1;
+    private string text_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Char {
-      get { return char_; }
+    public string Text {
+      get { return text_; }
       set {
-        char_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        text_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as TypeChar);
+      return Equals(other as HarvestField);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(TypeChar other) {
+    public bool Equals(HarvestField other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Char != other.Char) return false;
+      if (Text != other.Text) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3512,7 +3512,7 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Char.Length != 0) hash ^= Char.GetHashCode();
+      if (Text.Length != 0) hash ^= Text.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3531,9 +3531,9 @@ namespace Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Char.Length != 0) {
+      if (Text.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Char);
+        output.WriteString(Text);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3545,9 +3545,9 @@ namespace Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Char.Length != 0) {
+      if (Text.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Char);
+        output.WriteString(Text);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -3559,8 +3559,8 @@ namespace Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Char.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Char);
+      if (Text.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Text);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3570,12 +3570,12 @@ namespace Schema {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(TypeChar other) {
+    public void MergeFrom(HarvestField other) {
       if (other == null) {
         return;
       }
-      if (other.Char.Length != 0) {
-        Char = other.Char;
+      if (other.Text.Length != 0) {
+        Text = other.Text;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3593,7 +3593,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            Char = input.ReadString();
+            Text = input.ReadString();
             break;
           }
         }
@@ -3612,7 +3612,7 @@ namespace Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            Char = input.ReadString();
+            Text = input.ReadString();
             break;
           }
         }
@@ -3662,8 +3662,8 @@ namespace Schema {
         case MsgOneofCase.IssueDeploymentOrder:
           IssueDeploymentOrder = other.IssueDeploymentOrder.Clone();
           break;
-        case MsgOneofCase.TypeChar:
-          TypeChar = other.TypeChar.Clone();
+        case MsgOneofCase.HarvestField:
+          HarvestField = other.HarvestField.Clone();
           break;
       }
 
@@ -3712,15 +3712,15 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "type_char" field.</summary>
-    public const int TypeCharFieldNumber = 4;
+    /// <summary>Field number for the "harvest_field" field.</summary>
+    public const int HarvestFieldFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Schema.TypeChar TypeChar {
-      get { return msgCase_ == MsgOneofCase.TypeChar ? (global::Schema.TypeChar) msg_ : null; }
+    public global::Schema.HarvestField HarvestField {
+      get { return msgCase_ == MsgOneofCase.HarvestField ? (global::Schema.HarvestField) msg_ : null; }
       set {
         msg_ = value;
-        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.TypeChar;
+        msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.HarvestField;
       }
     }
 
@@ -3729,7 +3729,7 @@ namespace Schema {
     public enum MsgOneofCase {
       None = 0,
       IssueDeploymentOrder = 3,
-      TypeChar = 4,
+      HarvestField = 4,
     }
     private MsgOneofCase msgCase_ = MsgOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3763,7 +3763,7 @@ namespace Schema {
       if (SenderId != other.SenderId) return false;
       if (AuthToken != other.AuthToken) return false;
       if (!object.Equals(IssueDeploymentOrder, other.IssueDeploymentOrder)) return false;
-      if (!object.Equals(TypeChar, other.TypeChar)) return false;
+      if (!object.Equals(HarvestField, other.HarvestField)) return false;
       if (MsgCase != other.MsgCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -3775,7 +3775,7 @@ namespace Schema {
       if (SenderId.Length != 0) hash ^= SenderId.GetHashCode();
       if (AuthToken.Length != 0) hash ^= AuthToken.GetHashCode();
       if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) hash ^= IssueDeploymentOrder.GetHashCode();
-      if (msgCase_ == MsgOneofCase.TypeChar) hash ^= TypeChar.GetHashCode();
+      if (msgCase_ == MsgOneofCase.HarvestField) hash ^= HarvestField.GetHashCode();
       hash ^= (int) msgCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -3807,9 +3807,9 @@ namespace Schema {
         output.WriteRawTag(26);
         output.WriteMessage(IssueDeploymentOrder);
       }
-      if (msgCase_ == MsgOneofCase.TypeChar) {
+      if (msgCase_ == MsgOneofCase.HarvestField) {
         output.WriteRawTag(34);
-        output.WriteMessage(TypeChar);
+        output.WriteMessage(HarvestField);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3833,9 +3833,9 @@ namespace Schema {
         output.WriteRawTag(26);
         output.WriteMessage(IssueDeploymentOrder);
       }
-      if (msgCase_ == MsgOneofCase.TypeChar) {
+      if (msgCase_ == MsgOneofCase.HarvestField) {
         output.WriteRawTag(34);
-        output.WriteMessage(TypeChar);
+        output.WriteMessage(HarvestField);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -3856,8 +3856,8 @@ namespace Schema {
       if (msgCase_ == MsgOneofCase.IssueDeploymentOrder) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(IssueDeploymentOrder);
       }
-      if (msgCase_ == MsgOneofCase.TypeChar) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(TypeChar);
+      if (msgCase_ == MsgOneofCase.HarvestField) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(HarvestField);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3884,11 +3884,11 @@ namespace Schema {
           }
           IssueDeploymentOrder.MergeFrom(other.IssueDeploymentOrder);
           break;
-        case MsgOneofCase.TypeChar:
-          if (TypeChar == null) {
-            TypeChar = new global::Schema.TypeChar();
+        case MsgOneofCase.HarvestField:
+          if (HarvestField == null) {
+            HarvestField = new global::Schema.HarvestField();
           }
-          TypeChar.MergeFrom(other.TypeChar);
+          HarvestField.MergeFrom(other.HarvestField);
           break;
       }
 
@@ -3925,12 +3925,12 @@ namespace Schema {
             break;
           }
           case 34: {
-            global::Schema.TypeChar subBuilder = new global::Schema.TypeChar();
-            if (msgCase_ == MsgOneofCase.TypeChar) {
-              subBuilder.MergeFrom(TypeChar);
+            global::Schema.HarvestField subBuilder = new global::Schema.HarvestField();
+            if (msgCase_ == MsgOneofCase.HarvestField) {
+              subBuilder.MergeFrom(HarvestField);
             }
             input.ReadMessage(subBuilder);
-            TypeChar = subBuilder;
+            HarvestField = subBuilder;
             break;
           }
         }
@@ -3966,12 +3966,12 @@ namespace Schema {
             break;
           }
           case 34: {
-            global::Schema.TypeChar subBuilder = new global::Schema.TypeChar();
-            if (msgCase_ == MsgOneofCase.TypeChar) {
-              subBuilder.MergeFrom(TypeChar);
+            global::Schema.HarvestField subBuilder = new global::Schema.HarvestField();
+            if (msgCase_ == MsgOneofCase.HarvestField) {
+              subBuilder.MergeFrom(HarvestField);
             }
             input.ReadMessage(subBuilder);
-            TypeChar = subBuilder;
+            HarvestField = subBuilder;
             break;
           }
         }
@@ -6359,7 +6359,6 @@ namespace Schema {
       gridPos_ = other.gridPos_ != null ? other.gridPos_.Clone() : null;
       text_ = other.text_;
       owningKeepPos_ = other.owningKeepPos_ != null ? other.owningKeepPos_.Clone() : null;
-      progress_ = other.progress_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -6405,18 +6404,6 @@ namespace Schema {
       }
     }
 
-    /// <summary>Field number for the "progress" field.</summary>
-    public const int ProgressFieldNumber = 4;
-    private int progress_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int Progress {
-      get { return progress_; }
-      set {
-        progress_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -6435,7 +6422,6 @@ namespace Schema {
       if (!object.Equals(GridPos, other.GridPos)) return false;
       if (Text != other.Text) return false;
       if (!object.Equals(OwningKeepPos, other.OwningKeepPos)) return false;
-      if (Progress != other.Progress) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6446,7 +6432,6 @@ namespace Schema {
       if (gridPos_ != null) hash ^= GridPos.GetHashCode();
       if (Text.Length != 0) hash ^= Text.GetHashCode();
       if (owningKeepPos_ != null) hash ^= OwningKeepPos.GetHashCode();
-      if (Progress != 0) hash ^= Progress.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6477,10 +6462,6 @@ namespace Schema {
         output.WriteRawTag(26);
         output.WriteMessage(OwningKeepPos);
       }
-      if (Progress != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(Progress);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -6503,10 +6484,6 @@ namespace Schema {
         output.WriteRawTag(26);
         output.WriteMessage(OwningKeepPos);
       }
-      if (Progress != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(Progress);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -6525,9 +6502,6 @@ namespace Schema {
       }
       if (owningKeepPos_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(OwningKeepPos);
-      }
-      if (Progress != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Progress);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6555,9 +6529,6 @@ namespace Schema {
           OwningKeepPos = new global::Schema.V2();
         }
         OwningKeepPos.MergeFrom(other.OwningKeepPos);
-      }
-      if (other.Progress != 0) {
-        Progress = other.Progress;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6592,10 +6563,6 @@ namespace Schema {
             input.ReadMessage(OwningKeepPos);
             break;
           }
-          case 32: {
-            Progress = input.ReadInt32();
-            break;
-          }
         }
       }
     #endif
@@ -6627,10 +6594,6 @@ namespace Schema {
               OwningKeepPos = new global::Schema.V2();
             }
             input.ReadMessage(OwningKeepPos);
-            break;
-          }
-          case 32: {
-            Progress = input.ReadInt32();
             break;
           }
         }

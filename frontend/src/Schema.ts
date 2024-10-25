@@ -986,31 +986,31 @@ function _decodeIssueDeploymentOrder(bb: ByteBuffer): IssueDeploymentOrder {
   return message;
 }
 
-export interface TypeChar {
-  char?: string;
+export interface HarvestField {
+  text?: string;
 }
 
-export function encodeTypeChar(message: TypeChar): Uint8Array {
+export function encodeHarvestField(message: HarvestField): Uint8Array {
   let bb = popByteBuffer();
-  _encodeTypeChar(message, bb);
+  _encodeHarvestField(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeTypeChar(message: TypeChar, bb: ByteBuffer): void {
-  // optional string char = 1;
-  let $char = message.char;
-  if ($char !== undefined) {
+function _encodeHarvestField(message: HarvestField, bb: ByteBuffer): void {
+  // optional string text = 1;
+  let $text = message.text;
+  if ($text !== undefined) {
     writeVarint32(bb, 10);
-    writeString(bb, $char);
+    writeString(bb, $text);
   }
 }
 
-export function decodeTypeChar(binary: Uint8Array): TypeChar {
-  return _decodeTypeChar(wrapByteBuffer(binary));
+export function decodeHarvestField(binary: Uint8Array): HarvestField {
+  return _decodeHarvestField(wrapByteBuffer(binary));
 }
 
-function _decodeTypeChar(bb: ByteBuffer): TypeChar {
-  let message: TypeChar = {} as any;
+function _decodeHarvestField(bb: ByteBuffer): HarvestField {
+  let message: HarvestField = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -1019,9 +1019,9 @@ function _decodeTypeChar(bb: ByteBuffer): TypeChar {
       case 0:
         break end_of_message;
 
-      // optional string char = 1;
+      // optional string text = 1;
       case 1: {
-        message.char = readString(bb, readVarint32(bb));
+        message.text = readString(bb, readVarint32(bb));
         break;
       }
 
@@ -1037,7 +1037,7 @@ export interface Oneof_PlayerToGameServer {
   sender_id?: string;
   auth_token?: string;
   issue_deployment_order?: IssueDeploymentOrder;
-  type_char?: TypeChar;
+  harvest_field?: HarvestField;
 }
 
 export function encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer): Uint8Array {
@@ -1072,12 +1072,12 @@ function _encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional TypeChar type_char = 4;
-  let $type_char = message.type_char;
-  if ($type_char !== undefined) {
+  // optional HarvestField harvest_field = 4;
+  let $harvest_field = message.harvest_field;
+  if ($harvest_field !== undefined) {
     writeVarint32(bb, 34);
     let nested = popByteBuffer();
-    _encodeTypeChar($type_char, nested);
+    _encodeHarvestField($harvest_field, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -1118,10 +1118,10 @@ function _decodeOneof_PlayerToGameServer(bb: ByteBuffer): Oneof_PlayerToGameServ
         break;
       }
 
-      // optional TypeChar type_char = 4;
+      // optional HarvestField harvest_field = 4;
       case 4: {
         let limit = pushTemporaryLength(bb);
-        message.type_char = _decodeTypeChar(bb);
+        message.harvest_field = _decodeHarvestField(bb);
         bb.limit = limit;
         break;
       }
@@ -1867,7 +1867,6 @@ export interface GrownField {
   grid_pos?: V2Int;
   text?: string;
   owning_keep_pos?: V2;
-  progress?: number;
 }
 
 export function encodeGrownField(message: GrownField): Uint8Array {
@@ -1905,13 +1904,6 @@ function _encodeGrownField(message: GrownField, bb: ByteBuffer): void {
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
-
-  // optional int32 progress = 4;
-  let $progress = message.progress;
-  if ($progress !== undefined) {
-    writeVarint32(bb, 32);
-    writeVarint64(bb, intToLong($progress));
-  }
 }
 
 export function decodeGrownField(binary: Uint8Array): GrownField {
@@ -1947,12 +1939,6 @@ function _decodeGrownField(bb: ByteBuffer): GrownField {
         let limit = pushTemporaryLength(bb);
         message.owning_keep_pos = _decodeV2(bb);
         bb.limit = limit;
-        break;
-      }
-
-      // optional int32 progress = 4;
-      case 4: {
-        message.progress = readVarint32(bb);
         break;
       }
 

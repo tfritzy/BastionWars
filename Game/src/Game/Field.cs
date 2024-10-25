@@ -6,10 +6,8 @@ namespace KeepLordWarriors;
 public class Field
 {
     public string Text { get; private set; }
-    public int TypedIndex { get; private set; }
     public Vector2Int Position { get; set; }
     public float RemainingGrowthTime { get; set; }
-    public bool IsComplete => TypedIndex >= Text.Length;
     private Game Game;
     private bool ReportedGrown;
 
@@ -19,7 +17,6 @@ public class Field
     {
         Game = game;
         Text = GetRandomWord().ToLower();
-        TypedIndex = 0;
         Position = position;
         ReportedGrown = true;
     }
@@ -36,18 +33,12 @@ public class Field
         }
     }
 
-    public bool HandleKeystroke(char key)
+    public bool HandleTyped(string typed)
     {
-        if (key == Text[TypedIndex])
+        if (typed == Text)
         {
-            TypedIndex++;
-
-            if (IsComplete)
-            {
-                Game.Map.HarvestedFields.Add(Position.ToSchema());
-                Reset();
-            }
-
+            Game.Map.HarvestedFields.Add(Position.ToSchema());
+            Reset();
             return true;
         }
 
@@ -63,7 +54,6 @@ public class Field
     {
         Text = GetRandomWord().ToLower();
         RemainingGrowthTime = GROWTH_TIME;
-        TypedIndex = 0;
         ReportedGrown = false;
     }
 
