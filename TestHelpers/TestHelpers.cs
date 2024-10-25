@@ -12,6 +12,7 @@ public static class TH
         {
             Map = map ?? TestMaps.TenByFive,
             GenerationMode = mode,
+            Seed = 12
         };
     }
 

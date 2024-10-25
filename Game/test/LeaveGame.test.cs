@@ -32,6 +32,23 @@ public class LeaveGameTests
     [TestMethod]
     public void Game_LeaveGame_ResetsAllSoldiers()
     {
-        Assert.Fail("No soldiers should belong to the leaving player id");
+        Game game = new(TH.GetGameSettings());
+        var p = TH.AddPlayer(game);
+        var keep = game.Map.Keeps.Values.First(k => k.OwnerId == p.Id);
+        var target = game.Map.Keeps.Values.First(k => k.OwnerId != p.Id);
+
+        for (int i = 0; i < 3; i++)
+        {
+            game.Map.KeepAt(i).Capture(p.Alliance, p.Id);
+        }
+
+        game.AttackKeep(keep.Id, target.Id);
+        TH.UpdateGame(game, 1f);
+        TH.UpdateGame(game, 1f);
+        TH.UpdateGame(game, 1f);
+
+        Assert.IsTrue(game.Map.Soldiers.Values.Any(k => k.OwnerId == p.Id));
+        game.DisconnectPlayer(p.Id);
+        Assert.IsFalse(game.Map.Soldiers.Values.Any(k => k.OwnerId == p.Id));
     }
 }

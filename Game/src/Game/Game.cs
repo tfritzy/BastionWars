@@ -309,6 +309,15 @@ public class Game
                     k.CaptureWithDeferredRecalculate(0, null);
                 }
             }
+
+            foreach (Soldier s in Map.Soldiers.Values)
+            {
+                if (s.OwnerId == playerId)
+                {
+                    s.OwnerId = null;
+                    s.Alliance = -1;
+                }
+            }
         }
 
         Players.Remove(playerId);

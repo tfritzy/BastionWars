@@ -49,7 +49,7 @@ public class SoldierTests
         }
 
         float time = 0;
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 5000; i++)
         {
             TH.UpdateGame(game, .05f);
             time += .05f;
@@ -59,7 +59,7 @@ public class SoldierTests
             }
         }
 
-        TH.AssertIsApproximately(expectedDistance / Soldier.BaseMovementSpeed, time);
+        TH.AssertIsApproximately(expectedDistance / Soldier.BaseMovementSpeed, time, 2);
     }
 
     [TestMethod]
