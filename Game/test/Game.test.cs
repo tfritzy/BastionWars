@@ -60,6 +60,18 @@ public class GameTests
     }
 
     [TestMethod]
+    public void Game_InitialState_TellsAlliance()
+    {
+        Game game = new(TH.GetGameSettings());
+        var p1 = TH.AddPlayer(game);
+        var p2 = TH.AddPlayer(game);
+        var p1InitialState = p1.MessageQueue.Where(m => m.InitialState != null).First().InitialState;
+        var p2InitialState = p2.MessageQueue.Where(m => m.InitialState != null).First().InitialState;
+        Assert.AreEqual(p1.Alliance, p1InitialState.OwnAlliance);
+        Assert.AreEqual(p2.Alliance, p2InitialState.OwnAlliance);
+    }
+
+    [TestMethod]
     public void Game_DisconnectPlayer()
     {
         Game game = new(TH.GetGameSettings());

@@ -274,6 +274,7 @@ message InitialState {
     repeated RenderTile render_tiles = 5;
     repeated GrownField grown_fields = 6;
     repeated RemovedWords removed_words = 7;
+    int32 own_alliance = 8;
 }
 
 message RenderTileUpdate {

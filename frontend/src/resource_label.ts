@@ -23,8 +23,8 @@ const style: DrawStyle = {
 const keyRectSize = 18;
 
 export class ResourceLabel {
-  private text: string;
-  private progress: number;
+  public text: string;
+  public progress: number;
   private lerpedProgress: number;
   private boundHandleKeyDown: (event: KeyboardEvent) => void;
   private onCharComplete: () => void;

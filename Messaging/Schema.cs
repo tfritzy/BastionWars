@@ -93,35 +93,35 @@ namespace Schema {
             "ZWxvY2l0eRgEIAEoCzIKLlNjaGVtYS5WMxIWCg50aW1lX3dpbGxfbGFuZBgF",
             "IAEoAhIbChNncmF2aXRhdGlvbmFsX2ZvcmNlGAYgASgCIjwKDk5ld1Byb2pl",
             "Y3RpbGVzEioKC3Byb2plY3RpbGVzGAEgAygLMhUuU2NoZW1hLk5ld1Byb2pl",
-            "Y3RpbGUi+QEKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVt",
+            "Y3RpbGUijwIKDEluaXRpYWxTdGF0ZRIgCgVrZWVwcxgBIAMoCzIRLlNjaGVt",
             "YS5LZWVwU3RhdGUSEQoJbWFwX3dpZHRoGAIgASgFEhIKCm1hcF9oZWlnaHQY",
             "AyABKAUSHwoFdGlsZXMYBCADKA4yEC5TY2hlbWEuVGlsZVR5cGUSKAoMcmVu",
             "ZGVyX3RpbGVzGAUgAygLMhIuU2NoZW1hLlJlbmRlclRpbGUSKAoMZ3Jvd25f",
             "ZmllbGRzGAYgAygLMhIuU2NoZW1hLkdyb3duRmllbGQSKwoNcmVtb3ZlZF93",
-            "b3JkcxgHIAMoCzIULlNjaGVtYS5SZW1vdmVkV29yZHMiVAoQUmVuZGVyVGls",
-            "ZVVwZGF0ZRIXCgNwb3MYASABKAsyCi5TY2hlbWEuVjISJwoLcmVuZGVyX3Rp",
-            "bGUYAiABKAsyEi5TY2hlbWEuUmVuZGVyVGlsZSJKChFSZW5kZXJUaWxlVXBk",
-            "YXRlcxI1ChNyZW5kZXJfdGlsZV91cGRhdGVzGAEgAygLMhguU2NoZW1hLlJl",
-            "bmRlclRpbGVVcGRhdGUqKgoOR2VuZXJhdGlvbk1vZGUSDgoKQXV0b0FjY3J1",
-            "ZRAAEggKBFdvcmQQASpBCghUaWxlVHlwZRILCgdJbnZhbGlkEAASCAoETGFu",
-            "ZBABEgkKBVdhdGVyEAISCAoEVHJlZRADEgkKBUZpZWxkEAQqlwMKElJlbmRl",
-            "ckFsbGlhbmNlQ2FzZRIZChVJbnZhbGlkUmVuZGVyQWxsaWFuY2UQABIgChxG",
-            "dWxsTGFuZF9TaW5nbGVSb3VuZGVkQ29ybmVyEAESHAoYRnVsbExhbmRfU3Bs",
-            "aXREb3duTWlkZGxlEAISHgoaRnVsbExhbmRfSW5kaXZpZHVhbENvcm5lcnMQ",
-            "AxIVChFGdWxsTGFuZF9PbmVPd25lchAEEhkKFVRocmVlQ29ybmVyc19PbmVP",
-            "d25lchAFEhoKFlRocmVlQ29ybmVyc19Ud29Pd25lcnMQBhIcChhUaHJlZUNv",
-            "cm5lcnNfVGhyZWVPd25lcnMQBxIZChVUd29BZGphY2VudF9Ud29Pd25lcnMQ",
-            "CBIYChRUd29BZGphY2VudF9PbmVPd25lchAJEhkKFVR3b09wcG9zaXRlX1R3",
-            "b093bmVycxAKEhgKFFR3b09wcG9zaXRlX09uZU93bmVyEAsSGQoVU2luZ2xl",
-            "Q29ybmVyX09uZU93bmVyEAwSFQoRRnVsbFdhdGVyX05vT253ZXIQDSo6CgtT",
-            "b2xkaWVyVHlwZRISCg5JbnZhbGlkU29sZGllchAAEgsKB1dhcnJpb3IQARIK",
-            "CgZBcmNoZXIQAiqDAgoMV2Fsa1BhdGhUeXBlEhMKD1N0cmFpZ2h0VG9SaWdo",
-            "dBAAEhAKDFN0cmFpZ2h0RG93bhABEhAKDFN0cmFpZ2h0TGVmdBACEg4KClN0",
-            "cmFpZ2h0VXAQAxIUChBDaXJjdWxhckxlZnREb3duEAQSEgoOQ2lyY3VsYXJM",
-            "ZWZ0VXAQBRIUChBDaXJjdWxhckRvd25MZWZ0EAYSFQoRQ2lyY3VsYXJEb3du",
-            "UmlnaHQQBxIVChFDaXJjdWxhclJpZ2h0RG93bhAIEhMKD0NpcmN1bGFyUmln",
-            "aHRVcBAJEhMKD0NpcmN1bGFyVXBSaWdodBAKEhIKDkNpcmN1bGFyVXBMZWZ0",
-            "EAtiBnByb3RvMw=="));
+            "b3JkcxgHIAMoCzIULlNjaGVtYS5SZW1vdmVkV29yZHMSFAoMb3duX2FsbGlh",
+            "bmNlGAggASgFIlQKEFJlbmRlclRpbGVVcGRhdGUSFwoDcG9zGAEgASgLMgou",
+            "U2NoZW1hLlYyEicKC3JlbmRlcl90aWxlGAIgASgLMhIuU2NoZW1hLlJlbmRl",
+            "clRpbGUiSgoRUmVuZGVyVGlsZVVwZGF0ZXMSNQoTcmVuZGVyX3RpbGVfdXBk",
+            "YXRlcxgBIAMoCzIYLlNjaGVtYS5SZW5kZXJUaWxlVXBkYXRlKioKDkdlbmVy",
+            "YXRpb25Nb2RlEg4KCkF1dG9BY2NydWUQABIICgRXb3JkEAEqQQoIVGlsZVR5",
+            "cGUSCwoHSW52YWxpZBAAEggKBExhbmQQARIJCgVXYXRlchACEggKBFRyZWUQ",
+            "AxIJCgVGaWVsZBAEKpcDChJSZW5kZXJBbGxpYW5jZUNhc2USGQoVSW52YWxp",
+            "ZFJlbmRlckFsbGlhbmNlEAASIAocRnVsbExhbmRfU2luZ2xlUm91bmRlZENv",
+            "cm5lchABEhwKGEZ1bGxMYW5kX1NwbGl0RG93bk1pZGRsZRACEh4KGkZ1bGxM",
+            "YW5kX0luZGl2aWR1YWxDb3JuZXJzEAMSFQoRRnVsbExhbmRfT25lT3duZXIQ",
+            "BBIZChVUaHJlZUNvcm5lcnNfT25lT3duZXIQBRIaChZUaHJlZUNvcm5lcnNf",
+            "VHdvT3duZXJzEAYSHAoYVGhyZWVDb3JuZXJzX1RocmVlT3duZXJzEAcSGQoV",
+            "VHdvQWRqYWNlbnRfVHdvT3duZXJzEAgSGAoUVHdvQWRqYWNlbnRfT25lT3du",
+            "ZXIQCRIZChVUd29PcHBvc2l0ZV9Ud29Pd25lcnMQChIYChRUd29PcHBvc2l0",
+            "ZV9PbmVPd25lchALEhkKFVNpbmdsZUNvcm5lcl9PbmVPd25lchAMEhUKEUZ1",
+            "bGxXYXRlcl9Ob09ud2VyEA0qOgoLU29sZGllclR5cGUSEgoOSW52YWxpZFNv",
+            "bGRpZXIQABILCgdXYXJyaW9yEAESCgoGQXJjaGVyEAIqgwIKDFdhbGtQYXRo",
+            "VHlwZRITCg9TdHJhaWdodFRvUmlnaHQQABIQCgxTdHJhaWdodERvd24QARIQ",
+            "CgxTdHJhaWdodExlZnQQAhIOCgpTdHJhaWdodFVwEAMSFAoQQ2lyY3VsYXJM",
+            "ZWZ0RG93bhAEEhIKDkNpcmN1bGFyTGVmdFVwEAUSFAoQQ2lyY3VsYXJEb3du",
+            "TGVmdBAGEhUKEUNpcmN1bGFyRG93blJpZ2h0EAcSFQoRQ2lyY3VsYXJSaWdo",
+            "dERvd24QCBITCg9DaXJjdWxhclJpZ2h0VXAQCRITCg9DaXJjdWxhclVwUmln",
+            "aHQQChISCg5DaXJjdWxhclVwTGVmdBALYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Schema.GenerationMode), typeof(global::Schema.TileType), typeof(global::Schema.RenderAllianceCase), typeof(global::Schema.SoldierType), typeof(global::Schema.WalkPathType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -157,7 +157,7 @@ namespace Schema {
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.AllKeepUpdates), global::Schema.AllKeepUpdates.Parser, new[]{ "KeepUpdates" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectile), global::Schema.NewProjectile.Parser, new[]{ "Id", "StartPos", "BirthTime", "InitialVelocity", "TimeWillLand", "GravitationalForce" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.NewProjectiles), global::Schema.NewProjectiles.Parser, new[]{ "Projectiles" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles", "GrownFields", "RemovedWords" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Schema.InitialState), global::Schema.InitialState.Parser, new[]{ "Keeps", "MapWidth", "MapHeight", "Tiles", "RenderTiles", "GrownFields", "RemovedWords", "OwnAlliance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTileUpdate), global::Schema.RenderTileUpdate.Parser, new[]{ "Pos", "RenderTile" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Schema.RenderTileUpdates), global::Schema.RenderTileUpdates.Parser, new[]{ "RenderTileUpdates_" }, null, null, null, null)
           }));
@@ -8737,6 +8737,7 @@ namespace Schema {
       renderTiles_ = other.renderTiles_.Clone();
       grownFields_ = other.grownFields_.Clone();
       removedWords_ = other.removedWords_.Clone();
+      ownAlliance_ = other.ownAlliance_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -8825,6 +8826,18 @@ namespace Schema {
       get { return removedWords_; }
     }
 
+    /// <summary>Field number for the "own_alliance" field.</summary>
+    public const int OwnAllianceFieldNumber = 8;
+    private int ownAlliance_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int OwnAlliance {
+      get { return ownAlliance_; }
+      set {
+        ownAlliance_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -8847,6 +8860,7 @@ namespace Schema {
       if(!renderTiles_.Equals(other.renderTiles_)) return false;
       if(!grownFields_.Equals(other.grownFields_)) return false;
       if(!removedWords_.Equals(other.removedWords_)) return false;
+      if (OwnAlliance != other.OwnAlliance) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -8861,6 +8875,7 @@ namespace Schema {
       hash ^= renderTiles_.GetHashCode();
       hash ^= grownFields_.GetHashCode();
       hash ^= removedWords_.GetHashCode();
+      if (OwnAlliance != 0) hash ^= OwnAlliance.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -8892,6 +8907,10 @@ namespace Schema {
       renderTiles_.WriteTo(output, _repeated_renderTiles_codec);
       grownFields_.WriteTo(output, _repeated_grownFields_codec);
       removedWords_.WriteTo(output, _repeated_removedWords_codec);
+      if (OwnAlliance != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(OwnAlliance);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -8915,6 +8934,10 @@ namespace Schema {
       renderTiles_.WriteTo(ref output, _repeated_renderTiles_codec);
       grownFields_.WriteTo(ref output, _repeated_grownFields_codec);
       removedWords_.WriteTo(ref output, _repeated_removedWords_codec);
+      if (OwnAlliance != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(OwnAlliance);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -8936,6 +8959,9 @@ namespace Schema {
       size += renderTiles_.CalculateSize(_repeated_renderTiles_codec);
       size += grownFields_.CalculateSize(_repeated_grownFields_codec);
       size += removedWords_.CalculateSize(_repeated_removedWords_codec);
+      if (OwnAlliance != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(OwnAlliance);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -8959,6 +8985,9 @@ namespace Schema {
       renderTiles_.Add(other.renderTiles_);
       grownFields_.Add(other.grownFields_);
       removedWords_.Add(other.removedWords_);
+      if (other.OwnAlliance != 0) {
+        OwnAlliance = other.OwnAlliance;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -9003,6 +9032,10 @@ namespace Schema {
             removedWords_.AddEntriesFrom(input, _repeated_removedWords_codec);
             break;
           }
+          case 64: {
+            OwnAlliance = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -9045,6 +9078,10 @@ namespace Schema {
           }
           case 58: {
             removedWords_.AddEntriesFrom(ref input, _repeated_removedWords_codec);
+            break;
+          }
+          case 64: {
+            OwnAlliance = input.ReadInt32();
             break;
           }
         }

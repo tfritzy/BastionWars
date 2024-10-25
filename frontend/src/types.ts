@@ -1,3 +1,4 @@
+import type { Connection } from "./connection";
 import {
   GROUND_WORD_COMPLETED_STYLE,
   GROUND_WORD_REMAINING_STYLE,
@@ -67,8 +68,14 @@ export type Harvestable = {
   resource: ResourceLabel;
 };
 
+export type ClientState = {
+  selectedKeep: number | null;
+  connection: Connection | undefined;
+};
+
 export type GameState = {
   keeps: Map<number, Keep>;
+  keepNameToId: Map<string, number>;
   soldiers: Map<number, Soldier>;
   renderTiles: RenderTile[];
   tiles: TileType[];
@@ -76,10 +83,12 @@ export type GameState = {
   mapHeight: number;
   projectiles: Projectile[];
   harvestables: Harvestable[];
+  ownAlliance: number;
 };
 
 export const initialGameState: GameState = {
   keeps: new Map<number, Keep>(),
+  keepNameToId: new Map<string, number>(),
   soldiers: new Map(),
   renderTiles: [],
   tiles: [],
@@ -87,6 +96,7 @@ export const initialGameState: GameState = {
   mapHeight: 0,
   projectiles: [],
   harvestables: [],
+  ownAlliance: 0,
 };
 
 export const parseKeep: (keep: KeepState | undefined) => Keep | null = (
