@@ -193,7 +193,7 @@ public class Map
         return soldierType switch
         {
             SoldierType.Archer => 1,
-            SoldierType.Warrior => 4,
+            SoldierType.Warrior => 2,
             _ => 0
         };
     }
