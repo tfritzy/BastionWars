@@ -9,20 +9,6 @@ namespace Tests;
 public class FieldTests
 {
     [TestMethod]
-    public void Field_IncrementsProgress()
-    {
-        Game game = new(TH.GetGameSettings());
-        Field field = new(game: game, position: new Vector2Int(0, 0));
-        Assert.AreEqual(0, field.TypedIndex);
-        field.HandleKeystroke(field.Text[0]);
-        Assert.AreEqual(1, field.TypedIndex);
-        field.HandleKeystroke('.');
-        Assert.AreEqual(1, field.TypedIndex);
-        field.HandleKeystroke(field.Text[1]);
-        Assert.AreEqual(2, field.TypedIndex);
-    }
-
-    [TestMethod]
     public void Field_ReportingNewlyGrown()
     {
         Game game = new(TH.GetGameSettings());
@@ -78,7 +64,7 @@ public class FieldTests
         Field f1 = game.Map.Fields.Values.First();
         f1.RemainingGrowthTime = 1f;
         Field f2 = game.Map.Fields.Values.Last();
-        f2.HandleKeystroke(f2.Text[0]);
+        f2.HandleTyped(f2.Text);
         var p = TH.AddPlayer(game);
         var initialStates = p.MessageQueue.Where(m => m.InitialState != null).ToList();
         var state = initialStates[0].InitialState;
@@ -103,7 +89,6 @@ public class FieldTests
                 else
                 {
                     Assert.AreEqual(field!.Text, stateField!.Text);
-                    Assert.AreEqual(field.TypedIndex, stateField.Progress);
                 }
             }
         }

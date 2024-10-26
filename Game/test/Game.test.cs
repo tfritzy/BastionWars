@@ -105,7 +105,7 @@ public class GameTests
     }
 
     [TestMethod]
-    public void Game_IncrementsWordProgress()
+    public void Game_HarvestField()
     {
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         var p = TH.AddPlayer(game);
@@ -114,24 +114,15 @@ public class GameTests
         int lastCount = k.GetCount(k.SoldierType);
         string text = field.Text;
 
-        for (int i = 0; i < field.Text.Length; i++)
-        {
-            game.HandleKeystroke(field.Text[i], k.OwnerId!);
-            Assert.IsTrue(k.GetCount(k.SoldierType) > lastCount);
-
-            if (i != text.Length - 1)
-                Assert.AreEqual(0, field.RemainingGrowthTime);
-        }
-
-        Assert.AreNotEqual(text, field.Text);
-        Assert.AreEqual(0, field.TypedIndex);
+        Assert.AreEqual(0, field.RemainingGrowthTime);
+        game.HandleHarvest(field.Text, k.OwnerId!);
         Assert.AreEqual(Field.GROWTH_TIME, field.RemainingGrowthTime);
 
         TH.UpdateGame(game, Game.NetworkTickTime);
 
-        var harvestedFieldMsg = p.MessageQueue.Where(m => m.RemovedWords != null).ToList();
+        var harvestedFieldMsg = p.MessageQueue.Where(m => m.HarvestedFields != null).ToList();
         Assert.AreEqual(1, harvestedFieldMsg.Count);
-        Assert.AreEqual(field.Position.ToSchema(), harvestedFieldMsg.First().RemovedWords.Positions.First());
+        Assert.AreEqual(field.Position.ToSchema(), harvestedFieldMsg.First().HarvestedFields.Fields.First().Pos);
     }
 
     [TestMethod]
@@ -147,7 +138,7 @@ public class GameTests
 
         int numWordsOwned = game.Map.Fields.Values.Count(
             w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
-        game.HandleKeystroke('a', allyKeep.OwnerId!);
+        game.HandleHarvest("a", allyKeep.OwnerId!);
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }
 
