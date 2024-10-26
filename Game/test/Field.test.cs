@@ -58,6 +58,14 @@ public class FieldTests
     }
 
     [TestMethod]
+    public void Field_SendsUpdateWhenKeepIsCaptured()
+    {
+        Game game = new(TH.GetGameSettings());
+        var p = TH.AddPlayer(game);
+        Assert.Fail();
+    }
+
+    [TestMethod]
     public void Field_InitialStateHasInitialGrownFields()
     {
         Game game = new(TH.GetGameSettings());

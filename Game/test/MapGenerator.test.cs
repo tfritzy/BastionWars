@@ -9,7 +9,9 @@ public class MapGeneratorTests
     [TestMethod]
     public void MapGenerator_HasCorrectDimensions()
     {
-        Game game = new(TH.GetGameSettings(map: MapGenerator.Generate(64, 32)));
-        Console.Write(game.Map);
+        string mapStr = MapGenerator.Generate(64, 32);
+        Game game = new(TH.GetGameSettings(map: mapStr));
+        Console.Write(mapStr);
+        Assert.Fail();
     }
 }
