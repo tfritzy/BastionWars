@@ -163,7 +163,7 @@ public class KeepTests
             keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, game));
         }
         Assert.AreEqual(0, keep.GetCount(SoldierType.Warrior));
-        Assert.AreEqual(22, keep.GetCount(SoldierType.Archer));
+        Assert.AreEqual(26, keep.GetCount(SoldierType.Archer));
     }
 
     [TestMethod]
@@ -178,7 +178,7 @@ public class KeepTests
         {
             keep.Breach(TH.BuildEnemySoldier(SoldierType.Warrior, alliance, game));
         }
-        Assert.AreEqual(10, keep.GetCount(SoldierType.Archer));
+        Assert.AreEqual(20, keep.GetCount(SoldierType.Archer));
         Assert.AreEqual(alliance, keep.Alliance); // not captured
     }
 
@@ -188,13 +188,13 @@ public class KeepTests
         Game game = new(TH.GetGameSettings(map: TestMaps.TenByFive));
         Keep keep = new(game, SoldierType.Warrior, null);
 
-        keep.SetCount(warriors: 30);
+        keep.SetCount(warriors: 50);
         int alliance = keep.Alliance;
         for (int i = 0; i < 90; i++)
         {
             keep.Breach(TH.BuildEnemySoldier(SoldierType.Archer, alliance, game));
         }
-        Assert.AreEqual(8, keep.GetCount(SoldierType.Warrior));
+        Assert.AreEqual(5, keep.GetCount(SoldierType.Warrior));
         Assert.AreEqual(alliance, keep.Alliance); // not captured
     }
 

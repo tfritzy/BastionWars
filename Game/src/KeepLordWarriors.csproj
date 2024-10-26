@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="DotnetNoise" Version="1.0.0" />
     <PackageReference Include="Google.Protobuf" Version="3.27.1" />
   </ItemGroup>
   <ItemGroup>

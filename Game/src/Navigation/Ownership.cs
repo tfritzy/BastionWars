@@ -29,7 +29,6 @@ public static class Ownership
                     Vector2Int current = queue[id].Dequeue();
                     if (ownership.ContainsKey(current) && ownership[current] != id)
                         continue;
-                    ownership[current] = id;
                     for (int i = 0; i < 8; i++)
                     {
                         Vector2Int neighbor = current + Vector2Int.GetDirection(i);
@@ -44,6 +43,7 @@ public static class Ownership
                         }
 
                         newItems.Enqueue(neighbor);
+                        ownership[neighbor] = id;
                     }
                 }
                 queue[id] = newItems;

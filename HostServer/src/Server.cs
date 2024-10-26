@@ -4,6 +4,7 @@ using DotNetEnv;
 using GameServer;
 using Google.Protobuf;
 using Helpers;
+using KeepLordWarriors;
 using Schema;
 
 namespace HostServer;
@@ -187,9 +188,9 @@ public class Server
         var settings = new GameSettings
         {
             GenerationMode = GenerationMode.Word,
-            Map = Maps.Map
+            Map = MapGenerator.Generate(64, 64),
         };
-        string gameId = IdGenerator.GenerateGameId();
+        string gameId = Helpers.IdGenerator.GenerateGameId();
         string port = availablePorts.First().ToString();
         availablePorts.RemoveAt(0);
 
