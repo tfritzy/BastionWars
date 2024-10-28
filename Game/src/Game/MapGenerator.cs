@@ -6,15 +6,14 @@ namespace KeepLordWarriors
 {
     public static class MapGenerator
     {
-        // Configurable parameters for terrain generation
         public class TerrainConfig
         {
-            public float Scale { get; set; } = 8f;        // Controls how zoomed in/out the noise is
-            public float WaterThreshold { get; set; } = -.8f;  // Values below this become water
-            public float TreeThreshold { get; set; } = 0.7f;   // Values above this become trees
-            public int Seed { get; set; } = 0;              // Random seed for noise generation
-            public int KeepSpacing { get; set; } = 5;              // Random seed for noise generation
-            public int FieldSpacing { get; set; } = 2;              // Random seed for noise generation
+            public float Scale { get; set; } = 8f;
+            public float WaterThreshold { get; set; } = -.8f;
+            public float TreeThreshold { get; set; } = 0.7f;
+            public int Seed { get; set; } = 0;
+            public int KeepSpacing { get; set; } = 5;
+            public int FieldSpacing { get; set; } = 2;
         }
 
         public static string Generate(int width, int height, TerrainConfig config = null)

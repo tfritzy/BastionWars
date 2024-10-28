@@ -51,6 +51,15 @@ public static class TH
         return player;
     }
 
+    public static Player AddAI(Game game)
+    {
+        int playerCount = game.Players.Count;
+        var player = new Player(name: $"test_bot{playerCount}", id: $"plyr_000{playerCount}");
+        player.AIConfig = new();
+        game.JoinGame(player);
+        return player;
+    }
+
     public static List<AllKeepUpdates> GetKeepUpdateMessages(Player player)
     {
         return player.MessageQueue
@@ -99,5 +108,13 @@ public static class TH
         {
             throw new Exception($"{v1} is not close enough to {v2}");
         }
+    }
+
+    public static List<Field> OwnedAndGrownFields(Game game, string playerId)
+    {
+        return game.Map.Fields.Values.Where(
+           field => field.RemainingGrowthTime == 0 &&
+           game.Map.GetOwnerOf(field.Position).OwnerId == playerId)
+           .ToList();
     }
 }

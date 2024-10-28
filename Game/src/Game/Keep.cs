@@ -13,6 +13,9 @@ public class Keep : Entity
     public List<DeploymentOrder> DeploymentOrders { get; } = [];
     public string? Name { get; set; }
     public bool SomethingChanged { get; private set; }
+    public float TotalMeleePower =>
+        ArcherCount * Game.Map.MeleePowerOf(SoldierType.Archer, Alliance) +
+        WarriorCount * Game.Map.MeleePowerOf(SoldierType.Warrior, Alliance);
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .5f;

@@ -39,7 +39,7 @@ public class FieldTests
 
         foreach (Field field in game.Map.Fields.Values)
         {
-            Keep owner = game.Map.Keeps[game.Map.KeepLands[field.Position]];
+            Keep owner = game.Map.Keeps[game.Map.GetOwnerIdOf(field.Position)];
             if (owner.OwnerId == p.Id)
             {
                 Assert.IsTrue(
@@ -80,7 +80,7 @@ public class FieldTests
         Assert.IsTrue(state.GrownFields.Count > 0);
         foreach (Vector2Int pos in game.Map.Fields.Keys)
         {
-            if (game.Map.Keeps[game.Map.KeepLands[pos]].OwnerId != p.Id)
+            if (game.Map.Keeps[game.Map.GetOwnerIdOf(pos)].OwnerId != p.Id)
             {
                 continue;
             }

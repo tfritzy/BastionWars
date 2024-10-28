@@ -8,6 +8,8 @@ public class Player
     public string Id { get; private set; }
     public List<Oneof_GameServerToPlayer> MessageQueue { get; } = [];
     public int Alliance { get; set; }
+    public AIConfig? AIConfig { get; set; }
+    public bool IsAI => AIConfig != null;
 
     public Player(string name, string id)
     {

@@ -12,6 +12,7 @@ public class MapGeneratorTests
         string mapStr = MapGenerator.Generate(64, 32);
         Game game = new(TH.GetGameSettings(map: mapStr));
         Console.Write(mapStr);
-        Assert.Fail();
+        Assert.AreEqual(64, game.Map.Width);
+        Assert.AreEqual(32, game.Map.Height);
     }
 }

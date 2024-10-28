@@ -1,11 +1,12 @@
 using System.Numerics;
 using System.Reflection;
 using Castle.Components.DictionaryAdapter;
+using KeepLordWarriors;
 using Schema;
 using TestHelpers;
 using Tests;
 
-namespace KeepLordWarriors;
+namespace Tests;
 
 [TestClass]
 public class GameTests
@@ -110,7 +111,7 @@ public class GameTests
         Game game = new(TH.GetGameSettings(mode: GenerationMode.Word));
         var p = TH.AddPlayer(game);
         Keep k = game.Map.Keeps.Values.First(k => k.OwnerId == p.Id);
-        Field field = game.Map.Fields.Values.First(f => game.Map.KeepLands[f.Position] == k.Id)!;
+        Field field = game.Map.Fields.Values.First(f => game.Map.GetOwnerIdOf(f.Position) == k.Id)!;
         int lastCount = k.GetCount(k.SoldierType);
         string text = field.Text;
 
@@ -137,7 +138,7 @@ public class GameTests
             f.TestSetText("a");
 
         int numWordsOwned = game.Map.Fields.Values.Count(
-            w => w != null && game.Map.KeepLands[w.Position] == allyKeep.Id);
+            w => w != null && game.Map.GetOwnerIdOf(w.Position) == allyKeep.Id);
         game.HandleHarvest("a", allyKeep.OwnerId!);
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }

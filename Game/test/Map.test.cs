@@ -105,7 +105,7 @@ public class MapTests
         {
             for (int x = 0; x < game.Map.Width; x++)
             {
-                actualOwnership.Append($"{lookup[game.Map.KeepLands[new Vector2Int(x, y)]]}");
+                actualOwnership.Append($"{lookup[game.Map.GetOwnerIdOf(new Vector2Int(x, y))]}");
                 if (x != game.Map.Width - 1)
                     actualOwnership.Append(" ");
             }

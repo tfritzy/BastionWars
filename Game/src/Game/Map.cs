@@ -16,18 +16,19 @@ public class Map
     public Dictionary<uint, Keep> Keeps { get; private set; } = [];
     public List<uint> SoldierIds { get; private set; } = [];
     public Dictionary<uint, Soldier> Soldiers { get; private set; } = [];
-    public Dictionary<Vector2Int, uint> KeepLands { get; private set; } = [];
+    public uint[,] KeepLands { get; private set; } = new uint[0, 0];
     public Dictionary<Vector2Int, Field> Fields { get; private set; } = [];
-    private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
-    private readonly Dictionary<uint, Dictionary<uint, List<WalkPathType>>> keepWalkPaths = [];
     public List<Projectile> Projectiles { get; private set; } = [];
     public HashSet<uint> NewProjectiles { get; private set; } = [];
     public HashSet<uint> NewSoldiers { get; private set; } = [];
     public HashSet<uint> RemovedSoldiers { get; private set; } = [];
     public HashSet<Vector2Int> NewlyGrownFields { get; private set; } = [];
     public HashSet<V2Int> HarvestedFields { get; private set; } = [];
+    public Dictionary<uint, KeepGraph.Node> Graph { get; private set; } = new();
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
+    private readonly Dictionary<uint, Dictionary<uint, List<Vector2Int>>> keepPaths = [];
+    private readonly Dictionary<uint, Dictionary<uint, List<WalkPathType>>> keepWalkPaths = [];
 
     public Map(Game game, string rawMap)
     {
@@ -35,6 +36,7 @@ public class Map
         ParseMap(rawMap);
         CalculateKeepPathing();
         CalculateKeepOwnership();
+        this.Graph = KeepGraph.Calculate(KeepLands);
         ParseRenderTiles();
     }
 
@@ -317,6 +319,16 @@ public class Map
         });
     }
 
+    public Keep GetOwnerOf(Vector2Int pos)
+    {
+        return Keeps[KeepLands[pos.X, pos.Y]];
+    }
+
+    public uint GetOwnerIdOf(Vector2Int pos)
+    {
+        return KeepLands[pos.X, pos.Y];
+    }
+
     private RenderTile CalculateRenderTile(int x, int y)
     {
         var renderTile = new RenderTile()
@@ -482,17 +494,12 @@ public class Map
         }
 
         Vector2Int pos = new Vector2Int(x, y);
-        if (!KeepLands.ContainsKey(pos))
-        {
-            return -1;
-        }
-
         if (Tiles[x, y] == TileType.Water)
         {
             return -1;
         }
 
-        uint keepId = KeepLands[pos];
+        uint keepId = KeepLands[pos.X, pos.Y];
         return Keeps[keepId].Alliance;
     }
 

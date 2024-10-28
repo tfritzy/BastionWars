@@ -190,7 +190,7 @@ public class Game
         {
             if (Map.Fields.TryGetValue(gridPos, out Field? field))
             {
-                var owningKeepId = Map.KeepLands[gridPos];
+                var owningKeepId = Map.GetOwnerIdOf(gridPos);
                 var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
                 grownFields.Fields.Add(new GrownField()
                 {
@@ -340,7 +340,7 @@ public class Game
 
         foreach (Field field in Map.Fields.Values)
         {
-            uint landOwner = Map.KeepLands[field.Position];
+            uint landOwner = Map.GetOwnerIdOf(field.Position);
             if (Map.Keeps[landOwner].OwnerId != typer)
             {
                 continue;
@@ -348,11 +348,9 @@ public class Game
 
             if (field.HandleTyped(typed))
             {
-                if (Map.KeepLands.TryGetValue(field.Position, out uint ownerId))
-                {
-                    Keep bastion = Map.Keeps[ownerId];
-                    bastion.IncrementSoldierCount(bastion.SoldierType, typed.Length);
-                }
+                uint ownerId = Map.GetOwnerIdOf(field.Position);
+                Keep bastion = Map.Keeps[ownerId];
+                bastion.IncrementSoldierCount(bastion.SoldierType, typed.Length);
             }
         }
     }
@@ -389,7 +387,7 @@ public class Game
                     continue;
                 }
 
-                var owningKeepId = Map.KeepLands[pos];
+                var owningKeepId = Map.GetOwnerIdOf(pos);
                 var owningKeepPos = Map.Grid.GetEntitySchemaPosition(owningKeepId);
                 if (Map.Keeps[owningKeepId].OwnerId == forPlayer.Id)
                 {
