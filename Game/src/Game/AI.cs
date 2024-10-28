@@ -45,7 +45,7 @@ public static class AI
         if (player.AIConfig.HarvestCooldown <= 0)
         {
             Field? f = game.Map.Fields.Values.FirstOrDefault(
-                f => f.RemainingGrowthTime == 0 &&
+                f => f.RemainingGrowthTime <= 0 &&
                 game.Map.GetOwnerOf(f.Position).OwnerId == playerId);
 
             if (f == null)

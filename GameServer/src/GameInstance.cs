@@ -61,6 +61,14 @@ public class GameInstance
         }
     }
 
+    public void AddAI()
+    {
+        Player ai = new("Computer", Helpers.IdGenerator.GeneratePlayerId())
+        {
+            AIConfig = new()
+        };
+        game.JoinGame(ai);
+    }
 
     private async Task DrainPendingMessages()
     {

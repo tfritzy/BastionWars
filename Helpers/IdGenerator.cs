@@ -6,6 +6,7 @@ public static class IdGenerator
 {
     private static readonly Random random = new Random();
     public const string GamePrefix = "game";
+    public const string PlayerPrefix = "plyr";
     public const string AuthTokenPrefix = "auth";
 
     public static string GenerateId(string prefix)
@@ -28,6 +29,11 @@ public static class IdGenerator
     public static string GenerateGameId()
     {
         return GenerateId(GamePrefix);
+    }
+
+    public static string GeneratePlayerId()
+    {
+        return GenerateId(PlayerPrefix);
     }
 
     public static string GenerateAuthToken()

@@ -195,6 +195,9 @@ public class Server
         availablePorts.RemoveAt(0);
 
         var inst = new GameInstance(gameId, port, settings);
+        inst.AddAI();
+        inst.AddAI();
+        inst.AddAI();
         Task task = Task.Run(() => inst.StartGame());
 
         Games.Add(new GameInstanceDetails

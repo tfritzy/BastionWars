@@ -34,6 +34,7 @@ public class Game
         Time.Update(now);
 
         BastionAutoAccrue();
+        UpdateAi();
         Map.Update();
 
         lastNetworkTick += Time.deltaTime;
@@ -246,6 +247,14 @@ public class Game
                 bastion.Accrue();
                 bastionProduceCooldowns[bastion.Id] = AutoAccrualTime;
             }
+        }
+    }
+
+    private void UpdateAi()
+    {
+        foreach (Player p in Players.Values)
+        {
+            p.AIConfig?.Update(this, p.Id, Time.deltaTime);
         }
     }
 
