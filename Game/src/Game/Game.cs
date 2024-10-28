@@ -197,7 +197,6 @@ public class Game
                 {
                     GridPos = gridPos.ToSchema(),
                     Text = field!.Text,
-                    OwningKeepPos = owningKeepPos,
                 });
             }
         }
@@ -359,7 +358,7 @@ public class Game
             {
                 uint ownerId = Map.GetOwnerIdOf(field.Position);
                 Keep bastion = Map.Keeps[ownerId];
-                bastion.IncrementSoldierCount(bastion.SoldierType, typed.Length);
+                bastion.IncrementSoldierCount(bastion.SoldierType, field.HarvestValue);
             }
         }
     }
@@ -404,7 +403,6 @@ public class Game
                     {
                         GridPos = pos.ToSchema(),
                         Text = field.Text,
-                        OwningKeepPos = owningKeepPos,
                     });
                 }
             }
@@ -465,6 +463,42 @@ public class Game
         }
 
         return list;
+    }
+
+    public void UpdateFieldVisibilities(uint keepId, string? prevOwnerId, string? newOwnerId)
+    {
+        List<Field> capturedFields = Map.Fields.Values.Where(f => Map.GetOwnerIdOf(f.Position) == keepId).ToList();
+
+        if (prevOwnerId != null)
+        {
+            FieldVisibilityChanges msg = new FieldVisibilityChanges();
+            msg.NewValues.AddRange(capturedFields.Select(cf => new NewFieldVisibility()
+            {
+                GridPos = cf.Position.ToSchema(),
+                Visible = false,
+            }));
+            AddMessageToOutbox(
+                new Oneof_GameServerToPlayer() { FieldVisibilityChanges = msg },
+                prevOwnerId
+            );
+        }
+
+        if (newOwnerId != null)
+        {
+            FieldVisibilityChanges msg = new FieldVisibilityChanges();
+            msg.NewValues.AddRange(capturedFields.Select(cf => new NewFieldVisibility()
+            {
+                GridPos = cf.Position.ToSchema(),
+                RemainingGrowthTime = cf.RemainingGrowthTime,
+                Text = cf.Text,
+                TotalGrowthTime = Field.GROWTH_TIME,
+                Visible = true,
+            }));
+            AddMessageToOutbox(
+                new Oneof_GameServerToPlayer() { FieldVisibilityChanges = msg },
+                newOwnerId
+            );
+        }
     }
 
     private static uint? FindEmptyKeep(Map map)

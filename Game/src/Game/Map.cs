@@ -299,7 +299,6 @@ public class Map
                 if (!AreTilesEqual(renderTile, existingTile))
                 {
                     RenderTiles[x + 1, y + 1] = renderTile;
-                    Logger.Log($"{x + 1}, {y + 1} is different. {renderTile}");
                     updatedTiles.RenderTileUpdates_.Add(new RenderTileUpdate()
                     {
                         Pos = new V2()

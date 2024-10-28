@@ -41,7 +41,7 @@ export class InGameCli {
 
   attack = (command: string[]): string => {
     if (command.length < 3) {
-      return "attack needs 2 arguments. \nExample usage: attack {source_keep} {target_keep}";
+      return "attack needs at least 2 arguments. \nExample usage: attack {source_keep} {target_keep} {50}";
     }
 
     const source_keep = this.gameState.keepNameToId.get(command[1]);
@@ -51,13 +51,19 @@ export class InGameCli {
 
     const target_keep = this.gameState.keepNameToId.get(command[2]);
     if (!target_keep) {
-      return `Unable to find target_keep: ${command[1]}`;
+      return `Unable to find target_keep: ${command[2]}`;
+    }
+
+    const percent = Number(command[3]);
+    if (command[3] && !Number.isInteger(percent)) {
+      return "percent should be an integer.\nEg '43' to send 43% of troops";
     }
 
     this.clientState.connection?.sendMessage({
       issue_deployment_order: {
         source_keep: source_keep,
         target_keep: target_keep,
+        percent: percent ? percent / 100 : 1,
       },
     });
     return "";

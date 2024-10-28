@@ -46,15 +46,14 @@ export const soldierOutlineColors: {
 };
 
 export const keepColors = [
-  "#ecfccb",
-  "#ffe4e6",
-  "#d1fae5",
-  "#fee2e2",
-  "#dbeafe",
-  "#cffafe",
-  "#ede9fe",
-  "#fef3c7",
-  "#fae8ff",
+  "#ffd6a5",
+  "#fdffb6",
+  "#ffadad",
+  "#9bf6ff",
+  "#caffbf",
+  "#bdb2ff",
+  "#ffc6ff",
+  "#a0c4ff",
 ];
 
 // Shadows

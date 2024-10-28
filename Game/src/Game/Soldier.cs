@@ -17,7 +17,7 @@ public class Soldier : Entity
     public Vector2 Velocity { get; private set; }
 
     public const float Radius = 0.1f;
-    public const float BaseMovementSpeed = .3f;
+    public const float BaseMovementSpeed = .5f;
     public const int BaseHealth = 1;
 
     public Soldier(Game game, string? owner, int alliance, SoldierType type, uint source, uint target, float rowOffset) : base(game, owner, alliance)

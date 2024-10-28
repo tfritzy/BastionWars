@@ -4,7 +4,7 @@ namespace KeepLordWarriors;
 
 public static class AI
 {
-    public static void GetAction(Game game, string playerId)
+    public static void Attack(Game game, string playerId)
     {
         List<Keep> ownedKeeps = game.Map.Keeps.Values.Where(k => k.OwnerId == playerId).ToList();
 
@@ -26,9 +26,10 @@ public static class AI
                     continue;
                 }
 
-                if (source.TotalMeleePower > target.TotalMeleePower * 1.5f)
+                if (source.TotalMeleePower > target.TotalMeleePower * 3f)
                 {
-                    game.AttackKeep(source.Id, target.Id);
+                    game.AttackKeep(source.Id, target.Id, percent: .5f);
+                    return;
                 }
             }
         }
@@ -44,14 +45,17 @@ public static class AI
         player.AIConfig.HarvestCooldown -= deltaTime;
         if (player.AIConfig.HarvestCooldown <= 0)
         {
-            Field? f = game.Map.Fields.Values.FirstOrDefault(
+            List<Field> fields = game.Map.Fields.Values.Where(
                 f => f.RemainingGrowthTime <= 0 &&
-                game.Map.GetOwnerOf(f.Position).OwnerId == playerId);
+                game.Map.GetOwnerOf(f.Position).OwnerId == playerId)
+                .ToList();
 
-            if (f == null)
+            if (fields.Count == 0)
             {
                 return;
             }
+
+            Field f = game.Randy.ChaoticElement(fields);
 
             game.HandleHarvest(f.Text, playerId);
 

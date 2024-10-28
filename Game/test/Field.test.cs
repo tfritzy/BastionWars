@@ -61,8 +61,42 @@ public class FieldTests
     public void Field_SendsUpdateWhenKeepIsCaptured()
     {
         Game game = new(TH.GetGameSettings());
-        var p = TH.AddPlayer(game);
-        Assert.Fail();
+        var p1 = TH.AddPlayer(game);
+        var p2 = TH.AddPlayer(game);
+        var toCapture = game.Map.Keeps.Values.First(k => k.OwnerId == p2.Id);
+        var ownedFields = game.Map.Fields.Values
+            .Where(f => game.Map.GetOwnerIdOf(f.Position) == toCapture.Id)
+            .ToList();
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        p1.MessageQueue.Clear();
+        p2.MessageQueue.Clear();
+
+        Assert.AreEqual(0, p1.MessageQueue.Where(m => m.FieldVisibilityChanges != null).ToArray().Length);
+        toCapture.Capture(p1.Alliance, p1.Id);
+        TH.UpdateGame(game, Game.NetworkTickTime);
+        Assert.AreEqual(1, p1.MessageQueue.Where(m => m.FieldVisibilityChanges != null).ToArray().Length);
+        var p1VisChange = p1.MessageQueue.Where(m => m.FieldVisibilityChanges != null).First();
+        Assert.AreEqual(ownedFields.Count, p1VisChange.FieldVisibilityChanges.NewValues.Count);
+        foreach (Field field in ownedFields)
+        {
+            var visChangeMessage = p1VisChange.FieldVisibilityChanges.NewValues
+                .First(m => m.GridPos.X == field.Position.X && m.GridPos.Y == field.Position.Y);
+
+            Assert.AreEqual(field.Text, visChangeMessage.Text);
+            Assert.AreEqual(field.RemainingGrowthTime, visChangeMessage.RemainingGrowthTime);
+            Assert.AreEqual(Field.GROWTH_TIME, visChangeMessage.TotalGrowthTime);
+        }
+
+        Assert.AreEqual(1, p2.MessageQueue.Where(m => m.FieldVisibilityChanges != null).ToArray().Length);
+        var p2VisChange = p2.MessageQueue.Where(m => m.FieldVisibilityChanges != null).First();
+        Assert.AreEqual(ownedFields.Count, p2VisChange.FieldVisibilityChanges.NewValues.Count);
+        foreach (Field field in ownedFields)
+        {
+            var visChangeMessage = p2VisChange.FieldVisibilityChanges.NewValues
+                .First(m => m.GridPos.X == field.Position.X && m.GridPos.Y == field.Position.Y);
+
+            Assert.IsFalse(visChangeMessage.Visible);
+        }
     }
 
     [TestMethod]

@@ -18,7 +18,7 @@ public class Keep : Entity
         WarriorCount * Game.Map.MeleePowerOf(SoldierType.Warrior, Alliance);
 
     public const float Radius = 2f;
-    public const float DeploymentRefractoryPeriod = .5f;
+    public const float DeploymentRefractoryPeriod = .25f;
     public const int MaxTroopsPerWave = 3;
     public const float RowMaxWidth = .4f;
     public const float RowOffsetStepSize = RowMaxWidth / MaxTroopsPerWave;
@@ -330,6 +330,7 @@ public class Keep : Entity
 
     private void capture(int alliance, string? playerId)
     {
+        Game.UpdateFieldVisibilities(Id, OwnerId, playerId);
         Alliance = alliance;
         OwnerId = playerId;
         SomethingChanged = true;

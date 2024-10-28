@@ -159,8 +159,7 @@ export function parseSoldier(soldier: NewSoldier | undefined): Soldier | null {
 
 export function parseField(
   msgField: GrownField | undefined,
-  drawing: Drawing,
-  handleComplete: (resource_pos: V2Int, resource_text: string) => void
+  drawing: Drawing
 ): Harvestable | null {
   if (msgField?.grid_pos && msgField?.text) {
     const pos = parseV2(msgField.grid_pos);
@@ -168,12 +167,7 @@ export function parseField(
     return {
       pos: pos,
       text: msgField.text,
-      resource: new ResourceLabel(
-        text,
-        drawing,
-        parseV2(msgField.owning_keep_pos!),
-        () => handleComplete(pos, text)
-      ),
+      resource: new ResourceLabel(text, drawing),
       remainingGrowth: 0,
       totalGrowthTime: 1,
     };

@@ -1144,6 +1144,7 @@ export interface Oneof_GameServerToPlayer {
   render_tile_updates?: RenderTileUpdates;
   new_grown_fields?: NewGrownFields;
   harvested_fields?: HarvestedFields;
+  field_visibility_changes?: FieldVisibilityChanges;
 }
 
 export function encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer): Uint8Array {
@@ -1247,6 +1248,17 @@ function _encodeOneof_GameServerToPlayer(message: Oneof_GameServerToPlayer, bb: 
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
   }
+
+  // optional FieldVisibilityChanges field_visibility_changes = 10;
+  let $field_visibility_changes = message.field_visibility_changes;
+  if ($field_visibility_changes !== undefined) {
+    writeVarint32(bb, 82);
+    let nested = popByteBuffer();
+    _encodeFieldVisibilityChanges($field_visibility_changes, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
 }
 
 export function decodeOneof_GameServerToPlayer(binary: Uint8Array): Oneof_GameServerToPlayer {
@@ -1329,6 +1341,14 @@ function _decodeOneof_GameServerToPlayer(bb: ByteBuffer): Oneof_GameServerToPlay
       case 9: {
         let limit = pushTemporaryLength(bb);
         message.harvested_fields = _decodeHarvestedFields(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional FieldVisibilityChanges field_visibility_changes = 10;
+      case 10: {
+        let limit = pushTemporaryLength(bb);
+        message.field_visibility_changes = _decodeFieldVisibilityChanges(bb);
         bb.limit = limit;
         break;
       }
@@ -1866,7 +1886,6 @@ function _decodeRemovedSoldiers(bb: ByteBuffer): RemovedSoldiers {
 export interface GrownField {
   grid_pos?: V2Int;
   text?: string;
-  owning_keep_pos?: V2;
 }
 
 export function encodeGrownField(message: GrownField): Uint8Array {
@@ -1892,17 +1911,6 @@ function _encodeGrownField(message: GrownField, bb: ByteBuffer): void {
   if ($text !== undefined) {
     writeVarint32(bb, 18);
     writeString(bb, $text);
-  }
-
-  // optional V2 owning_keep_pos = 3;
-  let $owning_keep_pos = message.owning_keep_pos;
-  if ($owning_keep_pos !== undefined) {
-    writeVarint32(bb, 26);
-    let nested = popByteBuffer();
-    _encodeV2($owning_keep_pos, nested);
-    writeVarint32(bb, nested.limit);
-    writeByteBuffer(bb, nested);
-    pushByteBuffer(nested);
   }
 }
 
@@ -1931,14 +1939,6 @@ function _decodeGrownField(bb: ByteBuffer): GrownField {
       // optional string text = 2;
       case 2: {
         message.text = readString(bb, readVarint32(bb));
-        break;
-      }
-
-      // optional V2 owning_keep_pos = 3;
-      case 3: {
-        let limit = pushTemporaryLength(bb);
-        message.owning_keep_pos = _decodeV2(bb);
-        bb.limit = limit;
         break;
       }
 
@@ -2132,6 +2132,171 @@ function _decodeHarvestedField(bb: ByteBuffer): HarvestedField {
       // optional float totalGrowthTime = 3;
       case 3: {
         message.totalGrowthTime = readFloat(bb);
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface NewFieldVisibility {
+  grid_pos?: V2Int;
+  visible?: boolean;
+  text?: string;
+  remainingGrowthTime?: number;
+  totalGrowthTime?: number;
+}
+
+export function encodeNewFieldVisibility(message: NewFieldVisibility): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeNewFieldVisibility(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeNewFieldVisibility(message: NewFieldVisibility, bb: ByteBuffer): void {
+  // optional V2Int grid_pos = 1;
+  let $grid_pos = message.grid_pos;
+  if ($grid_pos !== undefined) {
+    writeVarint32(bb, 10);
+    let nested = popByteBuffer();
+    _encodeV2Int($grid_pos, nested);
+    writeVarint32(bb, nested.limit);
+    writeByteBuffer(bb, nested);
+    pushByteBuffer(nested);
+  }
+
+  // optional bool visible = 2;
+  let $visible = message.visible;
+  if ($visible !== undefined) {
+    writeVarint32(bb, 16);
+    writeByte(bb, $visible ? 1 : 0);
+  }
+
+  // optional string text = 3;
+  let $text = message.text;
+  if ($text !== undefined) {
+    writeVarint32(bb, 26);
+    writeString(bb, $text);
+  }
+
+  // optional float remainingGrowthTime = 4;
+  let $remainingGrowthTime = message.remainingGrowthTime;
+  if ($remainingGrowthTime !== undefined) {
+    writeVarint32(bb, 37);
+    writeFloat(bb, $remainingGrowthTime);
+  }
+
+  // optional float totalGrowthTime = 5;
+  let $totalGrowthTime = message.totalGrowthTime;
+  if ($totalGrowthTime !== undefined) {
+    writeVarint32(bb, 45);
+    writeFloat(bb, $totalGrowthTime);
+  }
+}
+
+export function decodeNewFieldVisibility(binary: Uint8Array): NewFieldVisibility {
+  return _decodeNewFieldVisibility(wrapByteBuffer(binary));
+}
+
+function _decodeNewFieldVisibility(bb: ByteBuffer): NewFieldVisibility {
+  let message: NewFieldVisibility = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // optional V2Int grid_pos = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        message.grid_pos = _decodeV2Int(bb);
+        bb.limit = limit;
+        break;
+      }
+
+      // optional bool visible = 2;
+      case 2: {
+        message.visible = !!readByte(bb);
+        break;
+      }
+
+      // optional string text = 3;
+      case 3: {
+        message.text = readString(bb, readVarint32(bb));
+        break;
+      }
+
+      // optional float remainingGrowthTime = 4;
+      case 4: {
+        message.remainingGrowthTime = readFloat(bb);
+        break;
+      }
+
+      // optional float totalGrowthTime = 5;
+      case 5: {
+        message.totalGrowthTime = readFloat(bb);
+        break;
+      }
+
+      default:
+        skipUnknownField(bb, tag & 7);
+    }
+  }
+
+  return message;
+}
+
+export interface FieldVisibilityChanges {
+  new_values?: NewFieldVisibility[];
+}
+
+export function encodeFieldVisibilityChanges(message: FieldVisibilityChanges): Uint8Array {
+  let bb = popByteBuffer();
+  _encodeFieldVisibilityChanges(message, bb);
+  return toUint8Array(bb);
+}
+
+function _encodeFieldVisibilityChanges(message: FieldVisibilityChanges, bb: ByteBuffer): void {
+  // repeated NewFieldVisibility new_values = 1;
+  let array$new_values = message.new_values;
+  if (array$new_values !== undefined) {
+    for (let value of array$new_values) {
+      writeVarint32(bb, 10);
+      let nested = popByteBuffer();
+      _encodeNewFieldVisibility(value, nested);
+      writeVarint32(bb, nested.limit);
+      writeByteBuffer(bb, nested);
+      pushByteBuffer(nested);
+    }
+  }
+}
+
+export function decodeFieldVisibilityChanges(binary: Uint8Array): FieldVisibilityChanges {
+  return _decodeFieldVisibilityChanges(wrapByteBuffer(binary));
+}
+
+function _decodeFieldVisibilityChanges(bb: ByteBuffer): FieldVisibilityChanges {
+  let message: FieldVisibilityChanges = {} as any;
+
+  end_of_message: while (!isAtEnd(bb)) {
+    let tag = readVarint32(bb);
+
+    switch (tag >>> 3) {
+      case 0:
+        break end_of_message;
+
+      // repeated NewFieldVisibility new_values = 1;
+      case 1: {
+        let limit = pushTemporaryLength(bb);
+        let values = message.new_values || (message.new_values = []);
+        values.push(_decodeNewFieldVisibility(bb));
+        bb.limit = limit;
         break;
       }
 

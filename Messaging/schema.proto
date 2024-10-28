@@ -117,6 +117,7 @@ message Oneof_GameServerToPlayer {
         RenderTileUpdates render_tile_updates = 7;
         NewGrownFields new_grown_fields = 8;
         HarvestedFields harvested_fields = 9;
+        FieldVisibilityChanges field_visibility_changes = 10;
     }
 }
 
@@ -199,7 +200,6 @@ message RemovedSoldiers {
 message GrownField {
     V2Int grid_pos = 1;
     string text = 2;
-    V2 owning_keep_pos = 3;
 }
 
 message NewGrownFields {
@@ -214,6 +214,18 @@ message HarvestedField {
     V2Int pos = 1;
     float remainingGrowthTime = 2;
     float totalGrowthTime = 3;
+}
+
+message NewFieldVisibility {
+    V2Int grid_pos = 1;
+    bool visible = 2;
+    string text = 3;
+    float remainingGrowthTime = 4;
+    float totalGrowthTime = 5;
+}
+
+message FieldVisibilityChanges {
+    repeated NewFieldVisibility new_values = 1;
 }
 
 enum WalkPathType {

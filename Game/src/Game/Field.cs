@@ -8,10 +8,12 @@ public class Field
     public string Text { get; private set; }
     public Vector2Int Position { get; set; }
     public float RemainingGrowthTime { get; set; }
+    public int HarvestValue => HARVEST_VALUE;
     private Game Game;
     private bool ReportedGrown;
 
-    public const float GROWTH_TIME = 30f;
+    public const float GROWTH_TIME = 60f;
+    public const int HARVEST_VALUE = 10;
 
     public Field(Game game, Vector2Int position)
     {

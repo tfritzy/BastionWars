@@ -25,12 +25,7 @@ export class ResourceLabel {
   public text: string;
   private drawing: Drawing;
 
-  constructor(
-    text: string,
-    drawing: Drawing,
-    keepPos: Vector2,
-    onComplete: () => void
-  ) {
+  constructor(text: string, drawing: Drawing) {
     this.text = text;
     this.drawing = drawing;
   }

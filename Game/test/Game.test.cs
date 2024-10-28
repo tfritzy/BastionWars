@@ -113,10 +113,10 @@ public class GameTests
         Keep k = game.Map.Keeps.Values.First(k => k.OwnerId == p.Id);
         Field field = game.Map.Fields.Values.First(f => game.Map.GetOwnerIdOf(f.Position) == k.Id)!;
         int lastCount = k.GetCount(k.SoldierType);
-        string text = field.Text;
 
         Assert.AreEqual(0, field.RemainingGrowthTime);
         game.HandleHarvest(field.Text, k.OwnerId!);
+        Assert.AreEqual(lastCount + field.HarvestValue, k.GetCount(k.SoldierType));
         Assert.AreEqual(Field.GROWTH_TIME, field.RemainingGrowthTime);
 
         TH.UpdateGame(game, Game.NetworkTickTime);
