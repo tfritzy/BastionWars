@@ -5,7 +5,7 @@ namespace Navigation;
 
 public static class KeepGraph
 {
-    public struct Node
+    public class Node
     {
         public Node(uint id)
         {
@@ -15,6 +15,7 @@ public static class KeepGraph
 
         public uint KeepId;
         public HashSet<Node> Next;
+        public int DistanceFromFrontline;
     }
 
     public static Dictionary<uint, Node> Calculate(uint[,] keepOwnership)
@@ -35,6 +36,49 @@ public static class KeepGraph
         }
 
         return nodes;
+    }
+
+    private struct NodeWithDistance
+    {
+        public Node Node;
+        public int Distance;
+
+        public NodeWithDistance(Node node, int distance)
+        {
+            Node = node;
+            Distance = distance;
+        }
+    }
+
+    public static void CalculateDistancesFromFrontline(Dictionary<uint, Keep> keeps, Dictionary<uint, Node> graph)
+    {
+        foreach (uint keepId in graph.Keys)
+        {
+            graph[keepId].DistanceFromFrontline = int.MaxValue;
+        }
+
+        Queue<NodeWithDistance> q =
+            new Queue<NodeWithDistance>(graph.Values
+                .Where(n => IsKeepOnFrontline(keeps, n))
+                .Select(n => new NodeWithDistance(n, 0)));
+
+        while (q.Count > 0)
+        {
+            NodeWithDistance curr = q.Dequeue();
+            if (graph[curr.Node.KeepId].DistanceFromFrontline > curr.Distance)
+            {
+                graph[curr.Node.KeepId].DistanceFromFrontline = curr.Distance;
+                foreach (Node n in curr.Node.Next)
+                {
+                    q.Enqueue(new NodeWithDistance(n, curr.Distance + 1));
+                }
+            }
+        }
+    }
+
+    private static bool IsKeepOnFrontline(Dictionary<uint, Keep> keeps, Node n)
+    {
+        return n.Next.Any(nextNode => keeps[n.KeepId].Alliance != keeps[nextNode.KeepId].Alliance);
     }
 
     private static void MaybeConnectNodes(Dictionary<uint, Node> nodes, uint keep1, uint keep2)

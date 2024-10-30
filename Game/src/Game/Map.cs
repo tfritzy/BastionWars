@@ -37,6 +37,7 @@ public class Map
         CalculateKeepPathing();
         CalculateKeepOwnership();
         this.Graph = KeepGraph.Calculate(KeepLands);
+        KeepGraph.CalculateDistancesFromFrontline(Keeps, Graph);
         ParseRenderTiles();
     }
 
@@ -161,6 +162,11 @@ public class Map
         }
 
         KeepLands = Ownership.Calculate(Width, Height, locations);
+    }
+
+    public void RecalculateFrontlineDistances()
+    {
+        KeepGraph.CalculateDistancesFromFrontline(Keeps, Graph);
     }
 
     public void AddSoldier(Soldier soldier, Vector2? pos = null)

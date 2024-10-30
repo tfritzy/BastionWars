@@ -333,6 +333,7 @@ public class Keep : Entity
         Game.UpdateFieldVisibilities(Id, OwnerId, playerId);
         Alliance = alliance;
         OwnerId = playerId;
+        Game.Map.RecalculateFrontlineDistances();
         SomethingChanged = true;
     }
 
