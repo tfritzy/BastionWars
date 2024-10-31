@@ -66,10 +66,10 @@ public class Game
                 float percent = order.HasPercent ? order.Percent : 1f;
                 AttackKeep(order.SourceKeep, order.TargetKeep, soldierType, percent);
                 break;
-            case Oneof_PlayerToGameServer.MsgOneofCase.HarvestField:
-                HarvestField harvest = msg.HarvestField;
-                if (harvest.Text.Length == 0) return;
-                HandleHarvest(msg.HarvestField.Text, msg.SenderId);
+            case Oneof_PlayerToGameServer.MsgOneofCase.HarvestFields:
+                HarvestFields harvested = msg.HarvestFields;
+                if (harvested.Text.Count == 0) return;
+                HandleHarvest(msg.HarvestFields.Text, msg.SenderId);
                 break;
             default:
                 Logger.Log("Game got invalid message type from player: " + msg.MsgCase);
@@ -338,7 +338,7 @@ public class Game
         Map.RecalculateRenderTiles();
     }
 
-    public void HandleHarvest(string typed, string typer)
+    public void HandleHarvest(IEnumerable<string> typed, string typer)
     {
         Logger.Log($"{typer} typed '{typed}'");
         if (GenerationMode != GenerationMode.Word)
@@ -354,11 +354,15 @@ public class Game
                 continue;
             }
 
-            if (field.HandleTyped(typed))
+            foreach (string text in typed)
             {
-                uint ownerId = Map.GetOwnerIdOf(field.Position);
-                Keep bastion = Map.Keeps[ownerId];
-                bastion.IncrementSoldierCount(bastion.SoldierType, field.HarvestValue);
+                if (field.HandleTyped(text))
+                {
+                    uint ownerId = Map.GetOwnerIdOf(field.Position);
+                    Keep bastion = Map.Keeps[ownerId];
+                    bastion.IncrementSoldierCount(bastion.SoldierType, field.HarvestValue);
+                    break;
+                }
             }
         }
     }

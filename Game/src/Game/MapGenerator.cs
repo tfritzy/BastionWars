@@ -13,7 +13,7 @@ namespace KeepLordWarriors
             public float TreeThreshold { get; set; } = 0.7f;
             public int Seed { get; set; } = 0;
             public int KeepSpacing { get; set; } = 5;
-            public int FieldSpacing { get; set; } = 2;
+            public int FieldSpacing { get; set; } = 4;
         }
 
         public static string Generate(int width, int height, TerrainConfig config = null)

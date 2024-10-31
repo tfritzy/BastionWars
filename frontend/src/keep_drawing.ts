@@ -10,8 +10,15 @@ import {
 import { drawCircle, type Drawing, type DrawStyle } from "./drawing";
 import type { Keep } from "./types";
 
-const SHADOW_OFFSET = 7;
+const SHADOW_OFFSET = 4;
 
+const keepLabel: DrawStyle = {
+ layer: Layer.UI,
+ fill_style: "#444444",
+ should_fill: true,
+ font: "1.2em monospace",
+ text_align: "center",
+};
 const archerBubbleStyle: DrawStyle = {
  layer: Layer.UI,
  fill_style: "#d1fae5",
@@ -48,13 +55,13 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
    // shadow
    ctx.beginPath();
    ctx.fillStyle = SHADOW_COLOR;
-   drawCircle(ctx, x - SHADOW_OFFSET, y + SHADOW_OFFSET, 24);
+   drawCircle(ctx, x - SHADOW_OFFSET, y + SHADOW_OFFSET, 18);
    ctx.fill();
 
    // center body
    ctx.beginPath();
    ctx.fillStyle = "#eeeeef";
-   drawCircle(ctx, x, y, 25);
+   drawCircle(ctx, x, y, 18.75);
    ctx.fill();
    ctx.stroke();
 
@@ -63,7 +70,7 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
    ctx.fillStyle = "white";
    ctx.moveTo(x, y);
    for (let i = 0; i < 10; i += 2) {
-    ctx.arc(x, y, 25, stepSize * i, stepSize * (i + 1));
+    ctx.arc(x, y, 18.75, stepSize * i, stepSize * (i + 1));
     ctx.closePath();
    }
    ctx.fill();
@@ -73,14 +80,14 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
    ctx.beginPath();
    ctx.fillStyle = "#dddddd";
    ctx.strokeStyle = KEEP_LINE_STYLE;
-   drawCircle(ctx, x, y, 20);
+   drawCircle(ctx, x, y, 15);
    ctx.fill();
    ctx.stroke();
 
    // ?
    ctx.beginPath();
    ctx.fillStyle = "white";
-   drawCircle(ctx, x - 0.6, y + 0.6, 18);
+   drawCircle(ctx, x - 0.6, y + 0.6, 13.5);
    ctx.fill();
   }
  );
@@ -92,5 +99,9 @@ export function drawKeep(drawing: Drawing, keep: Keep, deltaTime: number) {
  drawing.drawCustom(warriorBubbleStyle, (ctx) => {
   const r = Math.sqrt((keep.warrior_count * UNIT_AREA) / Math.PI);
   drawCircle(ctx, x, y, r);
+ });
+
+ drawing.drawCustom(keepLabel, (ctx) => {
+  ctx.fillText(keep.name, x, y - 22);
  });
 }

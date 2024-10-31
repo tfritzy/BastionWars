@@ -16,19 +16,33 @@ public static class AI
             }
 
             HashSet<KeepGraph.Node> neighbors = game.Map.Graph[s.Id].Next;
-            foreach (KeepGraph.Node n in neighbors)
+            KeepGraph.Node node = game.Map.Graph[s.Id];
+            if (node.DistanceFromFrontline == 0)
             {
-                Keep source = game.Map.Keeps[s.Id];
-                Keep target = game.Map.Keeps[n.KeepId];
-
-                if (source.Alliance == target.Alliance)
+                foreach (KeepGraph.Node n in neighbors)
                 {
-                    continue;
+                    Keep source = game.Map.Keeps[s.Id];
+                    Keep target = game.Map.Keeps[n.KeepId];
+
+                    if (source.Alliance == target.Alliance)
+                    {
+                        continue;
+                    }
+
+                    if (source.TotalMeleePower > target.TotalMeleePower * 3f)
+                    {
+                        game.AttackKeep(source.Id, target.Id, percent: .5f);
+                        return;
+                    }
                 }
-
-                if (source.TotalMeleePower > target.TotalMeleePower * 3f)
+            }
+            else
+            {
+                KeepGraph.Node closer = neighbors.First(n => n.DistanceFromFrontline == node.DistanceFromFrontline - 1);
+                float percentToTransfer = MathF.Max(node.DistanceFromFrontline / 4, 1);
+                if (s.TotalCount * percentToTransfer > 10)
                 {
-                    game.AttackKeep(source.Id, target.Id, percent: .5f);
+                    game.AttackKeep(s.Id, closer.KeepId, percent: percentToTransfer);
                     return;
                 }
             }
@@ -57,7 +71,7 @@ public static class AI
 
             Field f = game.Randy.ChaoticElement(fields);
 
-            game.HandleHarvest(f.Text, playerId);
+            game.HandleHarvest([f.Text], playerId);
 
             player.AIConfig.HarvestCooldown = player.AIConfig.BaseHarvestCooldown;
         }

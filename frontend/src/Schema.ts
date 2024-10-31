@@ -986,31 +986,33 @@ function _decodeIssueDeploymentOrder(bb: ByteBuffer): IssueDeploymentOrder {
   return message;
 }
 
-export interface HarvestField {
-  text?: string;
+export interface HarvestFields {
+  text?: string[];
 }
 
-export function encodeHarvestField(message: HarvestField): Uint8Array {
+export function encodeHarvestFields(message: HarvestFields): Uint8Array {
   let bb = popByteBuffer();
-  _encodeHarvestField(message, bb);
+  _encodeHarvestFields(message, bb);
   return toUint8Array(bb);
 }
 
-function _encodeHarvestField(message: HarvestField, bb: ByteBuffer): void {
-  // optional string text = 1;
-  let $text = message.text;
-  if ($text !== undefined) {
-    writeVarint32(bb, 10);
-    writeString(bb, $text);
+function _encodeHarvestFields(message: HarvestFields, bb: ByteBuffer): void {
+  // repeated string text = 1;
+  let array$text = message.text;
+  if (array$text !== undefined) {
+    for (let value of array$text) {
+      writeVarint32(bb, 10);
+      writeString(bb, value);
+    }
   }
 }
 
-export function decodeHarvestField(binary: Uint8Array): HarvestField {
-  return _decodeHarvestField(wrapByteBuffer(binary));
+export function decodeHarvestFields(binary: Uint8Array): HarvestFields {
+  return _decodeHarvestFields(wrapByteBuffer(binary));
 }
 
-function _decodeHarvestField(bb: ByteBuffer): HarvestField {
-  let message: HarvestField = {} as any;
+function _decodeHarvestFields(bb: ByteBuffer): HarvestFields {
+  let message: HarvestFields = {} as any;
 
   end_of_message: while (!isAtEnd(bb)) {
     let tag = readVarint32(bb);
@@ -1019,9 +1021,10 @@ function _decodeHarvestField(bb: ByteBuffer): HarvestField {
       case 0:
         break end_of_message;
 
-      // optional string text = 1;
+      // repeated string text = 1;
       case 1: {
-        message.text = readString(bb, readVarint32(bb));
+        let values = message.text || (message.text = []);
+        values.push(readString(bb, readVarint32(bb)));
         break;
       }
 
@@ -1037,7 +1040,7 @@ export interface Oneof_PlayerToGameServer {
   sender_id?: string;
   auth_token?: string;
   issue_deployment_order?: IssueDeploymentOrder;
-  harvest_field?: HarvestField;
+  harvest_fields?: HarvestFields;
 }
 
 export function encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer): Uint8Array {
@@ -1072,12 +1075,12 @@ function _encodeOneof_PlayerToGameServer(message: Oneof_PlayerToGameServer, bb: 
     pushByteBuffer(nested);
   }
 
-  // optional HarvestField harvest_field = 4;
-  let $harvest_field = message.harvest_field;
-  if ($harvest_field !== undefined) {
+  // optional HarvestFields harvest_fields = 4;
+  let $harvest_fields = message.harvest_fields;
+  if ($harvest_fields !== undefined) {
     writeVarint32(bb, 34);
     let nested = popByteBuffer();
-    _encodeHarvestField($harvest_field, nested);
+    _encodeHarvestFields($harvest_fields, nested);
     writeVarint32(bb, nested.limit);
     writeByteBuffer(bb, nested);
     pushByteBuffer(nested);
@@ -1118,10 +1121,10 @@ function _decodeOneof_PlayerToGameServer(bb: ByteBuffer): Oneof_PlayerToGameServ
         break;
       }
 
-      // optional HarvestField harvest_field = 4;
+      // optional HarvestFields harvest_fields = 4;
       case 4: {
         let limit = pushTemporaryLength(bb);
-        message.harvest_field = _decodeHarvestField(bb);
+        message.harvest_fields = _decodeHarvestFields(bb);
         bb.limit = limit;
         break;
       }

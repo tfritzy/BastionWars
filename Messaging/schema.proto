@@ -93,8 +93,8 @@ message IssueDeploymentOrder {
     optional float percent = 4;
 }
 
-message HarvestField {
-    string text = 1;
+message HarvestFields {
+    repeated string text = 1;
 }
 
 message Oneof_PlayerToGameServer {
@@ -102,7 +102,7 @@ message Oneof_PlayerToGameServer {
     string auth_token = 2;
     oneof msg {
          IssueDeploymentOrder issue_deployment_order = 3;
-         HarvestField harvest_field = 4;
+         HarvestFields harvest_fields = 4;
     }
 }
 

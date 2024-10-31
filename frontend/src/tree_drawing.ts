@@ -12,8 +12,8 @@ import { type Vector2 } from "./types";
 const SHADOW_OFFSET = 3;
 
 const treeLayerConfigs = [
- { numBumps: 6, radius: 20, bumpRadius: 12 },
- { numBumps: 5, radius: 13, bumpRadius: 8.8 },
+ { numBumps: 6, radius: 10, bumpRadius: 6 },
+ { numBumps: 5, radius: 6.5, bumpRadius: 4.4 },
 ] as const;
 
 const createTreeStyle = (layer: number): DrawStyle => ({

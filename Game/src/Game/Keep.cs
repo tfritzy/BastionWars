@@ -16,6 +16,7 @@ public class Keep : Entity
     public float TotalMeleePower =>
         ArcherCount * Game.Map.MeleePowerOf(SoldierType.Archer, Alliance) +
         WarriorCount * Game.Map.MeleePowerOf(SoldierType.Warrior, Alliance);
+    public int TotalCount => ArcherCount + WarriorCount + MageCount;
 
     public const float Radius = 2f;
     public const float DeploymentRefractoryPeriod = .25f;
