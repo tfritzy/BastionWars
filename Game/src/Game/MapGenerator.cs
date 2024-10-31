@@ -13,7 +13,6 @@ namespace KeepLordWarriors
             public float TreeThreshold { get; set; } = 0.7f;
             public int Seed { get; set; } = 0;
             public int KeepSpacing { get; set; } = 5;
-            public int FieldSpacing { get; set; } = 4;
         }
 
         public static string Generate(int width, int height, TerrainConfig config = null)
@@ -33,17 +32,6 @@ namespace KeepLordWarriors
                 for (int x = 0; x < width; x++)
                 {
                     map[y, x] = '.';
-                }
-            }
-
-            // generate fields
-            for (int y = 1; y < height / config.FieldSpacing; y++)
-            {
-                for (int x = 1; x < width / config.FieldSpacing; x++)
-                {
-                    int modX = x * config.FieldSpacing + r.Next(-1, 2);
-                    int modY = y * config.FieldSpacing + r.Next(-1, 2);
-                    map[modY, modX] = 'F';
                 }
             }
 

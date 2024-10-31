@@ -152,9 +152,16 @@ public class GameInstance
         {
             webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
             connections.Add(playerId, webSocketContext);
-            game.JoinGame(new Player("TODO: Player name", playerId));
-            Logger.Log($"Added {playerId} to game");
             Logger.Log($"Host WebSocket connection established at {context.Request.Url}");
+            bool success = game.JoinGame(new Player("TODO: Player name", playerId));
+            if (success)
+            {
+                Logger.Log($"Added {playerId} to game");
+            }
+            else
+            {
+                Logger.Log($"Game could not find a place for {playerId} to join");
+            }
         }
         catch (Exception e)
         {

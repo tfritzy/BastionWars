@@ -40,7 +40,6 @@ public class Server
 
         _routes.Add("/place-player", async (HttpListenerContext context) =>
         {
-            Logger.Log("Asked to place player in game");
             var body = await ReadBodyMatchmaker(context);
             if (body == null) return;
             var gameDetails = await HandlePlacePlayer(body);
@@ -187,7 +186,7 @@ public class Server
         Logger.Log("Starting up game instance");
         var settings = new GameSettings
         {
-            GenerationMode = GenerationMode.Word,
+            GenerationMode = GenerationMode.AutoAccrue,
             Map = MapGenerator.Generate(64, 64),
         };
         string gameId = Helpers.IdGenerator.GenerateGameId();
@@ -195,6 +194,8 @@ public class Server
         availablePorts.RemoveAt(0);
 
         var inst = new GameInstance(gameId, port, settings);
+        inst.AddAI();
+        inst.AddAI();
         inst.AddAI();
         inst.AddAI();
         inst.AddAI();

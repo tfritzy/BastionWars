@@ -290,7 +290,10 @@ public class Game
     {
         uint? emptyKeepId = FindEmptyKeep(Map);
         if (emptyKeepId == null)
+        {
+            Logger.Log("Could not find an empty keep for " + player.Id);
             return false;
+        }
 
         if (!Players.ContainsKey(player.Id))
         {
@@ -300,6 +303,10 @@ public class Game
             Map.Keeps[emptyKeepId.Value].OwnerId = player.Id;
             Map.Keeps[emptyKeepId.Value].Capture(player.Alliance, player.Id);
         }
+        else
+        {
+            Logger.Log($"{player.Id} is already in this game.");
+        }
 
         player.MessageQueue.Add(new Oneof_GameServerToPlayer { InitialState = GetInitialState(player) });
         return true;
@@ -307,6 +314,8 @@ public class Game
 
     public void DisconnectPlayer(string playerId)
     {
+        return;
+        Logger.Log($"Disconnecting player {playerId}");
         if (Players.TryGetValue(playerId, out Player? player))
         {
             foreach (Keep k in Map.Keeps.Values)

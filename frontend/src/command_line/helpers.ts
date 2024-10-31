@@ -1,4 +1,4 @@
-export function getTableText(headers: string[], rows: string[][]): string {
+export function getTableText(headers: string[], rows: string[][]): string[] {
   // Calculate the maximum width needed for each column
   const colWidths = headers.map((header, colIndex) => {
     const columnValues = [header, ...rows.map((row) => row[colIndex] || "")];
@@ -23,5 +23,5 @@ export function getTableText(headers: string[], rows: string[][]): string {
   );
 
   // Combine all parts
-  return [headerRow, separator, ...dataRows].join("\n");
+  return [headerRow, separator, ...dataRows];
 }

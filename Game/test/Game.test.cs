@@ -115,7 +115,7 @@ public class GameTests
         int lastCount = k.GetCount(k.SoldierType);
 
         Assert.AreEqual(0, field.RemainingGrowthTime);
-        game.HandleHarvest(field.Text, k.OwnerId!);
+        game.HandleHarvest([field.Text], k.OwnerId!);
         Assert.AreEqual(lastCount + field.HarvestValue, k.GetCount(k.SoldierType));
         Assert.AreEqual(Field.GROWTH_TIME, field.RemainingGrowthTime);
 
@@ -139,7 +139,7 @@ public class GameTests
 
         int numWordsOwned = game.Map.Fields.Values.Count(
             w => w != null && game.Map.GetOwnerIdOf(w.Position) == allyKeep.Id);
-        game.HandleHarvest("a", allyKeep.OwnerId!);
+        game.HandleHarvest(["a"], allyKeep.OwnerId!);
         Assert.AreEqual(numWordsOwned, allyKeep.GetCount(allyKeep.SoldierType));
     }
 
