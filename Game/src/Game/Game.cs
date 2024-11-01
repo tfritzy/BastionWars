@@ -234,6 +234,11 @@ public class Game
 
         foreach (Keep bastion in Map.Keeps.Values)
         {
+            if (bastion.Alliance == 0)
+            {
+                continue;
+            }
+
             if (!bastionProduceCooldowns.ContainsKey(bastion.Id))
             {
                 bastionProduceCooldowns[bastion.Id] = AutoAccrualTime;
@@ -300,8 +305,10 @@ public class Game
             Players[player.Id] = player;
             PlayerIds.Add(player.Id);
             player.Alliance = PlayerIds.Count;
-            Map.Keeps[emptyKeepId.Value].OwnerId = player.Id;
-            Map.Keeps[emptyKeepId.Value].Capture(player.Alliance, player.Id);
+            var keep = Map.Keeps[emptyKeepId.Value];
+            keep.OwnerId = player.Id;
+            keep.Capture(player.Alliance, player.Id);
+            keep.SetCount(archers: 25, warriors: 50);
         }
         else
         {
