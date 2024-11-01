@@ -232,24 +232,24 @@ public class Game
             return;
         }
 
-        foreach (Keep bastion in Map.Keeps.Values)
+        foreach (Keep keep in Map.Keeps.Values)
         {
-            if (bastion.Alliance == 0)
+            if (keep.Alliance == 0)
             {
                 continue;
             }
 
-            if (!bastionProduceCooldowns.ContainsKey(bastion.Id))
+            if (!bastionProduceCooldowns.ContainsKey(keep.Id))
             {
-                bastionProduceCooldowns[bastion.Id] = AutoAccrualTime;
+                bastionProduceCooldowns[keep.Id] = AutoAccrualTime;
             }
 
-            bastionProduceCooldowns[bastion.Id] -= Time.deltaTime;
+            bastionProduceCooldowns[keep.Id] -= Time.deltaTime;
 
-            if (bastionProduceCooldowns[bastion.Id] <= 0)
+            if (bastionProduceCooldowns[keep.Id] <= 0)
             {
-                bastion.Accrue();
-                bastionProduceCooldowns[bastion.Id] = AutoAccrualTime;
+                keep.Accrue();
+                bastionProduceCooldowns[keep.Id] = AutoAccrualTime;
             }
         }
     }
